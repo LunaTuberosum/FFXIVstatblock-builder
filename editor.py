@@ -1,5 +1,8 @@
 from settings import *
 
+from statCard import StatCard
+
+
 def _splitStatCardBackground() -> dict[str, pygame.Surface]:
     _img = pygame.image.load('assets/backgrounds/StatCardBackground.png').convert_alpha()
 
@@ -15,69 +18,44 @@ def _splitStatCardBackground() -> dict[str, pygame.Surface]:
         'BottomRight': None
     }
 
-    _temp['TopLeft'] = pygame.surface.Surface((174, 174))
+    _temp['TopLeft'] = pygame.surface.Surface((194, 194))
     _temp['TopLeft'].fill('#b7b7b7')
     _temp['TopLeft'].blit(_img, (0, 0))
-    _temp['TopMiddle'] = pygame.surface.Surface((174, 174))
+    _temp['TopMiddle'] = pygame.surface.Surface((194, 194))
     _temp['TopMiddle'].fill('#b7b7b7')
-    _temp['TopMiddle'].blit(_img, (-174, 0))
-    _temp['TopRight'] = pygame.surface.Surface((174, 174))
+    _temp['TopMiddle'].blit(_img, (-194, 0))
+    _temp['TopRight'] = pygame.surface.Surface((194, 194))
     _temp['TopRight'].fill('#b7b7b7')
-    _temp['TopRight'].blit(_img, (-348, 0))
+    _temp['TopRight'].blit(_img, (-388, 0))
 
-    _temp['Left'] = pygame.surface.Surface((174, 174))
+    _temp['Left'] = pygame.surface.Surface((194, 194))
     _temp['Left'].fill('#b7b7b7')
-    _temp['Left'].blit(_img, (0, -174))
-    _temp['Middle'] = pygame.surface.Surface((174, 174))
+    _temp['Left'].blit(_img, (0, -194))
+    _temp['Middle'] = pygame.surface.Surface((194, 194))
     _temp['Middle'].fill('#b7b7b7')
-    _temp['Middle'].blit(_img, (-174, -174))
-    _temp['Right'] = pygame.surface.Surface((174, 174))
+    _temp['Middle'].blit(_img, (-194, -194))
+    _temp['Right'] = pygame.surface.Surface((194, 194))
     _temp['Right'].fill('#b7b7b7')
-    _temp['Right'].blit(_img, (-348, -174))
+    _temp['Right'].blit(_img, (-388, -194))
 
-    _temp['BottomLeft'] = pygame.surface.Surface((174, 174))
+    _temp['BottomLeft'] = pygame.surface.Surface((194, 194))
     _temp['BottomLeft'].fill('#b7b7b7')
-    _temp['BottomLeft'].blit(_img, (0, -348))
-    _temp['BottomMiddle'] = pygame.surface.Surface((174, 174))
+    _temp['BottomLeft'].blit(_img, (0, -388))
+    _temp['BottomMiddle'] = pygame.surface.Surface((194, 194))
     _temp['BottomMiddle'].fill('#b7b7b7')
-    _temp['BottomMiddle'].blit(_img, (-174, -348))
-    _temp['BottomRight'] = pygame.surface.Surface((174, 174))
+    _temp['BottomMiddle'].blit(_img, (-194, -388))
+    _temp['BottomRight'] = pygame.surface.Surface((194, 194))
     _temp['BottomRight'].fill('#b7b7b7')
-    _temp['BottomRight'].blit(_img, (-348, -348))
+    _temp['BottomRight'].blit(_img, (-388, -388))
 
     return _temp
 
-def _makeStatCardBackGround(statCardBackground: dict[str: pygame.Surface], width: int, height: int) -> pygame.Surface:
-    _img: pygame.Surface = pygame.surface.Surface(
-        (((1 + ((width - 1) * 3)) + 2) * 174,
-        (height + 2) * 174)
-    )
-    
-    _x: int = 0
-    _y: int = 0
-    _i: int = 0
-    _list: list[str] = ['Top', '', 'Bottom']
+def draw(screen: pygame.Surface, statCards: list[StatCard], scroll: list[float]):
 
-    for _h in range(height + 2):
-        if _h > 0:
-            _y += 174
-        _img.blit(statCardBackground[_list[_i] + 'Left'], (_x, _y))
-
-        for _w in range(1 + (3 * (width - 1))):
-            _x += 174
-
-            _img.blit(statCardBackground[_list[_i] + 'Middle'], (_x, _y))
-
-        _x += 174
-        _img.blit(statCardBackground[_list[_i] + 'Right'], (_x, _y))
-
-        _x = 0
-        if _h == 0:
-            _i = 1
-        elif _h == height:
-            _i = 2
-
-    return _img
+    _x: int = 20
+    for _card in statCards:
+        _card.draw(screen, scroll, _x)
+        _x += _card.totalWidth + 20
 
 def main(screen: pygame.Surface, clock: pygame.time.Clock, file: int) -> None:
     font: pygame.font.Font = pygame.font.Font('assets/fonts/jupiter_pro_regular.otf', 40)
@@ -91,9 +69,12 @@ def main(screen: pygame.Surface, clock: pygame.time.Clock, file: int) -> None:
     pan: list[bool] = [False, False]
     
     zoom: bool = False
-    zoomScroll: float = 2
+    zoomScroll: float = 1
 
     center: bool = False
+
+    statCards: list[StatCard] = []
+    statCards.append(StatCard(statCardBackground, 1, 0))
 
     while True:
         clock.tick(30)
@@ -131,16 +112,16 @@ def main(screen: pygame.Surface, clock: pygame.time.Clock, file: int) -> None:
 
             if event.type == pygame.MOUSEWHEEL:
                 if zoom:
-                    zoomScroll += -event.y / 4
-                    if zoomScroll > 3: zoomScroll = 3
-                    if zoomScroll < 1: zoomScroll = 1
+                    zoomScroll += -event.y / 2
+                    if zoomScroll > 2: zoomScroll = 2
+                    if zoomScroll < .5: zoomScroll = .5 # change to 1
 
                 elif horiScroll:
-                    scrollX += event.y * 20
+                    scrollX += event.y * (20 * zoomScroll)
                     if scrollX > 0:
                         scrollX = 0
                 else:
-                    scrollY += event.y * 20
+                    scrollY += event.y * (20 * zoomScroll)
                     if scrollY > 0:
                         scrollY = 0
 
@@ -160,11 +141,12 @@ def main(screen: pygame.Surface, clock: pygame.time.Clock, file: int) -> None:
                     scrollY += event.rel[1]
                     if scrollY > 0:
                         scrollY = 0
-                
-        tempScreen.blit(_makeStatCardBackGround(statCardBackground, 3, 7), (20 + scrollX, 20 + scrollY))
+
+        draw(tempScreen, statCards, [scrollX, scrollY])
         _image: pygame.Surface = pygame.transform.scale(tempScreen, (tempScreen.get_width() / zoomScroll, tempScreen.get_height() / zoomScroll))
 
         screen.blit(_image, (0, 0))
 
         pygame.display.flip()
 
+                

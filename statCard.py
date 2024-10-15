@@ -141,8 +141,6 @@ class StatCard():
 
         self.totalWidth = _img.get_width()
 
-        print(_img.get_height())
-        
         _x: int = 0
 
         _img.blit(self.__statCardBackground['TopLeft'], (_x, 0))

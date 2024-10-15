@@ -1,5 +1,6 @@
 from settings import *
-import editor
+
+from editor import Editor
 
 
 def main(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
@@ -16,6 +17,6 @@ def main(screen: pygame.Surface, clock: pygame.time.Clock) -> None:
             
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    editor.main(screen, clock, 0)
+                    Editor(screen, clock, 0).main()
 
         pygame.display.flip()

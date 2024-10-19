@@ -33,7 +33,7 @@ class TopStatsComponent(Component):
         self.seperator: pygame.Surface = pygame.image.load('assets/backgrounds/StatsSeperator.png').convert_alpha()
 
     def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
-        self.image.fill('#F3E1C6')
+        super().draw(screen, parentPos)
         self.image.blit(self.backgroundMiddle, (3, 18))
         self.image.blit(self.backgroundBottom, (3, self.height() - self.backgroundBottom.get_height()))
         self.image.blit(self.topLine, (0, 0))
@@ -80,7 +80,7 @@ class TopStatsComponent(Component):
             137
         ))
 
-        screen.blit(self.image, [parentPos[0] + self.x(), parentPos[1] + self.y()])
+        screen.blit(self.image, [20 + self.x(), parentPos[1] + self.y()])
 
 
 

@@ -81,7 +81,7 @@ class AbilityComponent(Component):
         _blue: bool = False
         _dark: bool = False
 
-        self.image.fill('#F3E1C6')
+        super().draw(screen, parentPos)
 
         self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (1,0))
         self.image.blit(self.fontItalic.render(self.types, True, '#000000'), (self.width() - self.fontItalic.size(self.types)[0], 4))
@@ -121,16 +121,16 @@ class AbilityComponent(Component):
 
                 if _name:
                     self.image.blit(self.fontBolded.render(_w, True, '#995745'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _x += self.font.size(_w)[0] + 10
                 elif _bold:
                     self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _x += self.font.size(_w)[0] + 10
                 elif _red:
                     self.image.blit(self.fontBolded.render(_w, True, '#D34D35'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _x += self.font.size(_w)[0] + 10
                 elif _blue:
                     self.image.blit(self.fontBolded.render(_w, True, '#2D638E'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _x += self.font.size(_w)[0] + 10
                 else:
                     self.image.blit(self.font.render(_w, True, '#000000'), (_x, _y))
                     _x += self.font.size(_w)[0] + 3
@@ -143,6 +143,6 @@ class AbilityComponent(Component):
 
         if not self.last:
             self.image.blit(self.divider, (0, self.height() - 5))
-        screen.blit(self.image, (parentPos[0] + self.x(), parentPos[1] + self.y()))
+        screen.blit(self.image, (20 + self.x(), parentPos[1] + self.y()))
 
 

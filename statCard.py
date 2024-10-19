@@ -1,68 +1,26 @@
+from contextMenu import ContextMenu
 from settings import *
 
 from components.component import Component
-from components.name import NameComponent
-from components.topStats import TopStatsComponent
-from components.sectionName import SectionNameComponent
-from components.trait import TraitComponent
-from components.ability import AbilityComponent
 
 
-class StatCard():
-    def __init__(self, statCardBackground: dict[str, pygame.Surface], width: int, height: int, components: list[Component] = []):
+class StatCard(pygame.sprite.Sprite):
+    def __init__(self, statCardBackground: dict[str, pygame.Surface], width: int, height: int, editor: object):
+        super().__init__()
         self.image: pygame.Surface = None
         self.__statCardBackground: dict[str, pygame.Surface] = statCardBackground
         self.width: int = width
         self.totalWidth: int = 0
         self.height: int = height
+        self.editor: object = editor
 
-        self.components: list[Component] = components
-        self.components.append(NameComponent())
-        self.components.append(TopStatsComponent())
-
-        self.components.append(SectionNameComponent('Traits', 2))
-        self.components.append(TraitComponent(
-            'Elite Foe: Lord of the Corpse Hall',
-            'This character cannot be {b} Stunned {/b} and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter.'
-        ))
-        self.components.append(TraitComponent(
-            'Survive and Receive Valhalla',
-            'This creature summons 2 [Gungnir] 3 spaces from itself at the start of each round.'
+        self.rect: pygame.Rect = pygame.Rect((0, 0), (
+            ((1 + ((width - 1) * 3)) + 2) * 194, 
+            (height + 2) * 194
         ))
 
-        self.components.append(SectionNameComponent('Abilites', 2))
-
-        self.components.append(AbilityComponent(
-            'Shin-Zantetsiken',
-            'Primary, Physical',
-            {
-                'Marker Area:': 'The entire encounter map',
-                'Target:': 'All enemies within the marker area',
-                'Marker Trigger:': 'The beginning of the 3rd round',
-                'Marker Effect:': 'Deals 999 damage.'
-            }
-        ))
-
-        self.components.append(AbilityComponent(
-            'Gungnir',
-            'Primary, Mobile Marker, Magic',
-            {
-                'Origin': 'Two squares occupied by two separate enemy characters without {b} Enmity {/b}',
-                'Marker Area:': 'A mobile 5x5 area centered on the origins',
-                'Target:': 'All enemies within the marker area',
-                'Marker Trigger:': 'The beginning of this character\'s next turn',
-                'Marker Effect:': 'Deals 3d6 damage and summons a [Gungnir] in an unoccupied adjacenet area to the center.'
-            },
-            [
-                [0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 2, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 0],
-                [0, 0, 0, 0, 0, 0, 0]
-            ]
-        ))
+        self.components: list[Component] = list()
+        
         
         if self.height == 0:
             _height: int = 25
@@ -80,8 +38,42 @@ class StatCard():
         else:
             self._makeStatCardBackground(self.width, self.height)
 
+    def addComponent(self, component: Component):
+        self.components.append(component)
+
+        if self.height == 0:
+            _height: int = 25
+
+            for _c in self.components:
+                _height += _c.height()
+
+            _height += 5
+            if _height < 363:
+                _height = 363
+
+
+            self.temp = _height
+            self._makeStatCardBackgroundScale(self.width, _height)
+        else:
+            self._makeStatCardBackground(self.width, self.height)
+
     def draw(self, screen: pygame.Surface, scroll: list[float], x: int):
-        screen.blit(self.image, [x + scroll[0], 20 + scroll[1]])
+        if self.height == 0:
+            _height: int = 25
+
+            for _c in self.components:
+                _height += _c.height()
+
+            _height += 5
+            if _height < 363:
+                _height = 363
+
+
+            self.temp = _height
+            self._makeStatCardBackgroundScale(self.width, _height)
+        else:
+            self._makeStatCardBackground(self.width, self.height)
+        self.rect = pygame.Rect((x + scroll[0], 40 + scroll[1]), self.image.get_size())
 
         _x: int = x
         _y: int = 20
@@ -94,10 +86,27 @@ class StatCard():
             _comp.draw(self.image, (_x, _y))
 
             _y += _comp.height()
+        screen.blit(self.image, [x + scroll[0], 40 + scroll[1]])
 
     # TODO: do it later Mignt not need to?
     def sortComponenets(self) -> None:
         pass
+
+    def contextMenu(self) -> ContextMenu:
+        return ContextMenu([186, 96], {
+            'Edit': self.edit,
+            'Clear': self.clear,
+            'Delete': self.delete
+        })
+
+    def edit(self):
+        print('Edit')
+
+    def clear(self):
+        print('Clear')
+
+    def delete(self):
+        self.editor.statCards.remove(self)
 
     def _makeStatCardBackground(self, width: int, height: int) -> pygame.Surface:
         _img: pygame.Surface = pygame.surface.Surface(

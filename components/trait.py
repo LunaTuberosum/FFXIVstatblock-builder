@@ -57,7 +57,7 @@ class TraitComponent(Component):
         _red: bool = False
         _blue: bool = False
 
-        self.image.fill('#F3E1C6')
+        super().draw(screen, parentPos)
 
         self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (1,0))
 
@@ -89,13 +89,13 @@ class TraitComponent(Component):
 
                 if _bold:
                     self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _x += self.font.size(_w)[0] + 10
                 elif _red:
                     self.image.blit(self.fontBolded.render(_w, True, '#D34D35'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _x += self.font.size(_w)[0] + 10
                 elif _blue:
                     self.image.blit(self.fontBolded.render(_w, True, '#2D638E'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _x += self.font.size(_w)[0] + 10
                 else:
                     self.image.blit(self.font.render(_w, True, '#000000'), (_x, _y))
                     _x += self.font.size(_w)[0] + 3
@@ -106,7 +106,7 @@ class TraitComponent(Component):
         if not self.last:
             self.image.blit(self.divider, (0, self.height() - 5))
 
-        screen.blit(self.image, (parentPos[0] + self.x(), parentPos[1] + self.y()))
+        screen.blit(self.image, (20 + self.x(), parentPos[1] + self.y()))
 
 
 

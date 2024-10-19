@@ -20,12 +20,12 @@ class SectionNameComponent(Component):
         self.font: pygame.font.Font = pygame.font.Font('assets/fonts/LibreBaskerville.ttf', 18)
 
     def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
-        self.image.fill('#F3E1C6')
+        super().draw(screen, parentPos)
         self._renderSmallCase(self.section, 0)
 
         self.image.blit(self.divider, (2, self.height() - 3))
 
-        screen.blit(self.image, (parentPos[0] + self.x(), parentPos[1] + self.y()))
+        screen.blit(self.image, (20 + self.x(), parentPos[1] + self.y()))
 
 
 

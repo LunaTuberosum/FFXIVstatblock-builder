@@ -11,7 +11,7 @@ class NameUI(Background):
         super().__init__(
             'NameUI',
             'Name',
-            [550, 245],
+            [550, 240],
             pos
         )
 
@@ -81,15 +81,28 @@ class NameUI(Background):
         self.parent.name = self.components[0].text
 
     def changeLevel(self):
-        self.parent.level = self.components[1].text
+        try:
+            int(self.components[1].text)
+            self.parent.level = self.components[1].text
+        except:
+            self.components[1].text = self.parent.level
+            return
 
     def addLevel(self):
-        self.parent.level = str(int(self.parent.level) + 10)
-        self.components[1].text = self.parent.level
+        try:
+            self.parent.level = str(int(self.parent.level) + 10)
+            self.components[1].text = self.parent.level
+        except:
+            self.components[1].text = self.parent.level
+            return
 
     def minusLevel(self):
-        self.parent.level = str(int(self.parent.level) - 10) if int(self.parent.level) - 10 > 10 else str(10)
-        self.components[1].text = self.parent.level
+        try:
+            self.parent.level = str(int(self.parent.level) - 10) if int(self.parent.level) - 10 > 10 else str(10)
+            self.components[1].text = self.parent.level
+        except:
+            self.components[1].text = self.parent.level
+            return
 
     def changePostionEnd(self):
         self.parent.levelPositon = False

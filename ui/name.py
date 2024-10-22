@@ -18,12 +18,12 @@ class NameUI(Background):
         self.parent: object = parent
 
         self.components.append(
-            TextBox([(self.size[0] - 330), 80 + self.pos[1]], [270, 1], 0, self.changeName)
+            TextBox([(self.size[0] - 330), 80 + self.pos[1]], [270, 1], self.changeName)
         )
         self.components[0].text = parent.name
 
         self.components.append(
-            TextBox([(self.size[0] - 212), 140 + self.pos[1]], [90, 1], 0, self.changeLevel)
+            TextBox([(self.size[0] - 212), 140 + self.pos[1]], [90, 1], self.changeLevel)
         )
         self.components[1].text = parent.level
 

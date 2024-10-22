@@ -3,7 +3,6 @@ from settings import *
 from ui.background import Background
 from ui.button import Button
 from ui.textBox import TextBox
-from ui.toggleButtons import ToggleButtons
 
 
 class TopStatsUI(Background):
@@ -18,17 +17,17 @@ class TopStatsUI(Background):
         self.parent: object = parent
 
         self.components.append(
-            TextBox([130, 80 + self.pos[1]], [140, 1], 0, self.changeSize)
+            TextBox([130, 80 + self.pos[1]], [140, 1], self.changeSize)
         )
         self.components[0].text = parent.creatureSize
 
         self.components.append(
-            TextBox([520, 80 + self.pos[1]], [150, 1], 0, self.changeSpecies)
+            TextBox([520, 80 + self.pos[1]], [150, 1], self.changeSpecies)
         )
         self.components[1].text = parent.species
 
         self.components.append(
-            TextBox([140, 120 + self.pos[1]], [70, 1], 0, self.changeDefense)
+            TextBox([140, 120 + self.pos[1]], [70, 1], self.changeDefense)
         )
         self.components[2].text = parent.defense
 
@@ -52,7 +51,7 @@ class TopStatsUI(Background):
         )
 
         self.components.append(
-            TextBox([540, 120 + self.pos[1]], [70, 1], 0, self.changeMagicDefense)
+            TextBox([540, 120 + self.pos[1]], [70, 1], self.changeMagicDefense)
         )
         self.components[5].text = parent.magicDefense
 
@@ -76,7 +75,7 @@ class TopStatsUI(Background):
         )
 
         self.components.append(
-            TextBox([130, 160 + self.pos[1]], [80, 1], 0, self.changeMaxHP)
+            TextBox([130, 160 + self.pos[1]], [80, 1], self.changeMaxHP)
         )
         self.components[8].text = parent.maxHP
 
@@ -100,7 +99,7 @@ class TopStatsUI(Background):
         )
 
         self.components.append(
-            TextBox([540, 160 + self.pos[1]], [70, 1], 0, self.changeSpeed)
+            TextBox([540, 160 + self.pos[1]], [70, 1], self.changeSpeed)
         )
         self.components[11].text = parent.speed
 
@@ -124,7 +123,7 @@ class TopStatsUI(Background):
         )
 
         self.components.append(
-            TextBox([140, 200 + self.pos[1]], [70, 1], 0, self.changeVigilance)
+            TextBox([140, 200 + self.pos[1]], [70, 1], self.changeVigilance)
         )
         self.components[14].text = parent.vigilance
 
@@ -150,7 +149,7 @@ class TopStatsUI(Background):
         ##
 
         self.components.append(
-            TextBox([40, 300 + self.pos[1]], [50, 1], 0, self.changeSTR)
+            TextBox([40, 300 + self.pos[1]], [50, 1], self.changeSTR)
         )
         self.components[17].text = parent.str
 
@@ -174,7 +173,7 @@ class TopStatsUI(Background):
         )
 
         self.components.append(
-            TextBox([170, 300 + self.pos[1]], [50, 1], 0, self.changeDEX)
+            TextBox([170, 300 + self.pos[1]], [50, 1], self.changeDEX)
         )
         self.components[20].text = parent.dex
 
@@ -198,7 +197,7 @@ class TopStatsUI(Background):
         )
 
         self.components.append(
-            TextBox([300, 300 + self.pos[1]], [50, 1], 0, self.changeVIT)
+            TextBox([300, 300 + self.pos[1]], [50, 1], self.changeVIT)
         )
         self.components[23].text = parent.vit
 
@@ -222,7 +221,7 @@ class TopStatsUI(Background):
         )
 
         self.components.append(
-            TextBox([430, 300 + self.pos[1]], [50, 1], 0, self.changeINT)
+            TextBox([430, 300 + self.pos[1]], [50, 1], self.changeINT)
         )
         self.components[26].text = parent.int
 
@@ -246,7 +245,7 @@ class TopStatsUI(Background):
         )
 
         self.components.append(
-            TextBox([560, 300 + self.pos[1]], [50, 1], 0, self.changeMND)
+            TextBox([560, 300 + self.pos[1]], [50, 1], self.changeMND)
         )
         self.components[29].text = parent.mnd
 

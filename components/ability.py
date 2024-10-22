@@ -58,7 +58,7 @@ class AbilityComponent(Component):
                     _size = self.font.size(_w + ' ')[0]
                     continue
 
-                if _w == '{b}' or _w == '{/b}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}':
+                if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}':
                     _text += _w + ' '
                     continue
 
@@ -77,6 +77,7 @@ class AbilityComponent(Component):
         _text: str = ''
 
         _bold: bool = False
+        _italic: bool = False
         _red: bool = False
         _blue: bool = False
         _dark: bool = False
@@ -105,6 +106,13 @@ class AbilityComponent(Component):
                     _bold = False
                     continue
 
+                if _w == '{i}':
+                    _italic = True
+                    continue
+                if _w == '{/i}':
+                    _italic = False
+                    continue
+
                 if _w == '{a}':
                     _red = True
                     continue
@@ -125,6 +133,9 @@ class AbilityComponent(Component):
                 elif _bold:
                     self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y))
                     _x += self.font.size(_w)[0] + 10
+                elif _italic:
+                    self.image.blit(self.fontItalic.render(_w, True, '#000000'), (_x, _y))
+                    _x += self.font.size(_w)[0] + 3
                 elif _red:
                     self.image.blit(self.fontBolded.render(_w, True, '#D34D35'), (_x, _y))
                     _x += self.font.size(_w)[0] + 10
@@ -137,6 +148,12 @@ class AbilityComponent(Component):
 
             _y += 18
             _x = 1
+
+        _name = False
+        _bold = False
+        _italic = False
+        _red = False
+        _blue = False
 
         if self.marker:
             self.marker.draw(self.image, self.pos)

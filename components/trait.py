@@ -1,6 +1,7 @@
 from settings import *
 
 from components.component import Component
+from ui.trait import TraitUI
 
 
 class TraitComponent(Component):
@@ -13,9 +14,14 @@ class TraitComponent(Component):
         )
 
         self.fontTitle: pygame.font.Font = pygame.font.SysFont('Noto Sans', 19, True)
+
         self.font: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
+
         self.fontBolded: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
         self.fontBolded.bold = True
+
+        self.fontItalic: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
+        self.fontItalic.italic = True
 
         self.last: bool = False
         self.divider: pygame.Surface = pygame.image.load('assets/backgrounds/StatCardDivider.png').convert_alpha()
@@ -39,7 +45,7 @@ class TraitComponent(Component):
                 _backset = 0
                 continue
 
-            if _w == '{b}' or _w == '{/b}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}':
+            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}':
                 _backset += self.font.size(_w)[0] + 4 
                 _text += _w + ' '
                 continue
@@ -52,8 +58,11 @@ class TraitComponent(Component):
         self.image = pygame.Surface(self.size)
 
     def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
+        self._findSize()
+        self.parentPos: list[int] = parentPos
 
         _bold: bool = False
+        _italic: bool = False
         _red: bool = False
         _blue: bool = False
 
@@ -73,6 +82,13 @@ class TraitComponent(Component):
                     _bold = False
                     continue
 
+                if _w == '{i}':
+                    _italic = True
+                    continue
+                if _w == '{/i}':
+                    _italic = False
+                    continue
+
                 if _w == '{a}':
                     _red = True
                     continue
@@ -90,6 +106,9 @@ class TraitComponent(Component):
                 if _bold:
                     self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y))
                     _x += self.font.size(_w)[0] + 10
+                elif _italic:
+                    self.image.blit(self.fontItalic.render(_w, True, '#000000'), (_x, _y))
+                    _x += self.font.size(_w)[0] + 3
                 elif _red:
                     self.image.blit(self.fontBolded.render(_w, True, '#D34D35'), (_x, _y))
                     _x += self.font.size(_w)[0] + 10
@@ -103,10 +122,21 @@ class TraitComponent(Component):
             _y += 16
             _x = 1
 
+        _bold = False
+        _italic = False
+        _red = False
+        _blue = False
+
         if not self.last:
             self.image.blit(self.divider, (0, self.height() - 5))
 
         screen.blit(self.image, (20 + self.x(), parentPos[1] + self.y()))
+
+    def onClick(self):
+        if self.window:
+            self.window = None
+            return
+        self.window = TraitUI([-15, self.parentPos[1] + self.y() + 30], self)
 
 
 

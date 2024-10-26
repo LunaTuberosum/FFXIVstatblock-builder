@@ -48,8 +48,8 @@ class TopStatsComponent(Component):
         self.int: str = '7'
         self.mnd: str = '7'
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
-        super().draw(screen, parentPos)
+    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
+        super().draw(screen, parentPos, scroll)
         self.image.blit(self.backgroundMiddle, (3, 18))
         self.image.blit(self.backgroundBottom, (3, self.height() - self.backgroundBottom.get_height()))
         self.image.blit(self.topLine, (0, 0))

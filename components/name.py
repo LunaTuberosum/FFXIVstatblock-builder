@@ -20,7 +20,7 @@ class NameComponent(Component):
         self.fontCap: pygame.font.Font = pygame.font.Font('assets/fonts/LibreBaskerville.ttf', 24)
         self.font: pygame.font.Font = pygame.font.Font('assets/fonts/LibreBaskerville.ttf', 20)
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
+    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
 
         _words: list[str] = self.name.split()
         if not self.levelPositon:
@@ -43,7 +43,7 @@ class NameComponent(Component):
 
         self.size = (512, 36 + (30 * (len(_lines) - 1)))
         self.image = pygame.Surface(self.size)
-        super().draw(screen, parentPos)
+        super().draw(screen, parentPos, scroll)
 
         _y: int = 0
         for _l in _lines:

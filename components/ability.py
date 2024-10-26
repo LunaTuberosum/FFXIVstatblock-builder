@@ -2,6 +2,7 @@ from settings import *
 
 from components.component import Component
 from components.marker import MarkerComponent
+from ui.ability import AbilityUI
 
 
 class AbilityComponent(Component):
@@ -19,7 +20,7 @@ class AbilityComponent(Component):
 
         self.marker: MarkerComponent = None
         if marker:
-            self.marker = MarkerComponent(7, 7, marker, self.width())
+            self.marker = MarkerComponent(len(marker), len(marker[0]), marker, self.width())
 
         self.last: bool = False
 
@@ -69,11 +70,12 @@ class AbilityComponent(Component):
 
         self.size = ((
             518,
-            40 + (18 * len(self.lines))
+            40 + (10 + self.marker.height() if self.marker and self.marker.height() > (18 * len(self.lines)) else (18 * len(self.lines)))
         ))
         self.image = pygame.Surface(self.size)
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
+    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
+        self.parentPos: list[int] = parentPos
         _text: str = ''
 
         _bold: bool = False
@@ -82,10 +84,12 @@ class AbilityComponent(Component):
         _blue: bool = False
         _dark: bool = False
 
-        super().draw(screen, parentPos)
+        self._findHeight()
+        super().draw(screen, parentPos, scroll)
 
         self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (1,0))
         self.image.blit(self.fontItalic.render(self.types, True, '#000000'), (self.width() - self.fontItalic.size(self.types)[0], 4))
+
 
         _y: int = 26
         _x: int = 1
@@ -149,11 +153,11 @@ class AbilityComponent(Component):
             _y += 18
             _x = 1
 
-        _name = False
-        _bold = False
-        _italic = False
-        _red = False
-        _blue = False
+            _name = False
+            _bold = False
+            _italic = False
+            _red = False
+            _blue = False
 
         if self.marker:
             self.marker.draw(self.image, self.pos)
@@ -162,4 +166,8 @@ class AbilityComponent(Component):
             self.image.blit(self.divider, (0, self.height() - 5))
         screen.blit(self.image, (20 + self.x(), parentPos[1] + self.y()))
 
-
+    def onClick(self):
+        if self.window:
+            self.window = None
+            return
+        self.window = AbilityUI([-15, self.parentPos[1] + self.y() + 30], self)

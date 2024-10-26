@@ -64,7 +64,7 @@ class TextBox():
             else:
                 self.text += event.unicode
 
-    def draw(self, screen: pygame.Surface, right: int):
+    def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
         _background: dict[str, pygame.Surface] = self.background if not self.hovering else self.backgroundSelected
         if self.active:
             _background = self.backgroundSelected
@@ -88,17 +88,19 @@ class TextBox():
             _pos = [8, 5]
         elif self.font.size(self.text)[0] > _size[0]:
             _pos = [_size[0] - self.font.size(self.text)[0] - 10, _size[1] / 2 - self.font.size(self.text)[1] / 2]
-            
+
+        self.text = self.text.strip()
+
         if self.size[1] > 1:
             self.multiLineBlit()
 
         else:
-            self.image.blit(self.font.render(self.text, True, '#000000'), (_pos[0] + 1, _pos[1] + 1))
-            self.image.blit(self.font.render(self.text, True, '#ffffff'), _pos)
+            self.image.blit(self.font.render(self.text + ('_' if self.active else ''), True, '#000000'), (_pos[0] + 1, _pos[1] + 1))
+            self.image.blit(self.font.render(self.text + ('_' if self.active else ''), True, '#ffffff'), _pos)
         
-        self.rect: pygame.Rect = pygame.Rect((self.pos[0] + right, self.pos[1]), self.image.size)
+        self.rect: pygame.Rect = pygame.Rect((self.pos[0] + right, self.pos[1] + scroll[1]), self.image.size)
 
-        screen.blit(self.image, (self.pos[0] + right, self.pos[1]))
+        screen.blit(self.image, (self.pos[0] + right, self.pos[1] + scroll[1]))
 
     def multiLineBlit(self):
         _size: list[int] = self.image.size
@@ -122,7 +124,7 @@ class TextBox():
 
             _text += _w + ' '
 
-        _lines.append(_text)
+        _lines.append(_text + ('_' if self.active else ''))
 
         _y: int = 5
         _x: int = 8

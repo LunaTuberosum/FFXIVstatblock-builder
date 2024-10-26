@@ -12,10 +12,10 @@ class Button():
 
         self.hovering: bool = False
 
-    def draw(self, screen: pygame.Surface, right: int):
-        self.rect: pygame.Rect = pygame.Rect((self.pos[0] + right, self.pos[1]), self.image.size)
+    def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
+        self.rect: pygame.Rect = pygame.Rect((self.pos[0] + right, self.pos[1] + scroll[1]), self.image.size)
 
-        screen.blit(self.image if not self.hovering else self.imageHover, (self.pos[0] + right, self.pos[1]))
+        screen.blit(self.image if not self.hovering else self.imageHover, (self.pos[0] + right, self.pos[1] + scroll[1]))
 
     def hover(self):
         self.hovering = True

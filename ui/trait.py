@@ -62,11 +62,11 @@ class TraitUI(Background):
                 )
         )
 
-    def draw(self, screen: pygame.Surface, right: int):
+    def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
         for _component in self.components:
             if hasattr(_component, 'commandUpdate'):
                 _component.update()
-        super().draw(screen, right)
+        super().draw(screen, right, scroll)
 
         self.image.blit(self.font.render('Name', True, '#000000'), (25, 56))
         self.image.blit(self.font.render('Name', True, '#C2C2C2'), (25, 55))
@@ -77,10 +77,10 @@ class TraitUI(Background):
         self.image.blit(self.font.render('Description', True, '#000000'), (25, 116))
         self.image.blit(self.font.render('Description', True, '#C2C2C2'), (25, 115))
 
-        screen.blit(self.image, (self.pos[0] + right, self.pos[1]))
+        screen.blit(self.image, (self.pos[0] + right, self.pos[1] + scroll[1]))
 
         for _component in self.components:
-            _component.draw(screen, right)
+            _component.draw(screen, right, scroll)
 
     def changeName(self):
         self.parent.name = self.components[0].text

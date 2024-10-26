@@ -269,8 +269,8 @@ class TopStatsUI(Background):
         )
 
 
-    def draw(self, screen: pygame.Surface, right: int):
-        super().draw(screen, right)
+    def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
+        super().draw(screen, right, scroll)
 
         self.image.blit(self.font.render('Secondary Attributes', True, '#000000'), (25, 56))
         self.image.blit(self.font.render('Secondary Attributes', True, '#C2C2C2'), (25, 55))
@@ -316,10 +316,10 @@ class TopStatsUI(Background):
         self.image.blit(self.font.render('MND', True, '#000000'), (625 - (self.font.size('MND')[0] / 2), 271))
         self.image.blit(self.font.render('MND', True, '#EEE1C5'), (625 - (self.font.size('MND')[0] / 2), 270))
 
-        screen.blit(self.image, (self.pos[0] + right, self.pos[1]))
+        screen.blit(self.image, (self.pos[0] + right, self.pos[1] + scroll[1]))
 
         for _component in self.components:
-            _component.draw(screen, right)
+            _component.draw(screen, right, scroll)
 
     def changeSize(self):
         self.parent.creatureSize = self.components[0].text

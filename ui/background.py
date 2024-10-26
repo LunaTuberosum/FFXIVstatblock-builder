@@ -20,10 +20,10 @@ class Background():
         self.fontTitle: pygame.font.Font = pygame.font.Font('assets/fonts/Deutschlander.otf', 25)
         self.seperator: pygame.Surface = pygame.image.load('assets/backgrounds/UISeperator.png').convert_alpha()
 
-    def draw(self, screen: pygame.Surface, right: int):
+    def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
             self.image.fill('#ff00b6')
             self.image.set_colorkey('#ff00b6')
-            self.rect = pygame.Rect(self.pos[0] + right, self.pos[1], self.size[0], self.size[1])
+            self.rect = self.image.get_rect(topleft=(self.pos[0] + right, self.pos[1] + scroll[1]))
 
             self.image.blit(self.uiBackground['TopLeft'], (0, 0))
             self.image.blit(self.uiBackground['TopRight'], (self.size[0] - 50, 0))

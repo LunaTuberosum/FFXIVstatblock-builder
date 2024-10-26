@@ -57,7 +57,7 @@ class TraitComponent(Component):
         self.size = (518, 50 + (14 * len(self.lines) - 1))
         self.image = pygame.Surface(self.size)
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
+    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
         self._findSize()
         self.parentPos: list[int] = parentPos
 
@@ -66,7 +66,7 @@ class TraitComponent(Component):
         _red: bool = False
         _blue: bool = False
 
-        super().draw(screen, parentPos)
+        super().draw(screen, parentPos, scroll)
 
         self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (1,0))
 

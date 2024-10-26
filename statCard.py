@@ -73,6 +73,7 @@ class StatCard(pygame.sprite.Sprite):
             self._makeStatCardBackgroundScale(self.width, _height)
         else:
             self._makeStatCardBackground(self.width, self.height)
+            
         self.rect = pygame.Rect((x + scroll[0], 40 + scroll[1]), self.image.get_size())
 
         _x: int = x
@@ -83,7 +84,7 @@ class StatCard(pygame.sprite.Sprite):
             _last.last = True
         
         for _comp in self.components:
-            _comp.draw(self.image, (_x, _y))
+            _comp.draw(self.image, (_x, _y), scroll)
 
             _y += _comp.height()
         screen.blit(self.image, [x + scroll[0], 40 + scroll[1]])

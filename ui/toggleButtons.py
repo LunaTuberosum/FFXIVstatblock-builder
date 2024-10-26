@@ -26,7 +26,7 @@ class ToggleButtons():
 
         self.hovering: bool = False
 
-    def draw(self, screen: pygame.Surface, right: int):
+    def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
         self.image.fill('#313031')
         self.rect: pygame.Rect = pygame.Rect((self.pos[0] + right, self.pos[1]), self.image.size)
         
@@ -41,11 +41,11 @@ class ToggleButtons():
                 self.image.blit(self.buttonImage_hover, (_x, 0))
             else:
                 self.image.blit(self.buttonImage, (_x, 0))
-            self.buttonRects[label] = pygame.Rect(_x + self.pos[0] + right, 0 + self.pos[1], 25 + self.font.size(label)[0], 20)
+            self.buttonRects[label] = pygame.Rect(_x + self.pos[0] + right, self.pos[1] + scroll[1], 25 + self.font.size(label)[0], 20)
             _x -= 20 + 30
 
 
-        screen.blit(self.image, (self.pos[0] + right, self.pos[1]))
+        screen.blit(self.image, (self.pos[0] + right, self.pos[1] + scroll[1]))
 
     def hover(self):
         self.hovering = True

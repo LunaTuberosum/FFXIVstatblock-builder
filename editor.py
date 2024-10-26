@@ -48,12 +48,7 @@ class Editor():
         for _card in self.statCards:
             for _component in _card.components:
                 if _component.window:
-                    _component.window.draw(self.screen, _card.rect.right)
-                    
-        if self.contextMenu:
-
-            self.contextMenu.draw(self.screen, self.contextMenuPos)
-
+                    _component.window.draw(self.tempScreen, _card.rect.right, [self.scrollX, self.scrollY])
 
     def keyHandler(self, event: pygame.event.Event):
         if event.type == pygame.KEYDOWN:
@@ -80,6 +75,11 @@ class Editor():
             for _component in _statCard.components:
                 if not _component.window:
                     continue
+                if hasattr(_component.window, 'effectsList'):
+                    for _effect in _component.window.effectsList:
+                        for _comp in _effect:
+                            if hasattr(_comp, 'text'):
+                                _comp.typing(event)
                 for _comp in _component.window.components:
                     if hasattr(_comp, 'text'):
                         _comp.typing(event)
@@ -143,6 +143,10 @@ class Editor():
             for _statCard in self.statCards:
                 for _component in _statCard.components:
                     if _component.window and _component.window.rect.collidepoint(pygame.mouse.get_pos()):
+                        if hasattr(_component.window, 'onClick'):
+                            _component.window.onClick()
+                            return
+
                         for _comp in _component.window.components:
                             if hasattr(_comp, 'active'): 
                                 _comp.active = False
@@ -194,6 +198,8 @@ class Editor():
 
                             if not _component.window:
                                 continue
+                            if hasattr(_component.window, 'hover'):
+                                _component.window.hover()
                             for _comp in _component.window.components:
                                 _comp.noHover()
                                 if _comp.rect.collidepoint(pygame.mouse.get_pos()):
@@ -205,7 +211,7 @@ class Editor():
 
     def main(self) -> None:
         while True:
-            self.clock.tick(30)
+            self.clock.tick(60)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -227,10 +233,13 @@ class Editor():
                             _option.hover()
 
             self.draw()
+            self.drawUI()
             _image: pygame.Surface = pygame.transform.scale(self.tempScreen, (self.tempScreen.get_width() / self.zoomScroll, self.tempScreen.get_height() / self.zoomScroll))
 
             self.screen.blit(_image, (0, 0))
-            self.drawUI()
+
+            if self.contextMenu:
+                self.contextMenu.draw(self.screen, self.contextMenuPos)
 
             pygame.display.flip()
 

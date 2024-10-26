@@ -18,8 +18,8 @@ class Component():
 
         self.hovering: bool = False
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
-        self.rect: pygame.Rect = pygame.Rect(self.pos[0] + parentPos[0], self.pos[1] + parentPos[1] + 40, self.size[0], self.size[1])
+    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
+        self.rect: pygame.Rect = pygame.Rect(self.pos[0] + parentPos[0] + scroll[0], self.pos[1] + parentPos[1] + 40 + scroll[1], self.size[0], self.size[1])
         if self.hovering:
             self.image.fill('#E0D3BF')
             return

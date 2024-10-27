@@ -114,14 +114,11 @@ class AbilityUI(Background):
             if hasattr(_component, 'commandUpdate'):
                 _component.update()
 
-        _prev: object = self.lastClickEffect
         for _effect in self.effectsList:
             for _component in _effect:
                 if hasattr(_component, 'commandUpdate'):
-                    self.lastClickEffect = _effect
-                    _component.update()
+                    _component.commandUpdate(_effect)
 
-        self.lastClickEffect = _prev
         super().draw(screen, right, scroll)
 
         self.image.blit(self.font.render('Name', True, '#000000'), (25, 56))
@@ -177,6 +174,7 @@ class AbilityUI(Background):
                     _comp.hover()
 
     def onClick(self):
+        print(self.lastClickEffect)
         for _effect in self.effectsList:
             for _comp in _effect:
                 if hasattr(_comp, 'active'): 
@@ -230,7 +228,6 @@ class AbilityUI(Background):
             return
 
     def addBold(self):
-        print(self.lastClickEffect)
         self.lastClickEffect[1].text += ' {b} '
         self.lastClickEffect[1].active = True
 
@@ -238,11 +235,11 @@ class AbilityUI(Background):
         self.lastClickEffect[1].text += ' {/b} '
         self.lastClickEffect[1].active = True
 
-    def updateBold(self):
-        if self.lastClickEffect[1].currentFormat == 1:
-            self.lastClickEffect[2].on = True
+    def updateBold(self, _lastClickEffect: list[TextBox]):
+        if _lastClickEffect[1].currentFormat == 1:
+            _lastClickEffect[2].on = True
         else:
-            self.lastClickEffect[2].on = False
+            _lastClickEffect[2].on = False
 
     def addItalic(self):
         self.lastClickEffect[1].text += ' {i} '
@@ -252,11 +249,11 @@ class AbilityUI(Background):
         self.lastClickEffect[1].text += ' {/i} '
         self.lastClickEffect[1].active = True
 
-    def updateItalic(self):
-        if self.lastClickEffect[1].currentFormat == 2:
-            self.lastClickEffect[3].on = True
+    def updateItalic(self, _lastClickEffect: list[TextBox]):
+        if _lastClickEffect[1].currentFormat == 2:
+            _lastClickEffect[3].on = True
         else:
-            self.lastClickEffect[3].on = False
+            _lastClickEffect[3].on = False
 
     def addAbility(self):
         self.lastClickEffect[1].text += ' {a} '
@@ -266,11 +263,11 @@ class AbilityUI(Background):
         self.lastClickEffect[1].text += ' {/a} '
         self.lastClickEffect[1].active = True
 
-    def updateAbility(self):
-        if self.lastClickEffect[1].currentFormat == 3:
-            self.lastClickEffect[4].on = True
+    def updateAbility(self, _lastClickEffect: list[TextBox]):
+        if _lastClickEffect[1].currentFormat == 3:
+            _lastClickEffect[4].on = True
         else:
-            self.lastClickEffect[4].on = False
+            _lastClickEffect[4].on = False
 
     def changeEffects(self):
         _newDict: dict[str, str] = {}

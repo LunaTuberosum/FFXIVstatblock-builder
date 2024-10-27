@@ -143,17 +143,21 @@ class Editor():
             for _statCard in self.statCards:
                 for _component in _statCard.components:
                     if _component.window and _component.window.rect.collidepoint(pygame.mouse.get_pos()):
-                        if hasattr(_component.window, 'onClick'):
-                            _component.window.onClick()
-                            return
 
                         for _comp in _component.window.components:
                             if hasattr(_comp, 'active'): 
+                                if _comp.active:
+                                    _comp.exitField()
                                 _comp.active = False
-                                _comp.exitField()
                             if _comp.rect.collidepoint(pygame.mouse.get_pos()):
                                 _comp.onClick()
+                                
+                        if hasattr(_component.window, 'onClick'):
+                            _component.window.onClick()
+                            return
                         return
+                    
+                    
                     
                     if _component.rect.collidepoint(pygame.mouse.get_pos()):
                         _component.onClick()

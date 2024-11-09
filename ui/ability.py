@@ -1,7 +1,9 @@
+from components.marker import MarkerComponent
 from settings import *
 
 from ui.button import Button
 from ui.background import Background
+from ui.markerBuilder import MarkerBuilderUI
 from ui.switchButton import SwitchButton
 from ui.textBox import TextBox
 
@@ -16,6 +18,8 @@ class AbilityUI(Background):
         )
 
         self.parent: object = parent
+
+        self.window: MarkerBuilderUI = None
 
         self.lastClickEffect: list[TextBox] = None
         self.effectsList: list[list[TextBox]] = []
@@ -53,6 +57,17 @@ class AbilityUI(Background):
                 'assets/icons/MinusButton.png',
                 'assets/icons/MinusButton_hover.png',
                 self.minusEffect
+            )
+        )
+
+        self.components.append(
+            Button(
+                [332, (self.size[1] - 65) + self.pos[1]],
+                [198, 38],
+                'assets/icons/button.png',
+                'assets/icons/button_hover.png',
+                self.makeMarker,
+                'Marker Builder'
             )
         )
 
@@ -110,6 +125,8 @@ class AbilityUI(Background):
         self.image = pygame.Surface(self.size)
 
     def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
+        if self.window:
+            self.window.draw(screen, self.rect.right, scroll)
         for _component in self.components:
             if hasattr(_component, 'commandUpdate'):
                 _component.update()
@@ -139,18 +156,18 @@ class AbilityUI(Background):
         self.image.blit(self.font.render('Number of Effects', True, '#000000'), (50, 236))
         self.image.blit(self.font.render('Number of Effects', True, '#EEE1C5'), (50, 235))
 
-        self.image.blit(self.font.render('Marker', True, '#000000'), (25, self.size[1] - 86))
-        self.image.blit(self.font.render('Marker', True, '#C2C2C2'), (25, self.size[1] - 85))
-
-        self.image.blit(self.font.render('Edit Marker', True, '#000000'), (50, self.size[1] - 61))
-        self.image.blit(self.font.render('Edit Marker', True, '#EEE1C5'), (50, self.size[1] - 60))
-
         for _effect in self.effectsList:
             self.image.blit(self.font.render('Effect Name', True, '#000000'), (50, _effect[0].pos[1] - self.pos[1] + 1))
             self.image.blit(self.font.render('Effect Name', True, '#EEE1C5'), (50, _effect[0].pos[1] - self.pos[1]))
 
             self.image.blit(self.font.render('Effect Description', True, '#000000'), (50, _effect[1].pos[1] - self.pos[1] + 1))
             self.image.blit(self.font.render('Effect Description', True, '#EEE1C5'), (50, _effect[1].pos[1] - self.pos[1]))
+
+        self.image.blit(self.font.render('Marker', True, '#000000'), (25, self.size[1] - 86))
+        self.image.blit(self.font.render('Marker', True, '#C2C2C2'), (25, self.size[1] - 85))
+
+        self.image.blit(self.font.render('Edit Marker', True, '#000000'), (50, self.size[1] - 61))
+        self.image.blit(self.font.render('Edit Marker', True, '#EEE1C5'), (50, self.size[1] - 60))
 
         screen.blit(self.image, (self.pos[0] + right, self.pos[1] + scroll[1]))
 
@@ -163,6 +180,8 @@ class AbilityUI(Background):
             _effect[3].draw(screen, right, scroll)
             _effect[4].draw(screen, right, scroll)
 
+        self.components[-1].pos[1] = self.size[1] - 65 + self.pos[1]
+
         for _component in self.components:
             _component.draw(screen, right, scroll)
 
@@ -174,12 +193,12 @@ class AbilityUI(Background):
                     _comp.hover()
 
     def onClick(self):
-        print(self.lastClickEffect)
         for _effect in self.effectsList:
             for _comp in _effect:
                 if hasattr(_comp, 'active'): 
+                    if _comp.active:
+                        _comp.exitField()
                     _comp.active = False
-                    _comp.exitField()
                     
                 if _comp.rect.collidepoint(pygame.mouse.get_pos()):
                     self.lastClickEffect = _effect
@@ -236,7 +255,7 @@ class AbilityUI(Background):
         self.lastClickEffect[1].active = True
 
     def updateBold(self, _lastClickEffect: list[TextBox]):
-        if _lastClickEffect[1].currentFormat == 1:
+        if _lastClickEffect[1].currentFormat['bold']:
             _lastClickEffect[2].on = True
         else:
             _lastClickEffect[2].on = False
@@ -250,7 +269,7 @@ class AbilityUI(Background):
         self.lastClickEffect[1].active = True
 
     def updateItalic(self, _lastClickEffect: list[TextBox]):
-        if _lastClickEffect[1].currentFormat == 2:
+        if _lastClickEffect[1].currentFormat['italic']:
             _lastClickEffect[3].on = True
         else:
             _lastClickEffect[3].on = False
@@ -264,7 +283,7 @@ class AbilityUI(Background):
         self.lastClickEffect[1].active = True
 
     def updateAbility(self, _lastClickEffect: list[TextBox]):
-        if _lastClickEffect[1].currentFormat == 3:
+        if _lastClickEffect[1].currentFormat['red']:
             _lastClickEffect[4].on = True
         else:
             _lastClickEffect[4].on = False
@@ -275,3 +294,18 @@ class AbilityUI(Background):
             _newDict[_effect[0].text] = _effect[1].text
 
         self.parent.effects = _newDict
+
+    def makeMarker(self):
+        if self.window:
+            self.window = None
+            return
+        if not self.parent.marker:
+            _marker: list[list[int]] = [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ]
+            self.parent.marker = MarkerComponent(len(_marker[0]), len(_marker), _marker, self.parent.width())
+        self.window = MarkerBuilderUI([self.pos[0] - 15, self.pos[1] + 20], self)

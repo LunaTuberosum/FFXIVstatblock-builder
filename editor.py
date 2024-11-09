@@ -78,10 +78,14 @@ class Editor():
                 if hasattr(_component.window, 'effectsList'):
                     for _effect in _component.window.effectsList:
                         for _comp in _effect:
-                            if hasattr(_comp, 'text'):
+                            if hasattr(_comp, 'typing'):
                                 _comp.typing(event)
+                if hasattr(_component.window, 'window') and _component.window.window:
+                    for _comp in _component.window.window.components:
+                        if hasattr(_comp, 'typing'):
+                            _comp.typing(event)
                 for _comp in _component.window.components:
-                    if hasattr(_comp, 'text'):
+                    if hasattr(_comp, 'typing'):
                         _comp.typing(event)
 
     def keyUp(self, event: pygame.event.Event):
@@ -115,11 +119,11 @@ class Editor():
             if self.zoomScroll < .5: self.zoomScroll = .5 # change to 1
 
         elif self.horiScroll:
-            self.scrollX += event.y * (20 * self.zoomScroll)
+            self.scrollX += event.y * (40 * self.zoomScroll)
             if self.scrollX > 0:
                 self.scrollX = 0
         else:
-            self.scrollY += event.y * (20 * self.zoomScroll)
+            self.scrollY += event.y * (40 * self.zoomScroll)
             if self.scrollY > 0:
                 self.scrollY = 0
 
@@ -142,20 +146,24 @@ class Editor():
 
             for _statCard in self.statCards:
                 for _component in _statCard.components:
-                    if _component.window and _component.window.rect.collidepoint(pygame.mouse.get_pos()):
-
-                        for _comp in _component.window.components:
-                            if hasattr(_comp, 'active'): 
-                                if _comp.active:
-                                    _comp.exitField()
-                                _comp.active = False
-                            if _comp.rect.collidepoint(pygame.mouse.get_pos()):
-                                _comp.onClick()
-                                
-                        if hasattr(_component.window, 'onClick'):
-                            _component.window.onClick()
+                    if _component.window:
+                        if hasattr(_component.window, 'window') and _component.window.window:
+                            if _component.window.window.rect.collidepoint(pygame.mouse.get_pos()):
+                                _component.window.window.onClick()
+                                return
+                        if _component.window.rect.collidepoint(pygame.mouse.get_pos()):
+                            for _comp in _component.window.components:
+                                if hasattr(_comp, 'active'): 
+                                    if _comp.active:
+                                        _comp.exitField()
+                                    _comp.active = False
+                                if _comp.rect.collidepoint(pygame.mouse.get_pos()):
+                                    _comp.onClick()
+                                    
+                            if hasattr(_component.window, 'onClick'):
+                                _component.window.onClick()
+                                return
                             return
-                        return
                     
                     
                     
@@ -195,20 +203,24 @@ class Editor():
             for _component in _statCard.components:
                 _component.noHover()
                 
-                if _component.window and _component.window.rect.collidepoint(pygame.mouse.get_pos()):
-                    for _statCard in self.statCards:
-                        for _component in _statCard.components:
-                            _component.noHover()
+                if _component.window:
+                    if hasattr(_component.window, 'window') and _component.window.window:
+                        if _component.window.window.rect.collidepoint(pygame.mouse.get_pos()):
+                            _component.window.window.hover()
+                    if _component.window.rect.collidepoint(pygame.mouse.get_pos()):
+                        for _statCard in self.statCards:
+                            for _component in _statCard.components:
+                                _component.noHover()
 
-                            if not _component.window:
-                                continue
-                            if hasattr(_component.window, 'hover'):
-                                _component.window.hover()
-                            for _comp in _component.window.components:
-                                _comp.noHover()
-                                if _comp.rect.collidepoint(pygame.mouse.get_pos()):
-                                    _comp.hover()
-                    return
+                                if not _component.window:
+                                    continue
+                                if hasattr(_component.window, 'hover'):
+                                    _component.window.hover()
+                                for _comp in _component.window.components:
+                                    _comp.noHover()
+                                    if _comp.rect.collidepoint(pygame.mouse.get_pos()):
+                                        _comp.hover()
+                        return
                 if _component.rect.collidepoint(pygame.mouse.get_pos()):
                     if not _component.hovering:
                         _component.hover()
@@ -295,6 +307,8 @@ class Editor():
                 [0, 0, 0, 0, 0, 0, 0]
             ]
         ))
+        _card.components[-1].marker.type = 2
+        _card.components[-1].marker.markerImages()
         self.statCards.add(
             _card
         )

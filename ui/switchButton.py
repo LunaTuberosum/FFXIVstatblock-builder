@@ -5,9 +5,11 @@ class SwitchButton():
     def __init__(self, pos: list[int], size: list[int], image: str, imageHover: str, command: callable, commandDeactive: callable, commandUpdate: callable):
         self.pos: list[int] = pos
         self.size: list[int] = size
+
         self.image: pygame.Surface = pygame.image.load(image).convert_alpha()
         self.imageHover: pygame.Surface = pygame.image.load(imageHover).convert_alpha()
         self.rect: pygame.Rect = pygame.Rect(self.pos, self.size)
+        
         self.command: callable = command
         self.commandDeactive: callable = commandDeactive
         self.commandUpdate: callable = commandUpdate

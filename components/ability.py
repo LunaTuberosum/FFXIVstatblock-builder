@@ -20,7 +20,7 @@ class AbilityComponent(Component):
 
         self.marker: MarkerComponent = None
         if marker:
-            self.marker = MarkerComponent(len(marker), len(marker[0]), marker, self.width())
+            self.marker = MarkerComponent(len(marker[0]), len(marker), marker, self.width())
 
         self.last: bool = False
 

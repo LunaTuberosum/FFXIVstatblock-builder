@@ -28,7 +28,7 @@ class ToggleButtons():
 
     def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
         self.image.fill('#313031')
-        self.rect: pygame.Rect = pygame.Rect((self.pos[0] + right, self.pos[1]), self.image.size)
+        self.rect: pygame.Rect = pygame.Rect((self.pos[0] + right, self.pos[1] + scroll[1]), self.image.size)
         
         _x: int = self.size[0]
         for label in self.buttons.keys():

@@ -22,21 +22,20 @@ class TextBox():
 
         self.font: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 18)
 
-        self.fontBolded: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 18)
-        self.fontBolded.bold = True
-
-        self.fontItalic: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 18)
-        self.fontItalic.italic = True
-
         self.bold: bool = False
         self.italic: bool = False
         self.red: bool = False
         self.blue: bool = False
 
-        self.currentFormat: int = 0
+        self.currentFormat: dict[str, bool] = {
+            'bold': False,
+            'italic': False,
+            'red': False
+        }
 
     def exitField(self):
         self.active = False
+        self.text = self.text.strip()
 
         if self.exitCommand:
             self.exitCommand()
@@ -62,6 +61,8 @@ class TextBox():
                 return
             
             else:
+                if len(self.text) and self.text[-1] == '}':
+                    self.text += ' '
                 self.text += event.unicode
 
     def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
@@ -88,8 +89,6 @@ class TextBox():
             _pos = [8, 5]
         elif self.font.size(self.text)[0] > _size[0]:
             _pos = [_size[0] - self.font.size(self.text)[0] - 10, _size[1] / 2 - self.font.size(self.text)[1] / 2]
-
-        self.text = self.text.strip()
 
         if self.size[1] > 1:
             self.multiLineBlit()
@@ -133,29 +132,29 @@ class TextBox():
             for _w in _words:
                 if _w == '{b}':
                     self.bold = True
-                    self.currentFormat = 1
+                    self.currentFormat['bold'] = True
                     continue
                 if _w == '{/b}':
                     self.bold = False
-                    self.currentFormat = 0
+                    self.currentFormat['bold'] = False
                     continue
 
                 if _w == '{i}':
                     self.italic = True
-                    self.currentFormat = 2
+                    self.currentFormat['italic'] = True
                     continue
                 if _w == '{/i}':
                     self.italic = False
-                    self.currentFormat = 0
+                    self.currentFormat['italic'] = False
                     continue
 
                 if _w == '{a}':
                     self.red = True
-                    self.currentFormat = 3
+                    self.currentFormat['red'] = True
                     continue
                 if _w == '{/a}':
                     self.red = False
-                    self.currentFormat = 0
+                    self.currentFormat['red'] = False
                     continue
 
                 if _w == '{t}':
@@ -165,26 +164,28 @@ class TextBox():
                     self.blue = False
                     continue
 
+                _color: str = '#ffffff'
+                _xOffset: int = 3
                 if self.bold:
-                    self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y + 1))
-                    self.image.blit(self.fontBolded.render(_w, True, '#ffffff'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
+                    self.font.bold = True
+                    _xOffset = 10
                 elif self.italic:
-                    self.image.blit(self.fontItalic.render(_w, True, '#000000'), (_x, _y + 1))
-                    self.image.blit(self.fontItalic.render(_w, True, '#ffffff'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    self.font.italic = True
                 elif self.red:
-                    self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y + 1))
-                    self.image.blit(self.fontBolded.render(_w, True, '#D34D35'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
+                    _color = '#D34D35'
+                    self.font.bold = True
+                    _xOffset = 10
                 elif self.blue:
-                    self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y + 1))
-                    self.image.blit(self.fontBolded.render(_w, True, '#2D638E'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
-                else:
-                    self.image.blit(self.font.render(_w, True, '#000000'), (_x, _y + 1))
-                    self.image.blit(self.font.render(_w, True, '#ffffff'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _color = '#2D638E'
+                    self.font.bold = True
+                    _xOffset = 10
+                
+                self.image.blit(self.font.render(_w, True, '#000000'), (_x, _y + 1))
+                self.image.blit(self.font.render(_w, True, _color), (_x, _y))
+                _x += self.font.size(_w)[0] + _xOffset
+
+                self.font.bold = False
+                self.font.italic = False
 
             _y += 20
             _x = 8

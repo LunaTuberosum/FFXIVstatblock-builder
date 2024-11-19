@@ -40,7 +40,7 @@ class TraitComponent(Component):
         _backset: int = 0
 
         for _w in _words:
-            if _w == '{n}':
+            if _w == '{lb}':
                 _text += _w
                 self.lines.append(_text)
                 _text = ''
@@ -53,7 +53,7 @@ class TraitComponent(Component):
                 _backset = 0
                 continue
 
-            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{n}':
+            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{lb}':
                 _backset += self.font.size(_w)[0] + 4 
                 _text += _w + ' '
                 continue
@@ -62,7 +62,7 @@ class TraitComponent(Component):
 
         self.lines.append(_text)
 
-        self.size = (518, 50 + (14 * len(self.lines) - 1))
+        self.size = (518, 40 + (16 * len(self.lines)))
         self.image = pygame.Surface(self.size)
 
     def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
@@ -111,7 +111,7 @@ class TraitComponent(Component):
                     _blue = False
                     continue
 
-                if _w == '{n}':
+                if _w == '{lb}':
                     continue
 
                 if _bold:

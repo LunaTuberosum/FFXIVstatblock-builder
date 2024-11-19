@@ -318,9 +318,11 @@ class MarkerBuilderUI(Background):
 
         self.components[8].image = self.markerButtonImage[0]
         self.components[8].imageHover = self.markerButtonImage[1]
+        self.components[8].imageSelected = self.markerButtonImage[1]   
 
         self.components[9].image = self.orignButtonImage[0]
         self.components[9].imageHover = self.orignButtonImage[1]
+        self.components[9].imageSelected = self.orignButtonImage[1]    
 
     def changeMobile(self):
         self.parent.parent.marker.type = 2
@@ -331,9 +333,11 @@ class MarkerBuilderUI(Background):
 
         self.components[8].image = self.markerButtonImage[0]
         self.components[8].imageHover = self.markerButtonImage[1]
+        self.components[8].imageSelected = self.markerButtonImage[1]   
 
         self.components[9].image = self.orignOutlineStakeButtonImage[0]
         self.components[9].imageHover = self.orignOutlineStakeButtonImage[1]
+        self.components[9].imageSelected = self.orignOutlineStakeButtonImage[1]    
 
     def changeStack(self):
         self.parent.parent.marker.type = 1
@@ -344,9 +348,11 @@ class MarkerBuilderUI(Background):
 
         self.components[8].image = self.orignButtonImage[0]
         self.components[8].imageHover = self.orignButtonImage[1]
+        self.components[8].imageSelected = self.orignButtonImage[1]    
 
         self.components[9].image = self.markerButtonImage[0]
         self.components[9].imageHover = self.markerButtonImage[1]
+        self.components[9].imageSelected = self.markerButtonImage[1]   
 
     def changeProximity(self):
         self.parent.parent.marker.type = 0
@@ -357,9 +363,11 @@ class MarkerBuilderUI(Background):
 
         self.components[8].image = self.markerDisabledButtonImage[0]
         self.components[8].imageHover = self.markerDisabledButtonImage[1]
+        self.components[8].imageSelected = self.markerDisabledButtonImage[1]   
 
         self.components[9].image = self.markerButtonImage[0]
         self.components[9].imageHover = self.markerButtonImage[1]
+        self.components[9].imageSelected = self.markerButtonImage[1]   
 
     def _turnOffAllPaints(self, exception: int):
         for _i in range(7, 13):

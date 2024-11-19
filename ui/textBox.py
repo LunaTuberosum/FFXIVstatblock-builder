@@ -52,12 +52,12 @@ class TextBox():
                             continue
                         _text += _w + ' '
 
-                    self.text = _text.strip()
+                    self.text = _text
                     return
                 self.text = self.text[:-1]
 
             elif event.mod & pygame.KMOD_SHIFT and event.key == pygame.K_RETURN:
-                self.text += ' {n}'
+                self.text += ' {lb}'
 
             elif event.key == pygame.K_RETURN:
                 self.exitField()
@@ -113,11 +113,16 @@ class TextBox():
         _backset: int = 0
 
         for _w in _words:
-            if _w == '{n}':
+            if _w == '{lb}':
                 _text += _w
                 _lines.append(_text)
                 _text = ''
                 _backset = 0
+                continue
+
+            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{lb}':
+                _backset += self.font.size(_w + ' ')[0]
+                _text += _w + ' '
                 continue
 
             if self.font.size(_text + _w)[0] - _backset >= _size[0] - 16:
@@ -126,17 +131,12 @@ class TextBox():
                 _backset = 0
                 continue
 
-            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{n}':
-                _backset += self.font.size(_w + ' ')[0]
-                _text += _w + ' '
-                continue
-
             _text += _w + ' '
 
         _lines.append(_text + ('_' if self.active else ''))
 
-        _y: int = 5
-        _x: int = 8
+        _y: int = (-20 * ((len(_lines) - 1) - self.size[1])) if len(_lines) - 1 > self.size[1] else 5
+        _x: int = 8 
         for _l in _lines:
             _words: list[str] = _l.split()
             for _w in _words:
@@ -174,24 +174,24 @@ class TextBox():
                     self.blue = False
                     continue
 
-                if _w == '{n}':
+                if _w == '{lb}':
                     continue
 
                 _color: str = '#ffffff'
                 _xOffset: int = 3
                 if self.bold:
                     self.font.bold = True
-                    _xOffset = 10
+                    _xOffset = 6
                 elif self.italic:
                     self.font.italic = True
                 elif self.red:
                     _color = '#D34D35'
                     self.font.bold = True
-                    _xOffset = 10
+                    _xOffset = 6
                 elif self.blue:
                     _color = '#2D638E'
                     self.font.bold = True
-                    _xOffset = 10
+                    _xOffset = 6
                 
                 self.image.blit(self.font.render(_w, True, '#000000'), (_x, _y + 1))
                 self.image.blit(self.font.render(_w, True, _color), (_x, _y))

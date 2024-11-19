@@ -1,1 +1,581 @@
-{}
+{
+    "0": {
+        "width": 3,
+        "height": 4,
+        "components": {
+            "NameComponent [0]": {
+                "name": "Odin, The Unbroken",
+                "level": "50",
+                "levelPosition": false
+            },
+            "TopStatsComponent [1]": {
+                "token": false,
+                "creatureSize": "Large (2x2)",
+                "species": "Elder Primal",
+                "vigilance": "18",
+                "defense": "17",
+                "magicDefense": "17",
+                "maxHP": "Special",
+                "speed": "6",
+                "str": "7",
+                "dex": "7",
+                "vit": "7",
+                "int": "7",
+                "mnd": "7"
+            },
+            "SectionNameComponent [2]": {
+                "section": "Traits"
+            },
+            "TraitComponent [3]": {
+                "name": "Elite Fore: Lord of the Corpse Hall",
+                "desc": "This chracter cannot be {b} Stunned {/b} and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
+            },
+            "TraitComponent [4]": {
+                "name": "Against Adversity",
+                "desc": "Odin's Max HP is 125 per Enemy they are facing. If Odin is facing more than 4 enemies they perform one additional Primary Action."
+            },
+            "TraitComponent [5]": {
+                "name": "Master of the Dread Arm",
+                "desc": "Odin's [Zantetsuken] deals +2D6 damage if Odin is adjacent to a [Gungnir], consuming the [Gungnir] and causing the {b} Unworthy {/b} enfeeblement to the target, which has the following effects: {lb} * An {b} Unworthy {/b} character incurs a -2 penalty on all checks. {lb} * An {b} Unworthy {/b} character has its speed reduced by 2. {lb} * An {b} Unworthy {/b} character cannot wield a [Shard of Gungnir]. {lb} * {b} Unworthy {/b} removes the {b} Worthy {/b} enhancement. {lb} * {b} Unworthy {/b}  is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability."
+            },
+            "SectionNameComponent [6]": {
+                "section": "Abilities"
+            },
+            "AbilityComponent [7]": {
+                "name": "Trails of the Deadful Armory",
+                "types": "Instant",
+                "effects": {
+                    "Trigger:": "At the start of the encounter and each round, immediately before the [Adventurer Step] begins",
+                    "Base Effect:": "Odin prepares the following based on the round. Combining if overlapping: {lb} * {a} The First Test {/a} (Round 1, 3, & 6) Immediately prepare {a} Gungnir {/a} {lb} * {a} The Second Test {/a} (Round 2, 4, & 6) Immediately prepare {a} Eunherjar {/a} {lb} * {a} The Third Test {/a} (3, 5, & 6) Immediately prepare {a} Gagnrath {/a}  {lb} * {a} The Final Test {/a} (Round 7 or When Odin = 75 HP or less) Enter Phase 2 and Immagiately prepare {a} Shit Zantetsuken {/a}"
+                },
+                "marker": null
+            },
+            "AbilityComponent [8]": {
+                "name": "Combo",
+                "types": "Primary, Unique",
+                "effects": {
+                    "Base Effect:": "Attack using {a} Zantetsuken {/a} , then immediately use {a} Woden Valkut {/a} , {a}  Hall of Melancholy {/a} , {a} Sanngetall {/a} ."
+                },
+                "marker": null
+            },
+            "AbilityComponent [9]": {
+                "name": "Zantetsuken",
+                "types": "Primary, Physical",
+                "effects": {
+                    "Target:": "Single",
+                    "Range:": "Adjacent",
+                    "Check:": "{t} STR {/t} [d20+7]",
+                    "CR:": "Target's {t} Defense {/t}",
+                    "Base Effect:": "Deal 10 Damage to the target and all its adjacent allies",
+                    "Direct Hit:": "Deals an additional 3d6 Damage"
+                },
+                "marker": null
+            },
+            "AbilityComponent [10]": {
+                "name": "Woden Valknut",
+                "types": "Primary, Stationary Marker, Magic",
+                "effects": {
+                    "Origin:": "Odin",
+                    "Marker Area:": "A stationary 6x6 area centered on the origin",
+                    "Target:": "All enemies within the marker area",
+                    "Marker Trigger:": "The beginning of this chracter's nect turn",
+                    "Marker Effect:": "Deals 6d6 damage to all targets and any target that remains at 1 HP is graated the {b} Worthy {/b} enhancement, which has the following effects: {lb} * A {b} Worthy {/b} chracter gains +2 bonus to all checks {lb} * A {b} Worthy {/b}  chracter has its speed increased by 2 {lb} * A {b} Worthy {/b} character can use a held [Shard of Gungnir] as an [Instant] {lb} * {b} Worthy {/b} removes the {b} Unworthy {/b} enfeeblement"
+                },
+                "marker": {
+                    "type": 3,
+                    "gridSize": [
+                        8,
+                        8
+                    ],
+                    "markerArea": [
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            2,
+                            2,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            2,
+                            2,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ]
+                    ]
+                }
+            },
+            "AbilityComponent [11]": {
+                "name": "Hall of Melancholy",
+                "types": "Primary, Stationary Marker, Magic",
+                "effects": {
+                    "Orgin:": "Two squares occupied by two separate enemy characters without Enmity",
+                    "Marker Area:": "A stationary 5x5 area centered on the origin",
+                    "Target:": "All enemies within the marker area",
+                    "Marker Trigger:": "The beginning of this character's next turn",
+                    "Marker Effect:": "Deals 4d6 damage and any target that takes 10 or more damage by this (after damage reduction) gains the {b} Unworthy {/b} enfeeblement, which has the following effects: {lb} * An {b} Unworthy {/b} character incurs a -2 penalty on all checks. {lb} * An {b} Unworthy {/b} character has its speed reduced by 2. {lb} * An {b} Unworthy {/b} character cannot wield a [Shard of Gungnir]. {lb} * {b} Unworthy {/b} removes the {b} Worthy {/b} enhancement. {lb} * {b} Unworthy {/b}  is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability"
+                },
+                "marker": {
+                    "type": 3,
+                    "gridSize": [
+                        7,
+                        7
+                    ],
+                    "markerArea": [
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            2,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ]
+                    ]
+                }
+            },
+            "AbilityComponent [12]": {
+                "name": "Sanngetall",
+                "types": "Primary, Mobile Marker, Physical",
+                "effects": {
+                    "Marker Area:": "A mobile 1x1 marker centered on one enemy with Enmity or the highest amount of Hit Points",
+                    "Target:": "All enemies within the marker area",
+                    "Marker Trigger:": "The beginning of this chracter's next turn",
+                    "Marker Effect:": "Deals 8d6 damage to the target and if the target remains a t or above 1 HP it grants the {b} Worthy {/b} enhancement to them, which has the following effects: {lb} * A {b} Worthy {/b} chracter gains +2 bonus to all checks {lb} * A {b} Worthy {/b}  chracter has its speed increased by 2 {lb} * A {b} Worthy {/b} character can use a held [Shard of Gungnir] as an [Instant] {lb} * {b} Worthy {/b} removes the {b} Unworthy {/b} enfeeblement"
+                },
+                "marker": {
+                    "type": 2,
+                    "gridSize": [
+                        5,
+                        5
+                    ],
+                    "markerArea": [
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            2,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ]
+                    ]
+                }
+            },
+            "AbilityComponent [13]": {
+                "name": "Einherjar",
+                "types": "Primary, Magic",
+                "effects": {
+                    "": "{i} An emanation of Odin's dark power, draining your very will {/i}",
+                    "Marker Area:": "The entire encounter map",
+                    "Target:": "All enemies within the marker area",
+                    "Marker Trigger:": "The beginning of this character's next turn",
+                    "Marker Effect:": "Deals 3d6 damage to all targets and causes {b} DOT(5) {/b}"
+                },
+                "marker": null
+            },
+            "AbilityComponent [14]": {
+                "name": "Gagnrath",
+                "types": "Primary, Stationary Marker, Magic",
+                "effects": {
+                    "Origin:": "3 non-adjacent points on one edge of the encounter map",
+                    "Marker Area:": "A stationary 1x16 area extending in a straight line from the origin",
+                    "Target:": "All enemies within the marker area",
+                    "Marker Trigger:": "The beginning of this character's next turn",
+                    "Marker Effect:": "Deals 8d6 damage to all target and any taget that take 10 or more damage by this (after damage reduction) gain the {b} Unworthy {/b} enfeeblement, which has the following effects: {lb} * An {b} Unworthy {/b} character incurs a -2 penalty on all checks. {lb} * An {b} Unworthy {/b} character has its speed reduced by 2. {lb} * An {b} Unworthy {/b} character cannot wield a [Shard of Gungnir]. {lb} * {b} Unworthy {/b} removes the {b} Worthy {/b} enhancement. {lb} * {b} Unworthy {/b}  is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability"
+                },
+                "marker": {
+                    "type": 3,
+                    "gridSize": [
+                        7,
+                        7
+                    ],
+                    "markerArea": [
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            2,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            2,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            2,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ]
+                    ]
+                }
+            },
+            "AbilityComponent [15]": {
+                "name": "Gungnir",
+                "types": "Primary, Mobile Marker, Magic",
+                "effects": {
+                    "Origin:": "Two squares occupied by two separate enemy characters without enmity",
+                    "Marker Area:": "A mobile 5x5 area centered on the origin",
+                    "Target:": "All enemies within the marker area",
+                    "Marker Trigger": "The beginning of this character's next turn",
+                    "Marker Effect:": "Deals 3d6 damage and summons a [Gungnir] in an unoccupied adjacent area to the center"
+                },
+                "marker": {
+                    "type": 2,
+                    "gridSize": [
+                        7,
+                        7
+                    ],
+                    "markerArea": [
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            2,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ]
+                    ]
+                }
+            }
+        }
+    },
+    "1": {
+        "width": 1,
+        "height": 0,
+        "components": {
+            "NameComponent [0]": {
+                "name": "Gungnir",
+                "level": "50",
+                "levelPosition": false
+            },
+            "TopStatsComponent [1]": {
+                "token": true,
+                "creatureSize": "Medium (1x1)",
+                "species": "Summon Hazard",
+                "vigilance": "10",
+                "defense": "8",
+                "magicDefense": "8",
+                "maxHP": "30",
+                "speed": "0",
+                "str": "0",
+                "dex": "0",
+                "vit": "0",
+                "int": "0",
+                "mnd": "0"
+            },
+            "SectionNameComponent [2]": {
+                "section": "Traits"
+            },
+            "TraitComponent [3]": {
+                "name": "Dreadful Tension",
+                "desc": "This character does not take a turn, instead at the end of the [Adventurer Step] it deals 5 damage to all enemies and causes the {b} Unworthy {/b} enfeeblement, which has the following effects: {lb} * An {b} Unworthy {/b} character incurs a -2 penalty on all checks. {lb} * An {b} Unworthy {/b} character has its speed reduced by 2. {lb} * An {b} Unworthy {/b} character cannot wield a [Shard of Gungnir]. {lb} * {b} Unworthy {/b} removes the {b} Worthy {/b} enhancement. {lb} * {b} Unworthy {/b}  is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability"
+            },
+            "TraitComponent [4]": {
+                "name": "Worthy Prize",
+                "desc": "When a chracter reduces a [Gungnir] to 0 HP, they gain the {b} Worthy {/b} enhancement, which has the following effects: {lb} * A {b} Worthy {/b} chracter gains +2 bonus to all checks {lb} * A {b} Worthy {/b}  chracter has its speed increased by 2 {lb} * A {b} Worthy {/b} character can use a held [Shard of Gungnir] as an [Instant] {lb} * {b} Worthy {/b} removes the {b} Unworthy {/b} enfeeblement"
+            },
+            "TraitComponent [5]": {
+                "name": "Elder Arm",
+                "desc": "When this character is reduced to 0 HP, it is not removed from the battlefield. Instead inform the player that, \"The Mighty Gungnir will be wielded by the Worthy.\" If they interact with the defeated [Gungir] using a Primary or Secondary Action they gain [Shard of Gungnir] and acces to the following [Duty Actions]. After a [Duty Action] is used tehy lose [Shard of Gungnir]. {lb} * {a} Boon of Steel {/a} (Primary, Ranged 10) You divide 10 damage reduction among any nuber of allies in range until the start of the next [Adventurer Step]. {lb} * {a} Heaven Piercer {/a}  (Primary, Ranged 10) You deal 6d6+6 damage among any number of enemies in range. {lb} * {a} To Valhalla {/a} (Primary, Ranged 10) You heal 4d6+4 hit points. divided among any number of allies within range."
+            }
+        }
+    },
+    "2": {
+        "width": 1,
+        "height": 0,
+        "components": {
+            "NameComponent [0]": {
+                "name": "Odin, Lord of the Eternal Hall",
+                "level": "50",
+                "levelPosition": false
+            },
+            "TopStatsComponent [1]": {
+                "token": false,
+                "creatureSize": "Large (2x2)",
+                "species": "Elder Primal",
+                "vigilance": "20",
+                "defense": "12",
+                "magicDefense": "12",
+                "maxHP": "Varies",
+                "speed": "0",
+                "str": "7",
+                "dex": "7",
+                "vit": "7",
+                "int": "7",
+                "mnd": "7"
+            },
+            "SectionNameComponent [2]": {
+                "section": "Traits"
+            },
+            "TraitComponent [3]": {
+                "name": "Elite Foe: Lord of the Corpse Hall",
+                "desc": "This character cannot be {b} Stunned {/b} and markerrs they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
+            },
+            "TraitComponent [4]": {
+                "name": "Survive and Receive Valhalla",
+                "desc": "Odin summons 2 [Gungnir] 3 spaces from themself at the start of each Round this Phase."
+            },
+            "SectionNameComponent [5]": {
+                "section": "Abilities"
+            },
+            "AbilityComponent [6]": {
+                "name": "Shin-Zantetsuken",
+                "types": "Primary, Physical",
+                "effects": {
+                    "Target:": "All enemies on the encounter map",
+                    "Base Effect:": "Odin remains stationary until the start of the 3rd round the deal 999 damage to all enemies"
+                },
+                "marker": null
+            }
+        }
+    }
+}

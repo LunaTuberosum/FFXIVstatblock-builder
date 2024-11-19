@@ -118,6 +118,7 @@ class MarkerComponent(Component):
 
     def save(self) -> dict:
         return {
+            'type': self.type,
             'gridSize': self.gridSize,
             'markerArea': self.markerArea,
             'type': self.type

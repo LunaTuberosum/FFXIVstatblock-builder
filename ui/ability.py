@@ -81,7 +81,7 @@ class AbilityUI(Background):
             _list[0].text = _name
 
             _y += 35
-            _list.append(TextBox([self.size[0] - 390, _y + self.pos[1]], [300, 3], self.changeEffects))
+            _list.append(TextBox([self.size[0] - 390, _y + self.pos[1]], [300, 3], self.changeEffects, True))
             _list[1].text = _effect
 
             _list.append(

@@ -54,10 +54,11 @@ class AbilityComponent(Component):
             _words: list[str] = _effect.split()
 
             for _w in _words:
-                if _w == '{n}':
+                if _w == '{lb}':
                     _text += _w
                     self.lines.append(_text)
                     _text = ''
+                    _size = 0
                     continue
 
                 if _size + self.font.size(_w)[0] >= _right:
@@ -66,7 +67,7 @@ class AbilityComponent(Component):
                     _size = self.font.size(_w + ' ')[0]
                     continue
 
-                if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{n}':
+                if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{lb}':
                     _text += _w + ' '
                     continue
 
@@ -138,7 +139,7 @@ class AbilityComponent(Component):
                     _blue = False
                     continue
 
-                if _w == '{n}':
+                if _w == '{lb}':
                     continue
 
                 if _name:
@@ -163,11 +164,11 @@ class AbilityComponent(Component):
             _y += 18
             _x = 1
 
-            _name = False
-            _bold = False
-            _italic = False
-            _red = False
-            _blue = False
+        _name = False
+        _bold = False
+        _italic = False
+        _red = False
+        _blue = False
 
         if self.marker:
             self.marker.draw(self.image, self.pos)

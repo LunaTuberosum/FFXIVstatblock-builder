@@ -362,8 +362,10 @@ class Editor():
                                     _compV['marker']['gridSize'][0],
                                     _compV['marker']['gridSize'][1],
                                     _compV['marker']['markerArea'],
-                                    _a.width()
+                                    _a.width(),
+                                    _a
                                 )
+                                _a.marker.type = _compV['marker']['type']
                             _c.addComponent(_a)
                             continue
 

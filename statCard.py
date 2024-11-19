@@ -73,25 +73,51 @@ class StatCard(pygame.sprite.Sprite):
             self._makeStatCardBackgroundScale(self.width, _height)
         else:
             self._makeStatCardBackground(self.width, self.height)
+            _height: int = (self.height + 2) * 194
             
         self.rect = pygame.Rect((x + scroll[0], 40 + scroll[1]), self.image.get_size())
 
-        _x: int = x
+        _x: int = 0
         _y: int = 20
+
+        for _comp in self.components:
+            _comp.last = False
 
         _last: Component = self.components[len(self.components) - 1]
         if hasattr(_last, 'last'):
             _last.last = True
         
-        for _comp in self.components:
-            _comp.draw(self.image, (_x, _y), scroll)
+        if self.height == 0:
+            for _comp in self.components:
+                _comp.draw(self.image, (_x, _y))
 
-            _y += _comp.height()
+                _y += _comp.height()
+
+        else:
+            for _i, _comp in enumerate(self.components):
+                if _y + _comp.height() >= _height - 60:
+                    _y = 20
+                    self.components[_i - 1].last = True
+                    _x += 550
+                    if _x + _comp.width() >= self.totalWidth:
+                        self.width += 1
+                        self._makeStatCardBackground(self.width, self.height)
+                _comp.draw(self.image, (_x, _y))
+
+                _y += _comp.height()
+
         screen.blit(self.image, [x + scroll[0], 40 + scroll[1]])
 
-    # TODO: do it later Mignt not need to?
-    def sortComponenets(self) -> None:
-        pass
+    def save(self) -> dict:
+        _dict: dict = {
+            'width': self.width,
+            'height': self.height,
+            'components': {}
+        }
+        for _i, _comp in enumerate(self.components):
+            _dict['components'][f'{_comp.id} [{_i}]'] = _comp.save()
+
+        return _dict
 
     def contextMenu(self) -> ContextMenu:
         return ContextMenu([186, 96], {
@@ -101,7 +127,7 @@ class StatCard(pygame.sprite.Sprite):
         })
 
     def edit(self):
-        print('Edit')
+        self.editor.edit(self)
 
     def clear(self):
         print('Clear')

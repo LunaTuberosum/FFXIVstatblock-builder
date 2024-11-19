@@ -1,4 +1,6 @@
+import json
 from components.ability import AbilityComponent
+from components.marker import MarkerComponent
 from components.name import NameComponent
 from components.sectionName import SectionNameComponent
 from components.topStats import TopStatsComponent
@@ -7,7 +9,9 @@ from contextMenu import ContextMenu
 from settings import *
 
 from statCard import StatCard
-from ui.name import NameUI
+from ui.background import Background
+from ui.editCard import EditCardUI
+from ui.newCard import NewCardUI
 
 class Editor():
     def __init__(self, screen: pygame.Surface, clock: pygame.time.Clock, file: int):
@@ -15,8 +19,14 @@ class Editor():
         self.clock: pygame.time.Clock = clock
         self.file: int = file
 
-        self.tempScreen: pygame.Surface = pygame.surface.Surface((SCREEN_WIDTH * 3, SCREEN_HEIGHT * 3))
         self.statCardBackground: dict[str, pygame.Surface] = _splitStatCardBackground()
+        self.statCards: pygame.sprite.Group[StatCard] = pygame.sprite.Group()
+
+        self.load()
+
+        self.window: Background = None
+
+        self.tempScreen: pygame.Surface = pygame.surface.Surface((SCREEN_WIDTH * 3, SCREEN_HEIGHT * 3))
 
         self.font: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 18)
 
@@ -29,8 +39,6 @@ class Editor():
         self.zoomScroll: float = 1
 
         self.center: bool = False
-
-        self.statCards: pygame.sprite.Group[StatCard] = pygame.sprite.Group()
 
         #temp
         self.contextMenu: ContextMenu = None
@@ -70,6 +78,11 @@ class Editor():
         if event.key == pygame.K_LCTRL:
             self.center = True
             self.zoom = True
+
+        if self.window:
+            for _comp in self.window.components:
+                if hasattr(_comp, 'typing'):
+                    _comp.typing(event)
 
         for _statCard in self.statCards:
             for _component in _statCard.components:
@@ -130,6 +143,20 @@ class Editor():
     def mouseDown(self, event: pygame.event.Event):
         if event.button == 1:
             self.pan[1] = True
+
+            if self.window:
+                if not self.window.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.window = None
+                    return
+                
+                for _comp in self.window.components:
+                    if hasattr(_comp, 'active'): 
+                        if _comp.active:
+                            _comp.exitField()
+                        _comp.active = False
+                    if _comp.rect.collidepoint(pygame.mouse.get_pos()):
+                        _comp.onClick()
+                        return
 
             if self.contextMenu:
                 if not self.contextMenu.rect.collidepoint(pygame.mouse.get_pos()):
@@ -239,6 +266,15 @@ class Editor():
 
             self.statCardHover()
 
+            if self.window:
+
+                for _comp in self.window.components:
+                    _comp.noHover()
+
+                    if _comp.rect.collidepoint(pygame.mouse.get_pos()):
+                        if not _comp.hovering:
+                            _comp.hover()
+
             if self.contextMenu:
 
                 for _option in self.contextMenu.options:
@@ -257,64 +293,87 @@ class Editor():
             if self.contextMenu:
                 self.contextMenu.draw(self.screen, self.contextMenuPos)
 
+            if self.window: self.window.draw(self.screen, 0, [0, 0])
+
             pygame.display.flip()
 
     def new(self):
-        _card: StatCard = StatCard(self.statCardBackground, 1, 0, self)
-        _card.addComponent(NameComponent())
-        _card.addComponent(TopStatsComponent())
+        self.window = NewCardUI(self)
 
-        _card.addComponent(SectionNameComponent('Traits', 2))
-        _card.addComponent(TraitComponent(
-            'Elite Foe: Lord of the Corpse Hall',
-            'This character cannot be {b} Stunned {/b} and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter.'
-        ))
-        _card.addComponent(TraitComponent(
-            'Survive and Receive Valhalla',
-            'This creature summons 2 [Gungnir] 3 spaces from itself at the start of each round.'
-        ))
-
-        _card.addComponent(SectionNameComponent('Abilites', 2))
-
-        _card.addComponent(AbilityComponent(
-            'Shin-Zantetsiken',
-            'Primary, Physical',
-            {
-                'Marker Area:': 'The entire encounter map',
-                'Target:': 'All enemies within the marker area',
-                'Marker Trigger:': 'The beginning of the 3rd round',
-                'Marker Effect:': 'Deals 999 damage.'
-            }
-        ))
-
-        _card.addComponent(AbilityComponent(
-            'Gungnir',
-            'Primary, Mobile Marker, Magic',
-            {
-                'Origin:': 'Two squares occupied by two separate enemy characters without {b} Enmity {/b}',
-                'Marker Area:': 'A mobile 5x5 area centered on the origins',
-                'Target:': 'All enemies within the marker area',
-                'Marker Trigger:': 'The beginning of this character\'s next turn',
-                'Marker Effect:': 'Deals 3d6 damage and summons a [Gungnir] in an unoccupied adjacenet area to the center.'
-            },
-            [
-                [0, 0, 0, 0, 0, 0, 0],
-                [0, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 2, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 0],
-                [0, 1, 1, 1, 1, 1, 0],
-                [0, 0, 0, 0, 0, 0, 0]
-            ]
-        ))
-        _card.components[-1].marker.type = 2
-        _card.components[-1].marker.markerImages()
-        self.statCards.add(
-            _card
-        )
+    def edit(self, statCard: StatCard):
+        self.window = EditCardUI(self, statCard)
 
     def save(self):
-        print('Save')
+        _saveDict: dict = {}
+        for _i, _card in enumerate(self.statCards):
+            _saveDict[str(_i)] = _card.save()
+
+        _jsonSave: str = json.dumps(_saveDict, indent=4)
+
+        with open(f'saves/statSheet{self.file}.json', 'w') as _jsonFile:
+            _jsonFile.write(_jsonSave)
+
+    def load(self):
+        try:
+            with open(f'saves/statSheet{self.file}.json', 'r') as _jsonFile:
+                _saveDict: dict = json.load(_jsonFile)
+
+            for _i, _card in _saveDict.items():
+                _c: StatCard = StatCard(self.statCardBackground, _card['width'], _card['height'], self)
+
+                _c.addComponent(NameComponent(_c))
+                _c.components[0].name = _card['components']['NameComponent [0]']['name']
+                _c.components[0].level = _card['components']['NameComponent [0]']['level']
+                _c.components[0].levelPosition = _card['components']['NameComponent [0]']['levelPosition']
+
+                _c.addComponent(TopStatsComponent(_c, _card['components']['TopStatsComponent [1]']['token']))
+                _c.components[1].creatureSize = _card['components']['TopStatsComponent [1]']['creatureSize']
+                _c.components[1].species = _card['components']['TopStatsComponent [1]']['species']
+                _c.components[1].vigilance = _card['components']['TopStatsComponent [1]']['vigilance']
+                _c.components[1].defense = _card['components']['TopStatsComponent [1]']['defense']
+                _c.components[1].magicDefense = _card['components']['TopStatsComponent [1]']['magicDefense']
+                _c.components[1].maxHP = _card['components']['TopStatsComponent [1]']['maxHP']
+                _c.components[1].speed = _card['components']['TopStatsComponent [1]']['speed']
+                _c.components[1].str = _card['components']['TopStatsComponent [1]']['str']
+                _c.components[1].dex = _card['components']['TopStatsComponent [1]']['dex']
+                _c.components[1].vit = _card['components']['TopStatsComponent [1]']['vit']
+                _c.components[1].int = _card['components']['TopStatsComponent [1]']['int']
+                _c.components[1].mnd = _card['components']['TopStatsComponent [1]']['mnd']
+
+                for _compN, _compV in _card['components'].items():
+                    _compName: str = _compN.split(' ')[0]
+
+                    match (_compName):
+                        case 'SectionNameComponent':
+                            _c.addComponent(SectionNameComponent(_compV['section'], 2, _c))
+                            continue
+                        case 'TraitComponent':
+                            _c.addComponent(TraitComponent(_compV['name'], _compV['desc'], _c))
+                            continue
+                        case 'AbilityComponent':
+                            _a: AbilityComponent = AbilityComponent(
+                                _compV['name'],
+                                _compV['types'],
+                                _compV['effects'],
+                                _c
+                            )
+                            if _compV['marker']:
+                                _a.marker = MarkerComponent(
+                                    _compV['marker']['gridSize'][0],
+                                    _compV['marker']['gridSize'][1],
+                                    _compV['marker']['markerArea'],
+                                    _a.width()
+                                )
+                            _c.addComponent(_a)
+                            continue
+
+                self.statCards.add(_c)
+            
+        except:
+            _jsonSave: str = json.dumps({}, indent=4)
+
+            with open(f'saves/statSheet{self.file}.json', 'w') as _jsonFile:
+                _jsonFile.write(_jsonSave)
 
     def export(self):
         print('Export')

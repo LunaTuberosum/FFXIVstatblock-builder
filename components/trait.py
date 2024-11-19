@@ -5,12 +5,13 @@ from ui.trait import TraitUI
 
 
 class TraitComponent(Component):
-    def __init__(self, name: str, desc: str):
+    def __init__(self, name: str, desc: str, parent: object):
         super().__init__(
             "TraitComponent",
             [518, 50], # Might need to change
             [12, 12],
-            2
+            2,
+            parent
         )
 
         self.fontTitle: pygame.font.Font = pygame.font.SysFont('Noto Sans', 19, True)
@@ -39,13 +40,20 @@ class TraitComponent(Component):
         _backset: int = 0
 
         for _w in _words:
+            if _w == '{n}':
+                _text += _w
+                self.lines.append(_text)
+                _text = ''
+                _backset = 0
+                continue
+
             if self.font.size(_text + _w)[0] - _backset >= self.width():
                 self.lines.append(_text)
                 _text = _w + ' '
                 _backset = 0
                 continue
 
-            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}':
+            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{n}':
                 _backset += self.font.size(_w)[0] + 4 
                 _text += _w + ' '
                 continue
@@ -57,7 +65,7 @@ class TraitComponent(Component):
         self.size = (518, 50 + (14 * len(self.lines) - 1))
         self.image = pygame.Surface(self.size)
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
+    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
         self._findSize()
         self.parentPos: list[int] = parentPos
 
@@ -66,7 +74,7 @@ class TraitComponent(Component):
         _red: bool = False
         _blue: bool = False
 
-        super().draw(screen, parentPos, scroll)
+        super().draw(screen, parentPos)
 
         self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (1,0))
 
@@ -103,6 +111,9 @@ class TraitComponent(Component):
                     _blue = False
                     continue
 
+                if _w == '{n}':
+                    continue
+
                 if _bold:
                     self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y))
                     _x += self.font.size(_w)[0] + 10
@@ -130,7 +141,7 @@ class TraitComponent(Component):
         if not self.last:
             self.image.blit(self.divider, (0, self.height() - 5))
 
-        screen.blit(self.image, (20 + self.x(), parentPos[1] + self.y()))
+        screen.blit(self.image, (20 + self.x() + parentPos[0], parentPos[1] + self.y()))
 
     def onClick(self):
         if self.window:
@@ -138,5 +149,9 @@ class TraitComponent(Component):
             return
         self.window = TraitUI([-15, self.parentPos[1] + self.y() + 30], self)
 
-
+    def save(self) -> dict:
+        return {
+            'name': self.name,
+            'desc': self.desc,
+        }
 

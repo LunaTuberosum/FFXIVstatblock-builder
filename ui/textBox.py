@@ -56,6 +56,9 @@ class TextBox():
                     return
                 self.text = self.text[:-1]
 
+            elif event.mod & pygame.KMOD_SHIFT and event.key == pygame.K_RETURN:
+                self.text += ' {n}'
+
             elif event.key == pygame.K_RETURN:
                 self.exitField()
                 return
@@ -110,13 +113,20 @@ class TextBox():
         _backset: int = 0
 
         for _w in _words:
+            if _w == '{n}':
+                _text += _w
+                _lines.append(_text)
+                _text = ''
+                _backset = 0
+                continue
+
             if self.font.size(_text + _w)[0] - _backset >= _size[0] - 16:
                 _lines.append(_text)
                 _text = _w + ' '
                 _backset = 0
                 continue
 
-            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}':
+            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{n}':
                 _backset += self.font.size(_w + ' ')[0]
                 _text += _w + ' '
                 continue
@@ -162,6 +172,9 @@ class TextBox():
                     continue
                 if _w == '{/t}':
                     self.blue = False
+                    continue
+
+                if _w == '{n}':
                     continue
 
                 _color: str = '#ffffff'

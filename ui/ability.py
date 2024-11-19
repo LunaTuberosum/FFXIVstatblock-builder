@@ -125,8 +125,6 @@ class AbilityUI(Background):
         self.image = pygame.Surface(self.size)
 
     def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
-        if self.window:
-            self.window.draw(screen, self.rect.right, scroll)
         for _component in self.components:
             if hasattr(_component, 'commandUpdate'):
                 _component.update()
@@ -137,6 +135,9 @@ class AbilityUI(Background):
                     _component.commandUpdate(_effect)
 
         super().draw(screen, right, scroll)
+
+        if self.window:
+            self.window.draw(screen, self.rect.right, scroll)
 
         self.image.blit(self.font.render('Name', True, '#000000'), (25, 56))
         self.image.blit(self.font.render('Name', True, '#C2C2C2'), (25, 55))
@@ -307,5 +308,5 @@ class AbilityUI(Background):
                 [0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0],
             ]
-            self.parent.marker = MarkerComponent(len(_marker[0]), len(_marker), _marker, self.parent.width())
+            self.parent.marker = MarkerComponent(len(_marker[0]), len(_marker), _marker, self.parent.width(), self.parent)
         self.window = MarkerBuilderUI([self.pos[0] - 15, self.pos[1] + 20], self)

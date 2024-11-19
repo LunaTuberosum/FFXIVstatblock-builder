@@ -4,7 +4,7 @@ from ui.background import Background
 
 
 class Component():
-    def __init__(self, name: str, size: list[int], pos: list[int], priority: int) -> None:
+    def __init__(self, name: str, size: list[int], pos: list[int], priority: int, parent: object) -> None:
         self.id: str = name
         self.size: list[int] = size
         self.pos: list[int] = pos
@@ -18,8 +18,10 @@ class Component():
 
         self.hovering: bool = False
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
-        self.rect: pygame.Rect = pygame.Rect(self.pos[0] + parentPos[0] + scroll[0], self.pos[1] + parentPos[1] + 40 + scroll[1], self.size[0], self.size[1])
+        self.parent: object = parent
+
+    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
+        self.rect: pygame.Rect = pygame.Rect(self.pos[0] + parentPos[0] + self.parent.rect.x, self.pos[1] + parentPos[1] + self.parent.rect.y, self.size[0], self.size[1])
         if self.hovering:
             self.image.fill('#E0D3BF')
             return
@@ -47,6 +49,9 @@ class Component():
 
     def onClick(self):
         print(f'Clicked on {self.id}')
+
+    def save(self) -> dict:
+        return {}
 
     def _sizeSmallCase(self, text: str) -> int:
         _characters: list[str] = [c for c in text]

@@ -10,7 +10,7 @@ class TopStatsUI(Background):
         super().__init__(
             'TopStatsUI',
             'Attributes',
-            [730, 370],
+            [730, 370 if not parent.token else 270], # 370
             pos
         )
 
@@ -148,6 +148,9 @@ class TopStatsUI(Background):
 
         ##
 
+        if self.parent.token:
+            return
+        
         self.components.append(
             TextBox([40, 300 + self.pos[1]], [50, 1], self.changeSTR)
         )
@@ -298,23 +301,25 @@ class TopStatsUI(Background):
 
         ##
 
-        self.image.blit(self.font.render('Primary Attributes', True, '#000000'), (25, 246))
-        self.image.blit(self.font.render('Primary Attributes', True, '#C2C2C2'), (25, 245))
+        if not self.parent.token:
 
-        self.image.blit(self.font.render('STR', True, '#000000'), (105 - (self.font.size('STR')[0] / 2), 271))
-        self.image.blit(self.font.render('STR', True, '#EEE1C5'), (105 - (self.font.size('STR')[0] / 2), 270))
+            self.image.blit(self.font.render('Primary Attributes', True, '#000000'), (25, 246))
+            self.image.blit(self.font.render('Primary Attributes', True, '#C2C2C2'), (25, 245))
 
-        self.image.blit(self.font.render('DEX', True, '#000000'), (235 - (self.font.size('DEX')[0] / 2), 271))
-        self.image.blit(self.font.render('DEX', True, '#EEE1C5'), (235 - (self.font.size('DEX')[0] / 2), 270))
+            self.image.blit(self.font.render('STR', True, '#000000'), (105 - (self.font.size('STR')[0] / 2), 271))
+            self.image.blit(self.font.render('STR', True, '#EEE1C5'), (105 - (self.font.size('STR')[0] / 2), 270))
 
-        self.image.blit(self.font.render('VIT', True, '#000000'), (365 - (self.font.size('VIT')[0] / 2), 271))
-        self.image.blit(self.font.render('VIT', True, '#EEE1C5'), (365 - (self.font.size('VIT')[0] / 2), 270))
+            self.image.blit(self.font.render('DEX', True, '#000000'), (235 - (self.font.size('DEX')[0] / 2), 271))
+            self.image.blit(self.font.render('DEX', True, '#EEE1C5'), (235 - (self.font.size('DEX')[0] / 2), 270))
 
-        self.image.blit(self.font.render('INT', True, '#000000'), (495 - (self.font.size('INT')[0] / 2), 271))
-        self.image.blit(self.font.render('INT', True, '#EEE1C5'), (495 - (self.font.size('INT')[0] / 2), 270))
+            self.image.blit(self.font.render('VIT', True, '#000000'), (365 - (self.font.size('VIT')[0] / 2), 271))
+            self.image.blit(self.font.render('VIT', True, '#EEE1C5'), (365 - (self.font.size('VIT')[0] / 2), 270))
 
-        self.image.blit(self.font.render('MND', True, '#000000'), (625 - (self.font.size('MND')[0] / 2), 271))
-        self.image.blit(self.font.render('MND', True, '#EEE1C5'), (625 - (self.font.size('MND')[0] / 2), 270))
+            self.image.blit(self.font.render('INT', True, '#000000'), (495 - (self.font.size('INT')[0] / 2), 271))
+            self.image.blit(self.font.render('INT', True, '#EEE1C5'), (495 - (self.font.size('INT')[0] / 2), 270))
+
+            self.image.blit(self.font.render('MND', True, '#000000'), (625 - (self.font.size('MND')[0] / 2), 271))
+            self.image.blit(self.font.render('MND', True, '#EEE1C5'), (625 - (self.font.size('MND')[0] / 2), 270))
 
         screen.blit(self.image, (self.pos[0] + right, self.pos[1] + scroll[1]))
 

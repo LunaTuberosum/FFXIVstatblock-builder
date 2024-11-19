@@ -4,12 +4,13 @@ from components.component import Component
 
 
 class MarkerComponent(Component):
-    def __init__(self, width: int, height: int, markerArea: list[list[int]], parentWidth: int):
+    def __init__(self, width: int, height: int, markerArea: list[list[int]], parentWidth: int, parent: object):
         super().__init__(
             "MarkerComponent",
             [25 * width, 25 * height],
             [parentWidth - ((25 * width) + 20), 22],
-            0
+            0,
+            parent
         )
         self.gridSize: list[int] = [width, height]
 
@@ -114,3 +115,10 @@ class MarkerComponent(Component):
             self.originImage = self.markerIcon
         elif self.type == self.MOBILE:
             self.originImage = self.originOutlineIcon
+
+    def save(self) -> dict:
+        return {
+            'gridSize': self.gridSize,
+            'markerArea': self.markerArea,
+            'type': self.type
+        }

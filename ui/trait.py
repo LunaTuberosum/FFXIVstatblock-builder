@@ -97,7 +97,7 @@ class TraitUI(Background):
         self.components[1].active = True
 
     def updateBold(self):
-        if self.components[1].currentFormat == 1:
+        if self.components[1].currentFormat['bold']:
             self.components[2].on = True
         else:
             self.components[2].on = False
@@ -111,7 +111,7 @@ class TraitUI(Background):
         self.components[1].active = True
 
     def updateItalic(self):
-        if self.components[1].currentFormat == 2:
+        if self.components[1].currentFormat['italic']:
             self.components[3].on = True
         else:
             self.components[3].on = False
@@ -125,7 +125,7 @@ class TraitUI(Background):
         self.components[1].active = True
 
     def updateAbility(self):
-        if self.components[1].currentFormat == 3:
+        if self.components[1].currentFormat['red']:
             self.components[4].on = True
         else:
             self.components[4].on = False

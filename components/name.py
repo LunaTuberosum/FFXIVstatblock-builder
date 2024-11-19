@@ -6,21 +6,22 @@ from ui.name import NameUI
 
 
 class NameComponent(Component):
-    def __init__(self):
+    def __init__(self, parent: object):
         super().__init__(
             "NameComponent",
             [512, 36],
             [12, 5],
-            0
+            0,
+            parent
         )
 
-        self.name: str = "Odin, Lord of the Eternal Hall"
-        self.level: str = '50'
+        self.name: str = 'Character Name'
+        self.level: str = '00'
         self.levelPositon: bool = False # False = end, true = top left
         self.fontCap: pygame.font.Font = pygame.font.Font('assets/fonts/LibreBaskerville.ttf', 24)
         self.font: pygame.font.Font = pygame.font.Font('assets/fonts/LibreBaskerville.ttf', 20)
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
+    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
 
         _words: list[str] = self.name.split()
         if not self.levelPositon:
@@ -43,7 +44,7 @@ class NameComponent(Component):
 
         self.size = (512, 36 + (30 * (len(_lines) - 1)))
         self.image = pygame.Surface(self.size)
-        super().draw(screen, parentPos, scroll)
+        super().draw(screen, parentPos)
 
         _y: int = 0
         for _l in _lines:
@@ -60,5 +61,10 @@ class NameComponent(Component):
             return
         self.window = NameUI([-15, 55], self)
 
-
+    def save(self) -> dict:
+        return {
+            'name': self.name,
+            'level': self.level,
+            'levelPosition': self.levelPositon
+        }
 

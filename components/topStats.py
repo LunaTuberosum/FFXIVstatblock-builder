@@ -5,13 +5,16 @@ from ui.topStats import TopStatsUI
 
 
 class TopStatsComponent(Component):
-    def __init__(self):
+    def __init__(self, parent: object, token: bool = False):
         super().__init__(
             "TopStatsComponent",
-            [526, 171],
+            [526, 171 if not token else 101], #171
             [5, 5],
-            1
+            1,
+            parent
         )
+
+        self.token: bool = token
 
         self.font: pygame.font.Font = pygame.font.SysFont('Noto Sans', 16, True)
         self.fontCap: pygame.font.Font = pygame.font.SysFont('Noto Sans', 18, True)
@@ -33,23 +36,23 @@ class TopStatsComponent(Component):
 
         self.seperator: pygame.Surface = pygame.image.load('assets/backgrounds/StatsSeperator.png').convert_alpha()
 
-        self.creatureSize: str = 'Large (2x2)'
-        self.species: str = 'Elder Primal'
-        self.vigilance: str = '20'
+        self.creatureSize: str = 'Medium (1x1)'
+        self.species: str = 'Character Species'
+        self.vigilance: str = '10'
 
-        self.defense: str = '12'
-        self.magicDefense: str = '12'
-        self.maxHP: str = '120'
+        self.defense: str = '10'
+        self.magicDefense: str = '10'
+        self.maxHP: str = '0'
         self.speed: str = '0'
 
-        self.str: str = '7'
-        self.dex: str = '7'
-        self.vit: str = '7'
-        self.int: str = '7'
-        self.mnd: str = '7'
+        self.str: str = '0'
+        self.dex: str = '0'
+        self.vit: str = '0'
+        self.int: str = '0'
+        self.mnd: str = '0'
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
-        super().draw(screen, parentPos, scroll)
+    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
+        super().draw(screen, parentPos)
         self.image.blit(self.backgroundMiddle, (3, 18))
         self.image.blit(self.backgroundBottom, (3, self.height() - self.backgroundBottom.get_height()))
         self.image.blit(self.topLine, (0, 0))
@@ -104,5 +107,23 @@ class TopStatsComponent(Component):
             return
         self.window = TopStatsUI([-15, 90], self)
 
+    def save(self) -> dict:
+        return {
+            'token': self.token,
+            
+            'creatureSize': self.creatureSize,
+            'species': self.species,
+            'vigilance': self.vigilance,
 
+            'defense': self.defense,
+            'magicDefense': self.magicDefense,
+            'maxHP': self.maxHP,
+            'speed': self.speed,
+
+            'str': self.str,
+            'dex': self.dex,
+            'vit': self.vit,
+            'int': self.int,
+            'mnd': self.mnd
+        }
 

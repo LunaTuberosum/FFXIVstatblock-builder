@@ -6,12 +6,13 @@ from ui.ability import AbilityUI
 
 
 class AbilityComponent(Component):
-    def __init__(self, name: str, types: str, effects: dict[str, str], marker: list[list[int]] = None):
+    def __init__(self, name: str, types: str, effects: dict[str, str], parent: object, marker: list[list[int]] = None):
         super().__init__(
             "AbilityComponent",
             [518, 40],
             [12, 12],
-            3
+            3,
+            parent
         )
 
         self.name: str = name
@@ -53,13 +54,19 @@ class AbilityComponent(Component):
             _words: list[str] = _effect.split()
 
             for _w in _words:
+                if _w == '{n}':
+                    _text += _w
+                    self.lines.append(_text)
+                    _text = ''
+                    continue
+
                 if _size + self.font.size(_w)[0] >= _right:
                     self.lines.append(_text)
                     _text = _w + ' '
                     _size = self.font.size(_w + ' ')[0]
                     continue
 
-                if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}':
+                if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{n}':
                     _text += _w + ' '
                     continue
 
@@ -74,7 +81,7 @@ class AbilityComponent(Component):
         ))
         self.image = pygame.Surface(self.size)
 
-    def draw(self, screen: pygame.Surface, parentPos: list[int], scroll: list[int]) -> None:
+    def draw(self, screen: pygame.Surface, parentPos: list[int]) -> None:
         self.parentPos: list[int] = parentPos
         _text: str = ''
 
@@ -85,7 +92,7 @@ class AbilityComponent(Component):
         _dark: bool = False
 
         self._findHeight()
-        super().draw(screen, parentPos, scroll)
+        super().draw(screen, parentPos)
 
         self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (1,0))
         self.image.blit(self.fontItalic.render(self.types, True, '#000000'), (self.width() - self.fontItalic.size(self.types)[0], 4))
@@ -131,6 +138,9 @@ class AbilityComponent(Component):
                     _blue = False
                     continue
 
+                if _w == '{n}':
+                    continue
+
                 if _name:
                     self.image.blit(self.fontBolded.render(_w, True, '#995745'), (_x, _y))
                     _x += self.font.size(_w)[0] + 10
@@ -164,10 +174,18 @@ class AbilityComponent(Component):
 
         if not self.last:
             self.image.blit(self.divider, (0, self.height() - 5))
-        screen.blit(self.image, (20 + self.x(), parentPos[1] + self.y()))
+        screen.blit(self.image, (20 + self.x() + parentPos[0], parentPos[1] + self.y()))
 
     def onClick(self):
         if self.window:
             self.window = None
             return
         self.window = AbilityUI([-15, self.parentPos[1] + self.y() + 30], self)
+
+    def save(self) -> dict:
+        return {
+            'name': self.name,
+            'types': self.types,
+            'effects': self.effects,
+            'marker': self.marker.save() if self.marker else None
+        }

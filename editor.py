@@ -378,7 +378,23 @@ class Editor():
                 _jsonFile.write(_jsonSave)
 
     def export(self):
-        print('Export')
+        _width: int = 40
+        _height: int = 40
+
+        for _card in self.statCards:
+            _width += _card.totalWidth + 20
+            if _height < ((_card.height + 2) * 194) + 40:
+                _height = ((_card.height + 2) * 194) + 40
+
+        _exp: pygame.Surface = pygame.Surface((_width + 40, _height + 40))
+        _exp.fill('#313031')
+
+        _x: int = 40
+        for _card in self.statCards:
+            _card.draw(_exp, [0, 0], _x)
+            _x += _card.totalWidth + 20
+
+        pygame.image.save(_exp, f'./exports/statSheet{self.file}.png')
 
 def _splitStatCardBackground() -> dict[str, pygame.Surface]:
     _img = pygame.image.load('assets/backgrounds/StatCardBackground.png').convert_alpha()

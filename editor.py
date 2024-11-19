@@ -391,6 +391,8 @@ class Editor():
 
         _x: int = 40
         for _card in self.statCards:
+            for _comp in _card.components:
+                _comp.noHover()
             _card.draw(_exp, [0, 0], _x)
             _x += _card.totalWidth + 20
 

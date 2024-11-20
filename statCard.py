@@ -137,8 +137,8 @@ class StatCard(pygame.sprite.Sprite):
 
     def _makeStatCardBackground(self, width: int, height: int) -> pygame.Surface:
         _img: pygame.Surface = pygame.surface.Surface(
-            (((1 + ((width - 1) * 3)) + 2) * 194,
-            (height + 2) * 194)
+            ((((1 + ((width - 1) * 3)) + 2) * 194) - (30 * (width - 1)),
+            (height + 2) * 194) 
         )
         self.totalWidth = _img.get_width()
         
@@ -158,7 +158,7 @@ class StatCard(pygame.sprite.Sprite):
                 _img.blit(self.__statCardBackground[_list[_i] + 'Middle'], (_x, _y))
 
             _x += 194
-            _img.blit(self.__statCardBackground[_list[_i] + 'Right'], (_x, _y))
+            _img.blit(self.__statCardBackground[_list[_i] + 'Right'], (_x - (30 * (width - 1)), _y))
 
             _x = 0
             if _h == 0:

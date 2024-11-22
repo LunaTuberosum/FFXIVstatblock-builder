@@ -29,4 +29,5 @@ This current version **(0.91)** is has all the features nessary to make a stat c
 * Able to save Stat Sheets
 * Able to export Stat Sheets as PNGs
 * Can make abilities INVK abilites
+* Types and names on abilites no longer overlap if one is two long
 ```

@@ -1,6 +1,6 @@
 from settings import *
 
-import menu
+from menu import Menu
 
 
 pygame.init()
@@ -12,4 +12,4 @@ pygame.display.set_caption('FFXIV TTRPG Stat Card Build')
 pygame.key.set_repeat(200, 100)
 
 if __name__ == '__main__':
-    menu.main(screen, clock)
+    Menu(screen, clock).main()

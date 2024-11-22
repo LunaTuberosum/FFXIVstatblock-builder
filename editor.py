@@ -44,6 +44,8 @@ class Editor():
         self.contextMenu: ContextMenu = None
         self.contextMenuPos: list[int] = []
 
+        self.game: bool = True
+
     def draw(self):
         self.tempScreen.fill('#313031')
 
@@ -78,6 +80,9 @@ class Editor():
         if event.key == pygame.K_LCTRL:
             self.center = True
             self.zoom = True
+
+        if event.key == pygame.K_ESCAPE:
+            self.game = False
 
         if self.window:
             for _comp in self.window.components:
@@ -205,6 +210,7 @@ class Editor():
                     self.contextMenu = _statCard.contextMenu()
                     self.contextMenuPos = pygame.mouse.get_pos()
                     return
+                
             self.contextMenu = ContextMenu([186, 96], {
                 'New Card': self.new,
                 'Save': self.save,
@@ -253,7 +259,7 @@ class Editor():
                         _component.hover()
 
     def main(self) -> None:
-        while True:
+        while self.game:
             self.clock.tick(60)
 
             for event in pygame.event.get():
@@ -296,6 +302,8 @@ class Editor():
             if self.window: self.window.draw(self.screen, 0, [0, 0])
 
             pygame.display.flip()
+        
+        return self.save()
 
     def new(self):
         self.window = NewCardUI(self)
@@ -312,6 +320,8 @@ class Editor():
 
         with open(f'saves/statSheet{self.file}.json', 'w') as _jsonFile:
             _jsonFile.write(_jsonSave)
+
+        return _saveDict
 
     def load(self):
         try:
@@ -383,8 +393,8 @@ class Editor():
 
         for _card in self.statCards:
             _width += _card.totalWidth + 20
-            if _height < ((_card.height + 2) * 194) + 40:
-                _height = ((_card.height + 2) * 194) + 40
+            if _height < _card.image.get_height() + 40:
+                _height = _card.image.get_height() + 40
 
         _exp: pygame.Surface = pygame.Surface((_width + 40, _height + 40))
         _exp.fill('#313031')

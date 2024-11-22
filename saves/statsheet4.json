@@ -1,0 +1,28 @@
+{
+    "0": {
+        "width": 1,
+        "height": 0,
+        "components": {
+            "NameComponent [0]": {
+                "name": "Character Name",
+                "level": "00",
+                "levelPosition": false
+            },
+            "TopStatsComponent [1]": {
+                "token": false,
+                "creatureSize": "Medium (1x1)",
+                "species": "Character Species",
+                "vigilance": "10",
+                "defense": "10",
+                "magicDefense": "10",
+                "maxHP": "0",
+                "speed": "0",
+                "str": "0",
+                "dex": "0",
+                "vit": "0",
+                "int": "0",
+                "mnd": "0"
+            }
+        }
+    }
+}

@@ -58,6 +58,13 @@ class Menu():
                 _save.reload(_saveDict)
                 return
                 
+    def quit(self):
+        def quitConfirm():
+            pygame.quit()
+            os._exit(-1)
+
+        self.window = ConfirmUI(self, 'Are you sure you want to exit?', quitConfirm, 'Exit', 'Stay')
+
     def delete(self, save: Save):
         def deleteConfirm():
             os.remove(f'.//saves//{save.saveJson}')
@@ -94,6 +101,11 @@ class Menu():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
+                    os._exit(-1)
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.quit()
                 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:

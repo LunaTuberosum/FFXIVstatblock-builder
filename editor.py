@@ -375,6 +375,7 @@ class Editor():
                                 _compV['effects'],
                                 _c
                             )
+                            _a.invk = _compV['invk']
                             if _compV['marker']:
                                 _a.marker = MarkerComponent(
                                     _compV['marker']['gridSize'][0],

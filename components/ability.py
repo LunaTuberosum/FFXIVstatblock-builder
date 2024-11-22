@@ -24,6 +24,9 @@ class AbilityComponent(Component):
             self.marker = MarkerComponent(len(marker[0]), len(marker), marker, self.width())
 
         self.last: bool = False
+        self.invk: bool = False
+
+        self.invkImage: pygame.Surface = pygame.image.load('.//assets//icons//INVK.png').convert_alpha()
 
         self.fontTitle: pygame.font.Font = pygame.font.SysFont('Noto Sans', 19, True)
         self.font: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
@@ -95,11 +98,25 @@ class AbilityComponent(Component):
         self._findHeight()
         super().draw(screen, parentPos)
 
-        self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (1,0))
-        self.image.blit(self.fontItalic.render(self.types, True, '#000000'), (self.width() - self.fontItalic.size(self.types)[0], 4))
+        _nameWidth: int = self.fontTitle.size(self.name)[0]
+        _typesWidth: int = self.fontItalic.size(self.types)[0]
+        _typesTooLong: bool = False
+
+        if self.invk:
+            self.image.blit(self.invkImage, (0, 0))
+            self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (78,0))
+            if _nameWidth + self.invkImage.get_width() + 12 + _typesWidth >= self.size[0]:
+                _typesTooLong = True
+
+        else:
+            self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (1,0))
+            if _nameWidth + 11 + _typesWidth >= self.size[0]:
+                _typesTooLong = True
+
+        self.image.blit(self.fontItalic.render(self.types, True, '#000000'), (self.width() - self.fontItalic.size(self.types)[0], 26 if _typesTooLong else 4))
 
 
-        _y: int = 26
+        _y: int = 26 + (22 if _typesTooLong else 0)
         _x: int = 1
         for _l in self.lines:
             _words: list[str] = _l.split()
@@ -171,7 +188,7 @@ class AbilityComponent(Component):
         _blue = False
 
         if self.marker:
-            self.marker.draw(self.image, self.pos)
+            self.marker.draw(self.image, [self.pos[0], self.pos[1] + (20 if _typesTooLong else 0)])
 
         if not self.last:
             self.image.blit(self.divider, (0, self.height() - 5))
@@ -186,6 +203,7 @@ class AbilityComponent(Component):
     def save(self) -> dict:
         return {
             'name': self.name,
+            'invk': self.invk,
             'types': self.types,
             'effects': self.effects,
             'marker': self.marker.save() if self.marker else None

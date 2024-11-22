@@ -6,6 +6,7 @@ from ui.background import Background
 from ui.markerBuilder import MarkerBuilderUI
 from ui.switchButton import SwitchButton
 from ui.textBox import TextBox
+from ui.toggleButtons import ToggleButtons
 
 
 class AbilityUI(Background):
@@ -13,7 +14,7 @@ class AbilityUI(Background):
         super().__init__(
             'AbilityUI',
             'Ability',
-            [620, 345],
+            [620, 395],
             pos
         )
 
@@ -32,18 +33,31 @@ class AbilityUI(Background):
         self.components[0].text = parent.name
 
         self.components.append(
-            TextBox([(self.size[0] - 360), 140 + self.pos[1]], [300, 2], self.changeTypes)
+            ToggleButtons(
+                [self.size[0] - 330, 140 + self.pos[1]], 
+                [270, 25],
+                {
+                    'On': self.on,
+                    'Off': self.off
+                },
+                'Off'
+            )
         )
-        self.components[1].text = parent.types
+        self.components[1].buttonSelected = 'On' if self.parent.invk else 'Off'
 
         self.components.append(
-            TextBox([450, 235 + self.pos[1]], [50, 1], self.changeEffect)
+            TextBox([(self.size[0] - 360), 190 + self.pos[1]], [300, 2], self.changeTypes)
         )
-        self.components[2].text = str(len(parent.effects))
+        self.components[2].text = parent.types
+
+        self.components.append(
+            TextBox([450, 285 + self.pos[1]], [50, 1], self.changeEffect)
+        )
+        self.components[3].text = str(len(parent.effects))
 
         self.components.append(
             Button(
-                [500, 235 + self.pos[1]],
+                [500, 285 + self.pos[1]],
                 [30, 32],
                 'assets/icons/AddButton.png',
                 'assets/icons/AddButton_hover.png',
@@ -52,7 +66,7 @@ class AbilityUI(Background):
         )
         self.components.append(
             Button(
-                [530, 235 + self.pos[1]],
+                [530, 285 + self.pos[1]],
                 [30, 32],
                 'assets/icons/MinusButton.png',
                 'assets/icons/MinusButton_hover.png',
@@ -73,7 +87,7 @@ class AbilityUI(Background):
 
     def _makeEffectList(self):
         self.effectsList = []
-        _y: int = 270
+        _y: int = 320
         for _name, _effect in self.parent.effects.items():
 
             _list: list[TextBox] = []
@@ -121,7 +135,7 @@ class AbilityUI(Background):
             _y += 105
             self.effectsList.append(_list)
 
-        self.size = [self.size[0], 345 + (140 * len(self.effectsList))]
+        self.size = [self.size[0], 395 + (140 * len(self.effectsList))]
         self.image = pygame.Surface(self.size)
 
     def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
@@ -145,17 +159,23 @@ class AbilityUI(Background):
         self.image.blit(self.font.render('Ability Name', True, '#000000'), (50, 81))
         self.image.blit(self.font.render('Ability Name', True, '#EEE1C5'), (50, 80))
 
-        self.image.blit(self.font.render('Types', True, '#000000'), (25, 116))
-        self.image.blit(self.font.render('Types', True, '#C2C2C2'), (25, 115))
+        self.image.blit(self.font.render('Invoked', True, '#000000'), (25, 116))
+        self.image.blit(self.font.render('Invoked', True, '#C2C2C2'), (25, 115))
 
-        self.image.blit(self.font.render('Ability Types', True, '#000000'), (50, 141))
-        self.image.blit(self.font.render('Ability Types', True, '#EEE1C5'), (50, 140))
+        self.image.blit(self.font.render('Is Invoked', True, '#000000'), (50, 141))
+        self.image.blit(self.font.render('Is Invoked', True, '#EEE1C5'), (50, 140))
 
-        self.image.blit(self.font.render('Effects', True, '#000000'), (25, 201))
-        self.image.blit(self.font.render('Effects', True, '#C2C2C2'), (25, 200))
+        self.image.blit(self.font.render('Types', True, '#000000'), (25, 166))
+        self.image.blit(self.font.render('Types', True, '#C2C2C2'), (25, 165))
 
-        self.image.blit(self.font.render('Number of Effects', True, '#000000'), (50, 236))
-        self.image.blit(self.font.render('Number of Effects', True, '#EEE1C5'), (50, 235))
+        self.image.blit(self.font.render('Ability Types', True, '#000000'), (50, 191))
+        self.image.blit(self.font.render('Ability Types', True, '#EEE1C5'), (50, 190))
+
+        self.image.blit(self.font.render('Effects', True, '#000000'), (25, 251))
+        self.image.blit(self.font.render('Effects', True, '#C2C2C2'), (25, 250))
+
+        self.image.blit(self.font.render('Number of Effects', True, '#000000'), (50, 286))
+        self.image.blit(self.font.render('Number of Effects', True, '#EEE1C5'), (50, 285))
 
         for _effect in self.effectsList:
             self.image.blit(self.font.render('Effect Name', True, '#000000'), (50, _effect[0].pos[1] - self.pos[1] + 1))
@@ -207,6 +227,12 @@ class AbilityUI(Background):
 
     def changeName(self):
         self.parent.name = self.components[0].text
+
+    def on(self):
+        self.parent.invk = True
+
+    def off(self):
+        self.parent.invk = False
 
     def changeTypes(self):
         self.parent.types = self.components[1].text

@@ -53,6 +53,7 @@ class NameUI(Background):
             },
             'End')
         )
+        self.components[4].buttonSelected = 'Top Right' if self.parent.levelPositon else 'End'
 
     def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
         super().draw(screen, right, scroll)

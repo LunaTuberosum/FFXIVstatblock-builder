@@ -43,6 +43,7 @@
             },
             "AbilityComponent [7]": {
                 "name": "Trails of the Deadful Armory",
+                "invk": false,
                 "types": "Instant",
                 "effects": {
                     "Trigger:": "At the start of the encounter and each round, immediately before the [Adventurer Step] begins",
@@ -52,6 +53,7 @@
             },
             "AbilityComponent [8]": {
                 "name": "Combo",
+                "invk": false,
                 "types": "Primary, Unique",
                 "effects": {
                     "Base Effect:": "Attack using {a} Zantetsuken {/a} , then immediately use {a} Woden Valkut {/a} , {a}  Hall of Melancholy {/a} , {a} Sanngetall {/a} ."
@@ -60,6 +62,7 @@
             },
             "AbilityComponent [9]": {
                 "name": "Zantetsuken",
+                "invk": false,
                 "types": "Primary, Physical",
                 "effects": {
                     "Target:": "Single",
@@ -73,6 +76,7 @@
             },
             "AbilityComponent [10]": {
                 "name": "Woden Valknut",
+                "invk": false,
                 "types": "Primary, Stationary Marker, Magic",
                 "effects": {
                     "Origin:": "Odin",
@@ -173,6 +177,7 @@
             },
             "AbilityComponent [11]": {
                 "name": "Hall of Melancholy",
+                "invk": false,
                 "types": "Primary, Stationary Marker, Magic",
                 "effects": {
                     "Orgin:": "Two squares occupied by two separate enemy characters without Enmity",
@@ -256,6 +261,7 @@
             },
             "AbilityComponent [12]": {
                 "name": "Sanngetall",
+                "invk": false,
                 "types": "Primary, Mobile Marker, Physical",
                 "effects": {
                     "Marker Area:": "A mobile 1x1 marker centered on one enemy with Enmity or the highest amount of Hit Points",
@@ -310,6 +316,7 @@
             },
             "AbilityComponent [13]": {
                 "name": "Einherjar",
+                "invk": false,
                 "types": "Primary, Magic",
                 "effects": {
                     "": "{i} An emanation of Odin's dark power, draining your very will {/i}",
@@ -322,6 +329,7 @@
             },
             "AbilityComponent [14]": {
                 "name": "Gagnrath",
+                "invk": false,
                 "types": "Primary, Stationary Marker, Magic",
                 "effects": {
                     "Origin:": "3 non-adjacent points on one edge of the encounter map",
@@ -405,6 +413,7 @@
             },
             "AbilityComponent [15]": {
                 "name": "Gungnir",
+                "invk": false,
                 "types": "Primary, Mobile Marker, Magic",
                 "effects": {
                     "Origin:": "Two squares occupied by two separate enemy characters without enmity",
@@ -569,6 +578,7 @@
             },
             "AbilityComponent [6]": {
                 "name": "Shin-Zantetsuken",
+                "invk": false,
                 "types": "Primary, Physical",
                 "effects": {
                     "Target:": "All enemies on the encounter map",

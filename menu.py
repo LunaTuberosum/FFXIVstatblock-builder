@@ -6,6 +6,8 @@ from saveAdd import SaveAdd
 from settings import *
 
 from editor import Editor
+from ui.background import Background
+from ui.confirm import ConfirmUI
 
 class Menu():
     
@@ -14,6 +16,8 @@ class Menu():
         self.clock: pygame.Clock = clock
         self.saves: list[str] = os.listdir('.//saves')
 
+        self.window: Background = None
+
         self.saveFiles: list[Save] = [Save(_save, self) for _save in self.saves]
         self.newSave: SaveAdd = SaveAdd(self)
 
@@ -21,6 +25,16 @@ class Menu():
         self.contextMenuPos: list[int] = []
 
     def leftClick(self):
+        if self.window:
+            if not self.window.rect.collidepoint(pygame.mouse.get_pos()):
+                self.window = None
+                return
+            
+            for _comp in self.window.components:
+                if _comp.rect.collidepoint(pygame.mouse.get_pos()):
+                    _comp.onClick()
+                    return
+
         if self.contextMenu:
             if not self.contextMenu.rect.collidepoint(pygame.mouse.get_pos()):
                 self.contextMenu = None
@@ -45,8 +59,13 @@ class Menu():
                 return
                 
     def delete(self, save: Save):
-        os.remove(f'.//saves//{save.saveJson}')
-        self.saveFiles.remove(save)
+        def deleteConfirm():
+            os.remove(f'.//saves//{save.saveJson}')
+            self.saves.remove(save.saveJson)
+            self.saveFiles.remove(save)
+            self.window = False
+
+        self.window = ConfirmUI(self, 'Are you sure you want to delete this save?', deleteConfirm)
 
     def createNewSave(self):
         _i: int = 0
@@ -67,9 +86,10 @@ class Menu():
 
         while True:
             self.clock.tick(30)
-            self.screen.fill('#B7B7B7')
+            self.screen.fill('#313031')
 
-            self.screen.blit(JUPITER_FONT.render('FFXIV TTRPG Stat Card Builder', True, '#000000'), (10, 20))
+            self.screen.blit(JUPITER_FONT.render('FFXIV TTRPG Stat Card Builder', True, '#000000'), (10, 21))
+            self.screen.blit(JUPITER_FONT.render('FFXIV TTRPG Stat Card Builder', True, '#CCCCCC'), (10, 20))
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -104,6 +124,15 @@ class Menu():
                 self.newSave.hover()
 
             self.newSave.draw(self.screen, _x, _y)
+
+            if self.window:
+                for _comp in self.window.components:
+                    _comp.noHover()
+
+                    if _comp.rect.collidepoint(pygame.mouse.get_pos()):
+                        _comp.hover()
+
+                self.window.draw(self.screen, 0, [0, 0])
 
             if self.contextMenu:
 

@@ -1,22 +1,30 @@
 from settings import *
+from ui.background import Background
 
 
-class SaveAdd(pygame.sprite.Sprite):
+class SaveAdd(Background):
     def __init__(self, menu: object):
-        super().__init__()
+        super().__init__(
+            'SaveAdd',
+            'New Save',
+            [250, 250],
+            [0, 0],
+            False
+        )
 
         self.image: pygame.Surface = pygame.Surface((250, 250))
 
         self.rect: pygame.Rect = self.image.get_rect(topleft=(0, 0))
-        self.font: pygame.font.Font = pygame.font.Font('assets/fonts/LibreBaskerville.ttf', 20)
 
         self.hovering: bool = False
 
     def draw(self, screen: pygame.Surface, x: int, y: int):
-        self.image.fill('#efefef' if self.hovering else '#dedede')
+        self.pos = [x, y]
+        super().draw(screen, 0, [0, 0])
         self.rect = self.image.get_rect(topleft=(x, y))
 
-        self.image.blit(self.font.render('Create New Stat Sheet', True, '#000000', wraplength=240), (125 - (self.font.size('Create New Stat Sheet')[0] / 2), 125 - (self.font.size('Create New Stat Sheet')[1] / 2)))
+        self.image.blit(self.font.render('Create New Stat Sheet', True, '#000000'), (125 - (self.font.size('Create New Stat Sheet')[0] / 2), (125 - (self.font.size('Create New Stat Sheet')[1] / 2) + 1)))
+        self.image.blit(self.font.render('Create New Stat Sheet', True, '#CCCCCC' if not self.hovering else '#dedede'), (125 - (self.font.size('Create New Stat Sheet')[0] / 2), 125 - (self.font.size('Create New Stat Sheet')[1] / 2)))
 
         screen.blit(self.image, (x, y))
 

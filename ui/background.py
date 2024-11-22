@@ -2,13 +2,14 @@ from settings import *
 
 
 class Background():
-    def __init__(self, name: str, title: str, size: list[int], pos: list[int]):
+    def __init__(self, name: str, title: str, size: list[int], pos: list[int], writeConfig: bool = True):
         self.uiBackground: dict[str, pygame.Surface] = _splitBackground()
 
         self.id: str = name
         self.title: str = title
         self.size: list[int] = size
         self.pos: list[int] = pos
+        self.writeConfig: bool = writeConfig
 
         self.image: pygame.Surface = pygame.Surface(self.size)
         self.rect: pygame.Rect = pygame.Rect(self.pos, self.size)
@@ -19,6 +20,8 @@ class Background():
 
         self.fontTitle: pygame.font.Font = pygame.font.Font('assets/fonts/Deutschlander.otf', 25)
         self.seperator: pygame.Surface = pygame.image.load('assets/backgrounds/UISeperator.png').convert_alpha()
+
+        self.hovering: bool = False
 
     def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
             self.image.fill('#ff00b6')
@@ -39,8 +42,8 @@ class Background():
 
             self.image.blit(pygame.transform.scale(self.seperator, (self.size[0] - 50, 3)), (25, 45))
 
-            self.image.blit(self.fontTitle.render(f'{self.title} Configuration', True, '#000000'), (25, 21))
-            self.image.blit(self.fontTitle.render(f'{self.title} Configuration', True, '#CCCCCC'), (25, 20))
+            self.image.blit(self.fontTitle.render(f'{self.title}{" Configuration" if self.writeConfig else ""}', True, '#000000'), (25, 21))
+            self.image.blit(self.fontTitle.render(f'{self.title}{" Configuration" if self.writeConfig else ""}', True, '#CCCCCC' if not self.hovering else '#dedede'), (25, 20))
 
 
 def _splitBackground() -> dict[str, pygame.Surface]:

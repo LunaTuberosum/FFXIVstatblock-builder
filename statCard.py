@@ -1,7 +1,10 @@
+from components.name import NameComponent
+from components.topStats import TopStatsComponent
 from contextMenu import ContextMenu
 from settings import *
 
 from components.component import Component
+from ui.confirm import ConfirmUI
 
 
 class StatCard(pygame.sprite.Sprite):
@@ -130,10 +133,21 @@ class StatCard(pygame.sprite.Sprite):
         self.editor.edit(self)
 
     def clear(self):
-        print('Clear')
+        def clearConfirm():
+            self.components = [
+                NameComponent(self),
+                TopStatsComponent(self, self.components[1].token)
+            ]
+            self.editor.window = False
+
+        self.editor.window = ConfirmUI(self.editor, 'Are you sure you want to clear this stat card?', clearConfirm)
 
     def delete(self):
-        self.editor.statCards.remove(self)
+        def deleteConfirm():
+            self.editor.statCards.remove(self)
+            self.editor.window = False
+
+        self.editor.window = ConfirmUI(self.editor, 'Are you sure you want to delete this stat card?', deleteConfirm)
 
     def _makeStatCardBackground(self, width: int, height: int) -> pygame.Surface:
         _img: pygame.Surface = pygame.surface.Surface(

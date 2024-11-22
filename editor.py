@@ -10,6 +10,7 @@ from settings import *
 
 from statCard import StatCard
 from ui.background import Background
+from ui.confirm import ConfirmUI
 from ui.editCard import EditCardUI
 from ui.newCard import NewCardUI
 
@@ -82,7 +83,7 @@ class Editor():
             self.zoom = True
 
         if event.key == pygame.K_ESCAPE:
-            self.game = False
+            self.escape()
 
         if self.window:
             for _comp in self.window.components:
@@ -304,6 +305,13 @@ class Editor():
             pygame.display.flip()
         
         return self.save()
+
+    def escape(self):
+        def escapeConfirm():
+            self.game = False
+            self.window = False
+
+        self.window = ConfirmUI(self, 'Are you sure you want to leave this sheet?', escapeConfirm, 'Save and Quit')
 
     def new(self):
         self.window = NewCardUI(self)

@@ -54,7 +54,8 @@ class Menu():
         for _save in self.saveFiles:
             if _save.rect.collidepoint(pygame.mouse.get_pos()):
                 _saveFileNum = _save.onClick()
-                _saveDict = Editor(self.screen, self.clock, _saveFileNum).main()
+                _e: Editor = Editor(self.screen, self.clock, _saveFileNum)
+                _saveDict = _e.main()
                 _save.reload(_saveDict)
                 return
                 

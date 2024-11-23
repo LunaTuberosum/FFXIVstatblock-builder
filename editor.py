@@ -293,9 +293,12 @@ class Editor():
 
             self.draw()
             self.drawUI()
-            _image: pygame.Surface = pygame.transform.scale(self.tempScreen, (self.tempScreen.get_width() / self.zoomScroll, self.tempScreen.get_height() / self.zoomScroll))
 
-            self.screen.blit(_image, (0, 0))
+            _image: pygame.Surface = pygame.Surface((0, 0))
+            _image = pygame.transform.scale(self.tempScreen, (self.tempScreen.get_width() / self.zoomScroll, self.tempScreen.get_height() / self.zoomScroll))
+
+            if _image:
+                self.screen.blit(_image, (0, 0))
 
             if self.contextMenu:
                 self.contextMenu.draw(self.screen, self.contextMenuPos)

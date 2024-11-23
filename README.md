@@ -31,6 +31,12 @@ This current version **(0.91)** it has all the features necessary to make a stat
 
 
 ## Changelog
+### Version 0.92.1
+```
+* Fixed bug (#1)
+* Readded Icon file
+```
+
 ### Version 0.92
 ```
 * Able to make Stat Sheets and Stat Cards within

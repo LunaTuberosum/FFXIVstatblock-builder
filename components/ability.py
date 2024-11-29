@@ -28,8 +28,8 @@ class AbilityComponent(Component):
 
         self.invkImage: pygame.Surface = pygame.image.load('.//assets//icons//INVK.png').convert_alpha()
 
-        self.fontTitle: pygame.font.Font = pygame.font.SysFont('Noto Sans', 19, True)
-        self.font: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
+        self.fontTitle: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 19)
+        self.font: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 15)
 
         self.fontBolded: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
         self.fontBolded.bold = True

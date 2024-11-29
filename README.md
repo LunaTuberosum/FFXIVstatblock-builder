@@ -34,6 +34,7 @@ This current version **(0.91.2)** it has all the features necessary to make a st
 ### Version 0.92.2
 ```
 * Fixed bug (#2)
+* Fixed bug (#3)
 ```
 
 ### Version 0.92.1

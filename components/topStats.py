@@ -16,11 +16,11 @@ class TopStatsComponent(Component):
 
         self.token: bool = token
 
-        self.font: pygame.font.Font = pygame.font.SysFont('Noto Sans', 16, True)
-        self.fontCap: pygame.font.Font = pygame.font.SysFont('Noto Sans', 18, True)
+        self.font: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 16)
+        self.fontCap: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 18)
 
-        self.largeFont: pygame.font.Font = pygame.font.SysFont('Noto Sans', 18, True)
-        self.largeFontCap: pygame.font.Font = pygame.font.SysFont('Noto Sans', 20, True)
+        self.largeFont: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 18)
+        self.largeFontCap: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 20)
 
         self.topLine: pygame.Surface = pygame.image.load('assets/backgrounds/StatsTopLine.png').convert_alpha()
 

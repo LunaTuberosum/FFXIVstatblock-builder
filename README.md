@@ -16,7 +16,7 @@ If you have any problems please message me on Discord. If you run into a bug ple
 
 
 ### **!! WARNING !!**
-This current version **(0.91)** it has all the features necessary to make a stat card but it's lacking quite a lot of polish and quality of life features. This is mostly due to me taking a lot longer on this than I wanted to and would rather get it out for testing and use reason than hold it off another month or so to add the polish. So the 1.0 update will add these features. So fair warning there will be a lot of jank and bugs but please report it all
+This current version **(0.91.2)** it has all the features necessary to make a stat card but it's lacking quite a lot of polish and quality of life features. This is mostly due to me taking a lot longer on this than I wanted to and would rather get it out for testing and use reason than hold it off another month or so to add the polish. So the 1.0 update will add these features. So fair warning there will be a lot of jank and bugs but please report it all
 
 
 ### How to download
@@ -31,6 +31,11 @@ This current version **(0.91)** it has all the features necessary to make a stat
 
 
 ## Changelog
+### Version 0.92.2
+```
+* Fixed bug (#2)
+```
+
 ### Version 0.92.1
 ```
 * Fixed bug (#1)

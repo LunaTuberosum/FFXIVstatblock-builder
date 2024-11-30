@@ -235,12 +235,12 @@ class AbilityUI(Background):
         self.parent.invk = False
 
     def changeTypes(self):
-        self.parent.types = self.components[1].text
+        self.parent.types = self.components[2].text
 
     def changeEffect(self):
         try:
             _newDict: dict[str, str] = {}
-            for _ef in range(int(self.components[2].text)):
+            for _ef in range(int(self.components[3].text)):
                 if _ef > len(self.effectsList) - 1:
                     _newDict[f'Effect {_ef + 1}:'] = ''
                     continue
@@ -248,17 +248,17 @@ class AbilityUI(Background):
             self.parent.effects = _newDict
             self._makeEffectList()
         except:
-            self.components[2].text = str(len(self.parent.effects))
+            self.components[3].text = str(len(self.parent.effects))
             return
 
     def addEffect(self):
         try:
             self.parent.effects[f'Effect {len(self.parent.effects)}:'] = ''
-            self.components[2].text = str(len(self.parent.effects))
+            self.components[3].text = str(len(self.parent.effects))
             self._makeEffectList()
 
         except:
-            self.components[2].text = str(len(self.parent.effects))
+            self.components[3].text = str(len(self.parent.effects))
             return
 
     def minusEffect(self):
@@ -266,11 +266,11 @@ class AbilityUI(Background):
             _els = list(self.parent.effects.items())
             _last = _els[-1]
             self.parent.effects.pop(_last[0])
-            self.components[2].text = str(len(self.parent.effects))
+            self.components[3].text = str(len(self.parent.effects))
             self._makeEffectList()
 
         except:
-            self.components[2].text = str(len(self.parent.effects))
+            self.components[3].text = str(len(self.parent.effects))
             return
 
     def addBold(self):

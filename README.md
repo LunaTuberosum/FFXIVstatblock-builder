@@ -31,6 +31,12 @@ This current version **(0.91.2)** it has all the features necessary to make a st
 
 
 ## Changelog
+### Version 0.92.4
+```
+* Fixed bug (#5)
+* Fixed bug (#7)
+```
+
 ### Version 0.92.3
 ```
 * Fixed bug (#4)

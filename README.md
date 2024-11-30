@@ -31,6 +31,13 @@ This current version **(0.91.2)** it has all the features necessary to make a st
 
 
 ## Changelog
+### Version 0.92.3
+```
+* Fixed bug (#4)
+* Fixed bug (#5)
+* Fixed issue where all font was bolded not just the title
+```
+
 ### Version 0.92.2
 ```
 * Fixed bug (#2)

@@ -15,7 +15,7 @@ class TraitComponent(Component):
         )
 
         self.fontTitle: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 19)
-        self.font: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 15)
+        self.font: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
 
         self.fontBolded: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
         self.fontBolded.bold = True

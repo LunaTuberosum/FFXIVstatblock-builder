@@ -29,7 +29,7 @@ class AbilityComponent(Component):
         self.invkImage: pygame.Surface = pygame.image.load('.//assets//icons//INVK.png').convert_alpha()
 
         self.fontTitle: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 19)
-        self.font: pygame.font.Font = pygame.font.Font('assets/fonts/NotoSans-Bold.ttf', 15)
+        self.font: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
 
         self.fontBolded: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 15)
         self.fontBolded.bold = True
@@ -48,7 +48,7 @@ class AbilityComponent(Component):
 
         _right: int = self.width()
         if self.marker:
-            _right -= self.marker.width() + 10
+            _right -= self.marker.width() + 20
 
         for _name, _effect in self.effects.items():
             _text = '{n} ' + _name + ' {/n} '

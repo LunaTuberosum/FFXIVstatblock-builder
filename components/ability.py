@@ -161,19 +161,19 @@ class AbilityComponent(Component):
 
                 if _name:
                     self.image.blit(self.fontBolded.render(_w, True, '#995745'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
+                    _x += self.fontBolded.size(_w)[0] + 3
                 elif _bold:
                     self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
+                    _x += self.fontBolded.size(_w)[0] + 3
                 elif _italic:
                     self.image.blit(self.fontItalic.render(_w, True, '#000000'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _x += self.fontItalic.size(_w)[0] + 3
                 elif _red:
                     self.image.blit(self.fontBolded.render(_w, True, '#D34D35'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
+                    _x += self.fontBolded.size(_w)[0] + 3
                 elif _blue:
                     self.image.blit(self.fontBolded.render(_w, True, '#2D638E'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
+                    _x += self.fontBolded.size(_w)[0] + 3
                 else:
                     self.image.blit(self.font.render(_w, True, '#000000'), (_x, _y))
                     _x += self.font.size(_w)[0] + 3

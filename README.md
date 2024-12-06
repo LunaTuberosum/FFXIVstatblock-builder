@@ -31,6 +31,11 @@ This current version **(0.91.2)** it has all the features necessary to make a st
 
 
 ## Changelog
+### Version 0.92.5
+```
+* Small change to make trait cut off text sooner
+```
+
 ### Version 0.92.4
 ```
 * Fixed bug (#6)

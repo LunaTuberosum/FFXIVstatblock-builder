@@ -46,7 +46,7 @@ class TraitComponent(Component):
                 _backset = 0
                 continue
 
-            if self.font.size(_text + _w)[0] - _backset >= self.width():
+            if self.font.size(_text + _w)[0] - _backset >= self.width() - 20:
                 self.lines.append(_text)
                 _text = _w + ' '
                 _backset = 0
@@ -115,16 +115,16 @@ class TraitComponent(Component):
 
                 if _bold:
                     self.image.blit(self.fontBolded.render(_w, True, '#000000'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
+                    _x += self.fontBolded.size(_w)[0] + 3
                 elif _italic:
                     self.image.blit(self.fontItalic.render(_w, True, '#000000'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 3
+                    _x += self.fontItalic.size(_w)[0] + 3
                 elif _red:
                     self.image.blit(self.fontBolded.render(_w, True, '#D34D35'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
+                    _x += self.fontBolded.size(_w)[0] + 3
                 elif _blue:
                     self.image.blit(self.fontBolded.render(_w, True, '#2D638E'), (_x, _y))
-                    _x += self.font.size(_w)[0] + 10
+                    _x += self.fontBolded.size(_w)[0] + 3
                 else:
                     self.image.blit(self.font.render(_w, True, '#000000'), (_x, _y))
                     _x += self.font.size(_w)[0] + 3

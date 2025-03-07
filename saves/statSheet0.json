@@ -180,7 +180,7 @@
                 "invk": false,
                 "types": "Primary, Stationary Marker, Magic",
                 "effects": {
-                    "Orgin:": "Two squares occupied by two separate enemy characters without Enmity",
+                    "Orgin:": "Two squares occupied by two separate enemy characters without Enmity ",
                     "Marker Area:": "A stationary 5x5 area centered on the origin",
                     "Target:": "All enemies within the marker area",
                     "Marker Trigger:": "The beginning of this character's next turn",

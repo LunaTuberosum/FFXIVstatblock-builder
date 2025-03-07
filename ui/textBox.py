@@ -2,6 +2,21 @@ from settings import *
 
 
 class TextBox():
+    BOLD: int = 0
+    BOLD_OFF: int = 1
+    ITALIC: int = 2
+    ITALIC_OFF: int = 3
+    ABILITY: int = 4
+    ABILITY_OFF: int = 5
+    ATTRIBUTE: int = 6
+    ATTRIBUTE_OFF: int = 7
+    NEW_LINE: int = 8
+
+    END: int = -1
+    TEXT_WIDTH: int = 14
+    LINE_CHAR: int = 32
+    CURSOR_OFFSET: int = 5
+
     def __init__(self, pos: list[int], size: list[int], exitCommand: callable, topleft: bool = False):
         self.backgroundSelected: dict[str, pygame.Surface] = _splitBackground('assets/backgrounds/UITextBoxBackground_selected.png')
         self.background: dict[str, pygame.Surface] = _splitBackground('assets/backgrounds/UITextBoxBackground.png')
@@ -16,11 +31,28 @@ class TextBox():
         self.topleft: bool = topleft
 
         self.text: str = ''
+        self.lines: int = 0
+        self.lastLines: int = self.lines
+
+        self.cursor: str = '|'
+        self.cursorPos: list[int] = [0, 0]
+        self.cursorIndex: int = -1
+
+        self.lineCharWidth: list[int] = []
 
         self.active: bool = False
         self.hovering: bool = False
 
         self.font: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 18)
+
+        self.fontBold: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 18)
+        self.fontBold.bold = True
+
+        self.fontItalic: pygame.font.Font = pygame.font.Font('assets/fonts/noto-sans.regular.ttf', 18)
+        self.fontItalic.italic = True
+
+        self.format: bool = False
+        self.textFormating: dict[int, int] = {}
 
         self.bold: bool = False
         self.italic: bool = False
@@ -30,43 +62,126 @@ class TextBox():
         self.currentFormat: dict[str, bool] = {
             'bold': False,
             'italic': False,
-            'red': False
+            'red': False,
+            'blue': False
         }
 
     def exitField(self):
         self.active = False
-        self.text = self.text.strip()
+
+        self.cursorIndex = TextBox.END
 
         if self.exitCommand:
             self.exitCommand()
 
+    def _backspaceFormat(self):
+        if not (len(self.text) in self.textFormating):
+            return
+        
+        self.textFormating.pop(len(self.text))
+
+    def _setFormat(self, onFormat: int, offFormat: int):
+        _isFormated: bool = False
+
+        for _index, _format in self.textFormating.items():
+            if self.cursorIndex != -1 and _index > self.cursorIndex: continue
+
+            if _format == onFormat: _isFormated = True
+            if _format == offFormat: _isFormated = False
+
+        self.textFormating[len(self.text) if self.cursorIndex == TextBox.END else self.cursorIndex] = offFormat if _isFormated else onFormat
+
+    def _addChar(self, event: pygame.Event):
+        _char: list[str] = list(self.text)
+
+        if self.cursorIndex == TextBox.END: _char.insert(len(self.text), event.unicode)
+        else: 
+            _char.insert(self.cursorIndex, event.unicode)
+            self.cursorIndex += 1
+
+        self.text = ''.join(_char)
+
+    def _removeChar(self):
+        _chars: list[str] = list(self.text)
+        if len(_chars) == 0: return
+                
+        _chars.pop(self.cursorIndex - 1 if self.cursorIndex != TextBox.END else self.cursorIndex)
+        self.cursorIndex = max(self.cursorIndex - 1, -1)
+
+        self.text = ''.join(_chars)
+
     def typing(self, event: pygame.Event):
         if self.active:
+            # Delete of text and removal of formating
             if event.key == pygame.K_BACKSPACE:
-                if len(self.text) > 0 and self.text[-1] == '}':
-                    _words: list[str] = self.text.split()
-                    _text: str = ''
+                print(self.cursorIndex)
+                self._backspaceFormat()
+                self._removeChar()
 
-                    for _i, _w in enumerate(_words):
-                        if _i == len(_words) - 1:
-                            continue
-                        _text += _w + ' '
+            # Moving of the cursor
+            elif event.key == pygame.K_LEFT:
+                if not self.text: return
+                if self.cursorIndex == TextBox.END: 
+                    self.cursorIndex = len(self.text)
 
-                    self.text = _text
+                self.cursorIndex = max(self.cursorIndex - 1, 0)
+
+            elif event.key == pygame.K_RIGHT:
+                if not self.text: return
+                if self.cursorIndex == TextBox.END: return
+
+                if self.cursorIndex == len(self.text) - 1: 
+                    self.cursorIndex = TextBox.END
                     return
-                self.text = self.text[:-1]
 
+                self.cursorIndex = min(self.cursorIndex + 1, len(self.text))
+
+            # Create new line
             elif event.mod & pygame.KMOD_SHIFT and event.key == pygame.K_RETURN:
-                self.text += ' {lb}'
+                self.textFormating[len(self.text) if self.cursorIndex == TextBox.END else self.cursorIndex] = TextBox.NEW_LINE
 
+            # Handle formating creation
+            elif event.key == pygame.K_LCTRL:
+                self.format = True
+            
+            elif self.format and event.key == pygame.K_b:
+                self.format = False
+                self._setFormat(TextBox.BOLD, TextBox.BOLD_OFF)
+
+            elif self.format and event.key == pygame.K_i:
+                self.format = False
+                self._setFormat(TextBox.ITALIC, TextBox.ITALIC_OFF)
+
+            elif self.format and event.key == pygame.K_a:
+                self.format = False
+                self._setFormat(TextBox.ABILITY, TextBox.ABILITY_OFF)
+
+            elif self.format and event.key == pygame.K_t:
+                self.format = False
+                self._setFormat(TextBox.ATTRIBUTE, TextBox.ATTRIBUTE_OFF)
+
+            # Exiting of the text box using enter
             elif event.key == pygame.K_RETURN:
                 self.exitField()
                 return
             
+            # The adding of characters while typing
             else:
-                if len(self.text) and self.text[-1] == '}':
-                    self.text += ' '
-                self.text += event.unicode
+                self.format = False
+                self._addChar(event)
+
+    def _drawBackground(self, size: list[int], background: dict[str, pygame.Surface]):
+        self.image.blit(background['TopLeft'], (0, 0))
+        self.image.blit(background['TopRight'], (size[0] - 10, 0))
+        self.image.blit(background['BottomLeft'], (0, size[1] - 10))
+        self.image.blit(background['BottomRight'], (size[0] - 10, size[1] - 10))
+
+        self.image.blit(pygame.transform.scale(background['TopMiddle'], (size[0] - 20, 10)), (10, 0))
+        self.image.blit(pygame.transform.scale(background['Left'], (10, size[1] - 20)), (0, 10))
+        self.image.blit(pygame.transform.scale(background['Right'], (10, size[1] - 20)), (size[0] - 10, 10))
+        self.image.blit(pygame.transform.scale(background['BottomMiddle'], (size[0] - 20, 10)), (10, size[1] - 10))
+
+        self.image.blit(pygame.transform.scale(background['Middle'], (size[0] - 20, size[1] - 20)), (10, 10))
 
     def draw(self, screen: pygame.Surface, right: int, scroll: list[int]):
         _background: dict[str, pygame.Surface] = self.background if not self.hovering else self.backgroundSelected
@@ -75,133 +190,218 @@ class TextBox():
 
         _size = self.image.size
 
-        self.image.blit(_background['TopLeft'], (0, 0))
-        self.image.blit(_background['TopRight'], (_size[0] - 10, 0))
-        self.image.blit(_background['BottomLeft'], (0, _size[1] - 10))
-        self.image.blit(_background['BottomRight'], (_size[0] - 10, _size[1] - 10))
-
-        self.image.blit(pygame.transform.scale(_background['TopMiddle'], (_size[0] - 20, 10)), (10, 0))
-        self.image.blit(pygame.transform.scale(_background['Left'], (10, _size[1] - 20)), (0, 10))
-        self.image.blit(pygame.transform.scale(_background['Right'], (10, _size[1] - 20)), (_size[0] - 10, 10))
-        self.image.blit(pygame.transform.scale(_background['BottomMiddle'], (_size[0] - 20, 10)), (10, _size[1] - 10))
-
-        self.image.blit(pygame.transform.scale(_background['Middle'], (_size[0] - 20, _size[1] - 20)), (10, 10))
-
-        _pos: list[int] = [_size[0] / 2 - self.font.size(self.text)[0] / 2, _size[1] / 2 - self.font.size(self.text)[1] / 2]
-        if self.topleft:
-            _pos = [8, 5]
-        elif self.font.size(self.text)[0] > _size[0]:
-            _pos = [_size[0] - self.font.size(self.text)[0] - 10, _size[1] / 2 - self.font.size(self.text)[1] / 2]
+        self._drawBackground(_size, _background)
 
         if self.size[1] > 1:
             self.multiLineBlit()
 
         else:
+            _pos: list[int] = [
+                _size[0] / 2 - self.font.size(self.text)[0] / 2, 
+                _size[1] / 2 - self.font.size(self.text)[1] / 2
+            ]
+
+            if self.topleft: _pos = [8, 5]
+            elif self.font.size(self.text)[0] > _size[0]: _pos = [
+                                                                    _size[0] - self.font.size(self.text)[0] - 10, 
+                                                                    _size[1] / 2 - self.font.size(self.text)[1] / 2
+                                                                ]
+
             self.image.blit(self.font.render(self.text + ('_' if self.active else ''), True, '#000000'), (_pos[0] + 1, _pos[1] + 1))
             self.image.blit(self.font.render(self.text + ('_' if self.active else ''), True, '#ffffff'), _pos)
         
         self.rect: pygame.Rect = pygame.Rect((self.pos[0] + right, self.pos[1] + scroll[1]), self.image.size)
-
         screen.blit(self.image, (self.pos[0] + right, self.pos[1] + scroll[1]))
+
+    def _formatCheck(self, index: int, wordBuffer: str, bufferFormating: dict[int, int]) -> int:
+        if not (index in self.textFormating):
+            return 0
+        
+        if self.textFormating[index] == TextBox.NEW_LINE:
+            return 1
+        
+        bufferFormating[len(wordBuffer)] = self.textFormating[index]
+        return 0
+
+    def _formatCharSize(self, char: str, index: int) -> int:
+        if not (index in self.textFormating):
+            return self.font.size(char)[0]
+        
+        match self.textFormating[index]:
+            case TextBox.BOLD: return self.fontBold.size(char)[0]
+            case TextBox.ABILITY: return self.fontBold.size(char)[0]
+            case TextBox.ATTRIBUTE: return self.fontBold.size(char)[0]
+
+            case TextBox.ITALIC: return self.fontItalic.size(char)[0]
+            
+            case _: return self.font.size(char)[0]
+
+    def _formatHandle(self, index: int, bufferFormating: dict[int, int]):
+        if not (index in bufferFormating):
+            return
+        
+        match (bufferFormating[index]):
+            case TextBox.BOLD: self.bold = True
+            case TextBox.BOLD_OFF: self.bold = False
+
+            case TextBox.ITALIC: self.italic = True
+            case TextBox.ITALIC_OFF: self.italic = False
+
+            case TextBox.ABILITY: self.red = True
+            case TextBox.ABILITY_OFF: self.red = False
+
+            case TextBox.ATTRIBUTE: self.blue = True
+            case TextBox.ATTRIBUTE_OFF: self.blue = False
+
+    def _renderWord(self, wordBuffer: str, bufferFormating: dict[int, int], x: int, y: int):
+
+        _x: int = x
+        _color: str = '#ffffff'
+        for _index, _char in enumerate(wordBuffer):
+            self._formatHandle(_index, bufferFormating)
+            _font: pygame.Font = self.font
+            self.currentFormat['bold'] = False
+            self.currentFormat['italic'] = False
+            self.currentFormat['blue'] = False
+            self.currentFormat['red'] = False
+
+            if self.italic:
+                _font = self.fontItalic
+                self.currentFormat['italic'] = True
+
+            elif self.red: 
+                _color = '#D34D35'
+                _font = self.fontBold
+                self.currentFormat['red'] = True
+
+            elif self.blue: 
+                _color = '#2D638E'
+                _font = self.fontBold
+                self.currentFormat['blue'] = True
+
+            elif self.bold: 
+                _font = self.fontBold
+                self.currentFormat['bold'] = True
+
+            self.image.blit(_font.render(_char, True, _color), (_x, y))
+
+            _x += self.font.size(_char)[0]
+
+    def _cursorPlaceInBuffer(self):
+        _index: int = 0
+        _words: list[str] = self.text.split(' ')
+        
+        for _word in _words:
+            for _i, _char in enumerate(_word):
+                if _index == self.cursorIndex: return _i
+                _index += 1
+
+            _index += 1
+
+        return -1
 
     def multiLineBlit(self):
         _size: list[int] = self.image.size
-        _lines: list[str] = []
-        _words: list[str] = self.text.split()
-        _text: str = ''
+        _chars: list[str] = list(self.text)
 
-        _backset: int = 0
+        _wordBuffer: str = ''
+        _bufferFormating: dict[int, int] = {} 
 
-        for _w in _words:
-            if _w == '{lb}':
-                _text += _w
-                _lines.append(_text)
-                _text = ''
-                _backset = 0
-                continue
+        _lineWidth: int = 0
+        _lineIndex: int = 0
 
-            if _w == '{b}' or _w == '{/b}' or _w == '{i}' or _w == '{\i}' or _w == '{a}' or _w == '{/a}' or _w == '{t}' or _w == '{/t}' or _w == '{lb}':
-                _backset += self.font.size(_w + ' ')[0]
-                _text += _w + ' '
-                continue
+        self.lines = 0
+        self.lineCharWidth = []
 
-            if self.font.size(_text + _w)[0] - _backset >= _size[0] - 16:
-                _lines.append(_text)
-                _text = _w + ' '
-                _backset = 0
-                continue
+        _x: int = 8
+        _y: int = 5
 
-            _text += _w + ' '
+        _cursorInBuffer: bool = False
 
-        _lines.append(_text + ('_' if self.active else ''))
+        for _index, _char in enumerate(_chars):
 
-        _y: int = (-20 * ((len(_lines) - 1) - self.size[1])) if len(_lines) - 1 > self.size[1] else 5
-        _x: int = 8 
-        for _l in _lines:
-            _words: list[str] = _l.split()
-            for _w in _words:
-                if _w == '{b}':
-                    self.bold = True
-                    self.currentFormat['bold'] = True
-                    continue
-                if _w == '{/b}':
-                    self.bold = False
-                    self.currentFormat['bold'] = False
-                    continue
+            if _char == ' ':
+                self._renderWord(_wordBuffer, _bufferFormating, _x, _y)
+                _x += self.font.size(_wordBuffer)[0] # TODO: needs to check if formated
+                _wordBuffer = ''
+                _bufferFormating = {}
+                _cursorInBuffer = False
 
-                if _w == '{i}':
-                    self.italic = True
-                    self.currentFormat['italic'] = True
-                    continue
-                if _w == '{/i}':
-                    self.italic = False
-                    self.currentFormat['italic'] = False
-                    continue
+            if self._formatCheck(_index, _wordBuffer, _bufferFormating) == 1:
+                _y += 20
+                _x = 8
+                _lineWidth = self.font.size(_wordBuffer)[0]
+                self.lines += 1
+                self.lineCharWidth.append(_lineIndex - len(_wordBuffer))
+                _lineIndex = len(_wordBuffer) - 1
 
-                if _w == '{a}':
-                    self.red = True
-                    self.currentFormat['red'] = True
-                    continue
-                if _w == '{/a}':
-                    self.red = False
-                    self.currentFormat['red'] = False
-                    continue
+            _charSize: int = self._formatCharSize(_char, _index)
 
-                if _w == '{t}':
-                    self.blue = True
-                    continue
-                if _w == '{/t}':
-                    self.blue = False
-                    continue
+            if _lineWidth + _charSize > _size[0] - TextBox.TEXT_WIDTH:
 
-                if _w == '{lb}':
-                    continue
+                if self.font.size(_wordBuffer)[0] + _charSize > _size[0] - TextBox.TEXT_WIDTH:
+                    self._renderWord(_wordBuffer, _bufferFormating, _x, _y)
+                    _wordBuffer = ''
 
-                _color: str = '#ffffff'
-                _xOffset: int = 3
-                if self.bold:
-                    self.font.bold = True
-                    _xOffset = 6
-                elif self.italic:
-                    self.font.italic = True
-                elif self.red:
-                    _color = '#D34D35'
-                    self.font.bold = True
-                    _xOffset = 6
-                elif self.blue:
-                    _color = '#2D638E'
-                    self.font.bold = True
-                    _xOffset = 6
-                
-                self.image.blit(self.font.render(_w, True, '#000000'), (_x, _y + 1))
-                self.image.blit(self.font.render(_w, True, _color), (_x, _y))
-                _x += self.font.size(_w)[0] + _xOffset
+                _prevX: int = _x - (self.font.size(_wordBuffer.strip())[0])
+                _x = 8
+                _y += 20
 
-                self.font.bold = False
-                self.font.italic = False
+                if _cursorInBuffer:
+                    self.cursorPos = [_x - TextBox.CURSOR_OFFSET, _y]
+                    _placeInBuffer: int = self._cursorPlaceInBuffer()
+                    if _placeInBuffer == -1: self.cursorPos = [_prevX - TextBox.CURSOR_OFFSET, _y - 20]
 
-            _y += 20
-            _x = 8
+                    for _i, _c in enumerate(_wordBuffer.strip()):
+                        if _i == _placeInBuffer: 
+                            break
+                        self.cursorPos[0] += self.font.size(_c)[0]
+
+                _lineWidth = self.font.size(_wordBuffer)[0]
+                self.lineCharWidth.append(_lineIndex - len(_wordBuffer))
+                _wordBuffer = _wordBuffer.strip()
+
+                self.lines += 1
+
+            _lineWidth += _charSize
+            _wordBuffer = _wordBuffer + _char
+            _lineIndex += 1
+
+            if _index == self.cursorIndex:
+                _cursorInBuffer = True
+                self.cursorPos = [_x - TextBox.CURSOR_OFFSET, _y]
+
+                for _i, _c in enumerate(_wordBuffer):
+                    if _i == len(_wordBuffer) - 1: break
+                    self.cursorPos[0] += self.font.size(_c)[0]
+
+        if _wordBuffer:
+            self._renderWord(_wordBuffer, _bufferFormating, _x, _y)
+            self.lineCharWidth.append(_lineIndex)
+            _x += self.font.size(_wordBuffer)[0]
+
+        if self.cursorIndex == TextBox.END:
+            self.cursorPos = [_x - TextBox.CURSOR_OFFSET, _y]
+
+        if self.cursorIndex == 0:
+            self.cursorPos = [4, 5]
+
+        if self.active:
+            self.image.blit(self.font.render(self.cursor, True, '#ffffff'), self.cursorPos)
+
+        if len(self.text) in self.textFormating:
+            match self.textFormating[len(self.text)]:
+                case TextBox.BOLD: self.currentFormat['bold'] = True
+                case TextBox.BOLD_OFF: self.currentFormat['bold'] = False
+
+                case TextBox.ITALIC: self.currentFormat['italic'] = True
+                case TextBox.ITALIC_OFF: self.currentFormat['italic'] = False
+
+                case TextBox.ABILITY: self.currentFormat['red'] = True
+                case TextBox.ABILITY_OFF: self.currentFormat['red'] = False
+
+                case TextBox.ATTRIBUTE: self.currentFormat['blue'] = True
+                case TextBox.ATTRIBUTE_OFF: self.currentFormat['blue'] = False
 
         self.bold = False
         self.italic = False
@@ -220,6 +420,7 @@ class TextBox():
         self.active = True
 
 def _splitBackground(file: str) -> dict[str, pygame.Surface]:
+
     _img = pygame.image.load(file).convert_alpha()
 
     _temp: dict[str, pygame.Surface] = {

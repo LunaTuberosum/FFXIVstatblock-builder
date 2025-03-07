@@ -19,10 +19,14 @@ class Menu():
         self.window: Background = None
 
         self.saveFiles: list[Save] = [Save(_save, self) for _save in self.saves]
+        self.saveFiles.sort(key=Menu._sortList)
         self.newSave: SaveAdd = SaveAdd(self)
 
         self.contextMenu: ContextMenu = None
         self.contextMenuPos: list[int] = []
+
+    def _sortList(e: Save) -> int:
+        return int(e.saveJson.split(".")[0][9:])
 
     def leftClick(self):
         if self.window:

@@ -33,10 +33,30 @@ class Sheet(MenuObject):
     def deregister(self):
         super().deregister()
         
+    def on_click(self) -> None:
+        if not self.hovering:
+            return
+        
+        if self.click_timer.time_left() > 0:
+            pass
+        else:
+            self.click_timer.start()
+            
+            if not self.drag:
+                mouse: tuple[int, int] = pygame.mouse.get_pos()
+                self.drag_pos = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
+                
+            self.drag = True
+        
     def get_entry(self, entry) -> str:
         return super().get_entry(entry['components']['Name_Component']['name'])
         
     def draw(self, screen: pygame.Surface, x: int, y: int):
+        if self.drag:
+            mouse: tuple[int, int] = pygame.mouse.get_pos()
+            x = mouse[0] - self.drag_pos[0] - RECT_POS[0]
+            y = mouse[1] - self.drag_pos[1] - RECT_POS[1]
+        
         super().draw(x, y, Y_OFFSET)
         self.rect = pygame.Rect((x + RECT_POS[0], y + RECT_POS[1]), RECT_SIZE)
         

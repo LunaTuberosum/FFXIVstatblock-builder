@@ -10,6 +10,7 @@ class EventBus(Bus):
                 'quit': [],
                 
                 'change_folder': [],
+                'move_file': [],
                 'duplicate_sheet': [],
                 'delete_file': [],
                 

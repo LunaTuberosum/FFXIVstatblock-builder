@@ -64,8 +64,8 @@ class TextBox(Component):
         self.cursor_timer: Timer = Timer(400)
         
         self.cursor_selection: bool = False
-        self.cursor_selection_start: tuple[int, int] = []
-        self.cursor_selection_end: tuple[int, int] = []
+        self.cursor_selection_start: tuple[int, int] = ()
+        self.cursor_selection_end: tuple[int, int] = ()
         self.highlighted_text: str = ''
         
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)

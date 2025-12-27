@@ -6,11 +6,9 @@ import pygame
 
 from singletons import resourceHandler
 from singletons.eventBus import event_bus
-from singletons.keyBus import key_bus
 
 from menu.menuObject import MenuObject
 from menu.sheet import Sheet
-from src.timer import Timer
 
 
 ENTRY_START_Y: int = 75
@@ -42,16 +40,12 @@ class Folder(MenuObject):
         self.add_files()
         
         self.is_prev: bool = False
-        
-        self.click_timer: Timer = Timer(300)
-        
-        key_bus.register('mouse_left_down', self.on_click)
+            
         event_bus.register('duplicate_sheet', self.duplicate_sheet)
         
     def deregister(self):
         super().deregister()
         
-        key_bus.deregister('mouse_left_down', self.on_click)
         event_bus.deregister('duplicate_sheet', self.duplicate_sheet)
         
     def on_click(self) -> None:
@@ -62,6 +56,12 @@ class Folder(MenuObject):
             event_bus.sign('change_folder', self)
         else:
             self.click_timer.start()
+            
+            if not self.drag:
+                mouse: tuple[int, int] = pygame.mouse.get_pos()
+                self.drag_pos = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
+                
+            self.drag = True
         
     def add_files(self) -> None:
         # '' -> 'folder' -> 'fodler//folder2'
@@ -71,12 +71,20 @@ class Folder(MenuObject):
                 continue
             self.files.append(Folder(f'{self.path}\\{self.name}', m_file))
             
+        self.sort()
+        
+    def sort(self) -> None:
         self.files.sort(key=sort())
         
     def get_entry(self, entry) -> str:
         return super().get_entry(entry.name)
             
     def draw(self, screen: pygame.Surface, x: int, y: int) -> None:
+        if not self.is_prev and self.drag:
+            mouse: tuple[int, int] = pygame.mouse.get_pos()
+            x = mouse[0] - self.drag_pos[0] - RECT_POS[0]
+            y = mouse[1] - self.drag_pos[1] - RECT_POS[1]
+        
         if self.is_prev:
             prev_name: str = self.name
             self.name = 'Go Back...'
@@ -94,7 +102,7 @@ class Folder(MenuObject):
             screen.blit(self.add_outline(self.image), (x - 2, y - 2))
         else:
             screen.blit(self.image, (x, y))
-            
+                    
     def context_menu(self) -> None:
         if self.is_prev: return
         
@@ -115,7 +123,7 @@ class Folder(MenuObject):
         resourceHandler.save_dir(f'.\\saves\\{self.path}\\{self.name}', new_name)
         
         self.files.append(Folder(f'{self.path}\\{self.name}', new_name))
-        self.files.sort(key=sort())
+        self.sort()
     
     def create_sheet(self) -> None:
         event_bus.sign('context_menu', {})
@@ -132,7 +140,7 @@ class Folder(MenuObject):
         resourceHandler.save_json(f'.\\saves\\{self.path}\\{self.name}\\{new_name}.json', {})
         
         self.files.append(Sheet(f'{self.path}\\{self.name}', f'{new_name}.json'))
-        self.files.sort(key=sort())
+        self.sort()
         
     def duplicate_sheet(self, sheet: Sheet) -> None:
         if not any(m_file == sheet for m_file in self.files):
@@ -150,7 +158,7 @@ class Folder(MenuObject):
         resourceHandler.save_json(f'.\\saves\\{self.path}\\{self.name}\\{new_name}.json', sheet.sheet_info)
         
         self.files.append(Sheet(f'{self.path}\\{self.name}', f'{new_name}.json'))
-        self.files.sort(key=sort())
+        self.sort()
         
     def rename(self, text: str) -> None:
         if not text:

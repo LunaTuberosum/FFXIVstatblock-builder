@@ -8,6 +8,8 @@ from singletons import resourceHandler
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 
+from src.timer import Timer
+
 
 ENTRY_START_X: int = 33
 ENTRY_INDENT_X: int = 44
@@ -33,11 +35,33 @@ class MenuObject():
         self.fontTitle: pygame.font.Font = resourceHandler.load_font('assets/fonts/Deutschlander.otf', 25)
         
         self.hovering: bool = False
+    
+        self.drag: bool = False
+        self.drag_pos: tuple[int, int] = ()
+        
+        self.click_timer: Timer = Timer(300)
+        
+        key_bus.register('mouse_left_down', self.on_click)
+        key_bus.register('mouse_left_up', self.on_release)
         
         key_bus.register('mouse_right_down', self.context_menu)
         
     def deregister(self) -> None:
+        key_bus.deregister('mouse_left_down', self.on_click)
+        key_bus.deregister('mouse_left_up', self.on_release)
+        
         key_bus.deregister('mouse_right_down', self.context_menu)
+        
+    def on_click(self) -> None:
+        pass
+        
+    def on_release(self) -> None:
+        if not self.hovering or not self.drag:
+            return
+        
+        self.drag = False
+        
+        event_bus.sign('move_file', self)
         
     def add_outline(self, image: pygame.Surface) -> pygame.Surface:
         con_mask = pygame.mask.Mask((5, 5), fill=True)

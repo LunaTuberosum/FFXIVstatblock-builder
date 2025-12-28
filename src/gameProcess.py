@@ -35,6 +35,12 @@ class GameProcess():
         
         key_bus.register('esc_down', self.quit)
         
+    def deregister(self) -> None:
+        event_bus.deregister('context_menu', self.create_context_menu)
+        event_bus.deregister('ui_window', self.create_ui_window)
+        
+        key_bus.deregister('esc_down', self.quit)
+        
     def is_event(self, event_id: int) -> pygame.Event:
         for event in self.events:
             if event.type == event_id:

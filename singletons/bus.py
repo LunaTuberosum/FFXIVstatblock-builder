@@ -5,6 +5,10 @@ class Bus():
     def __init__(self, signals: dict[str, list[Callable[[None], None]]]) -> None:
         self.signals: dict[str, list[Callable[[None], None]]] = signals
         
+    def reset(self) -> None:
+        for sign in self.signals.keys():
+            self.signals[sign] = []
+    
     def register(self, signal: str, call: Callable[[None], None]) -> None:
         try:
             self.signals.get(signal).append(call)

@@ -2,9 +2,12 @@ from os import listdir
 import sys
 import pygame
 
+from editor.editor import Editor
 from menu.menu import Menu
 
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus 
+
 from singletons import resourceHandler
 
 from src.display import Display
@@ -16,7 +19,7 @@ DEFAULT_SCREEN_HEIGHT = 810
 
 class GameLoop():
     def __init__(self) -> None:
-        pygame.font.init()
+        pygame.init()
         
         self.clock = pygame.Clock()
         self.display: Display = None 
@@ -30,7 +33,12 @@ class GameLoop():
         self.current_process: GameProcess = Menu(self)
         self.run: bool = True
         
+        self.set_up_bus_calls()
+        
+    def set_up_bus_calls(self) -> None:
         event_bus.register('quit', self.quit)
+        event_bus.register('load_sheet', self.load_sheet)
+        event_bus.register('return_menu', self.return_menu)
         
     def quit(self) -> None:
         pygame.quit()
@@ -59,6 +67,20 @@ class GameLoop():
     def get_screen(self) -> pygame.Surface:
         return self.display.screen
     
+    def load_sheet(self, sheet: object) -> None:
+        event_bus.reset()
+        key_bus.reset()
+        self.set_up_bus_calls()
+        
+        self.current_process = Editor(self, sheet)
+        
+    def return_menu(self) -> None:
+        event_bus.reset()
+        key_bus.reset()
+        self.set_up_bus_calls()
+            
+        self.current_process = Menu(self)
+            
     def update(self) -> None:
         while self.run:
             try:

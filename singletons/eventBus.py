@@ -14,13 +14,16 @@ class EventBus(Bus):
                 'duplicate_sheet': [],
                 'delete_file': [],
                 
+                'load_sheet': [],
+                'return_menu': [],
+                
                 'context_menu': [],
                 'ui_window': [],
                 
                 'typing_register': [],
             }
         )
-    
+
     def sign(self, signal: str, *data) -> None:
         try:
             _signal: list[Callable[..., None]] = self.signals.get(signal)

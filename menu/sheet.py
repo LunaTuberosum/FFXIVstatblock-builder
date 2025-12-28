@@ -38,7 +38,7 @@ class Sheet(MenuObject):
             return
         
         if self.click_timer.time_left() > 0:
-            pass
+            event_bus.sign('load_sheet', self)
         else:
             self.click_timer.start()
             

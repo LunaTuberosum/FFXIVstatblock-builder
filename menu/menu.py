@@ -12,7 +12,7 @@ from src.gameProcess import GameProcess
 from ui.confirmElement import ConfirmElement
 
 
-pygame.init() ## TODO: IF CHANGE TO font.init, it only opens on moniter 1
+pygame.font.init()
 JUPITER_FONT: pygame.font.Font = resourceHandler.load_font('.\\assets\\fonts\\jupiter_pro_regular.otf', 40)
 MIEDINGER: pygame.font.Font = resourceHandler.load_font('assets/fonts/miedinger_medium.ttf', 18)
 
@@ -20,7 +20,7 @@ SAVE_X_START: int = 15
 SAVE_Y_START: int = 70
 SAVE_INCREASE: int = 260
 class Menu(GameProcess):
-    def __init__(self, main: object):
+    def __init__(self, main: object) -> None:
         super().__init__(main)
         
         self.current_folder: Folder = Folder('', '')
@@ -36,6 +36,15 @@ class Menu(GameProcess):
         event_bus.register('delete_file', self.delete_file)
         
         key_bus.register('mouse_right_down', self.menu_context_menu)
+        
+    def deregister(self) -> None:
+        super().deregister()
+        
+        event_bus.deregister('change_folder', self.change_folder)
+        event_bus.deregister('move_file', self.move_file)
+        event_bus.deregister('delete_file', self.delete_file)
+        
+        key_bus.deregister('mouse_right_down', self.menu_context_menu)
         
     def menu_context_menu(self) -> None:
         event_bus.sign('context_menu', {

@@ -25,8 +25,14 @@ class KeyHandler():
         if self.textbox:
             return
     
+        if keys[pygame.K_SPACE]:
+            key_bus.sign('space_down')
+            
         if keys[pygame.K_ESCAPE]:
             key_bus.sign('esc_down')
     
     def __key_up(self) -> None:
         keys = pygame.key.get_just_released()
+        
+        if keys[pygame.K_SPACE]:
+            key_bus.sign('space_up')

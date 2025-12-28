@@ -6,6 +6,8 @@ from singletons import resourceHandler
 from singletons.keyBus import key_bus
 
 
+IMAGE_POS: tuple[int, int] = (10, 2)
+
 class ContextMenuOption():
     def __init__(self, mouse_pos: tuple[int, int], pos: tuple[int, int], text: str, call: Callable[[None], None]) -> None:
         self.pos: tuple[int, int] = pos
@@ -23,7 +25,7 @@ class ContextMenuOption():
         self.clicked: bool = False
 
         self.hover_background: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\ContextMenuHoverBackground.png')
-        self.clciked_background: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\ContextMenuClickedBackground.png')
+        self.clicked_background: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\ContextMenuClickedBackground.png')
         
         key_bus.register('mouse_left_down', self.on_click)
         
@@ -34,9 +36,9 @@ class ContextMenuOption():
         if self.text == '': return
 
         if self.hovering:
-            screen.blit(self.hover_background, (self.pos[0] - 9, self.pos[1] + 2))
+            screen.blit(self.hover_background, (self.pos[0] - IMAGE_POS[0], self.pos[1] + IMAGE_POS[1]))
         if self.clicked:
-            screen.blit(self.clciked_background, (self.pos[0] - 9, self.pos[1] + 2))
+            screen.blit(self.clicked_background, (self.pos[0] - IMAGE_POS[0], self.pos[1] + IMAGE_POS[1]))
 
         screen.blit(self.font.render(self.text, True, '#000000'), (self.pos[0], self.pos[1] + 1))
         screen.blit(self.font.render(self.text, True, '#DED2B8'), (self.pos))

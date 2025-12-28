@@ -32,12 +32,14 @@ class ConfirmElement(UIElement):
         
         self.text: str = text
 
-        self.confrim_command: Callable[[None], None] = confrim_command
+        self.confrim_command: Callable[[None], None] = self.cancel
+        if confrim_command:
+            self.confrim_command = confrim_command
 
         self.confirm_text: str = confirm_text
         self.cancel_text: str = cancel_text
         
-        self.addComponent(
+        self.add_component(
             'Confirm',
             Button(
                 pos=(30, 135),
@@ -49,7 +51,7 @@ class ConfirmElement(UIElement):
             )
         )
         
-        self.addComponent(
+        self.add_component(
             'Cancel',
             Button(
                 pos=(272, 135),

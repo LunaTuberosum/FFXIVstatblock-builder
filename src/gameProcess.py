@@ -9,6 +9,7 @@ from src.keyHandler import KeyHandler
 from src.mouseHandler import MouseHandler
 
 from ui.confirmElement import ConfirmElement
+from ui.escapeMenu import EscapeMenu
 from ui.uiElement import UIElement
 
 
@@ -33,13 +34,13 @@ class GameProcess():
         event_bus.register('context_menu', self.create_context_menu)
         event_bus.register('ui_window', self.create_ui_window)
         
-        key_bus.register('esc_down', self.quit)
+        key_bus.register('esc_down', self.escape_menu)
         
     def deregister(self) -> None:
         event_bus.deregister('context_menu', self.create_context_menu)
         event_bus.deregister('ui_window', self.create_ui_window)
         
-        key_bus.deregister('esc_down', self.quit)
+        key_bus.deregister('esc_down', self.escape_menu)
         
     def is_event(self, event_id: int) -> pygame.Event:
         for event in self.events:
@@ -150,6 +151,20 @@ class GameProcess():
                 cancel_text='Stay'
             )
         )
+        
+    def escape_menu(self) -> None:
+        if isinstance(self.ui_window, EscapeMenu):
+            event_bus.sign('ui_window', None)
+            return
+        
+        event_bus.sign('ui_window', 
+            EscapeMenu(
+                self.menu_options()
+            )
+        )
+        
+    def menu_options(self) -> dict[str, Callable[[None], None]]:
+        return {}
     
     def draw(self) -> None:
         if self.context_menu:

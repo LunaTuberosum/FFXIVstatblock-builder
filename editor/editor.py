@@ -1,3 +1,4 @@
+from typing import Callable
 import pygame
 
 from editor.statcard import StatCard
@@ -86,16 +87,36 @@ class Editor( GameProcess):
         
     def quit(self) -> None:
         def confirm():
-            event_bus.sign('return_menu')
+            event_bus.sign('quit')
                     
         event_bus.sign('ui_window', 
             ConfirmElement(
-                'Are you sure you want to exit?',
+                'Are you sure you want to exit?\nYou will loose any unsaved progress.',
                 confirm,
                 confirm_text='Exit',
                 cancel_text='Stay'
             )
         )
+        
+    def menu_return(self) -> None:
+        def confirm():
+            event_bus.sign('return_menu')
+                    
+        event_bus.sign('ui_window', 
+            ConfirmElement(
+                'Are you sure you want to return?\nYou will loose any unsaved progress.',
+                confirm,
+                confirm_text='Return',
+                cancel_text='Stay'
+            )
+        )
+        
+    def menu_options(self) -> dict[str, Callable[[None], None]]:
+        return {
+            'Save': self.quit,
+            'Return to Menu': self.menu_return,
+            'Exit Program': self.quit
+        }
         
     def draw(self) -> None:
         screen: pygame.Surface = self.main.get_screen()

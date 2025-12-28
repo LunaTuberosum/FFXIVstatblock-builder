@@ -1,3 +1,4 @@
+from typing import Callable
 import pygame
 
 from menu.menuObject import MenuObject
@@ -207,6 +208,11 @@ class Menu(GameProcess):
             self.hover_object.hover()
     
         self.draw()
+        
+    def menu_options(self) -> dict[str, Callable[[None], None]]:
+        return {
+            'Exit Program': self.quit
+        }
         
     def draw(self) -> None:
         screen: pygame.Surface = self.main.get_screen()

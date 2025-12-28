@@ -4,6 +4,7 @@ from singletons import resourceHandler
 
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
+from uiComponents.button import Button
 
 
 BACKGROUND_TILE_SIZE: int = 50
@@ -52,6 +53,17 @@ class UIElement():
         
         key_bus.register('mouse_left_down', self.check_off_click)
         
+        self.add_component('Close_UI',Button(
+            pos=(
+                self.size[0] - 43,
+                19
+            ),
+            size=(24, 24),
+            image='.\\assets\\icons\\CloseButton.png',
+            image_hover='.\\assets\\icons\\CloseButton_hover.png',
+            command=self.close
+        ))
+        
     def deregister(self) -> None:
         key_bus.deregister('mouse_left_down', self.check_off_click)
         
@@ -80,11 +92,11 @@ class UIElement():
     def hover(self) -> None:
         self.hovering = True
         
-    def addComponent(self, component_name: str, component: object) -> object:
+    def add_component(self, component_name: str, component: object) -> object:
         self.components[component_name] = component
         return component
 
-    def getComponent(self, component_name: str) -> object:
+    def get_component(self, component_name: str) -> object:
         return self.components[component_name]
         
     def render_text(self, text: str, color: str, pos: tuple[int, int]) -> None:

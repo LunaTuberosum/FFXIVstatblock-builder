@@ -29,7 +29,7 @@ class RenameElement(UIElement):
         from menu.menuObject import MenuObject
         self.m_file: MenuObject = m_file
         
-        textbox: TextBox = self.addComponent(
+        textbox: TextBox = self.add_component(
             'Name_Text',
             TextBox(
                 pos=(220, 80),
@@ -38,7 +38,7 @@ class RenameElement(UIElement):
         )
         textbox.change_text(self.m_file.name)
         
-        self.addComponent(
+        self.add_component(
             'Close',
             Button(
                 pos=(30, 135),
@@ -50,7 +50,7 @@ class RenameElement(UIElement):
             )
         )
         
-        self.addComponent(
+        self.add_component(
             'Confirm',
             Button(
                 pos=(382, 135),
@@ -83,5 +83,5 @@ class RenameElement(UIElement):
             comp.draw(screen, self.pos)
             
     def change_name(self):
-        self.m_file.rename(self.getComponent('Name_Text').text)
+        self.m_file.rename(self.get_component('Name_Text').text)
         self.close()

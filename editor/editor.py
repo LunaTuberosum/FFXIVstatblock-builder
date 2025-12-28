@@ -30,7 +30,8 @@ class Editor( GameProcess):
             'space_down': False
         }
         
-        self.temp = StatCard(3, 1)
+        self.stat_cards: list[StatCard] = []
+        self.load()
         
     def setup_bus_calls(self) -> None:
         super().setup_bus_calls()
@@ -79,6 +80,13 @@ class Editor( GameProcess):
                 min(self.pan[0] + event.rel[0], 0), 
                 min(self.pan[1] + event.rel[1], 0)
             )
+            
+        for card in self.stat_cards:
+            for component in card.components.values():
+                component.no_hover()
+                
+                if component.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
+                    self.hover_object = component
         
         if self.hover_object:
             self.hover_object.hover()
@@ -123,9 +131,20 @@ class Editor( GameProcess):
         
         screen.fill('#313031')
         
-        self.temp.draw(screen, self.pan, 40)
+        x: int = 40
+        for card in self.stat_cards:
+            card.draw(screen, self.pan, x)
+                        
+            x += card.size[0] + 20
         
         screen.blit(MIEDINGER.render(str(round(self.main.clock.get_fps(), 1)), True, '#00ff00'), (screen.size[0]- 100, 10))
         
         super().draw()
         
+    def load(self) -> None:
+        for card in self.sheet.sheet_info.values():
+            s_card: StatCard = StatCard(card['width'], card['height'])
+            
+            s_card.load(card['components'])
+            
+            self.stat_cards.append(s_card)

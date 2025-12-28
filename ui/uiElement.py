@@ -5,6 +5,7 @@ from singletons import resourceHandler
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 from uiComponents.button import Button
+from uiComponents.componet import Component
 
 
 BACKGROUND_TILE_SIZE: int = 50
@@ -42,7 +43,7 @@ class UIElement():
             )
         )
         
-        self.components: dict[str, object] = {}
+        self.components: dict[str, Component] = {}
         
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\noto-sans.regular.ttf', 18)
 
@@ -92,11 +93,11 @@ class UIElement():
     def hover(self) -> None:
         self.hovering = True
         
-    def add_component(self, component_name: str, component: object) -> object:
+    def add_component(self, component_name: str, component: Component) -> Component:
         self.components[component_name] = component
         return component
 
-    def get_component(self, component_name: str) -> object:
+    def get_component(self, component_name: str) -> Component:
         return self.components[component_name]
         
     def render_text(self, text: str, color: str, pos: tuple[int, int]) -> None:

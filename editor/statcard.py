@@ -1,5 +1,7 @@
 import pygame
 
+from editor.cardComponents.cardComponent import CardComponent
+from editor.cardComponents.nameComponent import NameComponent
 from singletons import resourceHandler
 
 
@@ -18,6 +20,8 @@ class StatCard():
         self.background: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.__draw_background()
         
+        self.components: dict[str, CardComponent] = {}
+        
         self.image: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.rect: pygame.Rect = self.image.get_rect(topleft=(0, 40))
         
@@ -27,7 +31,24 @@ class StatCard():
         
         self.image.blit(self.background)
         
+        for componet in self.components.values():
+            componet.draw(self.image)
+            
         screen.blit(self.image, self.rect.topleft)
+        
+    def add_component(self, component_name: str, component: CardComponent) -> CardComponent:
+        self.components[component_name] = component
+        return component
+
+    def get_component(self, component_name: str) -> CardComponent:
+        return self.components[component_name]
+        
+    def load(self, component_data: dict[str, dict]) -> None:
+        self.add_component(
+            'Name_Component',
+            NameComponent(self)
+        )
+        self.get_component('Name_Component').load(component_data['Name_Component'])
         
     def __draw_background(self) -> None:
         _background: dict[str, pygame.Surface] = StatCard.__split_background()

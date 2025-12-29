@@ -2,7 +2,6 @@ import pygame
 
 from editor.cardComponents.cardComponent import CardComponent
 
-from editor.ui.nameElement import NameElement
 from singletons.eventBus import event_bus
 
 
@@ -26,7 +25,7 @@ class NameComponent(CardComponent):
         
         self.name: str = 'Character Name'
         self.level: str = '00'
-        self.levelPosition: bool = LEVEL_END
+        self.level_position: bool = LEVEL_END
 
         self.__draw_text_face()
         
@@ -41,13 +40,17 @@ class NameComponent(CardComponent):
         if not self.hovering:
             return
         
+        from editor.ui.nameElement import NameElement
         event_bus.sign('ui_window', NameElement(self))
     
     def load(self, data: dict[str]) -> None:
         self.name = data['name']
         self.level = data['level']
-        self.levelPosition = data['levelPosition']
+        self.level_position = data['levelPosition']
 
+        self.__draw_text_face()
+        
+    def refresh(self) -> None:
         self.__draw_text_face()
         
     def __draw_text_face(self) -> None:
@@ -58,7 +61,7 @@ class NameComponent(CardComponent):
         limit: int = NAME_LIMIT_TOPLEFT - self.font_cap.size(level)[0]
         
         words: list[str] = self.name.split(' ')
-        if self.levelPosition == LEVEL_END:
+        if self.level_position == LEVEL_END:
             words.append(level)
             limit = NAME_LIMIT_END
             
@@ -91,7 +94,7 @@ class NameComponent(CardComponent):
             self._render_small_case(line, (0, y))
             y += LINE_HEIGHT
             
-        if self.levelPosition == LEVEL_TOPLEFT:
+        if self.level_position == LEVEL_TOPLEFT:
             self._render_small_case(level, (limit, 0))
             
         

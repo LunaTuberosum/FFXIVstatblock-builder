@@ -38,8 +38,11 @@ class CardComponent():
         
         self.image.fill((0, 0, 0, 0))
         if self.hovering:
-            self.image.fill('#E0D3BF')
-        
+            self.image.fill('#E0D3BF')      
+            
+    def refresh(self) -> None:
+        pass
+               
     def on_click(self) -> None:
         pass
         

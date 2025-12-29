@@ -1,14 +1,17 @@
 import pygame
 
-from ui.uiElement import UIElement
+from editor.cardComponents.nameComponent import NameComponent
+
+from editor.ui.statCardElement import StatCardElement
+
 from uiComponents.button import Button
 from uiComponents.textBox import TextBox
 
 
 ELEMENT_SIZE: tuple[int, int] = (550, 278)
 
-class NameElement(UIElement):
-    def __init__(self, component: object) -> None:
+class NameElement(StatCardElement[NameComponent]):
+    def __init__(self, component) -> None:
         super().__init__(
             name='Name',
             title='Name',
@@ -16,11 +19,9 @@ class NameElement(UIElement):
             pos=(
                 pygame.display.get_surface().size[0] - ELEMENT_SIZE[0], 
                 30
-            )
+            ),
+            component=component
         )
-        
-        from editor.cardComponents.nameComponent import NameComponent
-        self.component: NameComponent = component
         
         self.add_component(
             'Name_Text',
@@ -59,40 +60,8 @@ class NameElement(UIElement):
             )
         )
         
-        
-        self.add_component(
-            'Close',
-            Button(
-                pos=(30, 215),
-                size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
-                command=self.close,
-                text='Close'
-            )
-        )
-        
-        self.add_component(
-            'Confirm',
-            Button(
-                pos=(322, 215),
-                size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
-                command=None,
-                text='Confirm'
-            )
-        )
-        
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)
-        
-        if self.pos[0] != screen.size[0] - ELEMENT_SIZE[0]:
-                    
-            self.pos = (
-                pygame.display.get_surface().size[0] - ELEMENT_SIZE[0], 
-                30
-            )
             
         self.render_text('Name', '#C2C2C2', (25, 55))
 
@@ -109,9 +78,26 @@ class NameElement(UIElement):
         for comp in self.components.values():
             comp.draw(screen, self.pos)
             
+    def apply(self) -> None:
+        self.component.name = self.get_component('Name_Text').text
+        self.component.level = self.get_component('Level_Text').text
+        # self.component.level_position = self.get_component('Level_Toggle')
+        
+        self.component.refresh()
+        
+    def confirm(self) -> None:
+        self.apply()
+        
+        self.close()
             
     def add_level(self) -> None:
-        pass
+        if not (level_text := self.get_component('Level_Text')).text.isnumeric():
+            return
+        
+        level_text.change_text(str(int(level_text.text) + 10))
     
     def minus_level(self) -> None:
-        pass
+        if not (level_text := self.get_component('Level_Text')).text.isnumeric():
+            return
+        
+        level_text.change_text(str(int(level_text.text) - 10))

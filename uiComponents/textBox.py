@@ -205,6 +205,9 @@ class TextBox(Component):
         pyperclip.copy(self.highlighted_text)
         
     def paste(self) -> None:
+        if not self.active:
+            return
+        
         clip: str = pyperclip.paste()
         
         if self.highlighted_text:
@@ -234,6 +237,10 @@ class TextBox(Component):
         self.change_text(''.join(chars))
         
     def typing(self, unicode: str) -> None:
+        if not self.active:
+            event_bus.sign('typing_register', None)
+            return 
+        
         # print(repr(unicode))
 
         # User used BACKSPACE
@@ -263,7 +270,7 @@ class TextBox(Component):
         self.__add_char(unicode)
         
     def check_off_click(self) -> None:
-        if self.hovering:
+        if self.hovering or not self.active:
             return
         
         self.cursor_active = False
@@ -273,7 +280,6 @@ class TextBox(Component):
         self.cursor_selection_end = []
         
         self.active = False
-        event_bus.sign('typing_register', None)
         
     def on_click(self) -> None:
         if not self.hovering:

@@ -2,6 +2,8 @@ import pygame
 
 from singletons import resourceHandler
 
+from singletons.keyBus import key_bus
+
 
 SMALL_CASE_BRACKET: int = 2
 SMALL_CASE_UPPER: int = 4
@@ -25,6 +27,11 @@ class CardComponent():
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\LibreBaskerville.ttf', 20)
         
         self.hovering: bool = False
+        
+        key_bus.register('mouse_left_down', self.on_click)
+        
+    def deregister(self) -> None:
+        key_bus.deregister('mouse_left_down', self.on_click)
         
     def draw(self, screen: pygame.Surface) -> None:
         self.rect.topleft = (self.pos[0] + self.card.rect.x, self.pos[1] + self.card.rect.y)

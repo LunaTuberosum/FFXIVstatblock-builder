@@ -132,7 +132,6 @@ class Editor( GameProcess):
         
         screen.fill('#313031')
         
-        
         x: int = 40
         for card in self.stat_cards:
             card.update(self.pan, x)

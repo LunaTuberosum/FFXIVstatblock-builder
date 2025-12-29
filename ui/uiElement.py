@@ -105,6 +105,8 @@ class UIElement():
         self.image.blit(self.font.render(text, True, color), (pos[0], pos[1]))
         
     def draw(self, screen: pygame.Surface) -> None:
+        self.image.fill((0, 0, 0, 0))
+        
         self.image.blit(self.background, (0, 0))
 
         self.image.blit(pygame.transform.scale(self.seperator, (self.size[0] - SEPERATOR_SIZE[0], SEPERATOR_SIZE[1])), SEPERATOR_POS)

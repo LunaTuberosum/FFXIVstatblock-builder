@@ -2,6 +2,9 @@ import pygame
 
 from editor.cardComponents.cardComponent import CardComponent
 
+from editor.ui.nameElement import NameElement
+from singletons.eventBus import event_bus
+
 
 LEVEL_END = False
 LEVEL_TOPLEFT = True
@@ -33,6 +36,12 @@ class NameComponent(CardComponent):
         self.image.blit(self.text_face, (0, 0))
         
         screen.blit(self.image, self.pos)
+        
+    def on_click(self) -> None:
+        if not self.hovering:
+            return
+        
+        event_bus.sign('ui_window', NameElement(self))
     
     def load(self, data: dict[str]) -> None:
         self.name = data['name']

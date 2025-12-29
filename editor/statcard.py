@@ -25,9 +25,11 @@ class StatCard():
         self.image: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.rect: pygame.Rect = self.image.get_rect(topleft=(0, 40))
         
-    def draw(self, screen: pygame.Surface, pan: tuple[int, int], x: int) -> None:
-        self.image.fill((0, 0, 0, 0))
+    def update(self, pan: tuple[int, int], x: int) -> None:
         self.rect.topleft = (x + pan[0], 40 + pan[1])
+        
+    def draw(self, screen: pygame.Surface) -> None:
+        self.image.fill((0, 0, 0, 0))
         
         self.image.blit(self.background)
         

@@ -128,13 +128,17 @@ class Editor( GameProcess):
         
     def draw(self) -> None:
         screen: pygame.Surface = self.main.get_screen()
+        screen_rect: pygame.Rect = pygame.Rect((0, 0), screen.size)
         
         screen.fill('#313031')
         
+        
         x: int = 40
         for card in self.stat_cards:
-            card.draw(screen, self.pan, x)
-                        
+            card.update(self.pan, x)
+            if screen_rect.colliderect(card.rect):
+                card.draw(screen)
+                
             x += card.size[0] + 20
         
         screen.blit(MIEDINGER.render(str(round(self.main.clock.get_fps(), 1)), True, '#00ff00'), (screen.size[0]- 100, 10))

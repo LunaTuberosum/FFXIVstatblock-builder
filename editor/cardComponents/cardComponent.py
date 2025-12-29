@@ -3,6 +3,10 @@ import pygame
 from singletons import resourceHandler
 
 
+SMALL_CASE_BRACKET: int = 2
+SMALL_CASE_UPPER: int = 4
+SMALL_CASE_LOWER: int = 8
+
 class CardComponent():
     def __init__(self, name: str, size: tuple[int, int], pos: tuple[int, int], card: object) -> None:
         self.name: str = name
@@ -46,25 +50,47 @@ class CardComponent():
     def load(self, data: dict[str]) -> None:
         pass
     
-    def _render_small_case(self, text: str, y: int, x: int = 0) -> None:
+    def _size_small_case(self, text: str) -> int:
         characters: list[str] = list(text)
-
-        _x: int = x
-        for _c in characters:
-            if _c.isspace():
-                _x += 5
+        
+        x: int = 0
+        for char in characters:
+            if char.isspace():
+                x += self.font.size(' ')[0]
                 
-            elif _c == '[' or _c == ']':
-                _render: pygame.Surface = self.font_cap.render(_c, True, '#954E40')
-                self.text_face.blit(_render, (_x, 2 + y))
-                _x += self.font_cap.size(_c)[0] + 2    
+            elif char == '[' or char == ']':
+                render: pygame.Surface = self.font_cap.render(char, True, '#954E40')
+                x += render.get_width()
                 
-            elif _c.isupper() or _c.isnumeric():
-                _render: pygame.Surface = self.font_cap.render(_c, True, '#954E40')
-                self.text_face.blit(_render, (_x, 4 + y))
-                _x += self.font_cap.size(_c)[0] + 2
+            elif char.isupper() or char.isnumeric():
+                render: pygame.Surface = self.font_cap.render(char, True, '#954E40')
+                x += render.get_width()
                 
             else:
-                _render: pygame.Surface = self.font.render(_c.upper(), True, '#954E40')
-                self.text_face.blit(_render, (_x, 8 + y))
-                _x += self.font.size(_c)[0] + 2
+                render: pygame.Surface = self.font.render(char.upper(), True, '#954E40')
+                x += render.get_width()
+                
+        return x
+    
+    def _render_small_case(self, text: str, pos: tuple[int, int]) -> None:
+        characters: list[str] = list(text)
+        
+        x: int = pos[0]
+        for char in characters:
+            if char.isspace():
+                x += self.font.size(' ')[0]
+                
+            elif char == '[' or char == ']':
+                render: pygame.Surface = self.font_cap.render(char, True, '#954E40')
+                self.text_face.blit(render, (x, pos[1] + SMALL_CASE_BRACKET))
+                x += render.get_width()
+                
+            elif char.isupper() or char.isnumeric():
+                render: pygame.Surface = self.font_cap.render(char, True, '#954E40')
+                self.text_face.blit(render, (x, pos[1] + SMALL_CASE_UPPER))
+                x += render.get_width()
+                
+            else:
+                render: pygame.Surface = self.font.render(char.upper(), True, '#954E40')
+                self.text_face.blit(render, (x, pos[1] + SMALL_CASE_LOWER))
+                x += render.get_width()

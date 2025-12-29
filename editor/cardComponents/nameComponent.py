@@ -6,6 +6,12 @@ from editor.cardComponents.cardComponent import CardComponent
 LEVEL_END = False
 LEVEL_TOPLEFT = True
 
+NAME_LIMIT_END: int = 512
+NAME_LIMIT_TOPLEFT: int = 500
+
+BASE_HEIGHT: int = 36
+LINE_HEIGHT: int = 30
+
 class NameComponent(CardComponent):
     def __init__(self, card: object) -> None:
         super().__init__(
@@ -18,13 +24,12 @@ class NameComponent(CardComponent):
         self.name: str = 'Character Name'
         self.level: str = '00'
         self.levelPosition: bool = LEVEL_END
+
+        self.__draw_text_face()
         
     def draw(self, screen):
         super().draw(screen)    
-        
-        self.text_face.fill((0,0,0,0))
-        self._render_small_case(self.name, 0)
-        
+                
         self.image.blit(self.text_face, (0, 0))
         
         screen.blit(self.image, self.pos)
@@ -33,3 +38,52 @@ class NameComponent(CardComponent):
         self.name = data['name']
         self.level = data['level']
         self.levelPosition = data['levelPosition']
+
+        self.__draw_text_face()
+        
+    def __draw_text_face(self) -> None:
+        self.text_face.fill((0,0,0,0))
+        
+        level: str = f'[L{self.level}]'
+        
+        limit: int = NAME_LIMIT_TOPLEFT - self.font_cap.size(level)[0]
+        
+        words: list[str] = self.name.split(' ')
+        if self.levelPosition == LEVEL_END:
+            words.append(level)
+            limit = NAME_LIMIT_END
+            
+        text: str = ''
+        lines: list[str] = []
+        
+        for word in words:
+            if self._size_small_case(text + word) > limit:
+                lines.append(text)
+                text = word + ' '
+                continue
+            
+            text += word + ' '
+            
+        lines.append(text)
+        
+        if len(lines) > 1:
+            self.size = (
+                NAME_LIMIT_END,
+                BASE_HEIGHT + (LINE_HEIGHT * (len(lines) - 1))
+            )
+            
+            self.image = pygame.Surface(self.size, pygame.SRCALPHA)
+            self.rect = self.image.get_rect(topleft=self.pos)
+            
+            self.text_face = pygame.Surface(self.size, pygame.SRCALPHA)
+        
+        y: int = 0
+        for line in lines:
+            self._render_small_case(line, (0, y))
+            y += LINE_HEIGHT
+            
+        if self.levelPosition == LEVEL_TOPLEFT:
+            self._render_small_case(level, (limit, 0))
+            
+        
+        

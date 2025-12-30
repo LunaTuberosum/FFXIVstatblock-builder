@@ -29,12 +29,12 @@ class NameComponent(CardComponent):
 
         self.__draw_text_face()
         
-    def draw(self, screen: pygame.Surface, offset: tuple[int, int]) -> None:
-        super().draw(screen, offset)    
+    def draw(self, screen: pygame.Surface) -> None:
+        super().draw(screen)    
                 
         self.image.blit(self.text_face, (0, 0))
         
-        screen.blit(self.image, (self.pos[0] + offset[0], self.pos[1] + offset[1]))
+        screen.blit(self.image, (self.pos[0] + self.offset[0], self.pos[1] + self.offset[1]))
         
     def on_click(self) -> None:
         if not self.hovering:

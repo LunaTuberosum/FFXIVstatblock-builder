@@ -55,8 +55,8 @@ class TopStatComponent(CardComponent):
         
         self.__draw_text_face()
         
-    def draw(self, screen: pygame.Surface, offset: tuple[int, int]) -> None:
-        super().draw(screen, offset)
+    def draw(self, screen: pygame.Surface) -> None:
+        super().draw(screen)
         self.image.fill((0, 0, 0, 0))
         
         self.image.blit(self.background)
@@ -66,14 +66,14 @@ class TopStatComponent(CardComponent):
         
         self.image.blit(self.seperator, (12, 102))
         
-        
-        con_mask = pygame.mask.Mask((1, 1), fill=True)
-        mask = pygame.mask.from_surface(self.image)
-        
-        screen.blit(self.image, (self.pos[0] + offset[0], self.pos[1] + offset[1]))
+        screen.blit(self.image, (self.pos[0] + self.offset[0], self.pos[1] + self.offset[1]))
         
         if self.hovering:
-            screen.blit(mask.convolve(con_mask).to_surface(setcolor=(221, 221, 221, 20), unsetcolor=(0,0,0,0)), (self.pos[0] + offset[0], self.pos[1] + offset[1]))
+            con_mask: pygame.Mask = pygame.mask.Mask((1, 1), fill=True)
+            mask: pygame.Mask = pygame.mask.from_surface(self.image)
+            out: pygame.Surface = mask.convolve(con_mask).to_surface(setcolor=(221, 221, 221, 20), unsetcolor=(0,0,0,0))
+            
+            screen.blit(out, (self.pos[0] + self.offset[0], self.pos[1] + self.offset[1]))
         
         
     def on_click(self) -> None:

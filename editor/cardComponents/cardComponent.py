@@ -21,6 +21,8 @@ class CardComponent():
         self.image: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.rect: pygame.Rect = self.image.get_rect(topleft=self.pos)
         
+        self.offset: tuple[int, int] = ()
+                
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         
         self.font_cap: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\LibreBaskerville.ttf', 24)
@@ -34,16 +36,19 @@ class CardComponent():
     def deregister(self) -> None:
         key_bus.deregister('mouse_left_down', self.on_click)
         
-    def draw(self, screen: pygame.Surface, offset: tuple[int, int]) -> None:
+    def update(self, offset: tuple[int, int]) -> None:
         self.rect.topleft = (
             self.pos[0] + self.card.rect.x + offset[0], 
             self.pos[1] + self.card.rect.y + offset[1]
         )
         
+        self.offset = offset
+        
+    def draw(self, screen: pygame.Surface) -> None:
         self.image.fill((0, 0, 0, 0))
         if self.hovering:
-            self.image.fill('#E0D3BF')      
-            
+            self.image.fill('#E0D3BF')    
+                        
     def refresh(self) -> None:
         pass
                
@@ -62,6 +67,9 @@ class CardComponent():
         return {}
     
     def load(self, data: dict[str]) -> None:
+        pass
+    
+    def __draw_text_face(self) -> None:
         pass
     
     def _size_small_case(self, text: str) -> int:

@@ -2,6 +2,7 @@ import pygame
 
 from editor.cardComponents.cardComponent import CardComponent
 from editor.cardComponents.nameComponent import NameComponent
+from editor.cardComponents.sectionNameComponent import SectionNameComponent
 from editor.cardComponents.topStatComponent import TopStatComponent
 from singletons import resourceHandler
 
@@ -30,22 +31,22 @@ class StatCard():
     def update(self, pan: tuple[int, int], x: int) -> None:
         self.rect.topleft = (x + pan[0], 40 + pan[1])
         
+        offset: tuple[int, int] = (0, 0)
+        for componet in self.components.values():
+            if offset[1] + componet.rect.height >= self.limit:
+                offset = (offset[0] + 550, 0)
+                
+            componet.update(offset)
+                
+            offset = (0, offset[1] + componet.rect.height)
+        
     def draw(self, screen: pygame.Surface) -> None:
         self.image.fill((0, 0, 0, 0))
         
         self.image.blit(self.background)
         
-        offset: tuple[int, int] = (0, 0)
         for componet in self.components.values():
-            if offset[1] + componet.rect.height >= self.limit:
-                offset = (offset[0] + 550, 0)
-            
-            if self.limit - offset[1] < 40:
-                componet.is_last = True
-            
-            componet.draw(self.image, offset)
-            
-            offset = (0, offset[1] + componet.rect.height)
+            componet.draw(self.image)
             
         screen.blit(self.image, self.rect.topleft)
         
@@ -68,6 +69,26 @@ class StatCard():
             TopStatComponent(self, component_data['Top_Stat_Component']['token'])
         )
         self.get_component('Top_Stat_Component').load(component_data['Top_Stat_Component'])
+        
+        for name, data in component_data.items():
+
+            if name == 'Traits_Title':
+                self.add_component(
+                    'Traits_Title',
+                    SectionNameComponent(
+                        self,
+                        data['section']
+                    )
+                )
+                
+            elif name == 'Abilities_Title':
+                self.add_component(
+                    'Abilities_Title',
+                    SectionNameComponent(
+                        self,
+                        data['section']
+                    )
+                )
                
     def __draw_background(self) -> None:
         _background: dict[str, pygame.Surface] = StatCard.__split_background()

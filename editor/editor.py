@@ -1,7 +1,10 @@
 from typing import Callable
 import pygame
 
+from editor.cardComponents.cardComponent import CardComponent
+
 from editor.statcard import StatCard
+
 from menu.sheet import Sheet
 
 from singletons import resourceHandler
@@ -67,13 +70,14 @@ class Editor( GameProcess):
         if self.can_pan['space_down']:
             pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_SIZEALL))
             
+        elif self.hover_object and isinstance(self.hover_object, CardComponent):
+            pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_HAND))
+            
         else:
             pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW))
         
     def update(self) -> None:
         super().update()
-        
-        self.__update_cursor()
         
         if self.can_pan['left_down'] and self.can_pan['space_down'] and (event := self.is_event(pygame.MOUSEMOTION)):
             self.pan = (
@@ -90,6 +94,8 @@ class Editor( GameProcess):
         
         if self.hover_object:
             self.hover_object.hover()
+            
+        self.__update_cursor()
         
         self.draw()
         

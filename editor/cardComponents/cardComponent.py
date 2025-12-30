@@ -27,14 +27,18 @@ class CardComponent():
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\LibreBaskerville.ttf', 20)
         
         self.hovering: bool = False
+        self.is_last: bool = False
         
         key_bus.register('mouse_left_down', self.on_click)
         
     def deregister(self) -> None:
         key_bus.deregister('mouse_left_down', self.on_click)
         
-    def draw(self, screen: pygame.Surface) -> None:
-        self.rect.topleft = (self.pos[0] + self.card.rect.x, self.pos[1] + self.card.rect.y)
+    def draw(self, screen: pygame.Surface, offset: tuple[int, int]) -> None:
+        self.rect.topleft = (
+            self.pos[0] + self.card.rect.x + offset[0], 
+            self.pos[1] + self.card.rect.y + offset[1]
+        )
         
         self.image.fill((0, 0, 0, 0))
         if self.hovering:
@@ -104,3 +108,4 @@ class CardComponent():
                 render: pygame.Surface = self.font.render(char.upper(), True, '#954E40')
                 self.text_face.blit(render, (x, pos[1] + SMALL_CASE_LOWER))
                 x += render.get_width()
+                

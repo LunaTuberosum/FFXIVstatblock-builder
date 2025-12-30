@@ -1,5 +1,6 @@
 from enum import Enum
 import re
+from typing import Callable
 
 import pygame
 
@@ -31,7 +32,7 @@ class Formating(Enum):
     NEW_LINE: int = 8
     
 BACKGROUND_TILE_SIZE: int = 10
-BACKGROUND_TILE_SIZE_X2: int = 10
+BACKGROUND_TILE_SIZE_X2: int = 20
     
 TEXT_WIDTH: int = 14
 LINE_CHAR: int = 32
@@ -73,6 +74,8 @@ class TextBox(Component):
         
         self.active: bool = False
         
+        self.command: Callable[[TextBox], None] = None
+        
         key_bus.register('mouse_left_down', self.on_click)
         key_bus.register('mouse_left_down', self.check_off_click)
         
@@ -102,6 +105,9 @@ class TextBox(Component):
         key_bus.deregister('down_arrow_down', self.down_shift)
         key_bus.deregister('right_arrow_down', self.right_shift)
         
+    def add_command(self, command: Callable[['TextBox'], None]) -> None:
+        self.command = command
+        
     def change_text(self, new_text: str) -> None:
         self.text = new_text
         
@@ -117,6 +123,9 @@ class TextBox(Component):
         self.text_face.blit(self.font.render(text, True, color), (pos[0], pos[1]))
         
     def left_shift(self) -> None:
+        if not self.active:
+            return
+            
         self.cursor_active = True
         self.cursor_timer.start()
         
@@ -129,6 +138,9 @@ class TextBox(Component):
         self.__draw_text()
         
     def up_shift(self) -> None:
+        if not self.active:
+            return
+            
         self.cursor_active = True
         self.cursor_timer.start()
         
@@ -138,6 +150,9 @@ class TextBox(Component):
             return
         
     def down_shift(self) -> None:
+        if not self.active:
+            return
+            
         self.cursor_active = True
         self.cursor_timer.start()
         
@@ -147,6 +162,9 @@ class TextBox(Component):
             return
     
     def right_shift(self) -> None:
+        if not self.active:
+            return
+            
         if self.cursor_index == CURSOR_END:
             return
         self.cursor_active = True
@@ -281,6 +299,9 @@ class TextBox(Component):
         
         self.active = False
         
+        if self.command:
+            self.command(self)
+        
     def on_click(self) -> None:
         if not self.hovering:
             return
@@ -341,7 +362,7 @@ class TextBox(Component):
         
         modded_cursor: bool = False
         for index, char in enumerate(self.text):
-            if sel_low and sel_low[0] < pos[0] and pos[0] < sel_high[0]:
+            if sel_low and sel_low[0] < pos[0] + (text_metrics[index][4] / 2) and pos[0] + (text_metrics[index][4] / 2) < sel_high[0]:
                 self.render_text(char, '#ffffff', pos, highlight=True)
             else:
                 self.render_text(char, '#ffffff', pos)
@@ -352,7 +373,7 @@ class TextBox(Component):
             
             pos = (pos[0] + text_metrics[index][4], pos[1])
             
-            if self.cursor_mouse_pos[0] < pos[0] - text_metrics[index][4]:
+            if self.cursor_mouse_pos[0] < pos[0] - (text_metrics[index][4] / 2):
                 self.__set_cursor_pos((pos[0] - text_metrics[index][4], pos[1]))
                 self.cursor_mouse_pos = CURSOR_MOUSE_POS_DEFUALT
                 self.cursor_index = index

@@ -2,6 +2,7 @@ import pygame
 
 from editor.cardComponents.cardComponent import CardComponent
 from editor.cardComponents.nameComponent import NameComponent
+from editor.cardComponents.topStatComponent import TopStatComponent
 from singletons import resourceHandler
 
 
@@ -13,9 +14,10 @@ class StatCard():
         
         self.width: int = width * 3
         self.height: int = height
-        self.actual_height: int = (self.height + 1) * 2
+        self.actual_height: int = max(self.height, 2)
         
         self.size: tuple[int, int] = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * BACKGROUND_TILE_SIZE)
+        self.limit: int = self.size[1] - 20
         
         self.background: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.__draw_background()
@@ -33,8 +35,17 @@ class StatCard():
         
         self.image.blit(self.background)
         
+        offset: tuple[int, int] = (0, 0)
         for componet in self.components.values():
-            componet.draw(self.image)
+            if offset[1] + componet.rect.height >= self.limit:
+                offset = (offset[0] + 550, 0)
+            
+            if self.limit - offset[1] < 40:
+                componet.is_last = True
+            
+            componet.draw(self.image, offset)
+            
+            offset = (0, offset[1] + componet.rect.height)
             
         screen.blit(self.image, self.rect.topleft)
         
@@ -52,6 +63,12 @@ class StatCard():
         )
         self.get_component('Name_Component').load(component_data['Name_Component'])
         
+        self.add_component(
+            'Top_Stat_Component',
+            TopStatComponent(self, component_data['Top_Stat_Component']['token'])
+        )
+        self.get_component('Top_Stat_Component').load(component_data['Top_Stat_Component'])
+               
     def __draw_background(self) -> None:
         _background: dict[str, pygame.Surface] = StatCard.__split_background()
 

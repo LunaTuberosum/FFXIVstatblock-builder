@@ -117,7 +117,6 @@ class GameProcess():
                 if comp.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
                     self.hover_object = comp
                     self.ui_window.hover()
-                    break
             
             if self.ui_window.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
                 self.hover_object = self.ui_window
@@ -131,7 +130,6 @@ class GameProcess():
                 if option.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
                     self.hover_object = option
                     self.context_menu.hover()
-                    break
             
             if self.context_menu.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
                 self.hover_object = self.context_menu

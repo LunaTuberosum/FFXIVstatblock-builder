@@ -15,8 +15,8 @@ from ui.confirmElement import ConfirmElement
 
 
 pygame.font.init()
-JUPITER_FONT: pygame.font.Font = resourceHandler.load_font('.\\assets\\fonts\\jupiter_pro_regular.otf', 40)
-MIEDINGER: pygame.font.Font = resourceHandler.load_font('assets/fonts/miedinger_medium.ttf', 18)
+JUPITER_FONT: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\jupiter_pro_regular.otf', 40)
+MIEDINGER: pygame.Font = resourceHandler.load_font('assets/fonts/miedinger_medium.ttf', 18)
 
 class Editor( GameProcess):
     def __init__(self, main: object, sheet: Sheet) -> None:

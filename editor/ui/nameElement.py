@@ -56,7 +56,7 @@ class NameElement(StatCardElement[NameComponent]):
         self.add_component(
             'Level_Minus',
             Button(
-                pos=[461, 140],
+                pos=[460, 140],
                 size=[30, 32],
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
@@ -80,15 +80,7 @@ class NameElement(StatCardElement[NameComponent]):
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)
             
-        self.render_text('Name', '#C2C2C2', (25, 55))
-
-        self.render_text('Character Name', '#EEE1C5', (50, 80))
-
-        self.render_text('Level', '#C2C2C2', (25, 115))
-
-        self.render_text('Character Level', '#EEE1C5', (50, 140))
-
-        self.render_text('Level Position', '#EEE1C5', (50, 175))
+        self.image.blit(self.text_face)
         
         screen.blit(self.image, self.pos)
         
@@ -113,16 +105,29 @@ class NameElement(StatCardElement[NameComponent]):
         self.close()
             
     def add_level(self) -> None:
-        if not (level_text := self.get_component('Level_Text')).text.isnumeric():
+        if not (textbox := self.get_component('Level_Text')).text.isnumeric():
             return
         
-        level_text.change_text(str(int(level_text.text) + 10))
+        textbox.change_text(str(int(textbox.text) + 10))
     
     def minus_level(self) -> None:
-        if not (level_text := self.get_component('Level_Text')).text.isnumeric():
+        if not (textbox := self.get_component('Level_Text')).text.isnumeric():
             return
         
-        level_text.change_text(str(int(level_text.text) - 10))
+        textbox.change_text(str(int(textbox.text) - 10))
         
     def change_level_position(self, text_pos: str) -> None:
         self.get_component('Level_Toggle').set_option(text_pos)
+        
+    def _render_text_face(self):
+        super()._render_text_face()
+        
+        self.render_text('Name', '#C2C2C2', (25, 55))
+
+        self.render_text('Character Name', '#EEE1C5', (50, 80))
+
+        self.render_text('Level', '#C2C2C2', (25, 115))
+
+        self.render_text('Character Level', '#EEE1C5', (50, 140))
+
+        self.render_text('Level Position', '#EEE1C5', (50, 175))

@@ -6,9 +6,13 @@ from editor.ui.statCardElement import StatCardElement
 
 from uiComponents.button import Button
 from uiComponents.textBox import TextBox
+from uiComponents.toggleButtons import ToggleButtons
 
 
-ELEMENT_SIZE: tuple[int, int] = (550, 278)
+LEVEL_END = False
+LEVEL_TOPRIGHT = True
+
+ELEMENT_SIZE: tuple[int, int] = (550, 280)
 
 class NameElement(StatCardElement[NameComponent]):
     def __init__(self, component) -> None:
@@ -60,6 +64,19 @@ class NameElement(StatCardElement[NameComponent]):
             )
         )
         
+        self.add_component(
+            'Level_Toggle',
+            ToggleButtons(
+                pos=(290, 180),
+                size=(200, 25),
+                options={
+                    'End': self.change_level_position,
+                    'Top Right': self.change_level_position
+                },
+                default='Top Right' if self.component.level_position == LEVEL_TOPRIGHT else 'End'
+            )
+        )
+        
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)
             
@@ -81,8 +98,13 @@ class NameElement(StatCardElement[NameComponent]):
     def apply(self) -> None:
         self.component.name = self.get_component('Name_Text').text
         self.component.level = self.get_component('Level_Text').text
-        # self.component.level_position = self.get_component('Level_Toggle')
         
+        level_toggle: ToggleButtons = self.get_component('Level_Toggle')
+        if level_toggle.button_selected.text == 'End':
+            self.component.level_position = LEVEL_END
+        elif level_toggle.button_selected.text == 'Top Right':
+            self.component.level_position = LEVEL_TOPRIGHT
+            
         self.component.refresh()
         
     def confirm(self) -> None:
@@ -101,3 +123,6 @@ class NameElement(StatCardElement[NameComponent]):
             return
         
         level_text.change_text(str(int(level_text.text) - 10))
+        
+    def change_level_position(self, text_pos: str) -> None:
+        self.get_component('Level_Toggle').set_option(text_pos)

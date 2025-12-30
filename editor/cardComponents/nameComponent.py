@@ -6,7 +6,7 @@ from singletons.eventBus import event_bus
 
 
 LEVEL_END = False
-LEVEL_TOPLEFT = True
+LEVEL_TOPRIGHT = True
 
 NAME_LIMIT_END: int = 512
 NAME_LIMIT_TOPLEFT: int = 500
@@ -94,7 +94,7 @@ class NameComponent(CardComponent):
             self._render_small_case(line, (0, y))
             y += LINE_HEIGHT
             
-        if self.level_position == LEVEL_TOPLEFT:
+        if self.level_position == LEVEL_TOPRIGHT:
             self._render_small_case(level, (limit, 0))
             
         

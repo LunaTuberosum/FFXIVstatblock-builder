@@ -38,6 +38,9 @@ class StatCardElement[T](UIElement):
             )
         )
         
+    def check_off_click(self) -> None:
+        pass
+        
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)
         

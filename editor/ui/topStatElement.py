@@ -165,11 +165,6 @@ class TopStatElement(StatCardElement[TopStatComponent]):
         
         self.component.refresh()
         
-    def confirm(self) -> None:
-        self.apply()
-        
-        self.close()
-        
     def add_defence(self) -> None:
         self.__change_value('Defence_Text', 1)
     

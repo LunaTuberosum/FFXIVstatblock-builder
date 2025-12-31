@@ -1,7 +1,11 @@
 import pygame
 
 from editor.cardComponents.cardComponent import CardComponent
+
 from singletons import resourceHandler
+
+from singletons.eventBus import event_bus
+
 from uiComponents.textFormat import Format, FormatData
 
 
@@ -39,6 +43,13 @@ class TraitComponent(CardComponent):
             
         screen.blit(self.image, (self.pos[0] + self.offset[0], self.pos[1] + self.offset[1]), special_flags=pygame.BLEND_RGBA_MIN if self.hovering else 0)
         
+    def on_click(self) -> None:
+        if not self.hovering:
+            return
+        
+        from editor.ui.traitElement import TraitElement
+        event_bus.sign('ui_window',TraitElement(self))
+        
     def load(self, data: dict[str]) -> None:
         self.name = data['name']
         self.desc = data['desc']
@@ -51,9 +62,12 @@ class TraitComponent(CardComponent):
         self.__draw_text_face()
     
     def refresh(self) -> None:
+        self.__find_size()
         self.__draw_text_face()
             
     def __find_size(self) -> None:
+        self.lines = []
+        
         words: list[str] = self.desc.split(' ')
         text: str = ''
         

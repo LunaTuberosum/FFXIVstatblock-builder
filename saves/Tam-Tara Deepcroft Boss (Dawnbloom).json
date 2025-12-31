@@ -29,7 +29,16 @@
             },
             "Trait_0": {
                 "name": "Elite Foe: Malicous Mage",
-                "format": {},
+                "format": {
+                    "25": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "33": {
+                        "type": 5,
+                        "data": ""
+                    }
+                },
                 "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginnig the encounter."
             },
             "Trait_1": {
@@ -638,9 +647,9 @@
             }
         }
     },
-    "1": { 
+    "1": {
         "width": 2,
-        "height": 3,
+        "height": 1,
         "components": {
             "Name_Component": {
                 "name": "Avere Bravearm",
@@ -985,7 +994,7 @@
     },
     "2": {
         "width": 1,
-        "height": 3,
+        "height": 0,
         "components": {
             "Name_Component": {
                 "name": "Wedding Corpse",
@@ -1061,7 +1070,7 @@
     },
     "3": {
         "width": 2,
-        "height": 5,
+        "height": 2,
         "components": {
             "Name_Component": {
                 "name": "Edda the Consumed",

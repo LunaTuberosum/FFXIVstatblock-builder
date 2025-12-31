@@ -98,11 +98,6 @@ class NameElement(StatCardElement[NameComponent]):
             self.component.level_position = LEVEL_TOPRIGHT
             
         self.component.refresh()
-        
-    def confirm(self) -> None:
-        self.apply()
-        
-        self.close()
             
     def add_level(self) -> None:
         if not (textbox := self.get_component('Level_Text')).text.isnumeric():

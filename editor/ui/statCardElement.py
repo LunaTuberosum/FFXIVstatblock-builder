@@ -55,7 +55,9 @@ class StatCardElement[T](UIElement):
         pass
     
     def confirm(self) -> None:
-        pass
+        self.apply()
+        
+        self.close()
     
     def render_text(self, text: str, color: str, pos: tuple[int, int]) -> None:
         self.text_face.blit(self.font.render(text, True, '#000000'), (pos[0], pos[1] + 1))

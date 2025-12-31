@@ -4,6 +4,7 @@ from editor.cardComponents.cardComponent import CardComponent
 from editor.cardComponents.nameComponent import NameComponent
 from editor.cardComponents.sectionNameComponent import SectionNameComponent
 from editor.cardComponents.topStatComponent import TopStatComponent
+from editor.cardComponents.traitComponent import TraitComponent
 from singletons import resourceHandler
 
 
@@ -18,7 +19,7 @@ class StatCard():
         self.actual_height: int = max(self.height, 2)
         
         self.size: tuple[int, int] = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * BACKGROUND_TILE_SIZE)
-        self.limit: int = self.size[1] - 20
+        self.limit: int = self.size[1] - 30
         
         self.background: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.__draw_background()
@@ -31,14 +32,17 @@ class StatCard():
     def update(self, pan: tuple[int, int], x: int) -> None:
         self.rect.topleft = (x + pan[0], 40 + pan[1])
         
-        offset: tuple[int, int] = (0, 0)
+        offset: tuple[int, int] = (20, 20)
         for componet in self.components.values():
             if offset[1] + componet.rect.height >= self.limit:
-                offset = (offset[0] + 550, 0)
+                offset = (offset[0] + 550, 20)
+                
+            if self.limit - offset[1] < 130:
+                componet.is_last = True
                 
             componet.update(offset)
                 
-            offset = (0, offset[1] + componet.rect.height)
+            offset = (offset[0], offset[1] + componet.rect.height)
         
     def draw(self, screen: pygame.Surface) -> None:
         self.image.fill((0, 0, 0, 0))
@@ -89,6 +93,12 @@ class StatCard():
                         data['section']
                     )
                 )
+                
+            elif name.startswith('Trait'):
+                self.add_component(
+                    name,
+                    TraitComponent(self)
+                ).load(component_data[name])
                
     def __draw_background(self) -> None:
         _background: dict[str, pygame.Surface] = StatCard.__split_background()

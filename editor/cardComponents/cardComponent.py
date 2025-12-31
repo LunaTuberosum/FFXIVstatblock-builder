@@ -21,7 +21,7 @@ class CardComponent():
         self.image: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.rect: pygame.Rect = self.image.get_rect(topleft=self.pos)
         
-        self.offset: tuple[int, int] = ()
+        self.offset: tuple[int, int] = (0, 0)
                 
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         
@@ -29,7 +29,9 @@ class CardComponent():
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\LibreBaskerville.ttf', 20)
         
         self.hovering: bool = False
+        
         self.is_last: bool = False
+        self.divider: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\StatCardDivider.png')
         
         key_bus.register('mouse_left_down', self.on_click)
         
@@ -47,7 +49,7 @@ class CardComponent():
     def draw(self, screen: pygame.Surface) -> None:
         self.image.fill((0, 0, 0, 0))
         if self.hovering:
-            self.image.fill('#E0D3BF')    
+            self.image.fill('#E4D2B7')    
                         
     def refresh(self) -> None:
         pass

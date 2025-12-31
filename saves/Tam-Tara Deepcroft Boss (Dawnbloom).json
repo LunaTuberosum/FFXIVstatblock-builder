@@ -1,7 +1,7 @@
 {
     "0": {
         "width": 3,
-        "height": 3,
+        "height": 1,
         "components": {
             "Name_Component": {
                 "name": "Edda Blackblossom",
@@ -32,7 +32,7 @@
             },
             "Trait_1": {
                 "name": "Combo",
-                "desc": "Attack using {b} Reaping Cut, {b} {/b} then perform {b} Slashing Scythe {/b} or {b} Void Orb"
+                "desc": "Attack using {b} Reaping Cut, {/b} then perform {b} Slashing Scythe {/b} or {b} Void Orb"
             },
             "Trait_2": {
                 "name": "Til Death Do Us Part",

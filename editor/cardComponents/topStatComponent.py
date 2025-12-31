@@ -15,7 +15,7 @@ class TopStatComponent(CardComponent):
         super().__init__(
             name='TopStatComponent',
             size=(WIDTH, HEIGHT_TOKEN if is_token else HEIGHT),
-            pos=(25, 25),
+            pos=(5, 5),
             card=card
         )
         

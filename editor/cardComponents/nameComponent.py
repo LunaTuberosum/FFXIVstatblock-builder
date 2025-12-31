@@ -19,7 +19,7 @@ class NameComponent(CardComponent):
         super().__init__(
             name='NameComponent',
             size=(512, 36),
-            pos=(32, 25),
+            pos=(12, 5),
             card=card
         )
         

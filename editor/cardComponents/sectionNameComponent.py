@@ -10,7 +10,7 @@ class SectionNameComponent(CardComponent):
         super().__init__(
             name='SectionNameComponent',
             size=(520, 42),
-            pos=(30, 30),
+            pos=(10, 10),
             card=card
         )
         

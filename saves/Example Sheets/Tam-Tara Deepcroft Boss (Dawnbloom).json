@@ -1,0 +1,1639 @@
+{
+    "version": "2.0",
+    "0": {
+        "width": 3,
+        "height": 3,
+        "components": {
+            "Name_Component": {
+                "name": "Edda Blackblossom",
+                "level": "50",
+                "levelPosition": true
+            },
+            "Top_Stat_Component": {
+                "token": false,
+                "creatureSize": "Medium (1x1)",
+                "species": "Human",
+                "vigilance": "14",
+                "defense": "13",
+                "magicDefense": "15",
+                "maxHP": "300",
+                "speed": "5",
+                "str": "2",
+                "dex": "4",
+                "vit": "3",
+                "int": "5",
+                "mnd": "5"
+            },
+            "Traits_Title": {
+                "section": "Traits"
+            },
+            "Trait_0": {
+                "name": "Elite Foe: Malicous Mage",
+                "format": {},
+                "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginnig the encounter."
+            },
+            "Trait_1": {
+                "name": "Combo",
+                "format": {
+                    "13": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "26": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "39": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "55": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "58": {
+                        "type": 0,
+                        "data": ""
+                    }
+                },
+                "desc": "Attack using Reaping Cut, then perform Slashing Scythe or Void Orb"
+            },
+            "Trait_2": {
+                "name": "Til Death Do Us Part",
+                "format": {
+                    "25": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "42": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "47": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "59": {
+                        "type": 5,
+                        "data": ""
+                    },
+                    "63": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "78": {
+                        "type": 5,
+                        "data": ""
+                    }
+                },
+                "desc": "When within 4 squares of Avere Braveheart gain Revivify(5) and Critical Up(3)"
+            },
+            "Trait_3": {
+                "name": "Blood Rune",
+                "format": {
+                    "9": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "27": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "32": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "45": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "97": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "108": {
+                        "type": 1,
+                        "data": ""
+                    }
+                },
+                "desc": "Whenever Edda Blackblossom uses Red Wedding, add 1d6 to the damage roll of that ability for each Blood Rune stack."
+            },
+            "Abilities_Title": {
+                "section": "Abilities"
+            },
+            "Ability_0": {
+                "name": "Ability 1",
+                "invk": false,
+                "types": "Primary, Physical",
+                "effects": {
+                    "Target": {
+                        "desc": "Single",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "10 Squares",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "DEX[d20+3]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 10 Damage to all targets in range",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "Immediately",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 2d6 Damage and inflicts DOT(3)",
+                        "format": {
+                            "44": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "51": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": {
+                    "type": 3,
+                    "gridSize": [
+                        7,
+                        7
+                    ],
+                    "markerArea": [
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            2,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ]
+                    ]
+                }
+            },
+            "Ability_1": {
+                "name": "Void Orb",
+                "invk": false,
+                "types": "Primary, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "Single",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "10 Squares",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "INT[d20+5]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Magic Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 8 Damage and marks Target",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 1d6 Damage",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "At the end of the targets next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Base Effect": {
+                        "desc": "Deals 1d6 damage to all Targets in a 3x3 area",
+                        "format": {},
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            },
+            "Ability_2": {
+                "name": "Slashing Scythe",
+                "invk": false,
+                "types": "Primary, Magic",
+                "effects": {
+                    "Marker Area": {
+                        "desc": "Half the encounter map",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "INT[d20+5]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Magic Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 1d6+10 Damage to all targets in range",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "At the start of this character's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 4d6 Damage",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "": {
+                        "desc": "Place this marker on either the left or right at random",
+                        "format": {
+                            "0": {
+                                "type": 2,
+                                "data": ""
+                            },
+                            "56": {
+                                "type": 3,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": {
+                    "type": 3,
+                    "gridSize": [
+                        7,
+                        7
+                    ],
+                    "markerArea": [
+                        [
+                            0,
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            2,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "Ability_3": {
+                "name": "Groom To Be",
+                "invk": false,
+                "types": "Secondary, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "Single",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "6 Squares away from the Target of this ability",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Summon a Wedding Corpse to the Encounter. This Wedding Corpse cannot act normally and is immune to all CC effects. The target of this ability is Binded and cannot move until the Wedding Corpse is killed. At the start of every turn, the Wedding Corpse must move 1 square towards the target. If the Wedding Corpse makes it to the Target, they suffer 2d6 damage and are enfeebled with Undeath for 2 rounds. Edda gains a charge of Blood Rune * Undeath Effect: Any healing action on the target instead deals damage.",
+                        "format": {
+                            "9": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "24": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "47": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "62": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "145": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "152": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "178": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "193": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "236": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "251": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "290": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "297": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "312": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "382": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "390": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "427": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "438": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "440": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "448": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            },
+            "Ability_4": {
+                "name": "Red Wedding",
+                "invk": false,
+                "types": "Secondary, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "The entire encounter map",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 2d6 + 1d6 for every Blood Rune charge",
+                        "format": {
+                            "26": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "37": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            },
+            "Ability_5": {
+                "name": "Speak No Evil",
+                "invk": false,
+                "types": "Instant, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "Single",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "10 Squares",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "MND [d20+5]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Magic Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Inflicts Silence on Target",
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "17": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 1d6 Damage",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Limitation": {
+                        "desc": "Twice Per Phase.",
+                        "format": {},
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            },
+            "Ability_6": {
+                "name": "Love of Mine",
+                "invk": false,
+                "types": "Instant, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "Avere Bravearm",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "10 Squares",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Inflicts Drain(4) on Target.",
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "18": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    },
+                    "Limitation": {
+                        "desc": "Twice Per Phase.",
+                        "format": {},
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            }
+        }
+    },
+    "1": { 
+        "width": 2,
+        "height": 3,
+        "components": {
+            "Name_Component": {
+                "name": "Avere Bravearm",
+                "level": "50",
+                "levelPosition": true
+            },
+            "Top_Stat_Component": {
+                "token": false,
+                "creatureSize": "Large (2x2)",
+                "species": "Voidkin",
+                "vigilance": "11",
+                "defense": "14",
+                "magicDefense": "14",
+                "maxHP": "300",
+                "speed": "6",
+                "str": "2",
+                "dex": "3",
+                "vit": "3",
+                "int": "5",
+                "mnd": "5"
+            },
+            "Traits_Title": {
+                "section": "Traits"
+            },
+            "Trait_0": {
+                "name": "Elite Foe: Undead Voidsent",
+                "format": {
+                    "25": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "33": {
+                        "type": 5,
+                        "data": ""
+                    }
+                },
+                "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
+            },
+            "Trait_1": {
+                "name": "Til Death Do Us Part",
+                "format": {
+                    "25": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "43": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "48": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "60": {
+                        "type": 5,
+                        "data": ""
+                    },
+                    "64": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "79": {
+                        "type": 5,
+                        "data": ""
+                    }
+                },
+                "desc": "When within 4 squares of Edda Blackblossom gain Revivify(5) and Critical Up(3)"
+            },
+            "Abilities_Title": {
+                "section": "Abilities"
+            },
+            "Ability_0": {
+                "name": "Head Over Heals",
+                "invk": false,
+                "types": "Primary, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "Single",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "An Adjacent Square",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "INT[d20+5]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Magic Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 10 Damage to the target and restores 10 health to Avere Bravearm",
+                        "format": {
+                            "56": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "71": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 1d6 Damage and restores that amount of health",
+                        "format": {},
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            },
+            "Ability_1": {
+                "name": "Drowning Blood",
+                "invk": false,
+                "types": "Primary, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "The entire encounter map",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "All enemies in the encounter",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "INT[d20+5]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Magic Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 8 Damage",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 1d6 Damage",
+                        "format": {},
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            },
+            "Ability_2": {
+                "name": "Desolation",
+                "invk": false,
+                "types": "Primary, Magic",
+                "effects": {
+                    "Marker Area": {
+                        "desc": "3x stationary 2x10 area centered on the target.",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker area",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "At the start of this character's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Effect": {
+                        "desc": "Deals 4d6 Damage to all targets in range. Inflicts DOT(3) to all targets in range",
+                        "format": {
+                            "51": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "58": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": {
+                    "type": 3,
+                    "gridSize": [
+                        7,
+                        7
+                    ],
+                    "markerArea": [
+                        [
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            0,
+                            0
+                        ],
+                        [
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1,
+                            1,
+                            2,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            1,
+                            1,
+                            1,
+                            0,
+                            0
+                        ]
+                    ]
+                }
+            },
+            "Ability_3": {
+                "name": "Spare Bodies",
+                "invk": false,
+                "types": "Secondary, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "Center of the encounter map",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "6 squares away from the Target of this ability.",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Summon a 3x Wedding Corpse to the Encounter. These Wedding Corpses cannot act normally and is immune to all CC effects. At the start of every turn, the Wedding Corpse must move 2 squares towards the target. If a Wedding Corpse makes it to the Target. Edda Blackblossom gains a stack of Blood Rune",
+                        "format": {
+                            "12": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "27": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "51": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "67": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "152": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "167": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "207": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "212": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "227": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "251": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "269": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "286": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "297": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            }
+        }
+    },
+    "2": {
+        "width": 1,
+        "height": 3,
+        "components": {
+            "Name_Component": {
+                "name": "Wedding Corpse",
+                "level": "50",
+                "levelPosition": true
+            },
+            "Top_Stat_Component": {
+                "token": false,
+                "creatureSize": "Medium (1x1)",
+                "species": "Undead",
+                "vigilance": "8",
+                "defense": "13",
+                "magicDefense": "13",
+                "maxHP": "20",
+                "speed": "2",
+                "str": "3",
+                "dex": "-3",
+                "vit": "3",
+                "int": "-3",
+                "mnd": "-1"
+            },
+            "Abilities_Title": {
+                "section": "Abilities"
+            },
+            "Ability_0": {
+                "name": "Attack",
+                "invk": false,
+                "types": "Primary, Physical",
+                "effects": {
+                    "Target": {
+                        "desc": "Single",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "An adjacent Square",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "STR[d20+3]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target\u00e2\u20ac\u2122's Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 10 Damage to the target.",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Inflicts a cleansable Disease for 2 turns.",
+                        "format": {
+                            "22": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "30": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            }
+        }
+    },
+    "3": {
+        "width": 2,
+        "height": 5,
+        "components": {
+            "Name_Component": {
+                "name": "Edda the Consumed",
+                "level": "50",
+                "levelPosition": true
+            },
+            "Top_Stat_Component": {
+                "token": false,
+                "creatureSize": "Large (2x2)",
+                "species": "Voidsent",
+                "vigilance": "14",
+                "defense": "14",
+                "magicDefense": "15",
+                "maxHP": "400",
+                "speed": "5",
+                "str": "3",
+                "dex": "3",
+                "vit": "3",
+                "int": "5",
+                "mnd": "5"
+            },
+            "Traits_Title": {
+                "section": "Traits"
+            },
+            "Trait_0": {
+                "name": "Elite Foe: Undead Voidsent",
+                "format": {
+                    "25": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "33": {
+                        "type": 5,
+                        "data": ""
+                    }
+                },
+                "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginnig the encounter."
+            },
+            "Trait_1": {
+                "name": "Blood Rune",
+                "format": {
+                    "9": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "27": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "32": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "49": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "101": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "112": {
+                        "type": 1,
+                        "data": ""
+                    }
+                },
+                "desc": "Whenever Edda the Consumed uses Black Honeymoon, add 1d6 to the damage roll of that ability for each Blood Rune stack."
+            },
+            "Trait_2": {
+                "name": "Doom",
+                "format": {
+                    "9": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "27": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "51": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "59": {
+                        "type": 5,
+                        "data": ""
+                    },
+                    "81": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "83": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "88": {
+                        "type": 5,
+                        "data": ""
+                    }
+                },
+                "desc": "Whenever Edda the Consumed reaches 100 HP. Inflict Doom(2) to all party members. * Doom Effect: After (x) amount of rounds, reduce the afflicted targets HP to 0 instantly at the start of their turn."
+            },
+            "Abilities_Title": {
+                "section": "Abilities"
+            },
+            "Ability_0": {
+                "name": "In Health",
+                "invk": false,
+                "types": "Primary, Magic",
+                "effects": {
+                    "Marker Area": {
+                        "desc": "An inverted 3x3 area OR a 4x4 area centered on the Origin.",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker.",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "INT[d20+4]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Magic Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 10 Damage to all targets in range and grants Edda the Consumed a Blood Rune for each target hit",
+                        "format": {
+                            "51": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "69": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "71": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "82": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "At the start of this character's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 2d6 Damage and inflicts a DOT(3)",
+                        "format": {
+                            "46": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "53": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": {
+                    "type": 3,
+                    "gridSize": [
+                        7,
+                        7
+                    ],
+                    "markerArea": [
+                        [
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1,
+                            0,
+                            0,
+                            0,
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1,
+                            0,
+                            2,
+                            0,
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1,
+                            0,
+                            0,
+                            0,
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "Ability_1": {
+                "name": "Void Flare",
+                "invk": false,
+                "types": "Primary, Magic",
+                "effects": {
+                    "Marker Area": {
+                        "desc": "3x mobile 3x3 Areas that move 1 square every turn.",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker.",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "INT[d20+4]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Magic Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 10 + 2d6 Damage to all targets in range and grants Edda the Consumed a Blood Rune for each target hit",
+                        "format": {
+                            "57": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "75": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "77": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "88": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "At the start of this character's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 2d6 Damage and inflicts a DOT(3)",
+                        "format": {
+                            "46": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "53": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": {
+                    "type": 2,
+                    "gridSize": [
+                        7,
+                        7
+                    ],
+                    "markerArea": [
+                        [
+                            1,
+                            1,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            1,
+                            2,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            1,
+                            1,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            1,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            2,
+                            1
+                        ],
+                        [
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            1,
+                            1
+                        ]
+                    ]
+                }
+            },
+            "Ability_2": {
+                "name": "Resolution",
+                "invk": false,
+                "types": "Primary, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "2 Random Enemies.",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "10 Squares",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "INT[d20+5]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Magic Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deals 8 Damage and marks Target",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "At the end of the target's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Base Effect": {
+                        "desc": "Deals 1d6 damage to all Targets in a 3x3 area. Destroys any Wedding Corpses at 0 HP in the area",
+                        "format": {
+                            "60": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "76": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            },
+            "Ability_3": {
+                "name": "Black Honeymoon",
+                "invk": false,
+                "types": "Secondary, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "The entire encounter map",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deal (5 + 2d6) + 1d6 for every Blood Rune charge",
+                        "format": {
+                            "31": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "42": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            },
+            "Ability_4": {
+                "name": "Persistent Bodies",
+                "invk": false,
+                "types": "Secondary, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "Random Enemy",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "8 squares away from the Target of this ability",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Summon 3x Wedding Corpse to the Encounter. This Wedding Corpse cannot be killed normally and is immune to all CC effects. If hit by the Resolution marker effect when it's HP is 0, remove this Wedding Corpse from the encounter",
+                        "format": {
+                            "10": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "25": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "48": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "63": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "192": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "207": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            },
+            "Ability_5": {
+                "name": "In Sickness",
+                "invk": false,
+                "types": "Instant, Magic",
+                "effects": {
+                    "Target": {
+                        "desc": "Single",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "10 Squares",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "INT[d20+5]",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Magic Defense",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Inflicts Disease & Silence on Target",
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "17": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "19": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "27": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 1d6 Damage",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Limitation": {
+                        "desc": "Twice Per Phase",
+                        "format": {},
+                        "in_line": false
+                    }
+                },
+                "marker": null
+            }
+        }
+    }
+}

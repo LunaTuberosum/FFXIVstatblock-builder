@@ -1,7 +1,8 @@
 {
-    "0": {
+    "version": "2.0",
+    "1": {
         "width": 3,
-        "height": 2,
+        "height": 6,
         "components": {
             "Name_Component": {
                 "name": "Odin, The Unbroken",
@@ -28,15 +29,104 @@
             },
             "Trait_0": {
                 "name": "Elite Fore: Lord of the Corpse Hall",
-                "desc": "This chracter cannot be {b} Stunned {/b} and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
+                "format": {
+                    "24": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "32": {
+                        "type": 1,
+                        "data": ""
+                    }
+                },
+                "desc": "This chracter cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
             },
             "Trait_1": {
                 "name": "Against Adversity",
+                "format": {},
                 "desc": "Odin's Max HP is 125 per Enemy they are facing. If Odin is facing more than 4 enemies they perform one additional Primary Action."
             },
             "Trait_2": {
                 "name": "Master of the Dread Arm",
-                "desc": "Odin's [Zantetsuken] deals +2D6 damage if Odin is adjacent to a [Gungnir], consuming the [Gungnir] and causing the {b} Unworthy {/b} enfeeblement to the target, which has the following effects: {lb} * An {b} Unworthy {/b} character incurs a -2 penalty on all checks. {lb} * An {b} Unworthy {/b} character has its speed reduced by 2. {lb} * An {b} Unworthy {/b} character cannot wield a [Shard of Gungnir]. {lb} * {b} Unworthy {/b} removes the {b} Worthy {/b} enhancement. {lb} * {b} Unworthy {/b}  is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability."
+                "format": {
+                    "115": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "124": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "185": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "190": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "199": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "244": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "249": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "258": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "296": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "301": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "310": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "355": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "357": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "366": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "378": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "385": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "398": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "400": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "409": {
+                        "type": 1,
+                        "data": ""
+                    }
+                },
+                "desc": "Odin's [Zantetsuken] deals +2D6 damage if Odin is adjacent to a [Gungnir], consuming the [Gungnir] and causing the Unworthy enfeeblement to the target, which has the following effects: * An Unworthy character incurs a -2 penalty on all checks. * An Unworthy character has its speed reduced by 2. * An Unworthy character cannot wield a [Shard of Gungnir]. * Unworthy removes the Worthy enhancement. * Unworthy is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability."
             },
             "Abilities_Title": {
                 "section": "Abilities"
@@ -46,8 +136,85 @@
                 "invk": false,
                 "types": "Instant",
                 "effects": {
-                    "Trigger": "At the start of the encounter and each round, immediately before the [Adventurer Step] begins",
-                    "Base Effect": "Odin prepares the following based on the round. Combining if overlapping: {lb} * {a} The First Test {/a} (Round 1, 3, & 6) Immediately prepare {a} Gungnir {/a} {lb} * {a} The Second Test {/a} (Round 2, 4, & 6) Immediately prepare {a} Eunherjar {/a} {lb} * {a} The Third Test {/a} (3, 5, & 6) Immediately prepare {a} Gagnrath {/a}  {lb} * {a} The Final Test {/a} (Round 7 or When Odin = 75 HP or less) Enter Phase 2 and Immagiately prepare {a} Shit Zantetsuken {/a}"
+                    "Trigger": {
+                        "desc": "At the start of the encounter and each round, immediately before the [Adventurer Step] begins",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Odin prepares the following based on the round. Combining if overlapping: * The First Test (Round 1, 3, & 6) Immediately prepare Gungnir * The Second Test (Round 2, 4, & 6) Immediately prepare Eunherjar * The Third Test (3, 5, & 6) Immediately prepare Gagnrath * The Final Test (Round 7 or When Odin = 75 HP or less) Enter Phase 2 and Immagiately prepare Shit Zantetsuken",
+                        "format": {
+                            "74": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "76": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "91": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "129": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "137": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "139": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "155": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "193": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "203": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "205": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "220": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "252": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "261": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "263": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "278": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "355": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "372": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
                 },
                 "marker": null
             },
@@ -56,7 +223,44 @@
                 "invk": false,
                 "types": "Primary, Unique",
                 "effects": {
-                    "Base Effect": "Attack using {a} Zantetsuken {/a} , then immediately use {a} Woden Valkut {/a} , {a}  Hall of Melancholy {/a} , {a} Sanngetall {/a} ."
+                    "Base Effect": {
+                        "desc": "Attack using Zantetsuken , then immediately use Woden Valkut , Hall of Melancholy , Sanngetall .",
+                        "format": {
+                            "13": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "25": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "48": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "61": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "63": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "82": {
+                                "type": 5,
+                                "data": ""
+                            },
+                            "84": {
+                                "type": 4,
+                                "data": "#D34D35"
+                            },
+                            "95": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
                 },
                 "marker": null
             },
@@ -65,12 +269,54 @@
                 "invk": false,
                 "types": "Primary, Physical",
                 "effects": {
-                    "Target": "Single",
-                    "Range": "Adjacent",
-                    "Check": "{t} STR {/t} [d20+7]",
-                    "CR": "Target's {t} Defense {/t}",
-                    "Base Effect": "Deal 10 Damage to the target and all its adjacent allies",
-                    "Direct Hit": "Deals an additional 3d6 Damage"
+                    "Target": {
+                        "desc": "Single",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
+                        "desc": "Adjacent",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Check": {
+                        "desc": "STR [d20+7]",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "4": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    },
+                    "CR": {
+                        "desc": "Target's Defense",
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "17": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Deal 10 Damage to the target and all its adjacent allies",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Direct Hit": {
+                        "desc": "Deals an additional 3d6 Damage",
+                        "format": {},
+                        "in_line": false
+                    }
                 },
                 "marker": null
             },
@@ -79,11 +325,96 @@
                 "invk": false,
                 "types": "Primary, Stationary Marker, Magic",
                 "effects": {
-                    "Origin": "Odin",
-                    "Marker Area": "A stationary 6x6 area centered on the origin",
-                    "Target": "All enemies within the marker area",
-                    "Marker Trigger": "The beginning of this chracter's nect turn",
-                    "Marker Effect": "Deals 6d6 damage to all targets and any target that remains at 1 HP is graated the {b} Worthy {/b} enhancement, which has the following effects: {lb} * A {b} Worthy {/b} chracter gains +2 bonus to all checks {lb} * A {b} Worthy {/b}  chracter has its speed increased by 2 {lb} * A {b} Worthy {/b} character can use a held [Shard of Gungnir] as an [Instant] {lb} * {b} Worthy {/b} removes the {b} Unworthy {/b} enfeeblement"
+                    "Origin": {
+                        "desc": "Odin",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Area": {
+                        "desc": "A stationary 6x6 area centered on the origin",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker area",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "The beginning of this chracter's nect turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Effect": {
+                        "desc": "Deals 6d6 damage to all targets and any target that remains at 1 HP is graated the Worthy enhancement, which has the following effects: * A Worthy chracter gains +2 bonus to all checks * A Worthy chracter has its speed increased by 2 * A Worthy character can use a held [Shard of Gungnir] as an [Instant] * Worthy removes the Unworthy enfeeblement",
+                        "format": {
+                            "83": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "90": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "136": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "140": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "147": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "185": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "189": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "196": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "234": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "238": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "245": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "305": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "307": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "314": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "326": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "335": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
                 },
                 "marker": {
                     "type": 3,
@@ -180,11 +511,108 @@
                 "invk": false,
                 "types": "Primary, Stationary Marker, Magic",
                 "effects": {
-                    "Orgin": "Two squares occupied by two separate enemy characters without Enmity",
-                    "Marker Area": "A stationary 5x5 area centered on the origin",
-                    "Target": "All enemies within the marker area",
-                    "Marker Trigger": "The beginning of this character's next turn",
-                    "Marker Effect": "Deals 4d6 damage and any target that takes 10 or more damage by this (after damage reduction) gains the {b} Unworthy {/b} enfeeblement, which has the following effects: {lb} * An {b} Unworthy {/b} character incurs a -2 penalty on all checks. {lb} * An {b} Unworthy {/b} character has its speed reduced by 2. {lb} * An {b} Unworthy {/b} character cannot wield a [Shard of Gungnir]. {lb} * {b} Unworthy {/b} removes the {b} Worthy {/b} enhancement. {lb} * {b} Unworthy {/b}  is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability"
+                    "Orgin": {
+                        "desc": "Two squares occupied by two separate enemy characters without Enmity",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Area": {
+                        "desc": "A stationary 5x5 area centered on the origin",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker area",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "The beginning of this character's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Effect": {
+                        "desc": "Deals 4d6 damage and any target that takes 10 or more damage by this (after damage reduction) gains the Unworthy enfeeblement, which has the following effects: * An Unworthy character incurs a -2 penalty on all checks. * An Unworthy character has its speed reduced by 2. * An Unworthy character cannot wield a [Shard of Gungnir]. * Unworthy removes the Worthy enhancement. * Unworthy is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability",
+                        "format": {
+                            "104": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "113": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "160": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "165": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "174": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "219": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "224": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "233": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "271": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "276": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "285": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "330": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "332": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "341": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "353": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "360": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "373": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "375": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "384": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
                 },
                 "marker": {
                     "type": 3,
@@ -264,10 +692,91 @@
                 "invk": false,
                 "types": "Primary, Mobile Marker, Physical",
                 "effects": {
-                    "Marker Area": "A mobile 1x1 marker centered on one enemy with Enmity or the highest amount of Hit Points",
-                    "Target": "All enemies within the marker area",
-                    "Marker Trigger": "The beginning of this chracter's next turn",
-                    "Marker Effect": "Deals 8d6 damage to the target and if the target remains a t or above 1 HP it grants the {b} Worthy {/b} enhancement to them, which has the following effects: {lb} * A {b} Worthy {/b} chracter gains +2 bonus to all checks {lb} * A {b} Worthy {/b}  chracter has its speed increased by 2 {lb} * A {b} Worthy {/b} character can use a held [Shard of Gungnir] as an [Instant] {lb} * {b} Worthy {/b} removes the {b} Unworthy {/b} enfeeblement"
+                    "Marker Area": {
+                        "desc": "A mobile 1x1 marker centered on one enemy with Enmity or the highest amount of Hit Points",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker area",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "The beginning of this chracter's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Effect": {
+                        "desc": "Deals 8d6 damage to the target and if the target remains a t or above 1 HP it grants the Worthy enhancement to them, which has the following effects: * A Worthy chracter gains +2 bonus to all checks * A Worthy chracter has its speed increased by 2 * A Worthy character can use a held [Shard of Gungnir] as an [Instant] * Worthy removes the Unworthy enfeeblement",
+                        "format": {
+                            "89": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "96": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "150": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "154": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "161": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "199": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "203": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "210": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "248": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "252": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "259": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "319": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "321": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "328": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "340": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "349": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
                 },
                 "marker": {
                     "type": 2,
@@ -319,11 +828,49 @@
                 "invk": false,
                 "types": "Primary, Magic",
                 "effects": {
-                    "": "{i} An emanation of Odin's dark power, draining your very will {/i}",
-                    "Marker Area": "The entire encounter map",
-                    "Target": "All enemies within the marker area",
-                    "Marker Trigger": "The beginning of this character's next turn",
-                    "Marker Effect": "Deals 3d6 damage to all targets and causes {b} DOT(5) {/b}"
+                    "": {
+                        "desc": "An emanation of Odin's dark power, draining your very will",
+                        "format": {
+                            "0": {
+                                "type": 2,
+                                "data": ""
+                            },
+                            "59": {
+                                "type": 3,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    },
+                    "Marker Area": {
+                        "desc": "The entire encounter map",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker area",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "The beginning of this character's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Effect": {
+                        "desc": "Deals 3d6 damage to all targets and causes DOT(5)",
+                        "format": {
+                            "43": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "50": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
                 },
                 "marker": null
             },
@@ -332,11 +879,108 @@
                 "invk": false,
                 "types": "Primary, Stationary Marker, Magic",
                 "effects": {
-                    "Origin": "3 non-adjacent points on one edge of the encounter map",
-                    "Marker Area": "A stationary 1x16 area extending in a straight line from the origin",
-                    "Target": "All enemies within the marker area",
-                    "Marker Trigger": "The beginning of this character's next turn",
-                    "Marker Effect": "Deals 8d6 damage to all target and any taget that take 10 or more damage by this (after damage reduction) gain the {b} Unworthy {/b} enfeeblement, which has the following effects: {lb} * An {b} Unworthy {/b} character incurs a -2 penalty on all checks. {lb} * An {b} Unworthy {/b} character has its speed reduced by 2. {lb} * An {b} Unworthy {/b} character cannot wield a [Shard of Gungnir]. {lb} * {b} Unworthy {/b} removes the {b} Worthy {/b} enhancement. {lb} * {b} Unworthy {/b}  is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability"
+                    "Origin": {
+                        "desc": "3 non-adjacent points on one edge of the encounter map",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Area": {
+                        "desc": "A stationary 1x16 area extending in a straight line from the origin",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker area",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "The beginning of this character's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Effect": {
+                        "desc": "Deals 8d6 damage to all target and any taget that take 10 or more damage by this (after damage reduction) gain the Unworthy enfeeblement, which has the following effects: * An Unworthy character incurs a -2 penalty on all checks. * An Unworthy character has its speed reduced by 2. * An Unworthy character cannot wield a [Shard of Gungnir]. * Unworthy removes the Worthy enhancement. * Unworthy is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability",
+                        "format": {
+                            "115": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "124": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "171": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "176": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "185": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "230": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "235": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "244": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "282": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "287": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "296": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "341": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "343": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "352": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "364": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "371": {
+                                "type": 1,
+                                "data": ""
+                            },
+                            "384": {
+                                "type": 6,
+                                "data": ""
+                            },
+                            "386": {
+                                "type": 0,
+                                "data": ""
+                            },
+                            "395": {
+                                "type": 1,
+                                "data": ""
+                            }
+                        },
+                        "in_line": false
+                    }
                 },
                 "marker": {
                     "type": 3,
@@ -416,11 +1060,31 @@
                 "invk": false,
                 "types": "Primary, Mobile Marker, Magic",
                 "effects": {
-                    "Origin": "Two squares occupied by two separate enemy characters without enmity",
-                    "Marker Area": "A mobile 5x5 area centered on the origin",
-                    "Target": "All enemies within the marker area",
-                    "Marker Trigger": "The beginning of this character's next turn",
-                    "Marker Effect": "Deals 3d6 damage and summons a [Gungnir] in an unoccupied adjacent area to the center"
+                    "Origin": {
+                        "desc": "Two squares occupied by two separate enemy characters without enmity",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Area": {
+                        "desc": "A mobile 5x5 area centered on the origin",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Target": {
+                        "desc": "All enemies within the marker area",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Trigger": {
+                        "desc": "The beginning of this character's next turn",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Marker Effect": {
+                        "desc": "Deals 3d6 damage and summons a [Gungnir] in an unoccupied adjacent area to the center",
+                        "format": {},
+                        "in_line": false
+                    }
                 },
                 "marker": {
                     "type": 2,
@@ -497,9 +1161,9 @@
             }
         }
     },
-    "1": {
+    "0": {
         "width": 1,
-        "height": 0,
+        "height": 5,
         "components": {
             "Name_Component": {
                 "name": "Gungnir",
@@ -526,21 +1190,203 @@
             },
             "Trait_0": {
                 "name": "Dreadful Tension",
-                "desc": "This character does not take a turn, instead at the end of the [Adventurer Step] it deals 5 damage to all enemies and causes the {b} Unworthy {/b} enfeeblement, which has the following effects: {lb} * An {b} Unworthy {/b} character incurs a -2 penalty on all checks. {lb} * An {b} Unworthy {/b} character has its speed reduced by 2. {lb} * An {b} Unworthy {/b} character cannot wield a [Shard of Gungnir]. {lb} * {b} Unworthy {/b} removes the {b} Worthy {/b} enhancement. {lb} * {b} Unworthy {/b}  is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability"
+                "format": {
+                    "129": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "138": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "185": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "190": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "199": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "244": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "249": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "258": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "296": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "301": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "310": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "355": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "357": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "366": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "378": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "385": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "398": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "400": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "409": {
+                        "type": 1,
+                        "data": ""
+                    }
+                },
+                "desc": "This character does not take a turn, instead at the end of the [Adventurer Step] it deals 5 damage to all enemies and causes the Unworthy enfeeblement, which has the following effects: * An Unworthy character incurs a -2 penalty on all checks. * An Unworthy character has its speed reduced by 2. * An Unworthy character cannot wield a [Shard of Gungnir]. * Unworthy removes the Worthy enhancement. * Unworthy is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability"
             },
             "Trait_1": {
                 "name": "Worthy Prize",
-                "desc": "When a chracter reduces a [Gungnir] to 0 HP, they gain the {b} Worthy {/b} enhancement, which has the following effects: {lb} * A {b} Worthy {/b} chracter gains +2 bonus to all checks {lb} * A {b} Worthy {/b}  chracter has its speed increased by 2 {lb} * A {b} Worthy {/b} character can use a held [Shard of Gungnir] as an [Instant] {lb} * {b} Worthy {/b} removes the {b} Unworthy {/b} enfeeblement"
+                "format": {
+                    "59": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "66": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "112": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "116": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "123": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "161": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "165": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "172": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "210": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "214": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "221": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "281": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "283": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "290": {
+                        "type": 1,
+                        "data": ""
+                    },
+                    "302": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "311": {
+                        "type": 1,
+                        "data": ""
+                    }
+                },
+                "desc": "When a chracter reduces a [Gungnir] to 0 HP, they gain the Worthy enhancement, which has the following effects: * A Worthy chracter gains +2 bonus to all checks * A Worthy chracter has its speed increased by 2 * A Worthy character can use a held [Shard of Gungnir] as an [Instant] * Worthy removes the Unworthy enfeeblement"
             },
             "Trait_2": {
                 "name": "Elder Arm",
-                "desc": "When this character is reduced to 0 HP, it is not removed from the battlefield. Instead inform the player that, \"The Mighty Gungnir will be wielded by the Worthy.\" If they interact with the defeated [Gungir] using a Primary or Secondary Action they gain [Shard of Gungnir] and acces to the following [Duty Actions]. After a [Duty Action] is used tehy lose [Shard of Gungnir]. {lb} * {a} Boon of Steel {/a} (Primary, Ranged 10) You divide 10 damage reduction among any nuber of allies in range until the start of the next [Adventurer Step]. {lb} * {a} Heaven Piercer {/a}  (Primary, Ranged 10) You deal 6d6+6 damage among any number of enemies in range. {lb} * {a} To Valhalla {/a} (Primary, Ranged 10) You heal 4d6+4 hit points. divided among any number of allies within range."
+                "format": {
+                    "376": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "378": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "392": {
+                        "type": 5,
+                        "data": ""
+                    },
+                    "526": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "528": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "543": {
+                        "type": 5,
+                        "data": ""
+                    },
+                    "624": {
+                        "type": 6,
+                        "data": ""
+                    },
+                    "626": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "638": {
+                        "type": 5,
+                        "data": ""
+                    }
+                },
+                "desc": "When this character is reduced to 0 HP, it is not removed from the battlefield. Instead inform the player that, \"The Mighty Gungnir will be wielded by the Worthy.\" If they interact with the defeated [Gungir] using a Primary or Secondary Action they gain [Shard of Gungnir] and acces to the following [Duty Actions]. After a [Duty Action] is used tehy lose [Shard of Gungnir]. * Boon of Steel (Primary, Ranged 10) You divide 10 damage reduction among any nuber of allies in range until the start of the next [Adventurer Step]. * Heaven Piercer (Primary, Ranged 10) You deal 6d6+6 damage among any number of enemies in range. * To Valhalla (Primary, Ranged 10) You heal 4d6+4 hit points. divided among any number of allies within range."
             }
         }
     },
     "2": {
         "width": 1,
-        "height": 0,
+        "height": 4,
         "components": {
             "Name_Component": {
                 "name": "Odin, Lord of the Eternal Hall",
@@ -567,10 +1413,21 @@
             },
             "Trait_0": {
                 "name": "Elite Foe: Lord of the Corpse Hall",
-                "desc": "This character cannot be {b} Stunned {/b} and markerrs they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
+                "format": {
+                    "25": {
+                        "type": 0,
+                        "data": ""
+                    },
+                    "33": {
+                        "type": 1,
+                        "data": ""
+                    }
+                },
+                "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
             },
             "Trait_1": {
                 "name": "Survive and Receive Valhalla",
+                "format": {},
                 "desc": "Odin summons 2 [Gungnir] 3 spaces from themself at the start of each Round this Phase."
             },
             "Abilities_Title": {
@@ -581,8 +1438,16 @@
                 "invk": false,
                 "types": "Primary, Physical",
                 "effects": {
-                    "Target": "All enemies on the encounter map",
-                    "Base Effect": "Odin remains stationary until the start of the 3rd round the deal 999 damage to all enemies"
+                    "Target": {
+                        "desc": "All enemies on the encounter map",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Base Effect": {
+                        "desc": "Odin remains stationary until the start of the 3rd round the deal 999 damage to all enemies",
+                        "format": {},
+                        "in_line": false
+                    }
                 },
                 "marker": null
             }

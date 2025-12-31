@@ -33,6 +33,7 @@ class StatCard():
         self.rect.topleft = (x + pan[0], 40 + pan[1])
         
         offset: tuple[int, int] = (20, 20)
+        list(self.components.values())[-1].is_last = True
         for componet in self.components.values():
             if offset[1] + componet.rect.height >= self.limit:
                 offset = (offset[0] + 550, 20)

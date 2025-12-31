@@ -1,5 +1,6 @@
 from enum import Enum
 import re
+import sys
 from typing import Callable
 
 import pygame
@@ -67,6 +68,7 @@ class TextBox(Component):
         self.cursor_selection: bool = False
         self.cursor_selection_start: tuple[int, int] = ()
         self.cursor_selection_end: tuple[int, int] = ()
+        self.cursor_selection_indexs: tuple[int, int] = (sys.maxsize, 0)
         self.highlighted_text: str = ''
         
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
@@ -127,7 +129,8 @@ class TextBox(Component):
             return
             
         self.cursor_active = True
-        self.cursor_timer.start()
+        self.__reset_selection()
+
         
         if self.cursor_index == CURSOR_END:
             self.cursor_index = max(len(self.text) - 1, 0)
@@ -142,7 +145,8 @@ class TextBox(Component):
             return
             
         self.cursor_active = True
-        self.cursor_timer.start()
+        self.__reset_selection()
+
         
         if self.box_size[1] == 1:
             self.cursor_index = 0
@@ -154,7 +158,8 @@ class TextBox(Component):
             return
             
         self.cursor_active = True
-        self.cursor_timer.start()
+        self.__reset_selection()
+
         
         if self.box_size[1] == 1:
             self.cursor_index = CURSOR_END
@@ -168,7 +173,8 @@ class TextBox(Component):
         if self.cursor_index == CURSOR_END:
             return
         self.cursor_active = True
-        self.cursor_timer.start()
+        self.__reset_selection()
+
         
         self.cursor_index += 1
         
@@ -222,6 +228,27 @@ class TextBox(Component):
     def copy(self) -> None:
         pyperclip.copy(self.highlighted_text)
         
+    def __reset_selection(self) -> None:
+        self.cursor_selection = False
+        self.cursor_selection_start = ()
+        self.cursor_selection_end = ()
+        self.cursor_selection_indexs = (sys.maxsize, 0)
+        
+    def __remove_highlighted_text(self) -> None:
+        text: str = ''
+        
+        for index, char in enumerate(list(self.text)):
+            if self.cursor_selection_indexs[0] <= index and index <= self.cursor_selection_indexs[1]:
+                continue
+            
+            text += char
+            
+        self.__reset_selection()
+        
+        self.change_text(text)
+            
+        self.highlighted_text = ''
+    
     def paste(self) -> None:
         if not self.active:
             return
@@ -229,13 +256,7 @@ class TextBox(Component):
         clip: str = pyperclip.paste()
         
         if self.highlighted_text:
-            self.text = self.text.replace(self.highlighted_text, '')
-            
-            self.highlighted_text = ''
-            
-            self.cursor_selection = False
-            self.cursor_selection_start = []
-            self.cursor_selection_end = []
+            self.__remove_highlighted_text()
         
         for char in clip:
             self.__add_char(char)
@@ -244,12 +265,15 @@ class TextBox(Component):
         if not self.text:
             return
         
+        if self.cursor_index == 0:
+            return
+        
         chars: list[str] = list(self.text)
         
         if self.cursor_index == CURSOR_END:
             chars.pop(self.cursor_index)
         else:
-            self.cursor_index -= 1
+            self.cursor_index = self.cursor_index - 1
             chars.pop(self.cursor_index)
             
         self.change_text(''.join(chars))
@@ -263,6 +287,10 @@ class TextBox(Component):
 
         # User used BACKSPACE
         if unicode == '\b':
+            if self.highlighted_text:
+                self.__remove_highlighted_text()
+                return
+            
             self.__remove_char()
             return
         
@@ -294,8 +322,7 @@ class TextBox(Component):
         self.cursor_active = False
         self.cursor_timer.reset()
         
-        self.cursor_selection_start = []
-        self.cursor_selection_end = []
+        self.__reset_selection()
         
         self.active = False
         
@@ -313,10 +340,9 @@ class TextBox(Component):
             mouse = pygame.mouse.get_pos()
             self.cursor_mouse_pos = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
             
+            self.__reset_selection()
             self.cursor_selection = True
-            self.highlighted_text = ''
             self.cursor_selection_start = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
-            self.cursor_selection_end = []
             
         self.cursor_active = True
         self.cursor_timer.start()
@@ -363,6 +389,10 @@ class TextBox(Component):
         modded_cursor: bool = False
         for index, char in enumerate(self.text):
             if sel_low and sel_low[0] < pos[0] + (text_metrics[index][4] / 2) and pos[0] + (text_metrics[index][4] / 2) < sel_high[0]:
+                self.cursor_selection_indexs = (
+                    min(index, self.cursor_selection_indexs[0]),
+                    max(index, self.cursor_selection_indexs[1])
+                )
                 self.render_text(char, '#ffffff', pos, highlight=True)
             else:
                 self.render_text(char, '#ffffff', pos)

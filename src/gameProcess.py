@@ -88,10 +88,10 @@ class GameProcess():
             if down := self.is_event(pygame.KEYDOWN):
                 self.key_handler.textbox.typing(down.unicode)
                 
-                if down.mod & pygame.KMOD_CTRL and down.key == pygame.K_v:
+                if pygame.key.get_mods() & pygame.KMOD_CTRL and down.key == pygame.K_v:
                     key_bus.sign('paste')
                     
-                if down.mod & pygame.KMOD_CTRL and down.key == pygame.K_c:
+                if pygame.key.get_mods() & pygame.KMOD_CTRL and down.key == pygame.K_c:
                     key_bus.sign('copy')
                 
                 if down.key == pygame.K_LEFT:

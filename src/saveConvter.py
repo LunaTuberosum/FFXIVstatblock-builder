@@ -1,0 +1,146 @@
+from singletons import resourceHandler
+
+
+def check_saves(folder: str) -> None:
+    for m_file in resourceHandler.load_dir(f'.\\saves\\{folder}'):
+        if m_file.endswith('.json'):
+            sheet = resourceHandler.load_json(f'.\\saves\\{folder}\\{m_file}')
+            
+            if sheet.get('version'):
+                continue
+            
+            sheet = reformat_sheet(sheet)
+            
+            resourceHandler.save_json(f'.\\saves\\{folder}\\{m_file}', sheet)
+        else:
+            check_saves(f'{folder}\\{m_file}')
+            
+def reformat_text(text: str) -> tuple[str, dict[str, dict]]:
+    new_text: str = ''
+    format_data: dict[str, dict] = {}
+    
+    index: int = 0
+    for word in text.split():
+        if word == '{b}':
+            format_data[str(index)] = {
+                'type': 0,
+                'data': ''
+            }
+            continue
+        elif word == '{/b}':
+            format_data[str(index)] = {
+                'type': 1,
+                'data': ''
+            }
+            continue
+        
+        elif word == '{i}':
+            format_data[str(index)] = {
+                'type': 2,
+                'data': ''
+            }
+            continue
+        elif word == '{/i}':
+            format_data[str(index)] = {
+                'type': 3,
+                'data': ''
+            }
+            continue
+        
+        elif word == '{a}':
+            format_data[str(index)] = {
+                'type': 4,
+                'data': '#D34D35'
+            }
+            continue
+        elif word == '{/a}':
+            format_data[str(index)] = {
+                'type': 5,
+                'data': ''
+            }
+            continue
+        
+        elif word == '{t}':
+            format_data[str(index)] = {
+                'type': 4,
+                'data': '#2D638E'
+            }
+            continue                    
+        elif word == '{/t}':
+            format_data[str(index)] = {
+                'type': 5,
+                'data': ''
+            }
+            continue
+        
+        elif word == '{lb}':
+            format_data[str(index)] = {
+                'type': 6,
+                'data': ''
+            }
+            continue
+            
+        new_text += word + ' '
+        index = len(new_text)
+        
+    new_text = new_text.strip()
+    
+    return (new_text, format_data)
+            
+def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
+    new_sheet: dict[str, dict[str]] = {
+        'version': '2.0'
+    }
+    
+    for card_id, card_data in sheet.items():
+        card: dict[str, dict] = {
+            'width': card_data['width'],
+            'height': card_data['height'],
+            'components': {
+                'Name_Component': card_data['components']['Name_Component'],
+                'Top_Stat_Component': card_data['components']['Top_Stat_Component']
+            }
+        }
+        
+        for comp_name, comp_data in card_data['components'].items():
+            if comp_name == 'Traits_Title':
+                card['components']['Traits_Title'] = comp_data
+                
+            elif comp_name == 'Abilities_Title':
+                card['components']['Abilities_Title'] = comp_data
+                
+            elif comp_name.startswith('Trait'):
+                new_desc, format_data = reformat_text(comp_data['desc'])
+                
+                card['components'][comp_name] = {
+                    'name': comp_data['name'],
+                    'format': format_data,
+                    'desc': new_desc
+                }
+                
+            elif comp_name.startswith('Ability'):
+                new_effects: dict[str, str] = {}
+                
+                for effect_name, effect_desc in comp_data['effects'].items():
+                    if effect_name.endswith(':'):
+                        effect_name = effect_name[:-1]
+                        
+                    new_desc, format_data = reformat_text(effect_desc)
+                    
+                    new_effects[effect_name] = {
+                        'desc': new_desc,
+                        'format': format_data,
+                        'in_line': False
+                    }
+                
+                card['components'][comp_name] = {
+                    'name': comp_data['name'],
+                    'invk': comp_data['invk'],
+                    'types': comp_data['types'],
+                    'effects': new_effects,
+                    'marker': comp_data['marker']
+                }
+                
+        new_sheet[card_id] = card
+        
+    return new_sheet

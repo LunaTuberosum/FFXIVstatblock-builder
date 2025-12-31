@@ -90,6 +90,8 @@ class MenuObject():
             return
         
         for _file in entries:
+            if _file == '2.0': continue
+            
             _x = ENTRY_START_X
             for word in self.get_entry(_file):
                 if _x + self.font.size(word)[0] > ENTRY_X_BOUND:

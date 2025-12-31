@@ -152,6 +152,8 @@ class Editor( GameProcess):
         
     def load(self) -> None:
         for card in self.sheet.sheet_info.values():
+            if card == '2.0': continue
+            
             s_card: StatCard = StatCard(card['width'], card['height'])
             
             s_card.load(card['components'])

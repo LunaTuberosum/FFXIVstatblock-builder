@@ -16,6 +16,7 @@ class EventBus(Bus):
                 
                 'load_sheet': [],
                 'return_menu': [],
+                'swap_traits': [],
                 
                 'context_menu': [],
                 'ui_window': [],

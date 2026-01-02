@@ -80,6 +80,10 @@ class TopStatComponent(CardComponent):
         if not self.hovering:
             return
         
+        if self.click_timer.time_left() < 0:
+            self.click_timer.start()
+            return
+        
         from editor.ui.topStatElement import TopStatElement
         event_bus.sign('ui_window', TopStatElement(self))
         

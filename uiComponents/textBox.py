@@ -138,7 +138,7 @@ class TextBox(Component):
         if not self.active:
             return
             
-        if self.cursor_selection_indexs[0]:
+        if self.highlighted_text:
             self.cursor_index = self.cursor_selection_indexs[0] + 1
             
         self.cursor_active = True
@@ -159,11 +159,40 @@ class TextBox(Component):
         self.cursor_active = True
         self.__reset_selection()
 
-        
         if self.box_size[1] == 1:
             self.cursor_index = 0
             self.__draw_text()
             return
+        
+        if self.cursor_index == CURSOR_END:
+            self.cursor_index = len(self.text) - 1
+            
+        index: int = 0
+        prev_line: int = -1
+        relative: int = -1
+        for l_index, line in enumerate(self.lines):
+            for c_index, char in enumerate(list(line)):
+                if index == self.cursor_index:
+                    print('relative: index', c_index)
+                    relative = c_index
+                    prev_line = l_index - 1
+                    
+                index += 1
+        
+        if prev_line == -1:
+            self.cursor_index = 0
+            self.__draw_text()
+            return
+        
+        index = 0
+        for l_index, line in enumerate(self.lines):
+            if l_index == prev_line:
+                self.cursor_index = index + relative
+                break
+            
+            index += len(line)
+            
+        self.__draw_text()
         
     def down_shift(self) -> None:
         if not self.active:
@@ -177,6 +206,33 @@ class TextBox(Component):
             self.cursor_index = CURSOR_END
             self.__draw_text()
             return
+            
+        index: int = 0
+        next_line: int = -1
+        relative: int = -1
+        for l_index, line in enumerate(self.lines):
+            for c_index, char in enumerate(list(line)):
+                if index == self.cursor_index:
+                    print('relative: index', c_index)
+                    relative = c_index
+                    next_line = l_index + 1
+                    
+                index += 1
+        
+        if next_line >= len(self.lines):
+            self.cursor_index = CURSOR_END
+            self.__draw_text()
+            return
+        
+        index = 0
+        for l_index, line in enumerate(self.lines):
+            if l_index == next_line:
+                self.cursor_index = index + relative
+                break
+            
+            index += len(line)
+            
+        self.__draw_text()
     
     def right_shift(self) -> None:
         if not self.active:
@@ -185,7 +241,7 @@ class TextBox(Component):
         if self.cursor_index == CURSOR_END:
             return
         
-        if self.cursor_selection_indexs[1]:
+        if self.highlighted_text:
             self.cursor_index = self.cursor_selection_indexs[1]
         
         self.cursor_active = True
@@ -247,6 +303,7 @@ class TextBox(Component):
         pyperclip.copy(self.highlighted_text)
         
     def __reset_selection(self) -> None:
+        self.highlighted_text = ''
         self.cursor_selection = False
         self.cursor_selection_start = ()
         self.cursor_selection_end = ()
@@ -439,26 +496,18 @@ class TextBox(Component):
                 sel_low = (self.cursor_selection_start[0], math.floor((self.cursor_selection_start[1] - 5) / 20))
                 sel_high = (self.cursor_selection_end[0], math.floor((self.cursor_selection_end[1] - 5) / 20))
                 
-                self.cursor_index = self.cursor_selection_indexs[1]
-                
             elif self.cursor_selection_start[1] > self.cursor_selection_end[1]:
                 sel_low = (self.cursor_selection_end[0], math.floor((self.cursor_selection_end[1] - 5) / 20))
                 sel_high = (self.cursor_selection_start[0], math.floor((self.cursor_selection_start[1] - 5) / 20))
                 
-                self.cursor_index = self.cursor_selection_indexs[0]
-            
             elif self.cursor_selection_start[0] < self.cursor_selection_end[0]:
                 sel_low = (self.cursor_selection_start[0], math.floor((self.cursor_selection_start[1] - 5) / 20))
                 sel_high = (self.cursor_selection_end[0], math.floor((self.cursor_selection_end[1] - 5) / 20))
                 
                 
-                self.cursor_index = self.cursor_selection_indexs[1]
-                
             else:
                 sel_low = (self.cursor_selection_end[0], math.floor((self.cursor_selection_end[1] - 5) / 20))
                 sel_high = (self.cursor_selection_start[0], math.floor((self.cursor_selection_start[1] - 5) / 20))
-                
-                self.cursor_index = self.cursor_selection_indexs[0]                
                 
         modded_cursor: bool = False
         
@@ -547,7 +596,7 @@ class TextBox(Component):
             if line == self.lines[-1]:
                 continue
             
-            y += 20
+            y += 25
             x = 8
             
         if self.cursor_mouse_pos[0] > x and not modded_cursor:

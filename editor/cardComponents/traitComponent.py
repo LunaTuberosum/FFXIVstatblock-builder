@@ -34,21 +34,43 @@ class TraitComponent(CardComponent):
         self.lines: list[str] = []
         
     def draw(self, screen: pygame.Surface) -> None:
+        x: int = self.pos[0]
+        y: int = self.pos[1]
+            
+        if self.drag:
+            self.hovering = True
+            mouse: tuple[int, int] = pygame.mouse.get_pos()
+            card_width: int = self.card.width / 3
+            x =  min(max(mouse[0] - self.drag_pos[0] - self.rect.x, -self.offset[0] + 32), ((card_width - 1) * 540) - self.offset[0] + (60 if card_width > 2 else 30))
+            y =  min(max(mouse[1] - self.drag_pos[1] - self.rect.y, -self.offset[1] + 32), self.card.size[1] - self.offset[1] - self.rect.height - 20)            
+            
         super().draw(screen)    
-                
+        
         self.image.blit(self.text_face, (0, 0))
         
         if not self.is_last:
             self.image.blit(self.divider, (0, self.rect.height - 5))
             
-        screen.blit(self.image, (self.pos[0] + self.offset[0], self.pos[1] + self.offset[1]), special_flags=pygame.BLEND_RGBA_MIN if self.hovering else 0)
+        if self.drag:       
+            screen.blit(self.image, (x + self.offset[0], y + self.offset[1]))
+        else:
+            screen.blit(self.image, (x + self.offset[0], y + self.offset[1]), special_flags=pygame.BLEND_RGBA_MIN if self.hovering else 0)
         
     def on_click(self) -> None:
         if not self.hovering:
             return
         
+        if not super().on_click():
+            return
+               
         from editor.ui.traitElement import TraitElement
         event_bus.sign('ui_window',TraitElement(self))
+        
+    def on_release(self) -> None:
+        if not super().on_release():
+            return
+        
+        event_bus.sign('swap_traits', self)
         
     def load(self, data: dict[str]) -> None:
         self.name = data['name']

@@ -5,7 +5,10 @@ from editor.cardComponents.nameComponent import NameComponent
 from editor.cardComponents.sectionNameComponent import SectionNameComponent
 from editor.cardComponents.topStatComponent import TopStatComponent
 from editor.cardComponents.traitComponent import TraitComponent
+
 from singletons import resourceHandler
+
+from singletons.eventBus import event_bus
 
 
 BACKGROUND_TILE_SIZE: int = 194
@@ -19,6 +22,9 @@ class StatCard():
         self.actual_height: int = max(self.height, 2)
         
         self.size: tuple[int, int] = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * BACKGROUND_TILE_SIZE)
+        if width > 1:
+            self.size = (self.size[0] - 48, self.size[1])
+            
         self.limit: int = self.size[1] - 30
         
         self.background: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
@@ -29,6 +35,42 @@ class StatCard():
         self.image: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.rect: pygame.Rect = self.image.get_rect(topleft=(0, 40))
         
+        event_bus.register('swap_traits', self.swap_traits)
+        
+    def deregister(self) -> None:
+        event_bus.deregister('swap_traits', self.swap_traits)
+        
+        for component in self.components.values():
+            component.deregister()
+        
+    def swap_traits(self, trait: TraitComponent) -> None:
+        swap_to: TraitComponent = None
+        for component in self.components.values():
+            if not isinstance(component, TraitComponent):
+                continue
+            
+            if component.hovering and component != trait:
+                swap_to = component
+                break
+            
+        if not swap_to:
+            return
+            
+        swapper_name: str = trait.name
+        swapper_format = trait.formating
+        swapper_desc: str = trait.desc
+        
+        trait.name = swap_to.name
+        trait.formating = swap_to.formating
+        trait.desc = swap_to.desc
+        
+        swap_to.name = swapper_name
+        swap_to.formating = swapper_format
+        swap_to.desc = swapper_desc
+        
+        trait.refresh()
+        swap_to.refresh()
+        
     def update(self, pan: tuple[int, int], x: int) -> None:
         self.rect.topleft = (x + pan[0], 40 + pan[1])
         
@@ -36,7 +78,7 @@ class StatCard():
         list(self.components.values())[-1].is_last = True
         for componet in self.components.values():
             if offset[1] + componet.rect.height >= self.limit:
-                offset = (offset[0] + 550, 20)
+                offset = (offset[0] + 540, 20)
                 
             if self.limit - offset[1] < 130:
                 componet.is_last = True
@@ -50,8 +92,16 @@ class StatCard():
         
         self.image.blit(self.background)
         
+        dragged_file: CardComponent = None
         for componet in self.components.values():
+            if componet.drag:
+                dragged_file = componet
+                continue
+            
             componet.draw(self.image)
+            
+        if dragged_file:
+            dragged_file.draw(self.image)
             
         screen.blit(self.image, self.rect.topleft)
         

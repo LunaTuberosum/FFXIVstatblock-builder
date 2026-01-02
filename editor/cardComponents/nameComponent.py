@@ -40,6 +40,10 @@ class NameComponent(CardComponent):
         if not self.hovering:
             return
         
+        if self.click_timer.time_left() < 0:
+            self.click_timer.start()
+            return
+        
         from editor.ui.nameElement import NameElement
         event_bus.sign('ui_window', NameElement(self))
     

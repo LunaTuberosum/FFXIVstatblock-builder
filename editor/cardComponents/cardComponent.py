@@ -4,6 +4,8 @@ from singletons import resourceHandler
 
 from singletons.keyBus import key_bus
 
+from src.timer import Timer
+
 
 SMALL_CASE_BRACKET: int = 2
 SMALL_CASE_UPPER: int = 4
@@ -30,13 +32,19 @@ class CardComponent():
         
         self.hovering: bool = False
         
+        self.click_timer: Timer = Timer(300)
+        self.drag: bool = False
+        self.drag_pos = tuple[int, int]
+        
         self.is_last: bool = False
         self.divider: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\StatCardDivider.png')
         
         key_bus.register('mouse_left_down', self.on_click)
+        key_bus.register('mouse_left_up', self.on_release)
         
     def deregister(self) -> None:
         key_bus.deregister('mouse_left_down', self.on_click)
+        key_bus.deregister('mouse_left_up', self.on_release)
         
     def update(self, offset: tuple[int, int]) -> None:
         self.rect.topleft = (
@@ -54,9 +62,26 @@ class CardComponent():
     def refresh(self) -> None:
         pass
                
-    def on_click(self) -> None:
-        pass
+    def on_click(self) -> bool:
+        if self.click_timer.time_left() < 0:
+            self.click_timer.start()
+            
+            if not self.drag:
+                mouse: tuple[int, int] = pygame.mouse.get_pos()
+                self.drag_pos = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
+                
+            self.drag = True
+            return False
         
+        return True
+    
+    def on_release(self) -> bool:
+        if not self.hovering or not self.drag:
+            return False
+        
+        self.drag = False
+        return True
+
     def no_hover(self) -> None:
         if not self.hovering:
             return

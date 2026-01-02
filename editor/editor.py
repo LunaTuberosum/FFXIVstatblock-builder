@@ -54,6 +54,9 @@ class Editor( GameProcess):
         key_bus.deregister('space_down', self.space_down)
         key_bus.deregister('space_up', self.space_up)
         
+        for card in self.stat_cards:
+            card.deregister()
+        
     def space_down(self) -> None:
         self.can_pan['space_down'] = True
         

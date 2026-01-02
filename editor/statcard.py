@@ -35,6 +35,8 @@ class StatCard():
         self.image: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.rect: pygame.Rect = self.image.get_rect(topleft=(0, 40))
         
+        self.dragged_file: CardComponent = None
+        
         event_bus.register('swap_traits', self.swap_traits)
         
     def deregister(self) -> None:
@@ -44,18 +46,29 @@ class StatCard():
             component.deregister()
         
     def swap_traits(self, trait: TraitComponent) -> None:
+        if not self.dragged_file:
+            return
+        
         swap_to: TraitComponent = None
+        all_traits: list[TraitComponent] = []
         for component in self.components.values():
             if not isinstance(component, TraitComponent):
                 continue
             
+            all_traits.append(component)
             if component.hovering and component != trait:
                 swap_to = component
-                break
+                
+        mouse = pygame.mouse.get_pos()
+        if not swap_to and mouse[1] < all_traits[0].rect.y:
+            swap_to = all_traits[0]
+            
+        elif not swap_to and mouse[0] > all_traits[-1].rect.x and mouse[1] > all_traits[-1].rect.y:
+            swap_to = all_traits[-1]
             
         if not swap_to:
             return
-            
+        
         swapper_name: str = trait.name
         swapper_format = trait.formating
         swapper_desc: str = trait.desc
@@ -92,16 +105,16 @@ class StatCard():
         
         self.image.blit(self.background)
         
-        dragged_file: CardComponent = None
+        self.dragged_file = None
         for componet in self.components.values():
             if componet.drag:
-                dragged_file = componet
+                self.dragged_file = componet
                 continue
             
             componet.draw(self.image)
             
-        if dragged_file:
-            dragged_file.draw(self.image)
+        if self.dragged_file:
+            self.dragged_file.draw(self.image)
             
         screen.blit(self.image, self.rect.topleft)
         

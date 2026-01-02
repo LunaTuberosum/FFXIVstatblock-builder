@@ -18,6 +18,7 @@ from singletons.eventBus import event_bus
 from uiComponents.componet import Component
 from uiComponents.textFormat import Format, FormatData
 
+## TODO: MAKE THE ABILITY TO FORMAT
     
 BACKGROUND_TILE_SIZE: int = 10
 BACKGROUND_TILE_SIZE_X2: int = 20

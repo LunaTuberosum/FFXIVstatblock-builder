@@ -73,6 +73,10 @@ class TextBox(Component):
         
         self.active: bool = False
         
+        self.bold: bool = False
+        self.italic: bool = False
+        self.color: bool = False
+        
         self.command: Callable[[TextBox], None] = None
         
         key_bus.register('mouse_left_down', self.on_click)
@@ -82,6 +86,9 @@ class TextBox(Component):
         
         key_bus.register('paste', self.paste)
         key_bus.register('copy', self.copy)
+        
+        key_bus.register('toggle_bold', self.toggle_bold)
+        key_bus.register('toggle_italic', self.toggle_italic)
         
         key_bus.register('left_arrow_down', self.left_shift)
         key_bus.register('up_arrow_down', self.up_shift)
@@ -98,6 +105,9 @@ class TextBox(Component):
         
         key_bus.deregister('paste', self.paste)
         key_bus.deregister('copy', self.copy)
+        
+        key_bus.deregister('toggle_bold', self.toggle_bold)
+        key_bus.deregister('toggle_italic', self.toggle_italic)
         
         key_bus.deregister('left_arrow_down', self.left_shift)
         key_bus.deregister('up_arrow_down', self.up_shift)
@@ -253,6 +263,54 @@ class TextBox(Component):
         if self.cursor_index == len(self.text):
             self.cursor_index = CURSOR_END
             
+        self.__draw_text()
+        
+    def toggle_bold(self) -> None:
+        if not self.active:
+            return
+        
+        index: int = len(self.text) if self.cursor_index == CURSOR_END else self.cursor_index
+        
+        if (f_data := self.formating.get(index)) and f_data.format_type == Format.BOLD:
+            self.formating.pop(index)
+            self.__draw_text()
+            return
+        
+        if (f_data := self.formating.get(index)) and f_data.format_type == Format.BOLD_OFF:
+            self.formating.pop(index)
+            self.__draw_text()
+            return
+                
+        if self.bold:
+            self.formating[index] = FormatData(Format.BOLD_OFF, '')
+            self.__draw_text()
+            return
+
+        self.formating[index] = FormatData(Format.BOLD, '')
+        self.__draw_text()
+        
+    def toggle_italic(self) -> None:
+        if not self.active:
+            return
+        
+        index: int = len(self.text) if self.cursor_index == CURSOR_END else self.cursor_index
+        
+        if (f_data := self.formating.get(index)) and f_data.format_type == Format.ITALIC:
+            self.formating.pop(index)
+            self.__draw_text()
+            return
+        
+        if (f_data := self.formating.get(index)) and f_data.format_type == Format.ITALIC_OFF:
+            self.formating.pop(index)
+            self.__draw_text()
+            return
+                
+        if self.italic:
+            self.formating[index] = FormatData(Format.ITALIC_OFF, '')
+            self.__draw_text()
+            return
+
+        self.formating[index] = FormatData(Format.ITALIC, '')
         self.__draw_text()
         
     def draw(self, screen: pygame.Surface, parent_pos: tuple[int, int]) -> None:
@@ -483,9 +541,9 @@ class TextBox(Component):
         y: int = 5
         x: int = 8
         
-        bold: bool = False
-        italic: bool = False
-        color: bool = False
+        self.bold: bool = False
+        self.italic: bool = False
+        self.color: bool = False
         color_data: str = ''
         
         sel_low: tuple[int, int] = ()
@@ -555,31 +613,33 @@ class TextBox(Component):
                     f_data = FormatData(Format.NONE, '')
                     
                 if f_data.format_type == Format.BOLD:
-                    bold = True
+                    self.bold = True
                 elif f_data.format_type == Format.BOLD_OFF:
-                    bold = False
+                    self.bold = False
                     
                 elif f_data.format_type == Format.ITALIC:
-                    italic = True
+                    self.italic = True
                 elif f_data.format_type == Format.ITALIC_OFF:
-                    italic = False
+                    self.italic = False
                     
                 elif f_data.format_type == Format.COLOR:
-                    color = True
+                    self.color = True
                     color_data = f_data.data
                 elif f_data.format_type == Format.COLOR_OFF:
-                    color = False
+                    self.color = False
                     color_data = ''
                     
                 if self.cursor_index == index:
                     self.__set_cursor_pos((x, y))
                     modded_cursor = True
                 
-                if bold:
+                if self.bold:
                     render: pygame.Surface = self.render_text(char, '#ffffff', (x, y), is_highlight=is_highlighted, is_bolded=True)
-                elif italic:
+                elif self.italic:
                     render: pygame.Surface = self.render_text(char, '#ffffff', (x, y), is_highlight=is_highlighted, is_italic=True)
-                elif color:
+                    x -= render.width
+                    x += text_metrics[index][4]
+                elif self.color:
                     render: pygame.Surface = self.render_text(char, color_data, (x, y), is_highlight=is_highlighted, is_bolded=True)
                 else:
                     render: pygame.Surface = self.render_text(char, '#ffffff', (x, y), is_highlight=is_highlighted)

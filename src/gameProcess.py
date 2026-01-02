@@ -93,6 +93,12 @@ class GameProcess():
                     
                 if pygame.key.get_mods() & pygame.KMOD_CTRL and down.key == pygame.K_c:
                     key_bus.sign('copy')
+                    
+                if pygame.key.get_mods() & pygame.KMOD_CTRL and down.key == pygame.K_b:
+                    key_bus.sign('toggle_bold')
+                    
+                if pygame.key.get_mods() & pygame.KMOD_CTRL and down.key == pygame.K_i:
+                    key_bus.sign('toggle_italic')
                 
                 if down.key == pygame.K_LEFT:
                     key_bus.sign('left_arrow_down')

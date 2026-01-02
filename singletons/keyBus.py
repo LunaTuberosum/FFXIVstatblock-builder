@@ -17,6 +17,9 @@ class KeyBus(Bus):
                 'copy': [],
                 'paste': [],
                 
+                'toggle_bold': [],
+                'toggle_italic': [],
+                
                 'esc_down': [],
                 'esc_up': [],
                 

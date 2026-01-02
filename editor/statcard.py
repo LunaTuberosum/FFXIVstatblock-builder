@@ -60,7 +60,7 @@ class StatCard():
                 swap_to = component
                 
         mouse = pygame.mouse.get_pos()
-        if not swap_to and mouse[1] < all_traits[0].rect.y:
+        if not swap_to and mouse[1] < all_traits[0].rect.y and mouse[0] <= self.rect.x + 550:
             swap_to = all_traits[0]
             
         elif not swap_to and mouse[0] > all_traits[-1].rect.x and mouse[1] > all_traits[-1].rect.y:

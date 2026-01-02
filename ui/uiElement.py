@@ -72,9 +72,6 @@ class UIElement():
             comp.deregister()
             
     def close(self) -> None:
-        for comp in self.components.values():
-            comp.deregister()
-            
         self.deregister()
             
         event_bus.sign('ui_window', None)

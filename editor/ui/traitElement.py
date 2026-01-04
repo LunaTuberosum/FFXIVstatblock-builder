@@ -36,7 +36,7 @@ class TraitElement(StatCardElement[TraitComponent]):
                 pos=(40, 140),
                 size=(480, 5)
             )
-        ).change_text(self.component.desc, self.component.formating)
+        ).change_text(self.component.desc, self.component.formating.copy())
         
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)

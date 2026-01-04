@@ -46,8 +46,8 @@ class NameElement(StatCardElement[NameComponent]):
         self.add_component(
             'Level_Plus',
             Button(
-                pos=[430, 140],
-                size=[30, 32],
+                pos=[428, 138],
+                size=[32, 34],
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
                 command=self.add_level
@@ -56,8 +56,8 @@ class NameElement(StatCardElement[NameComponent]):
         self.add_component(
             'Level_Minus',
             Button(
-                pos=[460, 140],
-                size=[30, 32],
+                pos=[458, 138],
+                size=[32, 34],
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
                 command=self.minus_level

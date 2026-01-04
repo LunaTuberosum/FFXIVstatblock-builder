@@ -17,9 +17,9 @@ from singletons.eventBus import event_bus
 
 from uiComponents.componet import Component
 from uiComponents.textFormat import Format, FormatData
+from uiComponents.textFormatBox import TextFormatBox
 
-## TODO: MAKE THE ABILITY TO FORMAT
-    
+
 BACKGROUND_TILE_SIZE: int = 10
 BACKGROUND_TILE_SIZE_X2: int = 20
     
@@ -53,6 +53,7 @@ class TextBox(Component):
         self.lines: list[str] = []
         
         self.formating: dict[int, FormatData] = {}
+        self.format_box: TextFormatBox = None
         
         # TODO: MAKE THIS ITS OWN OBJECT
         self.cursor: pygame.Surface = self.font.render('|', True, '#ffffff')
@@ -76,11 +77,14 @@ class TextBox(Component):
         self.bold: bool = False
         self.italic: bool = False
         self.color: bool = False
+        self.color_data: str = ''
         
         self.command: Callable[[TextBox], None] = None
         
         key_bus.register('mouse_left_down', self.on_click)
         key_bus.register('mouse_left_down', self.check_off_click)
+        
+        key_bus.register('mouse_right_down', self.on_right_click)
         
         key_bus.register('mouse_left_up', self.on_release)
         
@@ -100,6 +104,8 @@ class TextBox(Component):
         
         key_bus.deregister('mouse_left_down', self.on_click)
         key_bus.deregister('mouse_left_down', self.check_off_click)
+        
+        key_bus.deregister('mouse_right_down', self.on_right_click)
         
         key_bus.deregister('mouse_left_up', self.on_release)
         
@@ -144,6 +150,12 @@ class TextBox(Component):
         self.text_face.blit(render, (pos[0], pos[1]))
         
         return render
+        
+    def on_right_click(self) -> None:
+        if not self.active or not self.hovering or self.box_size[1] == 1:
+            return
+        
+        self.format_box = TextFormatBox(pygame.mouse.get_pos(), self)
         
     def left_shift(self) -> None:
         if not self.active:
@@ -265,8 +277,75 @@ class TextBox(Component):
             
         self.__draw_text()
         
+    def is_index_foramt(self, index: int) -> FormatData:
+        char_index: int = 0
+        
+        bold: bool = False
+        italic: bool = False
+        color: bool = False
+        color_data: str = ''
+        
+        for char in list(self.text):
+            if (f_data := self.formating.get(char_index)):
+                if f_data.format_type == Format.BOLD:
+                    bold = True
+                elif f_data.format_type == Format.BOLD_OFF:
+                    bold = False
+                    
+                if f_data.format_type == Format.ITALIC:
+                    italic = True
+                elif f_data.format_type == Format.ITALIC_OFF:
+                    italic = False
+                    
+                if f_data.format_type == Format.COLOR:
+                    color = True
+                    color_data = f_data.data
+                elif f_data.format_type == Format.COLOR_OFF:
+                    color = False
+                    color_data = ''
+                    
+            if char_index == index:
+                break
+            
+            char_index += 1
+            
+        if bold:
+            return FormatData(Format.BOLD, '')
+        elif italic:
+            return FormatData(Format.ITALIC, '')
+        elif color:
+            return FormatData(Format.COLOR, color_data)
+        else:
+            return FormatData(Format.NONE, '')
+        
+    def __toggle_format_highlight(self, on_toggle: Format, off_toggle: Format, data: str = '') -> None:
+        if self.is_index_foramt(self.cursor_selection_indexs[0]).format_type == on_toggle:
+            self.formating[self.cursor_selection_indexs[0]] = FormatData(off_toggle, '')
+            
+            if (f_data := self.formating.get(self.cursor_selection_indexs[1] + 1)) and f_data.format_type == off_toggle:
+                self.formating.pop(self.cursor_selection_indexs[1] + 1)
+            else:
+                self.formating[self.cursor_selection_indexs[1] + 1] = FormatData(on_toggle, data)
+        
+        else:
+            self.formating[self.cursor_selection_indexs[0]] = FormatData(on_toggle, data)
+            self.formating[self.cursor_selection_indexs[1] + 1] = FormatData(off_toggle, '')
+            
+        for index in range(self.cursor_selection_indexs[0] + 1, self.cursor_selection_indexs[1]):
+            if f_data := self.formating.get(index):
+                if f_data.format_type == on_toggle or f_data.format_type == off_toggle:
+                    self.formating.pop(index)
+            
+        self.cursor_index = self.cursor_selection_indexs[1] + 1
+        self.__reset_selection()
+        self.__draw_text()
+        
     def toggle_bold(self) -> None:
         if not self.active:
+            return
+        
+        if self.highlighted_text:
+            self.__toggle_format_highlight(Format.BOLD, Format.BOLD_OFF)
             return
         
         index: int = len(self.text) if self.cursor_index == CURSOR_END else self.cursor_index
@@ -293,6 +372,10 @@ class TextBox(Component):
         if not self.active:
             return
         
+        if self.highlighted_text:
+            self.__toggle_format_highlight(Format.ITALIC, Format.ITALIC_OFF)
+            return
+        
         index: int = len(self.text) if self.cursor_index == CURSOR_END else self.cursor_index
         
         if (f_data := self.formating.get(index)) and f_data.format_type == Format.ITALIC:
@@ -311,6 +394,33 @@ class TextBox(Component):
             return
 
         self.formating[index] = FormatData(Format.ITALIC, '')
+        self.__draw_text()
+        
+    def toggle_color(self, color: str) -> None:
+        if not self.active:
+            return
+        
+        if self.highlighted_text:
+            self.__toggle_format_highlight(Format.COLOR, Format.COLOR_OFF, color)
+            return
+        
+        index: int = len(self.text) if self.cursor_index == CURSOR_END else self.cursor_index
+        
+        if (f_data := self.formating.get(index)) and f_data.format_type == Format.COLOR:
+            self.formating.pop(index)
+            self.__draw_text()
+            return
+                
+        if self.color:
+            if self.color_data != color:
+                self.formating[index] = FormatData(Format.COLOR, color)
+            else:
+                self.formating[index] = FormatData(Format.COLOR_OFF, '')
+                
+            self.__draw_text()
+            return
+
+        self.formating[index] = FormatData(Format.COLOR, color)
         self.__draw_text()
         
     def draw(self, screen: pygame.Surface, parent_pos: tuple[int, int]) -> None:
@@ -338,6 +448,9 @@ class TextBox(Component):
             self.image.blit(self.cursor, self.cursor_pos)
             
         screen.blit(self.image, self.rect.topleft)
+        
+        if self.format_box:
+            self.format_box.draw(screen)
         
     def __add_char(self, char: str) -> None:
         if not self.text:
@@ -371,6 +484,7 @@ class TextBox(Component):
     def __remove_highlighted_text(self) -> None:
         text: str = ''
         
+        print(self.cursor_selection_indexs)
         for index, char in enumerate(list(self.text)):
             if self.cursor_selection_indexs[0] <= index and index <= self.cursor_selection_indexs[1]:
                 continue
@@ -453,8 +567,15 @@ class TextBox(Component):
         if self.hovering or not self.active:
             return
         
+        if self.format_box:
+            self.format_box.deregister()
+            self.format_box = None
+        
         self.cursor_active = False
         self.cursor_timer.reset()
+        
+        self.cursor_mouse_pos = CURSOR_MOUSE_POS_DEFUALT
+        self.cursor_index = CURSOR_END
         
         self.__reset_selection()
         
@@ -468,10 +589,7 @@ class TextBox(Component):
         if not self.hovering:
             return
         
-        self.cursor_mouse_pos = CURSOR_MOUSE_POS_DEFUALT
-        self.cursor_index = CURSOR_END
-        
-        if self.active:
+        if self.active and not (self.format_box and self.format_box.hovering):
             mouse = pygame.mouse.get_pos()
             self.cursor_mouse_pos = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
             
@@ -479,6 +597,10 @@ class TextBox(Component):
             self.cursor_selection = True
             self.cursor_selection_start = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
             
+        if self.format_box and not self.format_box.hovering:
+            self.format_box.deregister()
+            self.format_box = None
+        
         self.cursor_active = True
         self.cursor_timer.start()
         
@@ -489,6 +611,15 @@ class TextBox(Component):
         
     def on_release(self) -> None:
         self.cursor_selection = False
+        
+    def hover(self) -> None:
+        super().hover()
+        
+        if self.format_box:
+            self.format_box.no_hover()
+            
+            if self.format_box.rect.collidepoint(pygame.mouse.get_pos()):
+                self.format_box.hover()
         
     def __set_cursor_pos(self, pos: tuple[int, int]) -> None:
         self.cursor_pos = (pos[0] - CURSOR_OFFSET[0], pos[1] - CURSOR_OFFSET[1])
@@ -541,10 +672,18 @@ class TextBox(Component):
         y: int = 5
         x: int = 8
         
-        self.bold: bool = False
-        self.italic: bool = False
-        self.color: bool = False
+        self.bold = False
+        self.italic = False
+        self.color = False
+        self.color_data = ''
+        
+        bold: bool = False
+        italic: bool = False
+        color: bool = False
         color_data: str = ''
+        
+        if self.cursor_mouse_pos[1] > y + (len(self.lines) * 25):
+            self.cursor_index = CURSOR_END
         
         sel_low: tuple[int, int] = ()
         sel_high: tuple[int, int] = ()
@@ -552,21 +691,23 @@ class TextBox(Component):
         if self.cursor_selection_end:
             self.highlighted_text = ''
             if self.cursor_selection_start[1] < self.cursor_selection_end[1]:
-                sel_low = (self.cursor_selection_start[0], math.floor((self.cursor_selection_start[1] - 5) / 20))
-                sel_high = (self.cursor_selection_end[0], math.floor((self.cursor_selection_end[1] - 5) / 20))
+                sel_low = (self.cursor_selection_start[0], (self.cursor_selection_start[1] - 5) // 25)
+                sel_high = (self.cursor_selection_end[0], (self.cursor_selection_end[1] - 5) // 25)
                 
             elif self.cursor_selection_start[1] > self.cursor_selection_end[1]:
-                sel_low = (self.cursor_selection_end[0], math.floor((self.cursor_selection_end[1] - 5) / 20))
-                sel_high = (self.cursor_selection_start[0], math.floor((self.cursor_selection_start[1] - 5) / 20))
+                sel_low = (self.cursor_selection_end[0], (self.cursor_selection_end[1] - 5) // 25)
+                sel_high = (self.cursor_selection_start[0], (self.cursor_selection_start[1] - 5) // 25)
                 
             elif self.cursor_selection_start[0] < self.cursor_selection_end[0]:
-                sel_low = (self.cursor_selection_start[0], math.floor((self.cursor_selection_start[1] - 5) / 20))
-                sel_high = (self.cursor_selection_end[0], math.floor((self.cursor_selection_end[1] - 5) / 20))
+                sel_low = (self.cursor_selection_start[0], (self.cursor_selection_start[1] - 5) // 25)
+                sel_high = (self.cursor_selection_end[0], (self.cursor_selection_end[1] - 5) // 25)
                 
                 
             else:
-                sel_low = (self.cursor_selection_end[0], math.floor((self.cursor_selection_end[1] - 5) / 20))
-                sel_high = (self.cursor_selection_start[0], math.floor((self.cursor_selection_start[1] - 5) / 20))
+                sel_low = (self.cursor_selection_end[0], (self.cursor_selection_end[1] - 5) // 25)
+                sel_high = (self.cursor_selection_start[0], (self.cursor_selection_start[1] - 5) // 25)
+                
+        self.cursor_selection_indexs = (sys.maxsize, 0)
                 
         modded_cursor: bool = False
         
@@ -612,59 +753,87 @@ class TextBox(Component):
                 if not f_data:
                     f_data = FormatData(Format.NONE, '')
                     
-                if f_data.format_type == Format.BOLD:
-                    self.bold = True
-                elif f_data.format_type == Format.BOLD_OFF:
-                    self.bold = False
-                    
-                elif f_data.format_type == Format.ITALIC:
-                    self.italic = True
-                elif f_data.format_type == Format.ITALIC_OFF:
-                    self.italic = False
-                    
-                elif f_data.format_type == Format.COLOR:
-                    self.color = True
+                if f_data.format_type == Format.COLOR:
+                    color = True
                     color_data = f_data.data
                 elif f_data.format_type == Format.COLOR_OFF:
-                    self.color = False
-                    color_data = ''
+                    color = False
+                    color_data = ''    
+                
+                elif f_data.format_type == Format.BOLD:
+                    bold = True
+                elif f_data.format_type == Format.BOLD_OFF:
+                    bold = False
+                    
+                elif f_data.format_type == Format.ITALIC:
+                    italic = True
+                elif f_data.format_type == Format.ITALIC_OFF:
+                    italic = False
                     
                 if self.cursor_index == index:
+                    self.bold = bold
+                    self.italic = italic
+                    self.color = color
+                    self.color_data = color_data
+                    
                     self.__set_cursor_pos((x, y))
-                    modded_cursor = True
-                
-                if self.bold:
+                    
+                if color:
+                    render: pygame.Surface = self.render_text(char, color_data, (x, y), is_highlight=is_highlighted, is_bolded=True)
+                elif bold:
                     render: pygame.Surface = self.render_text(char, '#ffffff', (x, y), is_highlight=is_highlighted, is_bolded=True)
-                elif self.italic:
+                elif italic:
                     render: pygame.Surface = self.render_text(char, '#ffffff', (x, y), is_highlight=is_highlighted, is_italic=True)
                     x -= render.width
                     x += text_metrics[index][4]
-                elif self.color:
-                    render: pygame.Surface = self.render_text(char, color_data, (x, y), is_highlight=is_highlighted, is_bolded=True)
                 else:
                     render: pygame.Surface = self.render_text(char, '#ffffff', (x, y), is_highlight=is_highlighted)
                     
                 x += render.width
                 index += 1
                 
-                if self.cursor_mouse_pos[0] < x + (render.width / 2) and math.floor((self.cursor_mouse_pos[1] - 5) / 20) == l_index:
+                if self.cursor_mouse_pos[0] < x + (render.width / 2) and self.cursor_mouse_pos[1] // 25 == l_index:
                     self.__set_cursor_pos((x - render.width, y))
                     self.cursor_mouse_pos = CURSOR_MOUSE_POS_DEFUALT
                     self.cursor_index = index
-                    
-                    modded_cursor = True
-                
+                                    
             if line == self.lines[-1]:
                 continue
             
             y += 25
             x = 8
             
-        if self.cursor_mouse_pos[0] > x and not modded_cursor:
-            self.cursor_index = CURSOR_END
-        
+        if (f_data := self.formating.get(index)):
+            if f_data.format_type == Format.BOLD:
+                bold = True
+            elif f_data.format_type == Format.BOLD_OFF:
+                bold = False
+                
+            elif f_data.format_type == Format.ITALIC:
+                italic = True
+            elif f_data.format_type == Format.ITALIC_OFF:
+                italic = False
+                
+            elif f_data.format_type == Format.COLOR:
+                color = True
+                color_data = f_data.data
+            elif f_data.format_type == Format.COLOR_OFF:
+                color = False
+                color_data = ''
+                
         if self.cursor_index == CURSOR_END:
+            self.bold = bold
+            self.italic = italic
+            self.color = color
+            self.color_data = color_data
+            
             self.__set_cursor_pos((x, y))
+            
+            # if self.highlighted_text:
+            #     self.cursor_selection_indexs = (
+            #         self.cursor_selection_indexs[0],
+            #         len(self.text)
+            #     )
         
     def __draw_text(self) -> None:
         self.text_face.fill((0, 0, 0, 0))

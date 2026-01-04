@@ -41,8 +41,8 @@ class TraitComponent(CardComponent):
             self.hovering = True
             mouse: tuple[int, int] = pygame.mouse.get_pos()
             card_width: int = self.card.width / 3
-            x =  min(max(mouse[0] - self.drag_pos[0] - self.rect.x, -self.offset[0] + 32), ((card_width - 1) * 540) - self.offset[0] + (60 if card_width > 2 else 30))
-            y =  min(max(mouse[1] - self.drag_pos[1] - self.rect.y, -self.offset[1] + 32), self.card.size[1] - self.offset[1] - self.rect.height - 20)            
+            x =  min(max(mouse[0] - self.drag_pos[0] - self.rect.x + self.pos[0], -self.offset[0] + 32), ((card_width - 1) * 540) - self.offset[0] + (60 if card_width > 2 else 30))
+            y =  min(max(mouse[1] - self.drag_pos[1] - self.rect.y + self.pos[1], -self.offset[1] + 32), self.card.size[1] - self.offset[1] - self.rect.height - 20)            
             
         super().draw(screen)    
         
@@ -64,7 +64,7 @@ class TraitComponent(CardComponent):
             return
                
         from editor.ui.traitElement import TraitElement
-        event_bus.sign('ui_window',TraitElement(self))
+        event_bus.sign('ui_window', TraitElement(self))
         
     def on_release(self) -> None:
         if not super().on_release():

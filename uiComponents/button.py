@@ -37,6 +37,8 @@ class Button(Component):
             (self.size[1] / 2) - (self.text_size[1] / 2)
         )
         
+        self.active: bool = False
+        
         key_bus.register('mouse_left_down', self.on_click)
         
     def change_text_color(self, color: str) -> None:
@@ -59,13 +61,19 @@ class Button(Component):
         
         if self.hovering:
             self.image.blit(self.face_hover, (0, 0))
+            if self.active:
+                self.image.blit(self.__add_outline(self.face_hover), (-1, -1))
         else:
             self.image.blit(self.face, (0, 0))
+            if self.active:
+                self.image.blit(self.__add_outline(self.face), (-1, -1))
             
         self.image.blit(self.back_text, (self.text_pos[0], self.text_pos[1] + 1))
         self.image.blit(self.face_text, self.text_pos)
         
         screen.blit(self.image, self.rect.topleft)
+        
+        self.active = False
         
     def deregister(self) -> None:
         super().deregister()
@@ -77,3 +85,14 @@ class Button(Component):
             return
         
         self.command()
+        
+    def __add_outline(self, image: pygame.Surface) -> pygame.Surface:
+        con_mask = pygame.mask.Mask((3, 3), fill=True)
+
+        mask = pygame.mask.from_surface(image)
+
+        surf_out = mask.convolve(con_mask).to_surface(setcolor='#ffffff', unsetcolor=(0, 0, 0, 0))
+
+        surf_out.blit(image, (1, 1))
+
+        return surf_out

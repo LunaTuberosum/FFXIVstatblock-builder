@@ -252,8 +252,8 @@ class TopStatElement(StatCardElement[TopStatComponent]):
         self.add_component(
             f'{name}_Plus',
             Button(
-                pos=(pos[0] + box_size, pos[1]),
-                size=(30, 32),
+                pos=(pos[0] + box_size - 2, pos[1] - 2),
+                size=(32, 34),
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
                 command=plus_callback
@@ -262,8 +262,8 @@ class TopStatElement(StatCardElement[TopStatComponent]):
         self.add_component(
             f'{name}_Minus',
             Button(
-                pos=(pos[0] + box_size + 30, pos[1]),
-                size=(30, 32),
+                pos=(pos[0] + box_size + 28, pos[1] - 2),
+                size=(32, 34),
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
                 command=minus_callback

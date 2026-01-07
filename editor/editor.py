@@ -9,6 +9,7 @@ from menu.sheet import Sheet
 
 from singletons import resourceHandler
 
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 
@@ -21,7 +22,7 @@ pygame.font.init()
 JUPITER_FONT: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\jupiter_pro_regular.otf', 40)
 MIEDINGER: pygame.Font = resourceHandler.load_font('assets/fonts/miedinger_medium.ttf', 18)
 
-class Editor( GameProcess):
+class Editor(GameProcess):
     def __init__(self, main: object, sheet: Sheet) -> None:
         super().__init__(main)
         
@@ -33,8 +34,11 @@ class Editor( GameProcess):
             'space_down': False
         }
         
+        self.text_colors: list[str] = []
+        
         self.stat_cards: list[StatCard] = []
         self.load()
+        
         
     def setup_bus_calls(self) -> None:
         super().setup_bus_calls()
@@ -45,6 +49,9 @@ class Editor( GameProcess):
         key_bus.register('space_down', self.space_down)
         key_bus.register('space_up', self.space_up)
         
+        data_bus.register('get_colors', self.get_colors)
+        data_bus.register('add_color', self.add_color)
+        
     def deregister(self) -> None:
         super().deregister()
         
@@ -54,8 +61,17 @@ class Editor( GameProcess):
         key_bus.deregister('space_down', self.space_down)
         key_bus.deregister('space_up', self.space_up)
         
+        data_bus.deregister('get_colors', self.get_colors)
+        data_bus.deregister('add_color', self.add_color)
+        
         for card in self.stat_cards:
             card.deregister()
+        
+    def get_colors(self) -> list[str]:
+        return self.text_colors
+    
+    def add_color(self, color: str) -> None:
+        self.text_colors.append(color.strip('#'))
         
     def space_down(self) -> None:
         self.can_pan['space_down'] = True
@@ -155,7 +171,10 @@ class Editor( GameProcess):
         
     def load(self) -> None:
         for card in self.sheet.sheet_info.values():
-            if card == '2.0': continue
+            if not isinstance(card, dict): 
+                if isinstance(card, list):
+                    self.text_colors = card
+                continue
             
             s_card: StatCard = StatCard(card['width'], card['height'])
             

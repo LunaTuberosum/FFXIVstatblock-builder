@@ -460,16 +460,18 @@ class TextBox(Component):
         if self.format_box:
             self.format_box.no_hover()
             
-            if self.is_hover(pygame.mouse.get_pos()):
+            if self.format_box.is_hover(pygame.mouse.get_pos()):
                 self.format_box.hover()
                 
             self.format_box.draw(screen)
         
     def is_hover(self, mouse_pos: tuple[int, int]) -> bool:
-        if self.format_box:
-            return self.format_box.is_hover(mouse_pos)
+        is_hover: bool = False
         
-        return super().is_hover(mouse_pos)
+        if self.format_box and self.format_box.is_hover(mouse_pos):
+            is_hover = True
+        
+        return is_hover or super().is_hover(mouse_pos)
         
     def __add_char(self, char: str) -> None:
         if not self.text:
@@ -508,7 +510,7 @@ class TextBox(Component):
                 continue
             
             text += char
-            
+                        
         self.__reset_selection()
         
         self.change_text(text)
@@ -562,12 +564,14 @@ class TextBox(Component):
         
         # User used ESCAPE
         if unicode == '\x1b':
+            event_bus.sign('typing_register', None)
             self.hovering = False
             self.check_off_click()
             return
             
         # User used RETURN/ENTER
         if unicode == '\r':
+            event_bus.sign('typing_register', None)
             self.hovering = False
             self.check_off_click()
             return
@@ -613,6 +617,10 @@ class TextBox(Component):
         if not self.hovering:
             return
         
+        if self.format_box and not self.format_box.hovering:
+            self.format_box.deregister()
+            self.format_box = None
+        
         if self.active and not (self.format_box and self.format_box.hovering):
             mouse = pygame.mouse.get_pos()
             self.cursor_mouse_pos = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
@@ -620,10 +628,6 @@ class TextBox(Component):
             self.__reset_selection()
             self.cursor_selection = True
             self.cursor_selection_start = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
-            
-        if self.format_box and not self.format_box.hovering:
-            self.format_box.deregister()
-            self.format_box = None
         
         self.cursor_active = True
         self.cursor_timer.start()
@@ -697,9 +701,6 @@ class TextBox(Component):
         color: bool = False
         color_data: str = ''
         
-        if self.cursor_mouse_pos[1] > y + (len(self.lines) * 25):
-            self.cursor_index = CURSOR_END
-        
         sel_low: tuple[int, int] = ()
         sel_high: tuple[int, int] = ()
         is_highlighted: bool = False
@@ -724,8 +725,6 @@ class TextBox(Component):
                 
         self.cursor_selection_indexs = (sys.maxsize, 0)
                 
-        modded_cursor: bool = False
-        
         # [(minX, maxX, minY, maxY, advance**), ...]
         text_metrics: list[tuple[int, ...]] = self.font.metrics(self.text)
         
@@ -851,7 +850,7 @@ class TextBox(Component):
             #     self.cursor_selection_indexs = (
             #         self.cursor_selection_indexs[0],
             #         len(self.text)
-            #     )
+            #     ) OMG GREEN TEXT!!
         
     def __draw_text(self) -> None:
         self.text_face.fill((0, 0, 0, 0))

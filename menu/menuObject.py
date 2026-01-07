@@ -90,7 +90,7 @@ class MenuObject():
             return
         
         for _file in entries:
-            if _file == '2.0': continue
+            if not isinstance(_file, dict): continue
             
             _x = ENTRY_START_X
             for word in self.get_entry(_file):

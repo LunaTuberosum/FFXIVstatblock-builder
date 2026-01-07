@@ -1,8 +1,9 @@
-import colorsys
 import re
 import pygame
 
 from singletons import resourceHandler
+from singletons.dataBus import data_bus
+
 from uiComponents.button import Button
 
 
@@ -11,6 +12,8 @@ BACKGROUND_TILE_SIZE_X2: int = 22
 
 class TextFormatBox():
     def __init__(self, pos: tuple[int, int], textbox: object) -> None:
+        self.colors: dict[str, Button] = {}
+        
         self.pos: tuple[int, int] = pos
         self.size: tuple[int, int] = (177, 44)
         
@@ -45,7 +48,6 @@ class TextFormatBox():
             command=self.color_confirm
         )
         self.color_text_active: bool = False
-        self.colors: dict[str, Button] = {}
         
         self.bold_button: Button = Button(
             pos=(7, 6), 
@@ -86,6 +88,11 @@ class TextFormatBox():
             image_hover='.\\assets\\icons\\AddButton_hover.png',
             command=self.add_color
         )
+        
+        colors: list[str] = data_bus.sign('get_colors')
+        if colors:
+            for color in colors:
+                self.__add_color_button(color)
         
     def deregister(self) -> None:
         self.color_textbox.deregister()
@@ -187,6 +194,7 @@ class TextFormatBox():
                 hover = pygame.Surface((26, 27), pygame.SRCALPHA)
                 hover.fill((226, 226, 226, 140))
                 screen.blit(hover, (button.rect.x + 3, button.rect.y + 3))
+                
             button.draw(screen, self.rect.topleft)
         
         if self.color_text_active:
@@ -208,11 +216,8 @@ class TextFormatBox():
         if self.color_text_active and self.add_rect.collidepoint(mouse_pos):
             is_hover = True
             
-        if self.rect.collidepoint(mouse_pos):
-            is_hover = True
+        return is_hover or self.rect.collidepoint(mouse_pos)
             
-        return is_hover
-    
     def toggle_color(self) -> None:
         if self.ability_button.hovering:
             self.textbox.toggle_color('#D34D35')
@@ -239,12 +244,8 @@ class TextFormatBox():
         self.color_text_active = True
     
     def color_confirm(self) -> None:
-        color: str = '#{message:{fill}{align}{width}}'.format(
-                message=re.sub(r'[g-zG-Z]', 'F', self.color_textbox.text),
-                fill='F',
-                align='<',
-                width=6
-            )
+        if color := self.__add_color_button(self.color_textbox.text):
+            data_bus.sign('add_color', color)
         
         self.color_textbox.change_text('FFFFFF')
         self.color_confirm_button.no_hover()
@@ -252,8 +253,16 @@ class TextFormatBox():
         self.color_textbox.check_off_click()
         self.color_text_active = False
         
+    def __add_color_button(self, color_text: str) -> str:
+        color: str = '#{message:{fill}{align}{width}}'.format(
+            message=re.sub(r'[g-zG-Z]', 'F', color_text),
+            fill='F',
+            align='<',
+            width=6
+        )
+        
         if color in self.colors:
-            return
+            return None
         
         self.colors[color] = Button(
             pos=(139 + (33 * len(self.colors)), 6),
@@ -273,6 +282,8 @@ class TextFormatBox():
         self.image = pygame.Surface(self.size, pygame.SRCALPHA)
         self.rect = self.image.get_rect(bottomleft=self.pos)
         self.background = self.__draw_background()
+        
+        return color
     
     def __draw_background(self, set_size: tuple[int, int] = (0, 0)) -> pygame.Surface:
         size: tuple[int, int] = set_size if set_size[0] else self.size

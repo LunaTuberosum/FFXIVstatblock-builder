@@ -3,7 +3,7 @@
     "colors": [],
     "0": {
         "width": 3,
-        "height": 6,
+        "height": 8,
         "components": {
             "Name_Component": {
                 "name": "Odin, The Unbroken",
@@ -229,6 +229,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_1": {
@@ -275,6 +276,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_2": {
@@ -331,6 +333,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_3": {
@@ -429,6 +432,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": {
                     "type": 3,
                     "gridSize": [
@@ -627,6 +631,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": {
                     "type": 3,
                     "gridSize": [
@@ -791,6 +796,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": {
                     "type": 2,
                     "gridSize": [
@@ -841,20 +847,6 @@
                 "invk": false,
                 "types": "Primary, Magic",
                 "effects": {
-                    "": {
-                        "desc": "An emanation of Odin's dark power, draining your very will",
-                        "format": {
-                            "-1": {
-                                "type": 2,
-                                "data": ""
-                            },
-                            "58": {
-                                "type": 3,
-                                "data": ""
-                            }
-                        },
-                        "in_line": false
-                    },
                     "Marker Area": {
                         "desc": "The entire encounter map",
                         "format": {},
@@ -885,6 +877,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "An emanation of Odin's dark power, draining your very will",
                 "marker": null
             },
             "Ability_7": {
@@ -995,6 +988,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": {
                     "type": 3,
                     "gridSize": [
@@ -1099,6 +1093,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": {
                     "type": 2,
                     "gridSize": [
@@ -1176,7 +1171,7 @@
     },
     "1": {
         "width": 1,
-        "height": 6,
+        "height": 4,
         "components": {
             "Name_Component": {
                 "name": "Gungnir",
@@ -1399,7 +1394,7 @@
     },
     "2": {
         "width": 1,
-        "height": 6,
+        "height": 4,
         "components": {
             "Name_Component": {
                 "name": "Odin, Lord of the Eternal Hall",
@@ -1462,6 +1457,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             }
         }

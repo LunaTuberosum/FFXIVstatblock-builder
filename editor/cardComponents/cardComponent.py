@@ -34,6 +34,7 @@ class CardComponent():
         
         self.click_timer: Timer = Timer(300)
         self.drag: bool = False
+        self.can_drag: bool = True
         self.drag_pos = tuple[int, int]
         
         self.is_last: bool = False
@@ -42,9 +43,22 @@ class CardComponent():
         key_bus.register('mouse_left_down', self.on_click)
         key_bus.register('mouse_left_up', self.on_release)
         
+        key_bus.register('space_down', self.space_down)
+        key_bus.register('space_up', self.space_up)
+        
     def deregister(self) -> None:
         key_bus.deregister('mouse_left_down', self.on_click)
         key_bus.deregister('mouse_left_up', self.on_release)
+        
+        key_bus.deregister('space_down', self.space_down)
+        key_bus.deregister('space_up', self.space_up)
+        
+    def space_down(self) -> None:
+        self.can_drag = False
+        self.drag = False
+        
+    def space_up(self) -> None:
+        self.can_drag = True
         
     def update(self, offset: tuple[int, int]) -> None:
         self.rect.topleft = (
@@ -65,6 +79,9 @@ class CardComponent():
     def on_click(self) -> bool:
         if self.click_timer.time_left() < 0:
             self.click_timer.start()
+            
+            if not self.can_drag:
+                return False
             
             if not self.drag:
                 mouse: tuple[int, int] = pygame.mouse.get_pos()

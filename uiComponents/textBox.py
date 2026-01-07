@@ -105,6 +105,8 @@ class TextBox(Component):
     def deregister(self) -> None:
         super().deregister()
         
+        self.check_off_click()
+        
         key_bus.deregister('mouse_left_down', self.on_click)
         key_bus.deregister('mouse_left_down', self.check_off_click)
         

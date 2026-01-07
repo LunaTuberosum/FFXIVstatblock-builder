@@ -19,6 +19,9 @@ class Format(Enum):
     EFFECT_NAME: int = 7
     EFFECT_NAME_OFF: int = 8
     
+    EXTRA: int = 9
+    EXTRA_OFF: int = 10
+    
 @dataclass
 class FormatData():
     format_type: Format

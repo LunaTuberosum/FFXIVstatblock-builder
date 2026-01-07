@@ -96,7 +96,7 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
     for card_id, card_data in sheet.items():
         card: dict[str, dict] = {
             'width': card_data['width'],
-            'height': card_data['height'],
+            'height': (card_data['height'] + 2) * 2,
             'components': {
                 'Name_Component': card_data['components']['Name_Component'],
                 'Top_Stat_Component': card_data['components']['Top_Stat_Component']
@@ -121,13 +121,18 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
                 
             elif comp_name.startswith('Ability'):
                 new_effects: dict[str, str] = {}
+                extra_text: str = ''
                 
                 for effect_name, effect_desc in comp_data['effects'].items():
                     if effect_name.endswith(':'):
                         effect_name = effect_name[:-1]
                         
+                    if effect_name == '':
+                        effect_desc: str = effect_desc
+                        extra_text = effect_desc.strip('{i} {/i}')
+                        continue
+                        
                     new_desc, format_data = reformat_text(effect_desc)
-                    
                     new_effects[effect_name] = {
                         'desc': new_desc,
                         'format': format_data,
@@ -139,6 +144,7 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
                     'invk': comp_data['invk'],
                     'types': comp_data['types'],
                     'effects': new_effects,
+                    'extra_text': extra_text,
                     'marker': comp_data['marker']
                 }
                 

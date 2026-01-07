@@ -37,6 +37,7 @@ class AbilityComponent(CardComponent):
         
         self.name: str = ''
         self.types: str = ''
+        self.extra_text: str = ''
         self.effects: dict[str, EffectData] = {}
         self.formating: dict[int, FormatData] = {}
         
@@ -89,6 +90,7 @@ class AbilityComponent(CardComponent):
         self.name = data['name']
         self.invk = data['invk']
         self.types = data['types']
+        self.extra_text = data['extra_text']
         
         for effect_name, effect_data in data['effects'].items():
             
@@ -164,6 +166,28 @@ class AbilityComponent(CardComponent):
             
             self.lines.append(text)
             
+        
+        
+        if self.extra_text:
+            text = ''
+            size = 0
+            self.formating[index] = FormatData(Format.EXTRA, '')
+            for word in self.extra_text.split():
+                render: pygame.Surface = self.font_italic.render(word + ' ', True, '#000000')
+                
+                if size + render.width >= limit:
+                    self.lines.append(text)
+                    text = ''
+                    size = 0
+                    
+                text += word + ' '
+                index += len(word + ' ')
+                
+                size += render.width
+                    
+            self.lines.append(text)
+            self.formating[index] = FormatData(Format.EXTRA_OFF, '')
+                
         self.size = (
             518,
             40 + (18 * len(self.lines))
@@ -204,6 +228,7 @@ class AbilityComponent(CardComponent):
         x: int = 1
         
         name: bool = False
+        extra: bool = False
         bold: bool = False
         italic: bool = False
         color: bool = False
@@ -221,6 +246,11 @@ class AbilityComponent(CardComponent):
                     name = True
                 elif f_data.format_type == Format.EFFECT_NAME_OFF:
                     name = False
+                    
+                elif f_data.format_type == Format.EXTRA:
+                    extra = True
+                elif f_data.format_type == Format.EXTRA_OFF:
+                    extra = False
                     
                 if f_data.format_type == Format.BOLD:
                     bold = True
@@ -241,10 +271,20 @@ class AbilityComponent(CardComponent):
                     
                 if name:
                     render: pygame.Surface = self.font_bolded.render(char, True, '#995745')
+                elif extra:
+                    render: pygame.Surface = self.font_italic.render(char, True, '#995745')
+                    if x == 1:
+                        x += 3
+                    x -= render.width
+                    x += self.font.metrics(char)[0][4]
                 elif bold:
                     render: pygame.Surface = self.font_bolded.render(char, True, '#000000')
                 elif italic:
                     render: pygame.Surface = self.font_italic.render(char, True, '#000000')
+                    if x == 1:
+                        x += 3
+                    x -= render.width
+                    x += self.font.metrics(char)[0][4] 
                 elif color:
                     render: pygame.Surface = self.font_bolded.render(char, True, color_data)
                 else:

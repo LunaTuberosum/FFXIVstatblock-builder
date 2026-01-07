@@ -3,7 +3,7 @@
     "colors": [],
     "0": {
         "width": 3,
-        "height": 5,
+        "height": 6,
         "components": {
             "Name_Component": {
                 "name": "Edda Blackblossom",
@@ -154,7 +154,7 @@
                     "CR": {
                         "desc": "Target's Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deals 10 Damage to all targets in range",
@@ -181,6 +181,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": {
                     "type": 3,
                     "gridSize": [
@@ -277,7 +278,7 @@
                     "CR": {
                         "desc": "Target's Magic Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deals 8 Damage and marks Target",
@@ -300,6 +301,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_2": {
@@ -325,7 +327,7 @@
                     "CR": {
                         "desc": "Target's Magic Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deals 1d6+10 Damage to all targets in range",
@@ -341,22 +343,9 @@
                         "desc": "Deals an additional 4d6 Damage",
                         "format": {},
                         "in_line": false
-                    },
-                    "": {
-                        "desc": "Place this marker on either the left or right at random",
-                        "format": {
-                            "-1": {
-                                "type": 2,
-                                "data": ""
-                            },
-                            "55": {
-                                "type": 3,
-                                "data": ""
-                            }
-                        },
-                        "in_line": false
                     }
                 },
+                "extra_text": "Place this marker on either the left or right at random",
                 "marker": {
                     "type": 3,
                     "gridSize": [
@@ -532,6 +521,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_4": {
@@ -559,6 +549,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_5": {
@@ -584,7 +575,7 @@
                     "CR": {
                         "desc": "Target's Magic Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Inflicts Silence on Target",
@@ -611,6 +602,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_6": {
@@ -648,13 +640,14 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             }
         }
     },
     "1": {
         "width": 2,
-        "height": 5,
+        "height": 6,
         "components": {
             "Name_Component": {
                 "name": "Avere Bravearm",
@@ -749,7 +742,7 @@
                     "CR": {
                         "desc": "Target's Magic Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deals 10 Damage to the target and restores 10 health to Avere Bravearm",
@@ -771,6 +764,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_1": {
@@ -796,7 +790,7 @@
                     "CR": {
                         "desc": "Target's Magic Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deals 8 Damage",
@@ -809,6 +803,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_2": {
@@ -846,6 +841,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": {
                     "type": 3,
                     "gridSize": [
@@ -993,13 +989,14 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             }
         }
     },
     "2": {
         "width": 1,
-        "height": 5,
+        "height": 4,
         "components": {
             "Name_Component": {
                 "name": "Wedding Corpse",
@@ -1047,7 +1044,7 @@
                     "CR": {
                         "desc": "Target\u00e2\u20ac\u2122's Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deals 10 Damage to the target.",
@@ -1069,13 +1066,14 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             }
         }
     },
     "3": {
         "width": 2,
-        "height": 5,
+        "height": 8,
         "components": {
             "Name_Component": {
                 "name": "Edda the Consumed",
@@ -1204,7 +1202,7 @@
                     "CR": {
                         "desc": "Target's Magic Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deals 10 Damage to all targets in range and grants Edda the Consumed a Blood Rune for each target hit",
@@ -1248,6 +1246,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": {
                     "type": 3,
                     "gridSize": [
@@ -1344,7 +1343,7 @@
                     "CR": {
                         "desc": "Target's Magic Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deals 10 + 2d6 Damage to all targets in range and grants Edda the Consumed a Blood Rune for each target hit",
@@ -1388,6 +1387,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": {
                     "type": 2,
                     "gridSize": [
@@ -1484,7 +1484,7 @@
                     "CR": {
                         "desc": "Target's Magic Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deals 8 Damage and marks Target",
@@ -1511,6 +1511,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_3": {
@@ -1538,6 +1539,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_4": {
@@ -1586,6 +1588,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             },
             "Ability_5": {
@@ -1611,7 +1614,7 @@
                     "CR": {
                         "desc": "Target's Magic Defense",
                         "format": {},
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Inflicts Disease & Silence on Target",
@@ -1646,6 +1649,7 @@
                         "in_line": false
                     }
                 },
+                "extra_text": "",
                 "marker": null
             }
         }

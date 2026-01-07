@@ -69,6 +69,8 @@ class TextBox(Component):
         self.cursor_selection_indexs: tuple[int, int] = (sys.maxsize, 0)
         self.highlighted_text: str = ''
         
+        self.prefix: str = ''
+        
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.__draw_text()
         
@@ -80,6 +82,7 @@ class TextBox(Component):
         self.color_data: str = ''
         
         self.command: Callable[[TextBox], None] = None
+        self.char_limit: int = -1
         
         key_bus.register('mouse_left_down', self.on_click)
         key_bus.register('mouse_left_down', self.check_off_click)
@@ -123,6 +126,13 @@ class TextBox(Component):
     def add_command(self, command: Callable[['TextBox'], None]) -> None:
         self.command = command
         
+    def add_prefix(self, prefix: str) -> None:
+        self.prefix = prefix    
+        self.__draw_text()
+    
+    def add_char_limit(self, limit: int) -> None:
+        self.char_limit = limit 
+    
     def change_text(self, new_text: str, format_data: dict[int, FormatData] = None) -> None:
         self.text = new_text
         
@@ -155,7 +165,7 @@ class TextBox(Component):
         if not self.active or not self.hovering or self.box_size[1] == 1:
             return
         
-        self.format_box = TextFormatBox(pygame.mouse.get_pos(), self)
+        self.format_box = TextFormatBox((self.cursor_pos[0] + self.rect.x, self.cursor_pos[1] + self.rect.y), self)
         
     def left_shift(self) -> None:
         if not self.active:
@@ -196,7 +206,6 @@ class TextBox(Component):
         for l_index, line in enumerate(self.lines):
             for c_index, char in enumerate(list(line)):
                 if index == self.cursor_index:
-                    print('relative: index', c_index)
                     relative = c_index
                     prev_line = l_index - 1
                     
@@ -236,7 +245,6 @@ class TextBox(Component):
         for l_index, line in enumerate(self.lines):
             for c_index, char in enumerate(list(line)):
                 if index == self.cursor_index:
-                    print('relative: index', c_index)
                     relative = c_index
                     next_line = l_index + 1
                     
@@ -450,7 +458,18 @@ class TextBox(Component):
         screen.blit(self.image, self.rect.topleft)
         
         if self.format_box:
+            self.format_box.no_hover()
+            
+            if self.is_hover(pygame.mouse.get_pos()):
+                self.format_box.hover()
+                
             self.format_box.draw(screen)
+        
+    def is_hover(self, mouse_pos: tuple[int, int]) -> bool:
+        if self.format_box:
+            return self.format_box.is_hover(mouse_pos)
+        
+        return super().is_hover(mouse_pos)
         
     def __add_char(self, char: str) -> None:
         if not self.text:
@@ -484,7 +503,6 @@ class TextBox(Component):
     def __remove_highlighted_text(self) -> None:
         text: str = ''
         
-        print(self.cursor_selection_indexs)
         for index, char in enumerate(list(self.text)):
             if self.cursor_selection_indexs[0] <= index and index <= self.cursor_selection_indexs[1]:
                 continue
@@ -558,7 +576,10 @@ class TextBox(Component):
         if unicode == '\t':
             return
             
-        if not re.match(r'[A-Za-z0-9()-_[\]<> "\'{}]', unicode) or re.match(r'[:;]', unicode):
+        if not re.match(r'[A-Za-z0-9()-_[\]<> "\'{}#]', unicode) or re.match(r'[:;]', unicode):
+            return
+        
+        if self.char_limit != -1 and len(self.text) >= self.char_limit:
             return
         
         self.__add_char(unicode)
@@ -568,6 +589,9 @@ class TextBox(Component):
             return
         
         if self.format_box:
+            if self.format_box.rect.collidepoint(pygame.mouse.get_pos()):
+                return
+            
             self.format_box.deregister()
             self.format_box = None
         
@@ -611,15 +635,6 @@ class TextBox(Component):
         
     def on_release(self) -> None:
         self.cursor_selection = False
-        
-    def hover(self) -> None:
-        super().hover()
-        
-        if self.format_box:
-            self.format_box.no_hover()
-            
-            if self.format_box.rect.collidepoint(pygame.mouse.get_pos()):
-                self.format_box.hover()
         
     def __set_cursor_pos(self, pos: tuple[int, int]) -> None:
         self.cursor_pos = (pos[0] - CURSOR_OFFSET[0], pos[1] - CURSOR_OFFSET[1])
@@ -821,6 +836,9 @@ class TextBox(Component):
                 color = False
                 color_data = ''
                 
+        if (self.cursor_mouse_pos[1] // 25) == l_index and self.cursor_mouse_pos[0] > x:
+            self.cursor_index = CURSOR_END
+                
         if self.cursor_index == CURSOR_END:
             self.bold = bold
             self.italic = italic
@@ -843,7 +861,11 @@ class TextBox(Component):
             self.__draw_multiline_text()
             return
         
-        text_size: tuple[int, int] = self.font.size(self.text)
+        text: str = self.text
+        if self.prefix:
+            text = self.prefix + self.text
+        
+        text_size: tuple[int, int] = self.font.size(text)
         surf_size: tuple[int, int] = self.text_face.size
         pos: tuple[int, int] = (
             (surf_size[0] / 2) - (text_size[0] / 2),
@@ -851,7 +873,7 @@ class TextBox(Component):
         )
         
         # [(minX, maxX, minY, maxY, advance**), ...]
-        text_metrics: list[tuple[int, ...]] = self.font.metrics(self.text)
+        text_metrics: list[tuple[int, ...]] = self.font.metrics(text)
         
         sel_low: tuple[int, int] = []
         sel_high: tuple[int, int] = []
@@ -863,9 +885,16 @@ class TextBox(Component):
             else:
                 sel_low = self.cursor_selection_end
                 sel_high = self.cursor_selection_start
-        
+                
         modded_cursor: bool = False
-        for index, char in enumerate(self.text):
+        index: int = 0
+        for char in text:
+            if char == self.prefix:
+                self.render_text(char, '#ffffff', pos)
+                pos = (pos[0] + text_metrics[index][4], pos[1])
+                text_metrics.pop(index)
+                continue
+            
             if sel_low and sel_low[0] < pos[0] + (text_metrics[index][4] / 2) and pos[0] + (text_metrics[index][4] / 2) < sel_high[0]:
                 self.cursor_selection_indexs = (
                     min(index, self.cursor_selection_indexs[0]),
@@ -887,7 +916,9 @@ class TextBox(Component):
                 self.cursor_index = index
                 
                 modded_cursor = True
-        
+                
+            index += 1
+                
         if self.cursor_mouse_pos[0] > pos[0] and not modded_cursor:
             self.cursor_index = CURSOR_END
         

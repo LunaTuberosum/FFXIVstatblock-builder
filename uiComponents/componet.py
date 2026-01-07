@@ -23,5 +23,8 @@ class Component():
     def hover(self) -> None:
         self.hovering = True
         
+    def is_hover(self, mouse_pos: tuple[int, int]) -> bool:
+        return self.rect.collidepoint(mouse_pos)
+        
     def deregister(self) -> None:
         pass

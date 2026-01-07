@@ -120,7 +120,7 @@ class GameProcess():
             for comp in self.ui_window.components.values():
                 comp.no_hover()
                 
-                if comp.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
+                if comp.is_hover(self.mouse_handler.mouse_pos) and not self.hover_object:
                     self.hover_object = comp
                     self.ui_window.hover()
             

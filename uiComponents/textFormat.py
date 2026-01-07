@@ -16,6 +16,9 @@ class Format(Enum):
     
     NEW_LINE: int = 6
     
+    EFFECT_NAME: int = 7
+    EFFECT_NAME_OFF: int = 8
+    
 @dataclass
 class FormatData():
     format_type: Format

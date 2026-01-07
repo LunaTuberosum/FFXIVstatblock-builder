@@ -1,6 +1,7 @@
 {
     "version": "2.0",
-    "1": {
+    "colors": [],
+    "0": {
         "width": 3,
         "height": 6,
         "components": {
@@ -30,11 +31,11 @@
             "Trait_0": {
                 "name": "Elite Fore: Lord of the Corpse Hall",
                 "format": {
-                    "24": {
+                    "23": {
                         "type": 0,
                         "data": ""
                     },
-                    "32": {
+                    "31": {
                         "type": 1,
                         "data": ""
                     }
@@ -49,11 +50,11 @@
             "Trait_2": {
                 "name": "Master of the Dread Arm",
                 "format": {
-                    "115": {
+                    "114": {
                         "type": 0,
                         "data": ""
                     },
-                    "124": {
+                    "123": {
                         "type": 1,
                         "data": ""
                     },
@@ -61,11 +62,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "190": {
+                    "189": {
                         "type": 0,
                         "data": ""
                     },
-                    "199": {
+                    "198": {
                         "type": 1,
                         "data": ""
                     },
@@ -73,11 +74,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "249": {
+                    "248": {
                         "type": 0,
                         "data": ""
                     },
-                    "258": {
+                    "257": {
                         "type": 1,
                         "data": ""
                     },
@@ -85,11 +86,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "301": {
+                    "300": {
                         "type": 0,
                         "data": ""
                     },
-                    "310": {
+                    "309": {
                         "type": 1,
                         "data": ""
                     },
@@ -97,19 +98,19 @@
                         "type": 6,
                         "data": ""
                     },
-                    "357": {
+                    "356": {
                         "type": 0,
                         "data": ""
                     },
-                    "366": {
+                    "365": {
                         "type": 1,
                         "data": ""
                     },
-                    "378": {
+                    "377": {
                         "type": 0,
                         "data": ""
                     },
-                    "385": {
+                    "384": {
                         "type": 1,
                         "data": ""
                     },
@@ -117,11 +118,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "400": {
+                    "399": {
                         "type": 0,
                         "data": ""
                     },
-                    "409": {
+                    "408": {
                         "type": 1,
                         "data": ""
                     }
@@ -148,67 +149,79 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "76": {
+                            "75": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "91": {
+                            "90": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "129": {
+                            "128": {
                                 "type": 4,
                                 "data": "#D34D35"
+                            },
+                            "136": {
+                                "type": 5,
+                                "data": ""
                             },
                             "137": {
                                 "type": 6,
                                 "data": ""
                             },
-                            "139": {
+                            "138": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "155": {
+                            "154": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "193": {
+                            "192": {
                                 "type": 4,
                                 "data": "#D34D35"
+                            },
+                            "202": {
+                                "type": 5,
+                                "data": ""
                             },
                             "203": {
                                 "type": 6,
                                 "data": ""
                             },
-                            "205": {
+                            "204": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "220": {
+                            "219": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "252": {
+                            "251": {
                                 "type": 4,
                                 "data": "#D34D35"
+                            },
+                            "260": {
+                                "type": 5,
+                                "data": ""
                             },
                             "261": {
                                 "type": 6,
                                 "data": ""
                             },
-                            "263": {
+                            "262": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "278": {
+                            "277": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "355": {
+                            "354": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "372": {
+                            "371": {
                                 "type": 5,
                                 "data": ""
                             }
@@ -226,35 +239,35 @@
                     "Base Effect": {
                         "desc": "Attack using Zantetsuken , then immediately use Woden Valkut , Hall of Melancholy , Sanngetall .",
                         "format": {
-                            "13": {
+                            "12": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "25": {
+                            "24": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "48": {
+                            "47": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "61": {
+                            "60": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "63": {
+                            "62": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "82": {
+                            "81": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "84": {
+                            "83": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "95": {
+                            "94": {
                                 "type": 5,
                                 "data": ""
                             }
@@ -282,11 +295,11 @@
                     "Check": {
                         "desc": "STR [d20+7]",
                         "format": {
-                            "0": {
+                            "-1": {
                                 "type": 4,
                                 "data": "#2D638E"
                             },
-                            "4": {
+                            "3": {
                                 "type": 5,
                                 "data": ""
                             }
@@ -296,16 +309,16 @@
                     "CR": {
                         "desc": "Target's Defense",
                         "format": {
-                            "9": {
+                            "8": {
                                 "type": 4,
                                 "data": "#2D638E"
                             },
-                            "17": {
+                            "16": {
                                 "type": 5,
                                 "data": ""
                             }
                         },
-                        "in_line": false
+                        "in_line": true
                     },
                     "Base Effect": {
                         "desc": "Deal 10 Damage to the target and all its adjacent allies",
@@ -348,11 +361,11 @@
                     "Marker Effect": {
                         "desc": "Deals 6d6 damage to all targets and any target that remains at 1 HP is graated the Worthy enhancement, which has the following effects: * A Worthy chracter gains +2 bonus to all checks * A Worthy chracter has its speed increased by 2 * A Worthy character can use a held [Shard of Gungnir] as an [Instant] * Worthy removes the Unworthy enfeeblement",
                         "format": {
-                            "83": {
+                            "82": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "90": {
+                            "89": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -360,11 +373,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "140": {
+                            "139": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "147": {
+                            "146": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -372,11 +385,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "189": {
+                            "188": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "196": {
+                            "195": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -384,11 +397,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "238": {
+                            "237": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "245": {
+                            "244": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -396,19 +409,19 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "307": {
+                            "306": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "314": {
+                            "313": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "326": {
+                            "325": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "335": {
+                            "334": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -534,11 +547,11 @@
                     "Marker Effect": {
                         "desc": "Deals 4d6 damage and any target that takes 10 or more damage by this (after damage reduction) gains the Unworthy enfeeblement, which has the following effects: * An Unworthy character incurs a -2 penalty on all checks. * An Unworthy character has its speed reduced by 2. * An Unworthy character cannot wield a [Shard of Gungnir]. * Unworthy removes the Worthy enhancement. * Unworthy is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability",
                         "format": {
-                            "104": {
+                            "103": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "113": {
+                            "112": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -546,11 +559,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "165": {
+                            "164": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "174": {
+                            "173": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -558,11 +571,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "224": {
+                            "223": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "233": {
+                            "232": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -570,11 +583,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "276": {
+                            "275": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "285": {
+                            "284": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -582,19 +595,19 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "332": {
+                            "331": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "341": {
+                            "340": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "353": {
+                            "352": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "360": {
+                            "359": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -602,11 +615,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "375": {
+                            "374": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "384": {
+                            "383": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -710,11 +723,11 @@
                     "Marker Effect": {
                         "desc": "Deals 8d6 damage to the target and if the target remains a t or above 1 HP it grants the Worthy enhancement to them, which has the following effects: * A Worthy chracter gains +2 bonus to all checks * A Worthy chracter has its speed increased by 2 * A Worthy character can use a held [Shard of Gungnir] as an [Instant] * Worthy removes the Unworthy enfeeblement",
                         "format": {
-                            "89": {
+                            "88": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "96": {
+                            "95": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -722,11 +735,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "154": {
+                            "153": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "161": {
+                            "160": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -734,11 +747,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "203": {
+                            "202": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "210": {
+                            "209": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -746,11 +759,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "252": {
+                            "251": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "259": {
+                            "258": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -758,19 +771,19 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "321": {
+                            "320": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "328": {
+                            "327": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "340": {
+                            "339": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "349": {
+                            "348": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -831,11 +844,11 @@
                     "": {
                         "desc": "An emanation of Odin's dark power, draining your very will",
                         "format": {
-                            "0": {
+                            "-1": {
                                 "type": 2,
                                 "data": ""
                             },
-                            "59": {
+                            "58": {
                                 "type": 3,
                                 "data": ""
                             }
@@ -860,11 +873,11 @@
                     "Marker Effect": {
                         "desc": "Deals 3d6 damage to all targets and causes DOT(5)",
                         "format": {
-                            "43": {
+                            "42": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "50": {
+                            "49": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -902,11 +915,11 @@
                     "Marker Effect": {
                         "desc": "Deals 8d6 damage to all target and any taget that take 10 or more damage by this (after damage reduction) gain the Unworthy enfeeblement, which has the following effects: * An Unworthy character incurs a -2 penalty on all checks. * An Unworthy character has its speed reduced by 2. * An Unworthy character cannot wield a [Shard of Gungnir]. * Unworthy removes the Worthy enhancement. * Unworthy is removed when a character takes 10 or more damage from a single source, deals 10 or more damage in a single attack, or hals 10 or more HP in a single ability",
                         "format": {
-                            "115": {
+                            "114": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "124": {
+                            "123": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -914,11 +927,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "176": {
+                            "175": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "185": {
+                            "184": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -926,11 +939,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "235": {
+                            "234": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "244": {
+                            "243": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -938,11 +951,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "287": {
+                            "286": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "296": {
+                            "295": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -950,19 +963,19 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "343": {
+                            "342": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "352": {
+                            "351": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "364": {
+                            "363": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "371": {
+                            "370": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -970,11 +983,11 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "386": {
+                            "385": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "395": {
+                            "394": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -1161,9 +1174,9 @@
             }
         }
     },
-    "0": {
+    "1": {
         "width": 1,
-        "height": 5,
+        "height": 6,
         "components": {
             "Name_Component": {
                 "name": "Gungnir",
@@ -1191,11 +1204,11 @@
             "Trait_0": {
                 "name": "Dreadful Tension",
                 "format": {
-                    "129": {
+                    "128": {
                         "type": 0,
                         "data": ""
                     },
-                    "138": {
+                    "137": {
                         "type": 1,
                         "data": ""
                     },
@@ -1203,11 +1216,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "190": {
+                    "189": {
                         "type": 0,
                         "data": ""
                     },
-                    "199": {
+                    "198": {
                         "type": 1,
                         "data": ""
                     },
@@ -1215,11 +1228,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "249": {
+                    "248": {
                         "type": 0,
                         "data": ""
                     },
-                    "258": {
+                    "257": {
                         "type": 1,
                         "data": ""
                     },
@@ -1227,11 +1240,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "301": {
+                    "300": {
                         "type": 0,
                         "data": ""
                     },
-                    "310": {
+                    "309": {
                         "type": 1,
                         "data": ""
                     },
@@ -1239,19 +1252,19 @@
                         "type": 6,
                         "data": ""
                     },
-                    "357": {
+                    "356": {
                         "type": 0,
                         "data": ""
                     },
-                    "366": {
+                    "365": {
                         "type": 1,
                         "data": ""
                     },
-                    "378": {
+                    "377": {
                         "type": 0,
                         "data": ""
                     },
-                    "385": {
+                    "384": {
                         "type": 1,
                         "data": ""
                     },
@@ -1259,11 +1272,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "400": {
+                    "399": {
                         "type": 0,
                         "data": ""
                     },
-                    "409": {
+                    "408": {
                         "type": 1,
                         "data": ""
                     }
@@ -1273,11 +1286,11 @@
             "Trait_1": {
                 "name": "Worthy Prize",
                 "format": {
-                    "59": {
+                    "58": {
                         "type": 0,
                         "data": ""
                     },
-                    "66": {
+                    "65": {
                         "type": 1,
                         "data": ""
                     },
@@ -1285,11 +1298,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "116": {
+                    "115": {
                         "type": 0,
                         "data": ""
                     },
-                    "123": {
+                    "122": {
                         "type": 1,
                         "data": ""
                     },
@@ -1297,11 +1310,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "165": {
+                    "164": {
                         "type": 0,
                         "data": ""
                     },
-                    "172": {
+                    "171": {
                         "type": 1,
                         "data": ""
                     },
@@ -1309,11 +1322,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "214": {
+                    "213": {
                         "type": 0,
                         "data": ""
                     },
-                    "221": {
+                    "220": {
                         "type": 1,
                         "data": ""
                     },
@@ -1321,19 +1334,19 @@
                         "type": 6,
                         "data": ""
                     },
-                    "283": {
+                    "282": {
                         "type": 0,
                         "data": ""
                     },
-                    "290": {
+                    "289": {
                         "type": 1,
                         "data": ""
                     },
-                    "302": {
+                    "301": {
                         "type": 0,
                         "data": ""
                     },
-                    "311": {
+                    "310": {
                         "type": 1,
                         "data": ""
                     }
@@ -1347,11 +1360,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "378": {
+                    "377": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "392": {
+                    "391": {
                         "type": 5,
                         "data": ""
                     },
@@ -1359,11 +1372,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "528": {
+                    "527": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "543": {
+                    "542": {
                         "type": 5,
                         "data": ""
                     },
@@ -1371,11 +1384,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "626": {
+                    "625": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "638": {
+                    "637": {
                         "type": 5,
                         "data": ""
                     }
@@ -1386,7 +1399,7 @@
     },
     "2": {
         "width": 1,
-        "height": 4,
+        "height": 6,
         "components": {
             "Name_Component": {
                 "name": "Odin, Lord of the Eternal Hall",
@@ -1414,16 +1427,16 @@
             "Trait_0": {
                 "name": "Elite Foe: Lord of the Corpse Hall",
                 "format": {
-                    "25": {
+                    "24": {
                         "type": 0,
                         "data": ""
                     },
-                    "33": {
+                    "32": {
                         "type": 1,
                         "data": ""
                     }
                 },
-                "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
+                "desc": "This character cannot be Stunned and markerrs they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
             },
             "Trait_1": {
                 "name": "Survive and Receive Valhalla",

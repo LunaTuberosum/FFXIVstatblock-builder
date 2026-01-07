@@ -3,7 +3,7 @@
     "colors": [],
     "0": {
         "width": 3,
-        "height": 3,
+        "height": 5,
         "components": {
             "Name_Component": {
                 "name": "Edda Blackblossom",
@@ -31,11 +31,11 @@
             "Trait_0": {
                 "name": "Elite Foe: Malicous Mage",
                 "format": {
-                    "25": {
+                    "24": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "33": {
+                    "32": {
                         "type": 5,
                         "data": ""
                     }
@@ -45,23 +45,23 @@
             "Trait_1": {
                 "name": "Combo",
                 "format": {
-                    "13": {
+                    "12": {
                         "type": 0,
                         "data": ""
                     },
-                    "26": {
+                    "25": {
                         "type": 1,
                         "data": ""
                     },
-                    "39": {
+                    "38": {
                         "type": 0,
                         "data": ""
                     },
-                    "55": {
+                    "54": {
                         "type": 1,
                         "data": ""
                     },
-                    "58": {
+                    "57": {
                         "type": 0,
                         "data": ""
                     }
@@ -71,27 +71,27 @@
             "Trait_2": {
                 "name": "Til Death Do Us Part",
                 "format": {
-                    "25": {
+                    "24": {
                         "type": 0,
                         "data": ""
                     },
-                    "42": {
+                    "41": {
                         "type": 1,
                         "data": ""
                     },
-                    "47": {
+                    "46": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "59": {
+                    "58": {
                         "type": 5,
                         "data": ""
                     },
-                    "63": {
+                    "62": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "78": {
+                    "77": {
                         "type": 5,
                         "data": ""
                     }
@@ -101,27 +101,27 @@
             "Trait_3": {
                 "name": "Blood Rune",
                 "format": {
-                    "9": {
+                    "8": {
                         "type": 0,
                         "data": ""
                     },
-                    "27": {
+                    "26": {
                         "type": 1,
                         "data": ""
                     },
-                    "32": {
+                    "31": {
                         "type": 0,
                         "data": ""
                     },
-                    "45": {
+                    "44": {
                         "type": 1,
                         "data": ""
                     },
-                    "97": {
+                    "96": {
                         "type": 0,
                         "data": ""
                     },
-                    "108": {
+                    "107": {
                         "type": 1,
                         "data": ""
                     }
@@ -169,11 +169,11 @@
                     "Direct Hit": {
                         "desc": "Deals an additional 2d6 Damage and inflicts DOT(3)",
                         "format": {
-                            "44": {
+                            "43": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "51": {
+                            "50": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -345,11 +345,11 @@
                     "": {
                         "desc": "Place this marker on either the left or right at random",
                         "format": {
-                            "0": {
+                            "-1": {
                                 "type": 2,
                                 "data": ""
                             },
-                            "56": {
+                            "55": {
                                 "type": 3,
                                 "data": ""
                             }
@@ -448,43 +448,43 @@
                     "Base Effect": {
                         "desc": "Summon a Wedding Corpse to the Encounter. This Wedding Corpse cannot act normally and is immune to all CC effects. The target of this ability is Binded and cannot move until the Wedding Corpse is killed. At the start of every turn, the Wedding Corpse must move 1 square towards the target. If the Wedding Corpse makes it to the Target, they suffer 2d6 damage and are enfeebled with Undeath for 2 rounds. Edda gains a charge of Blood Rune * Undeath Effect: Any healing action on the target instead deals damage.",
                         "format": {
-                            "9": {
+                            "8": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "24": {
+                            "23": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "47": {
+                            "46": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "62": {
+                            "61": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "145": {
+                            "144": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "152": {
+                            "151": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "178": {
+                            "177": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "193": {
+                            "192": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "236": {
+                            "235": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "251": {
+                            "250": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -492,35 +492,39 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "297": {
+                            "296": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "312": {
+                            "311": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "382": {
+                            "381": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "390": {
+                            "389": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "427": {
+                            "426": {
                                 "type": 0,
+                                "data": ""
+                            },
+                            "437": {
+                                "type": 1,
                                 "data": ""
                             },
                             "438": {
                                 "type": 6,
                                 "data": ""
                             },
-                            "440": {
+                            "439": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "448": {
+                            "447": {
                                 "type": 5,
                                 "data": ""
                             }
@@ -543,11 +547,11 @@
                     "Base Effect": {
                         "desc": "Deals 2d6 + 1d6 for every Blood Rune charge",
                         "format": {
-                            "26": {
+                            "25": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "37": {
+                            "36": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -585,11 +589,11 @@
                     "Base Effect": {
                         "desc": "Inflicts Silence on Target",
                         "format": {
-                            "9": {
+                            "8": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "17": {
+                            "16": {
                                 "type": 5,
                                 "data": ""
                             }
@@ -627,11 +631,11 @@
                     "Base Effect": {
                         "desc": "Inflicts Drain(4) on Target.",
                         "format": {
-                            "9": {
+                            "8": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "18": {
+                            "17": {
                                 "type": 5,
                                 "data": ""
                             }
@@ -650,7 +654,7 @@
     },
     "1": {
         "width": 2,
-        "height": 1,
+        "height": 5,
         "components": {
             "Name_Component": {
                 "name": "Avere Bravearm",
@@ -678,11 +682,11 @@
             "Trait_0": {
                 "name": "Elite Foe: Undead Voidsent",
                 "format": {
-                    "25": {
+                    "24": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "33": {
+                    "32": {
                         "type": 5,
                         "data": ""
                     }
@@ -692,27 +696,27 @@
             "Trait_1": {
                 "name": "Til Death Do Us Part",
                 "format": {
-                    "25": {
+                    "24": {
                         "type": 0,
                         "data": ""
                     },
-                    "43": {
+                    "42": {
                         "type": 1,
                         "data": ""
                     },
-                    "48": {
+                    "47": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "60": {
+                    "59": {
                         "type": 5,
                         "data": ""
                     },
-                    "64": {
+                    "63": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "79": {
+                    "78": {
                         "type": 5,
                         "data": ""
                     }
@@ -750,11 +754,11 @@
                     "Base Effect": {
                         "desc": "Deals 10 Damage to the target and restores 10 health to Avere Bravearm",
                         "format": {
-                            "56": {
+                            "55": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "71": {
+                            "70": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -830,11 +834,11 @@
                     "Marker Effect": {
                         "desc": "Deals 4d6 Damage to all targets in range. Inflicts DOT(3) to all targets in range",
                         "format": {
-                            "51": {
+                            "50": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "58": {
+                            "57": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -933,27 +937,27 @@
                     "Base Effect": {
                         "desc": "Summon a 3x Wedding Corpse to the Encounter. These Wedding Corpses cannot act normally and is immune to all CC effects. At the start of every turn, the Wedding Corpse must move 2 squares towards the target. If a Wedding Corpse makes it to the Target. Edda Blackblossom gains a stack of Blood Rune",
                         "format": {
-                            "12": {
+                            "11": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "27": {
+                            "26": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "51": {
+                            "50": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "67": {
+                            "66": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "152": {
+                            "151": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "167": {
+                            "166": {
                                 "type": 1,
                                 "data": ""
                             },
@@ -961,27 +965,27 @@
                                 "type": 6,
                                 "data": ""
                             },
-                            "212": {
+                            "211": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "227": {
+                            "226": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "251": {
+                            "250": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "269": {
+                            "268": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "286": {
+                            "285": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "297": {
+                            "296": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -995,7 +999,7 @@
     },
     "2": {
         "width": 1,
-        "height": 0,
+        "height": 5,
         "components": {
             "Name_Component": {
                 "name": "Wedding Corpse",
@@ -1053,11 +1057,11 @@
                     "Direct Hit": {
                         "desc": "Inflicts a cleansable Disease for 2 turns.",
                         "format": {
-                            "22": {
+                            "21": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "30": {
+                            "29": {
                                 "type": 5,
                                 "data": ""
                             }
@@ -1071,7 +1075,7 @@
     },
     "3": {
         "width": 2,
-        "height": 2,
+        "height": 5,
         "components": {
             "Name_Component": {
                 "name": "Edda the Consumed",
@@ -1099,11 +1103,11 @@
             "Trait_0": {
                 "name": "Elite Foe: Undead Voidsent",
                 "format": {
-                    "25": {
+                    "24": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "33": {
+                    "32": {
                         "type": 5,
                         "data": ""
                     }
@@ -1113,27 +1117,27 @@
             "Trait_1": {
                 "name": "Blood Rune",
                 "format": {
-                    "9": {
+                    "8": {
                         "type": 0,
                         "data": ""
                     },
-                    "27": {
+                    "26": {
                         "type": 1,
                         "data": ""
                     },
-                    "32": {
+                    "31": {
                         "type": 0,
                         "data": ""
                     },
-                    "49": {
+                    "48": {
                         "type": 1,
                         "data": ""
                     },
-                    "101": {
+                    "100": {
                         "type": 0,
                         "data": ""
                     },
-                    "112": {
+                    "111": {
                         "type": 1,
                         "data": ""
                     }
@@ -1143,19 +1147,19 @@
             "Trait_2": {
                 "name": "Doom",
                 "format": {
-                    "9": {
+                    "8": {
                         "type": 0,
                         "data": ""
                     },
-                    "27": {
+                    "26": {
                         "type": 1,
                         "data": ""
                     },
-                    "51": {
+                    "50": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "59": {
+                    "58": {
                         "type": 5,
                         "data": ""
                     },
@@ -1163,11 +1167,11 @@
                         "type": 6,
                         "data": ""
                     },
-                    "83": {
+                    "82": {
                         "type": 4,
                         "data": "#D34D35"
                     },
-                    "88": {
+                    "87": {
                         "type": 5,
                         "data": ""
                     }
@@ -1205,19 +1209,19 @@
                     "Base Effect": {
                         "desc": "Deals 10 Damage to all targets in range and grants Edda the Consumed a Blood Rune for each target hit",
                         "format": {
-                            "51": {
+                            "50": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "69": {
+                            "68": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "71": {
+                            "70": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "82": {
+                            "81": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -1232,11 +1236,11 @@
                     "Direct Hit": {
                         "desc": "Deals an additional 2d6 Damage and inflicts a DOT(3)",
                         "format": {
-                            "46": {
+                            "45": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "53": {
+                            "52": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -1345,19 +1349,19 @@
                     "Base Effect": {
                         "desc": "Deals 10 + 2d6 Damage to all targets in range and grants Edda the Consumed a Blood Rune for each target hit",
                         "format": {
-                            "57": {
+                            "56": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "75": {
+                            "74": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "77": {
+                            "76": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "88": {
+                            "87": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -1372,11 +1376,11 @@
                     "Direct Hit": {
                         "desc": "Deals an additional 2d6 Damage and inflicts a DOT(3)",
                         "format": {
-                            "46": {
+                            "45": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "53": {
+                            "52": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -1495,11 +1499,11 @@
                     "Marker Base Effect": {
                         "desc": "Deals 1d6 damage to all Targets in a 3x3 area. Destroys any Wedding Corpses at 0 HP in the area",
                         "format": {
-                            "60": {
+                            "59": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "76": {
+                            "75": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -1522,11 +1526,11 @@
                     "Base Effect": {
                         "desc": "Deal (5 + 2d6) + 1d6 for every Blood Rune charge",
                         "format": {
-                            "31": {
+                            "30": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "42": {
+                            "41": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -1554,27 +1558,27 @@
                     "Base Effect": {
                         "desc": "Summon 3x Wedding Corpse to the Encounter. This Wedding Corpse cannot be killed normally and is immune to all CC effects. If hit by the Resolution marker effect when it's HP is 0, remove this Wedding Corpse from the encounter",
                         "format": {
-                            "10": {
+                            "9": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "25": {
+                            "24": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "48": {
+                            "47": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "63": {
+                            "62": {
                                 "type": 1,
                                 "data": ""
                             },
-                            "192": {
+                            "191": {
                                 "type": 0,
                                 "data": ""
                             },
-                            "207": {
+                            "206": {
                                 "type": 1,
                                 "data": ""
                             }
@@ -1612,19 +1616,19 @@
                     "Base Effect": {
                         "desc": "Inflicts Disease & Silence on Target",
                         "format": {
-                            "9": {
+                            "8": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "17": {
+                            "16": {
                                 "type": 5,
                                 "data": ""
                             },
-                            "19": {
+                            "18": {
                                 "type": 4,
                                 "data": "#D34D35"
                             },
-                            "27": {
+                            "26": {
                                 "type": 5,
                                 "data": ""
                             }

@@ -1,5 +1,6 @@
 import pygame
 
+from editor.cardComponents.abilityComponent import AbilityComponent
 from editor.cardComponents.cardComponent import CardComponent
 from editor.cardComponents.nameComponent import NameComponent
 from editor.cardComponents.sectionNameComponent import SectionNameComponent
@@ -162,6 +163,12 @@ class StatCard():
                 self.add_component(
                     name,
                     TraitComponent(self)
+                ).load(component_data[name])
+                
+            elif name.startswith('Ability'):
+                self.add_component(
+                    name,
+                    AbilityComponent(self)
                 ).load(component_data[name])
                
     def __draw_background(self) -> None:

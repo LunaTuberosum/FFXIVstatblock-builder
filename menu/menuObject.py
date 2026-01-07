@@ -90,7 +90,8 @@ class MenuObject():
             return
         
         for _file in entries:
-            if not isinstance(_file, dict): continue
+            if isinstance(_file, list): continue
+            if isinstance(_file, str): continue
             
             _x = ENTRY_START_X
             for word in self.get_entry(_file):

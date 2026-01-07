@@ -22,52 +22,52 @@ def reformat_text(text: str) -> tuple[str, dict[str, dict]]:
     index: int = 0
     for word in text.split():
         if word == '{b}':
-            format_data[str(index)] = {
+            format_data[str(index - 1)] = {
                 'type': 0,
                 'data': ''
             }
             continue
         elif word == '{/b}':
-            format_data[str(index)] = {
+            format_data[str(index - 1)] = {
                 'type': 1,
                 'data': ''
             }
             continue
         
         elif word == '{i}':
-            format_data[str(index)] = {
+            format_data[str(index - 1)] = {
                 'type': 2,
                 'data': ''
             }
             continue
         elif word == '{/i}':
-            format_data[str(index)] = {
+            format_data[str(index - 1)] = {
                 'type': 3,
                 'data': ''
             }
             continue
         
         elif word == '{a}':
-            format_data[str(index)] = {
+            format_data[str(index - 1)] = {
                 'type': 4,
                 'data': '#D34D35'
             }
             continue
         elif word == '{/a}':
-            format_data[str(index)] = {
+            format_data[str(index - 1)] = {
                 'type': 5,
                 'data': ''
             }
             continue
         
         elif word == '{t}':
-            format_data[str(index)] = {
+            format_data[str(index - 1)] = {
                 'type': 4,
                 'data': '#2D638E'
             }
             continue                    
         elif word == '{/t}':
-            format_data[str(index)] = {
+            format_data[str(index - 1)] = {
                 'type': 5,
                 'data': ''
             }
@@ -89,7 +89,8 @@ def reformat_text(text: str) -> tuple[str, dict[str, dict]]:
             
 def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
     new_sheet: dict[str, dict[str]] = {
-        'version': '2.0'
+        'version': '2.0',
+        'colors': []
     }
     
     for card_id, card_data in sheet.items():
@@ -130,7 +131,7 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
                     new_effects[effect_name] = {
                         'desc': new_desc,
                         'format': format_data,
-                        'in_line': False
+                        'in_line': True if effect_name == 'CR' else False
                     }
                 
                 card['components'][comp_name] = {

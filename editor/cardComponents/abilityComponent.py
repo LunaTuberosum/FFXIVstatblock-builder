@@ -77,14 +77,14 @@ class AbilityComponent(CardComponent):
         if not super().on_click():
             return
                
-        # from editor.ui.traitElement import TraitElement
-        # event_bus.sign('ui_window', TraitElement(self))
+        from editor.ui.abilityElement import AbilityElement
+        event_bus.sign('ui_window', AbilityElement(self))
         
     def on_release(self) -> None:
         if not super().on_release():
             return
         
-        event_bus.sign('swap_abilites', self)
+        event_bus.sign('swap_abilities', self)
         
     def load(self, data: dict[str]) -> None:
         self.name = data['name']
@@ -276,7 +276,7 @@ class AbilityComponent(CardComponent):
                     if x == 1:
                         x += 3
                     x -= render.width
-                    x += self.font.metrics(char)[0][4]
+                    x += max(self.font.metrics(char)[0][1], self.font.metrics(char)[0][4])
                 elif bold:
                     render: pygame.Surface = self.font_bolded.render(char, True, '#000000')
                 elif italic:
@@ -284,7 +284,7 @@ class AbilityComponent(CardComponent):
                     if x == 1:
                         x += 3
                     x -= render.width
-                    x += self.font.metrics(char)[0][4] 
+                    x += max(self.font.metrics(char)[0][1], self.font.metrics(char)[0][4])
                 elif color:
                     render: pygame.Surface = self.font_bolded.render(char, True, color_data)
                 else:

@@ -181,7 +181,7 @@ class TraitComponent(CardComponent):
                     if x == 1:
                         x += 3
                     x -= render.width
-                    x += self.font.metrics(char)[0][4] 
+                    x += max(self.font.metrics(char)[0][1], self.font.metrics(char)[0][4])
                 elif color:
                     render: pygame.Surface = self.font_bolded.render(char, True, color_data)
                 else:

@@ -52,6 +52,8 @@ class TextBox(Component):
         self.text: str = ''
         self.lines: list[str] = []
         
+        self.can_format: bool = True
+        
         self.formating: dict[int, FormatData] = {}
         self.format_box: TextFormatBox = None
         
@@ -125,6 +127,9 @@ class TextBox(Component):
         key_bus.deregister('down_arrow_down', self.down_shift)
         key_bus.deregister('right_arrow_down', self.right_shift)
         
+    def set_can_format(self, can_format: bool) -> None:
+        self.can_format = can_format
+        
     def add_command(self, command: Callable[['TextBox'], None]) -> None:
         self.command = command
         
@@ -165,6 +170,9 @@ class TextBox(Component):
         
     def on_right_click(self) -> None:
         if not self.active or not self.hovering or self.box_size[1] == 1:
+            return
+        
+        if not self.can_format:
             return
         
         self.format_box = TextFormatBox((self.cursor_pos[0] + self.rect.x, self.cursor_pos[1] + self.rect.y), self)
@@ -354,6 +362,9 @@ class TextBox(Component):
         if not self.active:
             return
         
+        if not self.can_format:
+            return
+        
         if self.highlighted_text:
             self.__toggle_format_highlight(Format.BOLD, Format.BOLD_OFF)
             return
@@ -382,6 +393,9 @@ class TextBox(Component):
         if not self.active:
             return
         
+        if not self.can_format:
+            return
+        
         if self.highlighted_text:
             self.__toggle_format_highlight(Format.ITALIC, Format.ITALIC_OFF)
             return
@@ -408,6 +422,9 @@ class TextBox(Component):
         
     def toggle_color(self, color: str) -> None:
         if not self.active:
+            return
+        
+        if not self.can_format:
             return
         
         if self.highlighted_text:
@@ -509,6 +526,7 @@ class TextBox(Component):
         
         for index, char in enumerate(list(self.text)):
             if self.cursor_selection_indexs[0] <= index and index <= self.cursor_selection_indexs[1]:
+                self.formating.pop(index, None)
                 continue
             
             text += char
@@ -542,6 +560,8 @@ class TextBox(Component):
         
         if self.cursor_index == CURSOR_END:
             chars.pop(self.cursor_index)
+            self.formating.pop(len(self.text), None)
+            
         else:
             self.cursor_index = self.cursor_index - 1
             chars.pop(self.cursor_index)
@@ -801,7 +821,7 @@ class TextBox(Component):
                 elif italic:
                     render: pygame.Surface = self.render_text(char, '#ffffff', (x, y), is_highlight=is_highlighted, is_italic=True)
                     x -= render.width
-                    x += text_metrics[index][4]
+                    x += max(self.font.metrics(char)[index][1], self.font.metrics(char)[index][4])
                 else:
                     render: pygame.Surface = self.render_text(char, '#ffffff', (x, y), is_highlight=is_highlighted)
                     

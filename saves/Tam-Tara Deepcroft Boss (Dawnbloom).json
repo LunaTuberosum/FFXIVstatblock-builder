@@ -133,7 +133,7 @@
             },
             "Ability_0": {
                 "name": "Ability 1",
-                "invk": false,
+                "invk": true,
                 "types": "Primary, Physical",
                 "effects": {
                     "Target": {

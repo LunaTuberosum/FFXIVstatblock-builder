@@ -143,7 +143,7 @@ class TextBox(Component):
     def change_text(self, new_text: str, format_data: dict[int, FormatData] = None) -> None:
         self.text = new_text
         
-        if format_data:
+        if format_data != None:
             self.formating = format_data
         
         self.__draw_text()

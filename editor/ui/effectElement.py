@@ -30,7 +30,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             component=component
         )
         
-        self.effects = self.component.effects
+        self.effects = self.component.effects.copy()
         self.current_effect = None
         if self.effects:
             self.current_effect = list(self.effects.items())[0]
@@ -83,25 +83,11 @@ class EffectElement(StatCardElement[AbilityComponent]):
         if self.current_effect:
             self.update_effect()
         
-    def close(self) -> None:
-        self.deregister()
-            
-        new_ability = self.ability_window.__class__(self.component)
-        new_ability.get_component('Name_Text').text = self.ability_window.get_component('Name_Text').text
-        
-        ability_invk = self.ability_window.get_component('INVK_Toggle')
-        new_ability.get_component('INVK_Toggle').set_option(next(( k for k, v in ability_invk.options.items() if v == ability_invk.button_selected)))
-        
-        new_ability.get_component('Types_Text').text = self.ability_window.get_component('Types_Text').text
-        new_ability.get_component('Extra_Text').text = self.ability_window.get_component('Extra_Text').text
-            
-        event_bus.sign('ui_window', new_ability)
-        
     def apply(self):
         new_effects: list[str, EffectData] = {}
         
-        for name, data in self.component.effects.items():
-            if self.current_effect[0] == name:
+        for name, data in self.effects.items():
+            if self.current_effect and self.current_effect[0] == name:
                 
                 desc_text: TextBox = self.get_component('Desc_Text')
                     
@@ -117,6 +103,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             new_effects[name] = data
             
         self.component.effects = new_effects
+        self.component.refresh()
         self.effects = new_effects
         self.get_component('Effect_List').set_effects()
                         

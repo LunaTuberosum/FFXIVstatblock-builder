@@ -84,6 +84,7 @@ class Button(Component):
         if not self.hovering:
             return
         
+        self.no_hover()
         self.command()
         
     def __add_outline(self, image: pygame.Surface) -> pygame.Surface:

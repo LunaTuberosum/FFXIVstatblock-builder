@@ -22,6 +22,7 @@ class GameProcess():
         self.mouse_handler: MouseHandler = MouseHandler()
         
         self.ui_window: UIElement = None
+        self.hold_window: list[UIElement] = []
         self.context_menu: ContextMenu = None
         
         self.hover_object: object = None
@@ -64,14 +65,21 @@ class GameProcess():
         
         self.context_menu = ContextMenu(self.mouse_handler.mouse_pos, 186, context_options)
         
-    def create_ui_window(self, window: UIElement) -> None:
+    def create_ui_window(self, window: UIElement, hold_window: bool = False) -> None:
         event_bus.sign('context_menu', {})
         
-        if self.ui_window:
+        if self.ui_window and not hold_window:
             self.ui_window.deregister()
+            
+        if hold_window:
+            self.hold_window.append(self.ui_window)
         
         if not window:
             self.ui_window = None
+            
+            if self.hold_window:
+                self.ui_window = self.hold_window.pop()
+                
             return
             
         window.hover()

@@ -1,6 +1,13 @@
+import re
 import pygame
 
+from editor.cardComponents.abilityComponent import EffectData
+
 from singletons import resourceHandler
+
+from singletons.eventBus import event_bus
+
+from ui.confirmElement import ConfirmElement
 from uiComponents.button import Button
 from uiComponents.componet import Component
 from uiComponents.listItem import ListItem
@@ -49,19 +56,21 @@ class List(Component):
                 size=(32, 34),
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
-                command=None
+                command=self.add_effect_num
             )
             ,
             'Effect_Minus': Button(
-                pos=(self.size[0] - 42, 9),
+                pos=(self.size[0] - 41, 9),
                 size=(32, 34),
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
-                command=None
+                command=self.minus_effect_num
             )
         }
         
         self.get_component('Effect_Text').change_text(str(len(self.element.effects)))
+        self.get_component('Effect_Text').add_command(self.check_numeric)
+        self.get_component('Effect_Text').add_char_limit(3)
         
     def deregister(self):
         super().deregister()
@@ -89,7 +98,79 @@ class List(Component):
                 command=self.change_effect
             ))
         
+    def handle_effects(self) -> None:
+        effect_text: TextBox = self.get_component('Effect_Text')
+        if effect_text.active:
+            return
+        
+        num_effects: int = int(effect_text.text)
+        
+        if num_effects == len(self.element.effects):
+            return
+        
+        if num_effects > len(self.element.effects):
+            count = 0
+            for name in self.element.effects.keys():
+                if name.startswith('Effect'):
+                    count += 1
+                    
+            for new in range(num_effects - len(self.element.effects)):
+                self.element.effects[f'Effect {count}'] = EffectData(
+                    '',
+                    {},
+                    False
+                )
+                count += 1
+                
+            self.set_effects()
+                
+        if num_effects < len(self.element.effects):
+            def lower_effects():
+                new_effects: dict[str, EffectData] = {}
+                
+                index: int = 0
+                for name, data in self.element.effects.items():
+                    if index >= num_effects:
+                        break
+                    
+                    new_effects[name] = data
+                    index += 1
+                    
+                self.element.effects = new_effects
+                effect_text.change_text(str(len(self.element.effects)))
+                
+                if name == self.element.current_effect[0]:
+                    last_key: str = list(self.element.effects.keys())[-1]
+                    self.element.current_effect = (last_key, self.element.effects[last_key])
+                    self.element.update_effect()
+                    
+                self.set_effects()
+                
+            def confirm():
+                event_bus.sign('ui_window', None)  
+                lower_effects()
+                
+            def cancel():
+                event_bus.sign('ui_window', None)
+                effect_text.change_text(str(len(self.element.effects)))
+            
+            last_key: str = list(self.element.effects.keys())[-1]
+            
+            if not last_key.startswith('Effect') or self.element.effects[last_key].desc:
+                confirm_elemnet: ConfirmElement = ConfirmElement(
+                    'This effect has been modified in some way.\nWould you like to delete it?',
+                    confrim_command=confirm
+                )
+                confirm_elemnet.change_cancel_commnad(cancel)
+                
+                event_bus.sign('ui_window', confirm_elemnet, True)
+                
+            else:
+                lower_effects()
+            
     def draw(self, screen: pygame.Surface, parent_pos: tuple[int, int]) -> None:
+        self.handle_effects()
+        
         super().draw(screen, parent_pos)
         
         self.image.blit(self.background)
@@ -114,11 +195,32 @@ class List(Component):
                 item.hover()
                 
             item.current = False
-            if item.effect_name == self.element.current_effect[0]:
+            if self.element.current_effect and item.effect_name == self.element.current_effect[0]:
                 item.current = True
             
             item.draw(screen, (5 + self.rect.x, y + self.rect.y))
             y += 32
+        
+    def check_numeric(self, textbox: TextBox) -> None:
+        if textbox.text.isnumeric():
+            return
+        
+        textbox.change_text(re.sub('[^0-9]', '', textbox.text))
+        
+        if not textbox.text:
+            textbox.change_text('0')
+            
+    def add_effect_num(self) -> None:
+        self.__change_value('Effect_Text', 1)
+    
+    def minus_effect_num(self) -> None:
+        self.__change_value('Effect_Text', -1)
+            
+    def __change_value(self, element_name: str, value: int) -> None:
+        if not (textbox := self.get_component(element_name)).text.isnumeric():
+            return
+        
+        textbox.change_text(str(int(textbox.text) + value)) 
         
     def change_effect(self, list_item: ListItem) -> None:
         self.element.current_effect = (list_item.effect_name, list_item.effect_data)

@@ -126,7 +126,7 @@ class AbilityElement(StatCardElement[AbilityComponent]):
         self.get_component('INVK_Toggle').set_option(selection)
          
     def effect_edit(self) -> None:
-        event_bus.sign('ui_window', EffectElement(self.component, self))
+        event_bus.sign('ui_window', EffectElement(self.component, self), True)
          
     def _render_text_face(self):
         super()._render_text_face()

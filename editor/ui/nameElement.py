@@ -46,8 +46,8 @@ class NameElement(StatCardElement[NameComponent]):
         self.add_component(
             'Level_Plus',
             Button(
-                pos=[428, 138],
-                size=[32, 34],
+                pos=(428, 138),
+                size=(32, 34),
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
                 command=self.add_level
@@ -56,8 +56,8 @@ class NameElement(StatCardElement[NameComponent]):
         self.add_component(
             'Level_Minus',
             Button(
-                pos=[458, 138],
-                size=[32, 34],
+                pos=(458, 138),
+                size=(32, 34),
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
                 command=self.minus_level
@@ -111,8 +111,8 @@ class NameElement(StatCardElement[NameComponent]):
         
         textbox.change_text(str(int(textbox.text) - 10))
         
-    def change_level_position(self, text_pos: str) -> None:
-        self.get_component('Level_Toggle').set_option(text_pos)
+    def change_level_position(self, selection: str) -> None:
+        self.get_component('Level_Toggle').set_option(selection)
         
     def _render_text_face(self):
         super()._render_text_face()

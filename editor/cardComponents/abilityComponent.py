@@ -109,6 +109,7 @@ class AbilityComponent(CardComponent):
         self.__draw_text_face()
         
     def __find_size(self) -> None:
+        self.lines = []
         size: int = 0
         
         limit: int = self.size[0] - 20
@@ -200,8 +201,6 @@ class AbilityComponent(CardComponent):
         
     def __draw_text_face(self) -> None:
         self.text_face.fill((0,0,0,0))
-        
-        self.text_face.blit(self.font_title.render(self.name, True, '#000000'), (1,0))
         
         name_width: int = self.font_title.size(self.name)[0]
         type_width: int = self.font_italic.size(self.types)[0]

@@ -642,6 +642,16 @@
                 },
                 "extra_text": "",
                 "marker": null
+            },
+             "Ability_7": {
+                "name": "Ability 7",
+                "invk": false,
+                "types": "Primary, Physical",
+                "effects": {
+
+                },
+                "extra_text": "",
+                "marker": null
             }
         }
     },

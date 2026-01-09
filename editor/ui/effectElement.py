@@ -1,6 +1,6 @@
 import pygame
 
-from editor.cardComponents.abilityComponent import AbilityComponent
+from editor.cardComponents.abilityComponent import AbilityComponent, EffectData
 
 from editor.ui.statCardElement import StatCardElement
 
@@ -96,6 +96,31 @@ class EffectElement(StatCardElement[AbilityComponent]):
         new_ability.get_component('Extra_Text').text = self.ability_window.get_component('Extra_Text').text
             
         event_bus.sign('ui_window', new_ability)
+        
+    def apply(self):
+        new_effects: list[str, EffectData] = {}
+        
+        for name, data in self.component.effects.items():
+            if self.current_effect[0] == name:
+                
+                desc_text: TextBox = self.get_component('Desc_Text')
+                    
+                new_effects[self.get_component('Name_Text').text] = EffectData(
+                    desc_text.text,
+                    desc_text.formating,
+                    self.get_component('Inline_Toggle').button_selected.text == 'On'
+                )
+                
+                self.current_effect = (self.get_component('Name_Text').text, new_effects[self.get_component('Name_Text').text])
+                continue
+            
+            new_effects[name] = data
+            
+        self.component.effects = new_effects
+        self.effects = new_effects
+        self.get_component('Effect_List').set_effects()
+                        
+        self.component.refresh()
         
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)

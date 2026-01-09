@@ -2,6 +2,7 @@ import pygame
 
 from editor.cardComponents.cardComponent import CardComponent
 
+from editor.cardComponents.markerComponnet import MarkerComponent
 from singletons import resourceHandler
 
 from singletons.eventBus import event_bus
@@ -41,7 +42,7 @@ class AbilityComponent(CardComponent):
         self.effects: dict[str, EffectData] = {}
         self.formating: dict[int, FormatData] = {}
         
-        self.marker = None # TODO
+        self.marker: MarkerComponent = None
         
         self.invk: bool = False
         
@@ -100,6 +101,14 @@ class AbilityComponent(CardComponent):
                 
             self.effects[effect_name] = EffectData(effect_data['desc'], formating, effect_data['in_line'])
             
+        if data['marker']:
+            self.marker = MarkerComponent(
+                data['marker']['gridSize'][0],
+                data['marker']['gridSize'][1],
+                self
+            )
+            self.marker.add_marker_area(data['marker']['markerArea'])
+            
         self.__find_size()
         
         self.__draw_text_face()
@@ -116,8 +125,9 @@ class AbilityComponent(CardComponent):
         bold: bool = False
         
         if self.marker:
-            limit -= 20
+            limit -= self.marker.size[0] + 20
             
+        self.formating = {}
             
         index: int = 0
         text: str = ''
@@ -166,8 +176,6 @@ class AbilityComponent(CardComponent):
                     size += render.width
             
             self.lines.append(text)
-            
-        
         
         if self.extra_text:
             text = ''
@@ -194,6 +202,21 @@ class AbilityComponent(CardComponent):
             40 + (18 * len(self.lines))
         )
         
+        if self.marker and self.marker.size[1] > self.size[1] - 40:
+            self.size = (
+                self.size[0],
+                self.marker.size[1] + 50
+            )
+        
+        name_width: int = self.font_title.size(self.name)[0]
+        type_width: int = self.font_italic.size(self.types)[0]
+        incc: int = 12
+        if self.invk:
+            incc += self.invk_image.width
+        
+        if name_width + incc + type_width >= self.size[0]:
+            self.size = (self.size[0], self.size[1] + 20)
+        
         self.image = pygame.Surface(self.size, pygame.SRCALPHA)
         self.rect = self.image.get_rect(topleft=self.pos)
         
@@ -217,6 +240,12 @@ class AbilityComponent(CardComponent):
             self.text_face.blit(self.font_title.render(self.name, True, '#000000'), (1, 0))
             if name_width + 12 + type_width >= self.size[0]:
                 type_overflow = True
+                
+        if self.marker:
+            if type_overflow:
+                self.marker.draw(self.text_face, (self.pos[0], self.pos[1] + 20))
+            else:
+                self.marker.draw(self.text_face, self.pos)
                 
         self.text_face.blit(self.font_italic.render(self.types, True, '#000000'), (
             self.size[0] - type_width,

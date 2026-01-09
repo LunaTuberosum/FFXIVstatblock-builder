@@ -74,6 +74,20 @@ class List(Component):
         
     def get_component(self, comp_name: str) -> Component:
         return self.components.get(comp_name)
+    
+    def set_effects(self) -> None:
+        for item in self.list_items:
+            item.deregister()
+            
+        self.list_items = []
+        
+        for name, data in self.element.effects.items():
+            self.list_items.append(ListItem(
+                size=(self.size[0] - 21, 30),
+                effect_name=name,
+                effect_data=data,
+                command=self.change_effect
+            ))
         
     def draw(self, screen: pygame.Surface, parent_pos: tuple[int, int]) -> None:
         super().draw(screen, parent_pos)

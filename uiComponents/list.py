@@ -37,7 +37,8 @@ class List(Component):
                 size=(self.size[0] - 21, 30),
                 effect_name=name,
                 effect_data=data,
-                command=self.change_effect
+                command=self.change_effect,
+                parent=self
             ))
         
         self.background: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
@@ -105,7 +106,8 @@ class List(Component):
                 size=(self.size[0] - 21, 30),
                 effect_name=name,
                 effect_data=data,
-                command=self.change_effect
+                command=self.change_effect,
+                parent=self
             ))
         
     def handle_effects(self) -> None:

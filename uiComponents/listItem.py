@@ -4,6 +4,8 @@ import pygame
 from editor.cardComponents.abilityComponent import EffectData
 
 from singletons import resourceHandler
+
+from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 
 from src.timer import Timer
@@ -13,7 +15,10 @@ BACKGROUND_TILE_SIZE: int = 10
 BACKGROUND_TILE_SIZE_X2: int = 20
 
 class ListItem():
-    def __init__(self, size: tuple[int, int], effect_name: str, effect_data: EffectData, command: Callable[['ListItem'], None]) -> None:
+    def __init__(self, size: tuple[int, int], effect_name: str, effect_data: EffectData, command: Callable[['ListItem'], None], parent) -> None:
+        from uiComponents.list import List
+        self.parent: List = parent
+            
         self.size: tuple[int, int] = size
         self.effect_name: str = effect_name
         self.effect_data: EffectData = effect_data
@@ -46,9 +51,11 @@ class ListItem():
         self.active: bool = True
         
         key_bus.register('mouse_left_down', self.on_click)
+        key_bus.register('mouse_right_down', self.context_menu)
         
     def deregister(self) -> None:
         key_bus.deregister('mouse_left_down', self.on_click)
+        key_bus.deregister('mouse_right_down', self.context_menu)
         
     def draw(self, screen: pygame.Surface, pos: tuple[int, int]) -> None:
         self.image.fill((0, 0, 0, 0))
@@ -88,6 +95,35 @@ class ListItem():
         
     def is_hover(self, mouse_pos: tuple[int, int]) -> bool:
         return self.rect.collidepoint(mouse_pos)
+    
+    def context_menu(self) -> None:
+        if not self.hovering:
+            return
+        
+        event_bus.sign('context_menu', {
+            'Edit': self.edit,
+            'Delete': self.delete,
+            'Duplicate': self.duplicate,
+        })
+        
+    def edit(self) -> None:
+        event_bus.sign('context_menu', None)
+        self.parent.element.current_effect = (self.effect_name, self.effect_data)
+        self.parent.element.update_effect()
+            
+    def delete(self) -> None:
+        event_bus.sign('context_menu', None)
+        self.parent.element.effects.pop(self.effect_name)
+        self.parent.get_component('Effect_Text').change_text(str(int(self.parent.get_component('Effect_Text').text) - 1))
+        
+        self.parent.set_effects()
+    
+    def duplicate(self) -> None:
+        event_bus.sign('context_menu', None)
+        self.parent.element.effects[f'{self.effect_name} Copy'] = self.effect_data
+        self.parent.get_component('Effect_Text').change_text(str(int(self.parent.get_component('Effect_Text').text) + 1))
+        
+        self.parent.set_effects()
     
     def __render_text_face(self) -> None:
         self.text_face.fill((0, 0, 0, 0))

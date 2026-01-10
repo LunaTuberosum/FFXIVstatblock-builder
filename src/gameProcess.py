@@ -121,19 +121,6 @@ class GameProcess():
                     key_bus.sign('right_arrow_down')
             
         self.mouse_handler.handle_mouse(self.events)
-        
-        if self.ui_window:
-            self.ui_window.no_hover()
-            
-            for comp in self.ui_window.components.values():
-                comp.no_hover()
-                
-                if comp.is_hover(self.mouse_handler.mouse_pos):
-                    self.hover_object = comp
-                    self.ui_window.hover()
-            
-            if self.ui_window.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
-                self.hover_object = self.ui_window
                 
         if self.context_menu:
             self.context_menu.no_hover()
@@ -147,6 +134,19 @@ class GameProcess():
             
             if self.context_menu.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
                 self.hover_object = self.context_menu
+                
+        if self.ui_window:
+            self.ui_window.no_hover()
+            
+            for comp in self.ui_window.components.values():
+                comp.no_hover()
+                
+                if comp.is_hover(self.mouse_handler.mouse_pos) and not self.hover_object:
+                    self.hover_object = comp
+                    self.ui_window.hover()
+            
+            if self.ui_window.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
+                self.hover_object = self.ui_window
                 
         if self.is_event(pygame.QUIT):
             self.quit()
@@ -178,11 +178,11 @@ class GameProcess():
     def menu_options(self) -> dict[str, Callable[[None], None]]:
         return {}
     
-    def draw(self) -> None:
-        if self.context_menu:
-            self.context_menu.draw(self.main.get_screen())
-            
+    def draw(self) -> None:            
         if self.ui_window:
             self.ui_window.draw(self.main.get_screen())
+            
+        if self.context_menu:
+            self.context_menu.draw(self.main.get_screen())
         
         self.main.display.draw()

@@ -6,6 +6,8 @@ from singletons.keyBus import key_bus
 LEFT: int = 1
 MIDDLE: int = 2
 RIGHT: int = 3
+SCROLL_UP: int = 4
+SCROLL_DOWN: int = 5
 
 class MouseHandler():
     def __init__(self) -> None:
@@ -26,6 +28,12 @@ class MouseHandler():
                     
                 if event.button == RIGHT:
                     key_bus.sign('mouse_right_down')
+                    
+                if event.button == SCROLL_UP:
+                    key_bus.sign('mouse_scroll_up')
+                    
+                if event.button == SCROLL_DOWN:
+                    key_bus.sign('mouse_scroll_down')
                     
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.button == LEFT:

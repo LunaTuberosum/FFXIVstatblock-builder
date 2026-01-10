@@ -6,8 +6,10 @@ from editor.cardComponents.abilityComponent import EffectData
 from singletons import resourceHandler
 
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 
 from ui.confirmElement import ConfirmElement
+
 from uiComponents.button import Button
 from uiComponents.componet import Component
 from uiComponents.listItem import ListItem
@@ -46,6 +48,8 @@ class List(Component):
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.__draw_text_face()
         
+        self.offset: int = 0
+        
         self.components: dict[str, Component] = {
             'Effect_Text': TextBox(
                 pos=(self.size[0] - 114, 10),
@@ -72,8 +76,14 @@ class List(Component):
         self.get_component('Effect_Text').add_command(self.check_numeric)
         self.get_component('Effect_Text').add_char_limit(3)
         
+        key_bus.register('mouse_scroll_down', self.mouse_scroll_down)
+        key_bus.register('mouse_scroll_up', self.mouse_scroll_up)
+        
     def deregister(self):
         super().deregister()
+        
+        key_bus.deregister('mouse_scroll_down', self.mouse_scroll_down)
+        key_bus.deregister('mouse_scroll_up', self.mouse_scroll_up)
         
         for componet in self.components.values():
             componet.deregister()
@@ -139,7 +149,7 @@ class List(Component):
                 self.element.effects = new_effects
                 effect_text.change_text(str(len(self.element.effects)))
                 
-                if name == self.element.current_effect[0]:
+                if self.element.current_effect and name == self.element.current_effect[0] and len(self.element.effects):
                     last_key: str = list(self.element.effects.keys())[-1]
                     self.element.current_effect = (last_key, self.element.effects[last_key])
                     self.element.update_effect()
@@ -178,6 +188,13 @@ class List(Component):
         
         screen.blit(self.image, self.rect.topleft)
         
+        if len(self.list_items) > 10:
+            segment_size: float = (self.size[1] - 52) / len(self.list_items)
+            scroll_size: float = segment_size * 10
+            scroll_offset: float = segment_size * self.offset
+            
+            pygame.draw.rect(screen, '#525552', (self.size[0] - 13 + self.rect.x, self.rect.y + 48 + scroll_offset, 8, scroll_size))
+        
         for component in self.components.values():
             component.no_hover()
             if component.is_hover(pygame.mouse.get_pos()):
@@ -186,7 +203,17 @@ class List(Component):
             component.draw(screen, self.rect.topleft)
             
         y: int = 49
-        for item in self.list_items:
+        for index, item in enumerate(self.list_items):
+            item.active = True
+            
+            if index <= self.offset - 1:
+                item.active = False
+                continue
+            
+            if index >= 10 + self.offset:
+                item.active = False
+                continue
+            
             item.no_hover()
             if not item.active:
                 return
@@ -200,6 +227,18 @@ class List(Component):
             
             item.draw(screen, (5 + self.rect.x, y + self.rect.y))
             y += 32
+        
+    def mouse_scroll_down(self) -> None:
+        if len(self.list_items) <= 10:
+            return
+        
+        self.offset = min(self.offset + 1, len(self.list_items) - 10)
+        
+    def mouse_scroll_up(self) -> None:
+        if len(self.list_items) <= 10:
+            return
+        
+        self.offset = max(self.offset - 1, 0)
         
     def check_numeric(self, textbox: TextBox) -> None:
         if textbox.text.isnumeric():
@@ -220,7 +259,8 @@ class List(Component):
         if not (textbox := self.get_component(element_name)).text.isnumeric():
             return
         
-        textbox.change_text(str(int(textbox.text) + value)) 
+        new_value: int = max(int(textbox.text) + value, 0)
+        textbox.change_text(str(new_value)) 
         
     def change_effect(self, list_item: ListItem) -> None:
         self.element.current_effect = (list_item.effect_name, list_item.effect_data)

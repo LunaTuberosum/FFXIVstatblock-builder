@@ -13,6 +13,9 @@ class KeyBus(Bus):
                 
                 'mouse_middle_down': [],
                 'mouse_middle_up': [],
+                
+                'mouse_scroll_down': [],
+                'mouse_scroll_up': [],
 
                 'copy': [],
                 'paste': [],

@@ -72,6 +72,7 @@ class TextBox(Component):
         self.highlighted_text: str = ''
         
         self.prefix: str = ''
+        self.offset: int = 0
         
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.__draw_text()
@@ -85,13 +86,16 @@ class TextBox(Component):
         
         self.command: Callable[[TextBox], None] = None
         self.char_limit: int = -1
-        
+                
         key_bus.register('mouse_left_down', self.on_click)
         key_bus.register('mouse_left_down', self.check_off_click)
         
         key_bus.register('mouse_right_down', self.on_right_click)
         
         key_bus.register('mouse_left_up', self.on_release)
+        
+        key_bus.register('mouse_scroll_down', self.mouse_scroll_down)
+        key_bus.register('mouse_scroll_up', self.mouse_scroll_up)
         
         key_bus.register('paste', self.paste)
         key_bus.register('copy', self.copy)
@@ -115,6 +119,9 @@ class TextBox(Component):
         key_bus.deregister('mouse_right_down', self.on_right_click)
         
         key_bus.deregister('mouse_left_up', self.on_release)
+        
+        key_bus.deregister('mouse_scroll_down', self.mouse_scroll_down)
+        key_bus.deregister('mouse_scroll_up', self.mouse_scroll_up)
         
         key_bus.deregister('paste', self.paste)
         key_bus.deregister('copy', self.copy)
@@ -662,6 +669,20 @@ class TextBox(Component):
     def on_release(self) -> None:
         self.cursor_selection = False
         
+    def mouse_scroll_down(self) -> None:
+        if len(self.lines) <= self.box_size[1]:
+            return
+        
+        self.offset = min(self.offset + 1, len(self.lines) - self.box_size[1])
+        self.__draw_text()
+        
+    def mouse_scroll_up(self) -> None:
+        if len(self.lines) <= self.box_size[1]:
+            return
+        
+        self.offset = max(self.offset - 1, 0)
+        self.__draw_text()
+        
     def __set_cursor_pos(self, pos: tuple[int, int]) -> None:
         self.cursor_pos = (pos[0] - CURSOR_OFFSET[0], pos[1] - CURSOR_OFFSET[1])
         
@@ -752,13 +773,21 @@ class TextBox(Component):
         
         index: int = 0
         for l_index, line in enumerate(self.lines):
+            if l_index <= self.offset - 1:
+                index += len(line)
+                continue
+            
+            if l_index > self.box_size[1] + self.offset:
+                index += len(line)
+                continue
+            
             chars: list[str] = list(line)
             
             for char in chars:
                 
                 is_highlighted = False
             
-                if sel_low and l_index == sel_low[1] and l_index == sel_high[1]:
+                if sel_low and l_index - self.offset == sel_low[1] and l_index - self.offset == sel_high[1]:
                     if sel_low[0] < x + (text_metrics[index][4] / 4) and x + (text_metrics[index][4] / 4) < sel_high[0]:
                         self.cursor_selection_indexs = (
                             min(index, self.cursor_selection_indexs[0]),
@@ -766,7 +795,7 @@ class TextBox(Component):
                         )
                         is_highlighted = True
                         
-                elif sel_low and l_index == sel_low[1]:
+                elif sel_low and l_index - self.offset == sel_low[1]:
                     if sel_low[0] < x + (text_metrics[index][4] / 4):
                         self.cursor_selection_indexs = (
                             min(index, self.cursor_selection_indexs[0]),
@@ -774,7 +803,7 @@ class TextBox(Component):
                         )
                         is_highlighted = True
                         
-                elif sel_low and l_index == sel_high[1]:
+                elif sel_low and l_index - self.offset == sel_high[1]:
                     if x + (text_metrics[index][4] / 4) < sel_high[0]:
                         self.cursor_selection_indexs = (
                             self.cursor_selection_indexs[0],
@@ -782,7 +811,7 @@ class TextBox(Component):
                         )
                         is_highlighted = True
                         
-                elif sel_low and sel_low[1] < l_index and l_index < sel_high[1]:
+                elif sel_low and sel_low[1] < l_index - self.offset and l_index - self.offset < sel_high[1]:
                     is_highlighted = True
                 
                 f_data: FormatData = self.formating.get(index)
@@ -828,7 +857,7 @@ class TextBox(Component):
                 x += render.width
                 index += 1
                 
-                if self.cursor_mouse_pos[0] < x + (render.width / 2) and self.cursor_mouse_pos[1] // 25 == l_index:
+                if self.cursor_mouse_pos[0] < x + (render.width / 2) and self.cursor_mouse_pos[1] // 25 == l_index - self.offset:
                     self.__set_cursor_pos((x - render.width, y))
                     self.cursor_mouse_pos = CURSOR_MOUSE_POS_DEFUALT
                     self.cursor_index = index
@@ -857,7 +886,7 @@ class TextBox(Component):
                 color = False
                 color_data = ''
                 
-        if (self.cursor_mouse_pos[1] // 25) == l_index and self.cursor_mouse_pos[0] > x:
+        if (self.cursor_mouse_pos[1] // 25) == l_index - self.offset and self.cursor_mouse_pos[0] > x:
             self.cursor_index = CURSOR_END
                 
         if self.cursor_index == CURSOR_END:

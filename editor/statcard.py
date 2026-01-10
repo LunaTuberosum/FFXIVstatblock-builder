@@ -39,9 +39,11 @@ class StatCard():
         self.dragged_file: CardComponent = None
         
         event_bus.register('swap_traits', self.swap_traits)
+        event_bus.register('swap_abilities', self.swap_abilities)
         
     def deregister(self) -> None:
         event_bus.deregister('swap_traits', self.swap_traits)
+        event_bus.deregister('swap_abilities', self.swap_abilities)
         
         for component in self.components.values():
             component.deregister()
@@ -83,6 +85,54 @@ class StatCard():
         swap_to.desc = swapper_desc
         
         trait.refresh()
+        swap_to.refresh()
+        
+    def swap_abilities(self, ability: AbilityComponent) -> None:
+        if not self.dragged_file:
+            return
+        
+        swap_to: AbilityComponent = None
+        all_abilities: list[AbilityComponent] = []
+        for component in self.components.values():
+            if not isinstance(component, AbilityComponent):
+                continue
+            
+            all_abilities.append(component)
+            if component.hovering and component != ability:
+                swap_to = component
+                
+        mouse = pygame.mouse.get_pos()
+        if not swap_to and mouse[1] < all_abilities[0].rect.y and mouse[0] <= self.rect.x + 550:
+            swap_to = all_abilities[0]
+            
+        elif not swap_to and mouse[0] > all_abilities[-1].rect.x and mouse[1] > all_abilities[-1].rect.y:
+            swap_to = all_abilities[-1]
+            
+        if not swap_to:
+            return
+        
+        swapper_name: str = ability.name
+        swapper_types: str = ability.types
+        swapper_extra_text: str = ability.extra_text
+        swapper_effects = ability.effects
+        swapper_formating = ability.formating
+        swapper_marker = ability.marker
+        
+        ability.name = swap_to.name
+        ability.types = swap_to.types
+        ability.extra_text = swap_to.extra_text
+        ability.effects = swap_to.effects
+        ability.formating = swap_to.formating
+        ability.marker = swap_to.marker
+        
+        swap_to.name = swapper_name
+        swap_to.types = swapper_types
+        swap_to.extra_text = swapper_extra_text
+        swap_to.effects = swapper_effects
+        swap_to.formating = swapper_formating
+        swap_to.marker = swapper_marker
+        
+        ability.refresh()
         swap_to.refresh()
         
     def update(self, pan: tuple[int, int], x: int) -> None:

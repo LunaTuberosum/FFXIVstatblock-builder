@@ -49,6 +49,8 @@ class List(Component):
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.__draw_text_face()
         
+        self.dragged_list: ListItem = None
+        
         self.offset: int = 0
         
         self.components: dict[str, Component] = {
@@ -80,11 +82,15 @@ class List(Component):
         key_bus.register('mouse_scroll_down', self.mouse_scroll_down)
         key_bus.register('mouse_scroll_up', self.mouse_scroll_up)
         
+        event_bus.register('swap_effects', self.swap_effects)
+        
     def deregister(self):
         super().deregister()
         
         key_bus.deregister('mouse_scroll_down', self.mouse_scroll_down)
         key_bus.deregister('mouse_scroll_up', self.mouse_scroll_up)
+        
+        event_bus.deregister('swap_effects', self.swap_effects)
         
         for componet in self.components.values():
             componet.deregister()
@@ -109,6 +115,47 @@ class List(Component):
                 command=self.change_effect,
                 parent=self
             ))
+        
+    def swap_effects(self, effect: ListItem) -> None:
+        if not self.dragged_list:
+            return
+        
+        swap_to: ListItem = None
+        all_effects: list[ListItem] = []
+        for item in self.list_items:
+            all_effects.append(item)
+            
+            if item.hovering and item != effect:
+                swap_to = item
+                
+        mouse = pygame.mouse.get_pos()
+        if not swap_to and mouse[1] < all_effects[0].rect.y:
+            swap_to = all_effects[0]
+            
+        if not swap_to and mouse[1] > all_effects[-1].rect.y:
+            swap_to = all_effects[-1]
+            
+        if not swap_to:
+            return
+        
+        swapper_effect_name: str = effect.effect_name
+        swapper_effect_data: str = effect.effect_data
+        
+        effect.effect_name = swap_to.effect_name
+        effect.effect_data = swap_to.effect_data
+        
+        swap_to.effect_name = swapper_effect_name
+        swap_to.effect_data = swapper_effect_data
+        
+        effect.refresh()
+        swap_to.refresh()
+        
+        new_effects = {}
+        for item in self.list_items:
+            new_effects[item.effect_name] = item.effect_data
+            
+        self.element.effects = new_effects
+        self.element.update_effect()
         
     def handle_effects(self) -> None:
         effect_text: TextBox = self.get_component('Effect_Text')
@@ -205,6 +252,8 @@ class List(Component):
             component.draw(screen, self.rect.topleft)
             
         y: int = 49
+        self.dragged_list = None
+        pos: tuple[int, int] = ()
         for index, item in enumerate(self.list_items):
             item.active = True
             
@@ -227,8 +276,15 @@ class List(Component):
             if self.element.current_effect and item.effect_name == self.element.current_effect[0]:
                 item.current = True
             
-            item.draw(screen, (5 + self.rect.x, y + self.rect.y))
+            if item.drag:
+                self.dragged_list = item
+                pos = (5 + self.rect.x, y + self.rect.y)
+            else:
+                item.draw(screen, (5 + self.rect.x, y + self.rect.y))   
             y += 32
+            
+        if self.dragged_list:
+            self.dragged_list.draw(screen, pos)
         
     def mouse_scroll_down(self) -> None:
         if len(self.list_items) <= 10:

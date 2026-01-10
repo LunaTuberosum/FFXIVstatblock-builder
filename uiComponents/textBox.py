@@ -896,12 +896,6 @@ class TextBox(Component):
             self.color_data = color_data
             
             self.__set_cursor_pos((x, y))
-            
-            # if self.highlighted_text:
-            #     self.cursor_selection_indexs = (
-            #         self.cursor_selection_indexs[0],
-            #         len(self.text)
-            #     ) OMG GREEN TEXT!!
         
     def __draw_text(self) -> None:
         self.text_face.fill((0, 0, 0, 0))

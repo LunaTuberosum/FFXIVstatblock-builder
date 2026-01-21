@@ -33,9 +33,15 @@ class MarkerComponent(Component):
             
         self.marker_overlays: dict[str, list[tuple[int, int]] | tuple[int, int]] = {
             'STAKE': [],
+            
             'STACK': [],
             'STACK_LINE': [],
             'STACK_MULTI': [],
+            
+            'TANKBUSTER': [],
+            'TANKBUSTER_AOE': [],
+            'TANKBUSTER_CAUTION': [],
+            
             'PROXIMITY': None
         }
             

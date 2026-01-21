@@ -21,21 +21,20 @@ class Paint(Enum):
     STACK: int = 7
     STACK_LINE: int = 8
     STACK_MULTI: int = 9
-    STACK_TANKBUSTER: int = 10
     
+    TANKBUSTER_MARKER: int = 10
     TANKBUSTER: int = 11
     TANKBUSTER_AOE: int = 12
     TANKBUSTER_CAUTION: int = 13
     
-    TOWER: int = 14
-    TOWER_2: int = 15
-    TOWER_3: int = 16
-    TOWER_4: int = 17
-    TOWER_TANK: int = 18
+    TOWER: int = 14 # One day...
+    TOWER_2: int = 15 # One day...
+    TOWER_3: int = 16 # One day...
+    TOWER_4: int = 17 # One day...
     
-    DPS: int = 19
-    HEALER: int = 20
-    TANK: int = 21
+    DPS: int = 18
+    HEALER: int = 19
+    TANK: int = 20
     
 class Paintbrush():
     def __init__(self) -> None:

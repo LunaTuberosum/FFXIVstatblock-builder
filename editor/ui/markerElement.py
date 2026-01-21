@@ -110,8 +110,7 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 options={
                     'Normal': self.palete_normal,
                     'Stack': self.palete_stack,
-                    'Tank Buster': None,
-                    'Towers': None
+                    'Tankbuster': self.palete_tankbuster
                 },
                 default='Please Select a Palete...',
                 size='Small'
@@ -332,6 +331,66 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 image='.\\assets\\icons\\MultiStackOriginButton.png',
                 image_hover='.\\assets\\icons\\MultiStackOriginButton_hover.png',
                 command=stack_origin_multi
+            )
+        ]
+        grid()
+        
+        self.__add_class_buttons()
+            
+    def palete_tankbuster(self) -> None:
+        self.__dergister_palete()
+        
+        def grid():
+            self.brush.paint = Paint.GRID
+            self.brush.active_button = self.paletes_buttons[0]
+        def tankbuster_marker():
+            self.brush.paint = Paint.TANKBUSTER_MARKER
+            self.brush.active_button = self.paletes_buttons[1]
+        def tankbuster():
+            self.brush.paint = Paint.TANKBUSTER
+            self.brush.active_button = self.paletes_buttons[2]
+        def aoe_tankbuster():
+            self.brush.paint = Paint.TANKBUSTER_AOE
+            self.brush.active_button = self.paletes_buttons[3]
+        def caution_tankbuster():
+            self.brush.paint = Paint.TANKBUSTER_CAUTION
+            self.brush.active_button = self.paletes_buttons[4]
+        
+        self.paletes_buttons = [
+            Button(
+                pos=(50, 230),
+                size=(32, 34),
+                image='.\\assets\\icons\\GridButton.png',
+                image_hover='.\\assets\\icons\\GridButton_hover.png',
+                command=grid
+            ),
+            Button(
+                pos=(82, 230),
+                size=(32, 34),
+                image='.\\assets\\icons\\TankbusterButton.png',
+                image_hover='.\\assets\\icons\\TankbusterButton_hover.png',
+                command=tankbuster_marker
+            ),
+            Button(
+                pos=(114, 230),
+                size=(32, 34),
+                image='.\\assets\\icons\\TankBusterOriginButton.png',
+                image_hover='.\\assets\\icons\\TankBusterOriginButton_hover.png',
+                command=tankbuster
+            ),
+            Button(
+                pos=(146, 230),
+                size=(32, 34),
+                image='.\\assets\\icons\\AOETankBusterOriginButton.png',
+                image_hover='.\\assets\\icons\\AOETankBusterOriginButton_hover.png',
+                command=aoe_tankbuster
+            ),
+            Button(
+                pos=(178, 230),
+                size=(32, 34),
+                image='.\\assets\\icons\\CautionTankBusterOriginButton.png',
+                image_hover='.\\assets\\icons\\CautionTankBusterOriginButton_hover.png',
+                command=caution_tankbuster
             )
         ]
         grid()

@@ -46,10 +46,15 @@ class Marker(Component):
         self.origin_tileset: dict[int, pygame.Surface] = get_tileset('.\\assets\\markerIcons\\SquareOriginTileset.png')
         self.instant_tileset: dict[int, pygame.Surface] = get_tileset('.\\assets\\markerIcons\\SquareInstantTileset.png')
         self.stack_tileset: dict[int, pygame.Surface] = get_tileset('.\\assets\\markerIcons\\SquareStackTileset.png')
+        self.tankbuster_tileset: dict[int, pygame.Surface] = get_tileset('.\\assets\\markerIcons\\SquareTankbusterTileset.png')
         
         self.stack_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\StackMarker.png')
         self.line_stack_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\LineStackMarker.png')
         self.multi_stack_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\MultiStackMarker.png')
+        
+        self.tankbuster_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\TankBusterMarker.png')
+        self.aoe_tankbuster_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\AOETankBusterMarker.png')
+        self.caution_tankbuster_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\CautionTankBusterMarker.png')
         
         self.stake_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\StakeMarker.png')
         
@@ -155,6 +160,15 @@ class Marker(Component):
             return
         
         if self.__add_overlay(self.marker_overlays['STACK_MULTI'], Paint.STACK_MULTI):
+            return
+        
+        if self.__add_overlay(self.marker_overlays['TANKBUSTER'], Paint.TANKBUSTER):
+            return
+        
+        if self.__add_overlay(self.marker_overlays['TANKBUSTER_AOE'], Paint.TANKBUSTER_AOE):
+            return
+        
+        if self.__add_overlay(self.marker_overlays['TANKBUSTER_CAUTION'], Paint.TANKBUSTER_CAUTION):
             return
         
         if self.parent.brush.paint == Paint.PROXIMITY:
@@ -290,6 +304,10 @@ class Marker(Component):
                 elif tile == Paint.STACK_MARKER:
                     self.__render_tile(x, y, self.stack_tileset, Paint.STACK_MARKER)
                     continue
+                
+                elif tile == Paint.TANKBUSTER_MARKER:
+                    self.__render_tile(x, y, self.tankbuster_tileset, Paint.TANKBUSTER_MARKER)
+                    continue
                      
                 elif tile == Paint.DPS or tile == Paint.TANK or tile == Paint.HEALER:
                     self.face.blit(self.icons[Paint.GRID], (x * 25, y * 25))
@@ -324,6 +342,15 @@ class Marker(Component):
             
         for pos in self.marker_overlays['STACK_MULTI']:
             self.face.blit(self.multi_stack_icon, ((pos[1] * 25) - 50, (pos[0] * 25) - 50))
+            
+        for pos in self.marker_overlays['TANKBUSTER']:
+            self.face.blit(self.tankbuster_icon, ((pos[1] * 25) - 25, (pos[0] * 25) - 25))
+            
+        for pos in self.marker_overlays['TANKBUSTER_AOE']:
+            self.face.blit(self.aoe_tankbuster_icon, ((pos[1] * 25) - 50, (pos[0] * 25) - 50))
+            
+        for pos in self.marker_overlays['TANKBUSTER_CAUTION']:
+            self.face.blit(self.caution_tankbuster_icon, ((pos[1] * 25) - 25, (pos[0] * 25) - 25))
             
         if pos := self.marker_overlays['PROXIMITY']:
             height: int = min(self.grid_size[1] - pos[0], 10)

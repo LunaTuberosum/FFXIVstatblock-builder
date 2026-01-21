@@ -118,11 +118,8 @@ class NameElement(StatCardElement[NameComponent]):
         super()._render_text_face()
         
         self.render_text('Name', '#C2C2C2', (25, 55))
-
         self.render_text('Character Name', '#EEE1C5', (50, 80))
 
         self.render_text('Level', '#C2C2C2', (25, 115))
-
         self.render_text('Character Level', '#EEE1C5', (50, 140))
-
         self.render_text('Level Position', '#EEE1C5', (50, 175))

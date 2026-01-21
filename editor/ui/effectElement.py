@@ -20,7 +20,7 @@ W_HALF: int = 395
 H_HALF: int = 245
 
 class EffectElement(StatCardElement[AbilityComponent]):
-    def __init__(self, component, ability_window) -> None:
+    def __init__(self, component) -> None:
         screen = pygame.display.get_surface()
         
         super().__init__(
@@ -38,9 +38,6 @@ class EffectElement(StatCardElement[AbilityComponent]):
         self.current_effect = None
         if self.effects:
             self.current_effect = list(self.effects.items())[0]
-        
-        from editor.ui.abilityElement import AbilityElement
-        self.ability_window: AbilityElement = ability_window
         
         apply = self.get_component('Apply')
         apply.pos = (self.size[0] - 436, apply.pos[1])

@@ -3,6 +3,7 @@ import pygame
 from editor.cardComponents.abilityComponent import AbilityComponent
 
 from editor.ui.effectElement import EffectElement
+from editor.ui.markerElement import MarkerElement
 from editor.ui.statCardElement import StatCardElement
 
 from singletons.eventBus import event_bus
@@ -79,7 +80,7 @@ class AbilityElement(StatCardElement[AbilityComponent]):
                 size=(198, 38),
                 image='.\\assets\\icons\\button.png',
                 image_hover='.\\assets\\icons\\button_hover.png',
-                command=None,
+                command=self.marker_edit,
                 text='Marker Builder'
             )
         )
@@ -114,10 +115,6 @@ class AbilityElement(StatCardElement[AbilityComponent]):
             
         self.component.types = self.get_component('Types_Text').text
         
-        ## effects
-        
-        ## marker
-        
         self.component.extra_text = self.get_component('Extra_Text').text
             
         self.component.refresh()
@@ -126,7 +123,10 @@ class AbilityElement(StatCardElement[AbilityComponent]):
         self.get_component('INVK_Toggle').set_option(selection)
          
     def effect_edit(self) -> None:
-        event_bus.sign('ui_window', EffectElement(self.component, self), True)
+        event_bus.sign('ui_window', EffectElement(self.component), True)
+        
+    def marker_edit(self) -> None:
+        event_bus.sign('ui_window', MarkerElement(self.component), True)
          
     def _render_text_face(self):
         super()._render_text_face()

@@ -18,21 +18,31 @@ class DropdownOption():
         self.rect: pygame.Rect = pygame.Rect(self.pos, (330, 30))
 
 class Dropdown(Component):
-    def __init__(self, pos: tuple[int, int], options: dict[str, Callable[[None], None]], default: str):
+    def __init__(self, pos: tuple[int, int], options: dict[str, Callable[[None], None]], default: str, size: str = 'Large'):
         super().__init__(
             pos=pos,
-            size=(330, 38)
+            size=(330 if size == 'Large' else 270, 38)
         )
         
-        self.image_open: dict[str, pygame.Surface] = {
-            'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_open.png'),
-            'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_open_hover.png'),
-        }
-        self.image_closed: dict[str, pygame.Surface] = {
-            'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_closed.png'),
-            'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_closed_hover.png'),
-        }
-        
+        if size == 'Large':
+            self.image_open: dict[str, pygame.Surface] = {
+                'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_open.png'),
+                'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_open_hover.png'),
+            }
+            self.image_closed: dict[str, pygame.Surface] = {
+                'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_closed.png'),
+                'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_closed_hover.png'),
+            }
+        else:
+            self.image_open: dict[str, pygame.Surface] = {
+                'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_open.png'),
+                'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_open_hover.png'),
+            }
+            self.image_closed: dict[str, pygame.Surface] = {
+                'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_closed.png'),
+                'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_closed_hover.png'),
+            }
+            
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\noto-sans.regular.ttf', 20)
         
         self.options: dict[str, DropdownOption] = {}

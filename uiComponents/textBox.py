@@ -687,6 +687,7 @@ class TextBox(Component):
         if len(self.lines) <= self.box_size[1]:
             return
         
+        self.__reset_selection()
         self.offset = min(self.offset + 1, len(self.lines) - self.box_size[1])
         self.__draw_text()
         
@@ -694,6 +695,7 @@ class TextBox(Component):
         if len(self.lines) <= self.box_size[1]:
             return
         
+        self.__reset_selection()
         self.offset = max(self.offset - 1, 0)
         self.__draw_text()
         
@@ -929,6 +931,19 @@ class TextBox(Component):
             (surf_size[0] / 2) - (text_size[0] / 2),
             (surf_size[1] / 2) - (text_size[1] / 2)
         )
+        
+        if text_size[0] + 5 > surf_size[0]:
+            pos = (
+                surf_size[0] - text_size[0] - 10,
+                pos[1]
+            )
+            
+            if self.cursor_index != CURSOR_END:
+                pos = (
+                    min(surf_size[0] - (self.cursor_index * 10), 5),
+                    pos[1]
+                )
+                print(pos)
         
         # [(minX, maxX, minY, maxY, advance**), ...]
         text_metrics: list[tuple[int, ...]] = self.font.metrics(text)

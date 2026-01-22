@@ -103,11 +103,11 @@ class AbilityComponent(CardComponent):
             
         if data['marker']:
             self.marker = MarkerComponent(
-                data['marker']['gridSize'][0],
-                data['marker']['gridSize'][1],
+                data['marker']['grid_size'][0],
+                data['marker']['grid_size'][1],
                 self
             )
-            self.marker.add_marker_area(data['marker']['markerArea'])
+            self.marker.add_marker_area(data['marker']['marker_area'], data['marker']['marker_overlay'])
             
         self.__find_size()
         

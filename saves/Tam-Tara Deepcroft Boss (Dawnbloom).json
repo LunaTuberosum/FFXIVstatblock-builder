@@ -133,7 +133,7 @@
             },
             "Ability_0": {
                 "name": "Ability 1",
-                "invk": true,
+                "invk": false,
                 "types": "Primary, Physical",
                 "effects": {
                     "Target": {
@@ -183,12 +183,21 @@
                 },
                 "extra_text": "",
                 "marker": {
-                    "type": 3,
-                    "gridSize": [
+                    "grid_size": [
                         7,
                         7
                     ],
-                    "markerArea": [
+                    "marker_overlay": {
+                        "STAKE": [],
+                        "STACK": [],
+                        "STACK_LINE": [],
+                        "STACK_MULTI": [],
+                        "TANKBUSTER": [],
+                        "TANKBUSTER_AOE": [],
+                        "TANKBUSTER_CAUTION": [],
+                        "PROXIMITY": null
+                    },
+                    "marker_area": [
                         [
                             0,
                             0,
@@ -347,74 +356,83 @@
                 },
                 "extra_text": "Place this marker on either the left or right at random",
                 "marker": {
-                    "type": 3,
-                    "gridSize": [
+                    "grid_size": [
                         7,
                         7
                     ],
-                    "markerArea": [
+                    "marker_overlay": {
+                        "STAKE": [],
+                        "STACK": [],
+                        "STACK_LINE": [],
+                        "STACK_MULTI": [],
+                        "TANKBUSTER": [],
+                        "TANKBUSTER_AOE": [],
+                        "TANKBUSTER_CAUTION": [],
+                        "PROXIMITY": null
+                    },
+                    "marker_area": [
                         [
                             0,
                             0,
                             0,
-                            1,
-                            1,
-                            1,
-                            1
+                            0,
+                            0,
+                            0,
+                            0
                         ],
                         [
                             0,
-                            0,
-                            0,
                             1,
                             1,
                             1,
-                            1
+                            1,
+                            1,
+                            0
                         ],
                         [
                             0,
-                            0,
-                            0,
                             1,
                             1,
                             1,
-                            1
+                            1,
+                            1,
+                            0
                         ],
                         [
                             0,
-                            0,
-                            0,
+                            1,
+                            1,
                             2,
                             1,
                             1,
-                            1
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            0
                         ],
                         [
                             0,
                             0,
                             0,
-                            1,
-                            1,
-                            1,
-                            1
-                        ],
-                        [
                             0,
                             0,
                             0,
-                            1,
-                            1,
-                            1,
-                            1
-                        ],
-                        [
-                            0,
-                            0,
-                            0,
-                            1,
-                            1,
-                            1,
-                            1
+                            0
                         ]
                     ]
                 }
@@ -607,7 +625,7 @@
             },
             "Ability_6": {
                 "name": "Love of Mine",
-                "invk": false,
+                "invk": true,
                 "types": "Instant, Magic",
                 "effects": {
                     "Target": {
@@ -639,16 +657,6 @@
                         "format": {},
                         "in_line": false
                     }
-                },
-                "extra_text": "",
-                "marker": null
-            },
-             "Ability_7": {
-                "name": "Ability 7",
-                "invk": false,
-                "types": "Primary, Physical",
-                "effects": {
-
                 },
                 "extra_text": "",
                 "marker": null
@@ -697,7 +705,7 @@
                 "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
             },
             "Trait_1": {
-                "name": "Til Death Do Us Part",
+                "name": "Til Death Do Us Par",
                 "format": {
                     "24": {
                         "type": 0,
@@ -853,12 +861,21 @@
                 },
                 "extra_text": "",
                 "marker": {
-                    "type": 3,
-                    "gridSize": [
+                    "grid_size": [
                         7,
                         7
                     ],
-                    "markerArea": [
+                    "marker_overlay": {
+                        "STAKE": [],
+                        "STACK": [],
+                        "STACK_LINE": [],
+                        "STACK_MULTI": [],
+                        "TANKBUSTER": [],
+                        "TANKBUSTER_AOE": [],
+                        "TANKBUSTER_CAUTION": [],
+                        "PROXIMITY": null
+                    },
+                    "marker_area": [
                         [
                             0,
                             0,
@@ -1258,12 +1275,21 @@
                 },
                 "extra_text": "",
                 "marker": {
-                    "type": 3,
-                    "gridSize": [
+                    "grid_size": [
                         7,
                         7
                     ],
-                    "markerArea": [
+                    "marker_overlay": {
+                        "STAKE": [],
+                        "STACK": [],
+                        "STACK_LINE": [],
+                        "STACK_MULTI": [],
+                        "TANKBUSTER": [],
+                        "TANKBUSTER_AOE": [],
+                        "TANKBUSTER_CAUTION": [],
+                        "PROXIMITY": null
+                    },
+                    "marker_area": [
                         [
                             1,
                             1,
@@ -1399,12 +1425,30 @@
                 },
                 "extra_text": "",
                 "marker": {
-                    "type": 2,
-                    "gridSize": [
+                    "grid_size": [
                         7,
                         7
                     ],
-                    "markerArea": [
+                    "marker_overlay": {
+                        "STAKE": [
+                            [
+                                1,
+                                1
+                            ],
+                            [
+                                5,
+                                5
+                            ]
+                        ],
+                        "STACK": [],
+                        "STACK_LINE": [],
+                        "STACK_MULTI": [],
+                        "TANKBUSTER": [],
+                        "TANKBUSTER_AOE": [],
+                        "TANKBUSTER_CAUTION": [],
+                        "PROXIMITY": null
+                    },
+                    "marker_area": [
                         [
                             1,
                             1,

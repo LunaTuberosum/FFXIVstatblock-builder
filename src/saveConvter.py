@@ -138,6 +138,44 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
                         'format': format_data,
                         'in_line': True if effect_name == 'CR' else False
                     }
+                    
+                new_marker: dict[str, list | int] = None
+                
+                if comp_data['marker']:
+                    new_marker = {
+                        'grid_size': comp_data['marker']['gridSize'],
+                        'marker_overlay': {
+                            'STAKE': [],
+                
+                            'STACK': [],
+                            'STACK_LINE': [],
+                            'STACK_MULTI': [],
+                            
+                            'TANKBUSTER': [],
+                            'TANKBUSTER_AOE': [],
+                            'TANKBUSTER_CAUTION': [],
+                            
+                            'PROXIMITY': None
+                        },
+                        'marker_area': comp_data['marker']['markerArea']
+                    }
+                    
+                    print(effect_name)
+                    print(comp_data['marker']['type'])
+                    if comp_data['marker']['type'] == 0:
+                        new_marker['marker_overlay']['PROXIMITY'] = (comp_data['marker']['gridSize'][0], 0)
+                        
+                    elif comp_data['marker']['type'] == 1:
+                        for y, col in enumerate(comp_data['marker']['markerArea']):
+                            for x, row in enumerate(col):
+                                if row == 2:
+                                    new_marker['marker_overlay']['STACK'].append((y, x))
+                                    
+                    elif comp_data['marker']['type'] == 2:
+                        for y, col in enumerate(comp_data['marker']['markerArea']):
+                            for x, row in enumerate(col):
+                                if row == 2:
+                                    new_marker['marker_overlay']['STAKE'].append((y, x))
                 
                 card['components'][comp_name] = {
                     'name': comp_data['name'],
@@ -145,7 +183,7 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
                     'types': comp_data['types'],
                     'effects': new_effects,
                     'extra_text': extra_text,
-                    'marker': comp_data['marker']
+                    'marker': new_marker
                 }
                 
         new_sheet[card_id] = card

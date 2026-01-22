@@ -80,7 +80,7 @@ class MarkerComponent(Component):
         
         self.__render_tiles()
         
-    def add_marker_area(self, marker_area: list[list[int]]) -> None:
+    def add_marker_area(self, marker_area: list[list[int]], marker_overlays: dict[str, list]) -> None:
         self.marker_area: list[list[int]] = []
         for row in marker_area:
             
@@ -89,6 +89,8 @@ class MarkerComponent(Component):
                 new_row.append(Paint(col))
                 
             self.marker_area.append(new_row)
+        
+        self.marker_overlays = marker_overlays
         
         self.__render_tiles()
         

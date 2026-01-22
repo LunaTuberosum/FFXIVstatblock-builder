@@ -1,9 +1,14 @@
+import re
 import pygame
 
 from editor.cardComponents.abilityComponent import AbilityComponent
 
 from editor.ui.paintbursh import Paintbrush, Paint
 from editor.ui.statCardElement import StatCardElement
+
+from singletons.eventBus import event_bus
+
+from ui.confirmElement import ConfirmElement
 
 from uiComponents.button import Button
 from uiComponents.dropdown import Dropdown
@@ -42,7 +47,11 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 pos=(220, 80),
                 size=(60, 1)
             )
-        ).change_text(str(self.component.marker.grid_size[0]))
+        )
+        
+        self.get_component('Width_Text').change_text(str(self.component.marker.grid_size[0]))
+        self.get_component('Width_Text').add_command(self.check_numeric)
+        self.get_component('Width_Text').add_char_limit(3)
         
         self.add_component(
             'Width_Plus',
@@ -51,7 +60,7 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 size=(32, 34),
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
-                command=None
+                command=self.add_width
             )
         )
         self.add_component(
@@ -61,7 +70,7 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 size=(32, 34),
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
-                command=None
+                command=self.minus_width
             )
         )
         
@@ -71,7 +80,11 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 pos=(220, 120),
                 size=(60, 1)
             )
-        ).change_text(str(self.component.marker.grid_size[0]))
+        )
+        
+        self.get_component('Height_Text').change_text(str(self.component.marker.grid_size[1]))
+        self.get_component('Height_Text').add_command(self.check_numeric)
+        self.get_component('Height_Text').add_char_limit(3)
         
         self.add_component(
             'Height_Plus',
@@ -80,7 +93,7 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 size=(32, 34),
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
-                command=None
+                command=self.add_height
             )
         )
         self.add_component(
@@ -90,14 +103,14 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 size=(32, 34),
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
-                command=None
+                command=self.minus_height
             )
         )
         
         self.add_component(
             'Marker',
             Marker(
-                pos=(410, 80),
+                pos=(425, 80),
                 marker_component=self.component.marker,
                 parent=self
             )
@@ -124,10 +137,19 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 size=(198, 38),
                 image='.\\assets\\icons\\button.png',
                 image_hover='.\\assets\\icons\\button_hover.png',
-                command=None,
+                command=self.remove_marker,
                 text='Remove  Marker'
             )
         )
+        
+    def apply(self) -> None:
+        marker_comp: Marker = self.get_component('Marker')
+        
+        self.component.marker.grid_size = marker_comp.grid_size
+        self.component.marker.marker_area = marker_comp.marker_area
+        self.component.marker.marker_overlays = marker_comp.marker_overlays
+        
+        self.component.refresh()
         
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)
@@ -155,11 +177,19 @@ class MarkerElement(StatCardElement[AbilityComponent]):
                 button.hover()
                 
             button.draw(screen, self.pos)    
+            
+        if not (self.get_component('Width_Text').active or self.get_component('Height_Text').active) and \
+        (int(self.get_component('Width_Text').text) != self.get_component('Marker').grid_size[0] or \
+        int(self.get_component('Height_Text').text) != self.get_component('Marker').grid_size[1]):
+                
+            width = int(self.get_component('Width_Text').text)
+            height = int(self.get_component('Height_Text').text)
+            
+            self.get_component('Marker').update_grid_size(width, height)
     
         for comp in self.components.values():
             comp.draw(screen, self.pos)
-        
-            
+          
     def __dergister_palete(self) -> None:
         for button in self.paletes_buttons:
             button.deregister()
@@ -396,7 +426,53 @@ class MarkerElement(StatCardElement[AbilityComponent]):
         grid()
         
         self.__add_class_buttons()
+        
+    def check_numeric(self, textbox: TextBox) -> None:
+        if textbox.text.isnumeric():
+            return
+        
+        textbox.change_text(re.sub('[^0-9]', '', textbox.text))
+        
+        if not textbox.text:
+            textbox.change_text('0')
             
+    def add_width(self) -> None:
+        self.__change_value('Width_Text', 1)
+    
+    def minus_width(self) -> None:
+        self.__change_value('Width_Text', -1)
+        
+    def add_height(self) -> None:
+        self.__change_value('Height_Text', 1)
+    
+    def minus_height(self) -> None:
+        self.__change_value('Height_Text', -1)
+        
+    def __change_value(self, element_name: str, value: int) -> None:
+        if not (textbox := self.get_component(element_name)).text.isnumeric():
+            return
+        
+        new_value: int = max(int(textbox.text) + value, 1)
+        textbox.change_text(str(new_value)) 
+      
+    def remove_marker(self) -> None:
+        def confirm():
+            
+            # Clear Confirm
+            event_bus.sign('ui_window', None)
+            
+            # Clear Marker
+            event_bus.sign('ui_window', None)
+            
+            self.component.marker = None
+            self.component.refresh()
+        
+        event_bus.sign('ui_window', ConfirmElement(
+            text='Are you sure you want to delete this Marker?',
+            confrim_command=confirm,
+            confirm_text='Delete'
+        ), True)
+          
     def _render_text_face(self):
         super()._render_text_face()
         
@@ -410,4 +486,6 @@ class MarkerElement(StatCardElement[AbilityComponent]):
         pygame.draw.rect(self.text_face, '#525552', (47, 227, 326, 108))
         pygame.draw.rect(self.text_face, '#D4B155', (47, 227, 326, 108), 2)
         pygame.draw.rect(self.text_face, '#6A4A32', (49, 229, 322, 104), 1)
+        
+        self.render_text('Marker', '#C2C2C2', (410, 55))
             

@@ -87,6 +87,41 @@ class Marker(Component):
         key_bus.deregister('mouse_left_down', self.on_click)
         key_bus.deregister('mouse_left_up', self.on_release)
         
+    def update_grid_size(self, width: int, height: int) -> None:
+        self.grid_size = (width, height)
+        new_marker_area: list[list[int]] = []
+        
+        for y in range(self.grid_size[1]):
+            if y >= len(self.marker_area):
+                new_marker_area.append([Paint.GRID for new in range(self.grid_size[0])])
+                continue
+            
+            row: list = []
+            for x in range(self.grid_size[0]):
+                if x >= len(self.marker_area[0]):
+                    row.append(Paint.GRID)
+                else:
+                    row.append(self.marker_area[y][x])
+                
+                for overlay_list in self.marker_overlays.values():
+                    if not isinstance(overlay_list, list):
+                        continue
+                    
+                    for overlay in overlay_list:
+                        if overlay == (x, y):
+                            overlay_list.remove(overlay)
+                
+            new_marker_area.append(row)
+            
+        self.marker_area = new_marker_area
+        
+        self.hover_icon = pygame.transform.scale(
+            self.hover_icon,
+            (400 / self.grid_size[0], 400 / self.grid_size[1])
+        )
+        
+        self.__render_tiles()
+        
     def draw(self, screen: pygame.Surface, parent_pos: tuple[int, int]) -> None:
         super().draw(screen, parent_pos)
         
@@ -143,6 +178,7 @@ class Marker(Component):
                 if pos == (self.hover_pos[1], self.hover_pos[0]):
                     overlay_list.remove(pos)
                     break
+            self.__render_tiles()
                 
         return False
             
@@ -150,37 +186,40 @@ class Marker(Component):
         if not self.hovering:
             return
         
+        modified_overlay: bool = False
         if self.__add_overlay(self.marker_overlays['STAKE'], Paint.STAKE):
-            return
+            modified_overlay = True
                 
         if self.__add_overlay(self.marker_overlays['STACK'], Paint.STACK):
-            return
+            modified_overlay = True
         
         if self.__add_overlay(self.marker_overlays['STACK_LINE'], Paint.STACK_LINE):
-            return
+            modified_overlay = True
         
         if self.__add_overlay(self.marker_overlays['STACK_MULTI'], Paint.STACK_MULTI):
-            return
+            modified_overlay = True
         
         if self.__add_overlay(self.marker_overlays['TANKBUSTER'], Paint.TANKBUSTER):
-            return
+            modified_overlay = True
         
         if self.__add_overlay(self.marker_overlays['TANKBUSTER_AOE'], Paint.TANKBUSTER_AOE):
-            return
+            modified_overlay = True
         
         if self.__add_overlay(self.marker_overlays['TANKBUSTER_CAUTION'], Paint.TANKBUSTER_CAUTION):
-            return
+            modified_overlay = True
         
         if self.parent.brush.paint == Paint.PROXIMITY:
             self.marker_overlays['PROXIMITY'] = (self.hover_pos[1], self.hover_pos[0])
             self.__render_tiles()
-            return
+            modified_overlay = True
         
         elif (self.hover_pos[1], self.hover_pos[0]) == self.marker_overlays['PROXIMITY']:
             self.marker_overlays['PROXIMITY'] = None
             self.__render_tiles()
-            return
+            modified_overlay = True
             
+        if modified_overlay:
+            return
             
         self.painting = True
         
@@ -285,8 +324,8 @@ class Marker(Component):
         self.face = pygame.Surface((self.grid_size[0] * 25, self.grid_size[1] * 25), pygame.SRCALPHA)
         self.face.fill((0, 0, 0, 0))
         
-        for y in range(self.grid_size[0]):
-            for x in range(self.grid_size[1]):
+        for y in range(self.grid_size[1]):
+            for x in range(self.grid_size[0]):
                 tile: int = self.marker_area[y][x]
                 if tile == Paint.MARKER:
                     self.__render_tile(x, y, self.marker_tileset, Paint.MARKER)
@@ -359,4 +398,5 @@ class Marker(Component):
             self.face.blit(scaled, (pos[1] * 25, pos[0] * 25))
             
         self.face = pygame.transform.scale(self.face, (400, 400))
+        
         

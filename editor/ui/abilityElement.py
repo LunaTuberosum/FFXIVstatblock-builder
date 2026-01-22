@@ -126,6 +126,11 @@ class AbilityElement(StatCardElement[AbilityComponent]):
         event_bus.sign('ui_window', EffectElement(self.component), True)
         
     def marker_edit(self) -> None:
+        if not self.component.marker:
+            from editor.cardComponents.markerComponnet import MarkerComponent
+            self.component.marker = MarkerComponent(5, 5, self.component)
+            self.component.refresh()
+        
         event_bus.sign('ui_window', MarkerElement(self.component), True)
          
     def _render_text_face(self):

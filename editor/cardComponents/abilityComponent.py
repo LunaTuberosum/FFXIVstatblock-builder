@@ -114,6 +114,9 @@ class AbilityComponent(CardComponent):
         self.__draw_text_face()
     
     def refresh(self) -> None:
+        if self.marker:
+            self.marker.refresh()
+        
         self.__find_size()
         self.__draw_text_face()
         
@@ -125,7 +128,7 @@ class AbilityComponent(CardComponent):
         bold: bool = False
         
         if self.marker:
-            limit -= self.marker.size[0] + 20
+            limit -= self.marker.face.size[0]
             
         self.formating = {}
             
@@ -142,7 +145,7 @@ class AbilityComponent(CardComponent):
             if effect_data.in_line:
                 text = self.lines.pop() + text
             
-            size = self.font_bolded.size(name)[0]
+            size = self.font_bolded.size(text)[0]
             
             effect_index: int = 0
             for word in effect_data.desc.split():
@@ -202,10 +205,10 @@ class AbilityComponent(CardComponent):
             40 + (18 * len(self.lines))
         )
         
-        if self.marker and self.marker.size[1] > self.size[1] - 40:
+        if self.marker and self.marker.face.size[1] > self.size[1] - 50:
             self.size = (
                 self.size[0],
-                self.marker.size[1] + 50
+                self.marker.face.size[1] + 55
             )
         
         name_width: int = self.font_title.size(self.name)[0]

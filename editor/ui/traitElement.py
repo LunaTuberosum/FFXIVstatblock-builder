@@ -28,7 +28,10 @@ class TraitElement(StatCardElement[TraitComponent]):
                 pos=(220, 80),
                 size=(300, 1)
             )
-        ).change_text(self.component.name)
+        )
+        
+        self.get_component('Name_Text').change_text(self.component.name)
+        self.get_component('Name_Text').add_tabbing(self.tab)
         
         self.add_component(
             'Desc_Text',
@@ -36,7 +39,10 @@ class TraitElement(StatCardElement[TraitComponent]):
                 pos=(40, 140),
                 size=(480, 5)
             )
-        ).change_text(self.component.desc, self.component.formating.copy())
+        )
+        
+        self.get_component('Desc_Text').change_text(self.component.desc, self.component.formating.copy())
+        self.get_component('Desc_Text').add_tabbing(self.tab)
         
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)

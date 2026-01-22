@@ -37,7 +37,10 @@ class AbilityElement(StatCardElement[AbilityComponent]):
                 pos=(220, 80),
                 size=(300, 1)
             )
-        ).change_text(self.component.name)
+        )
+        
+        self.get_component('Name_Text').change_text(self.component.name)
+        self.get_component('Name_Text').add_tabbing(self.tab)
         
         self.add_component(
             'INVK_Toggle',
@@ -58,7 +61,10 @@ class AbilityElement(StatCardElement[AbilityComponent]):
                 pos=(220, 200),
                 size=(300, 2)
             )
-        ).change_text(self.component.types)
+        )
+        
+        self.get_component('Types_Text').change_text(self.component.types)
+        self.get_component('Types_Text').add_tabbing(self.tab)
         self.get_component('Types_Text').set_can_format(False)
         
         self.add_component(
@@ -91,7 +97,10 @@ class AbilityElement(StatCardElement[AbilityComponent]):
                 pos=(40, 420),
                 size=(480, 3)
             )
-        ).change_text(self.component.extra_text)
+        )
+        
+        self.get_component('Extra_Text').change_text(self.component.extra_text)
+        self.get_component('Extra_Text').add_tabbing(self.tab)
         self.get_component('Extra_Text').set_can_format(False)
         
     def draw(self, screen: pygame.Surface) -> None:

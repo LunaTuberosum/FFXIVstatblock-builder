@@ -50,6 +50,7 @@ class MarkerElement(StatCardElement[AbilityComponent]):
         )
         
         self.get_component('Width_Text').change_text(str(self.component.marker.grid_size[0]))
+        self.get_component('Width_Text').add_tabbing(self.tab)
         self.get_component('Width_Text').add_command(self.check_numeric)
         self.get_component('Width_Text').add_char_limit(3)
         
@@ -83,6 +84,7 @@ class MarkerElement(StatCardElement[AbilityComponent]):
         )
         
         self.get_component('Height_Text').change_text(str(self.component.marker.grid_size[1]))
+        self.get_component('Height_Text').add_tabbing(self.tab)
         self.get_component('Height_Text').add_command(self.check_numeric)
         self.get_component('Height_Text').add_char_limit(3)
         

@@ -31,16 +31,22 @@ class TopStatElement(StatCardElement[TopStatComponent]):
                 [130, 80], 
                 [140, 1]
             )
-        ).change_text(self.component.creature_size)
+        )
         
+        self.get_component('Size_Text').change_text(self.component.creature_size)
+        self.get_component('Size_Text').add_tabbing(self.tab)
+
         self.add_component(
             'Species_Text',
             TextBox(
                 [490, 80], 
                 [180, 1]
             )
-        ).change_text(self.component.species)
+        )
         
+        self.get_component('Species_Text').change_text(self.component.species)
+        self.get_component('Species_Text').add_tabbing(self.tab)
+
         self.__add_textbox(
             name='Defence',
             text=self.component.defense,
@@ -247,7 +253,10 @@ class TopStatElement(StatCardElement[TopStatComponent]):
                 pos=pos, 
                 size=(box_size, 1)
             )
-        ).change_text(text)
+        )
+        
+        self.get_component(f'{name}_Text').change_text(text)
+        self.get_component(f'{name}_Text').add_tabbing(self.tab)
         
         self.add_component(
             f'{name}_Plus',

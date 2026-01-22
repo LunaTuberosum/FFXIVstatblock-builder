@@ -49,6 +49,8 @@ class EffectElement(StatCardElement[AbilityComponent]):
                 size=(270, 1)
             )
         )
+
+        self.get_component('Name_Text').add_tabbing(self.tab)
         
         self.add_component(
             'Desc_Text',
@@ -57,6 +59,8 @@ class EffectElement(StatCardElement[AbilityComponent]):
                 size=(450, 6)
             )
         )
+
+        self.get_component('Desc_Text').add_tabbing(self.tab)
         
         self.add_component(
             'Inline_Toggle',

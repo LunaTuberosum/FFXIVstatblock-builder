@@ -33,16 +33,22 @@ class NameElement(StatCardElement[NameComponent]):
                 pos=(220, 80),
                 size=(270, 1)
             )
-        ).change_text(self.component.name)
+        )
         
+        self.get_component('Name_Text').change_text(self.component.name)
+        self.get_component('Name_Text').add_tabbing(self.tab)
+
         self.add_component(
             'Level_Text',
             TextBox(
                 pos=(338, 140),
                 size=(90, 1)
             )
-        ).change_text(self.component.level)
+        )
         
+        self.get_component('Level_Text').change_text(self.component.level)
+        self.get_component('Level_Text').add_tabbing(self.tab)
+
         self.add_component(
             'Level_Plus',
             Button(
@@ -98,7 +104,7 @@ class NameElement(StatCardElement[NameComponent]):
             self.component.level_position = LEVEL_TOPRIGHT
             
         self.component.refresh()
-            
+                
     def add_level(self) -> None:
         if not (textbox := self.get_component('Level_Text')).text.isnumeric():
             return

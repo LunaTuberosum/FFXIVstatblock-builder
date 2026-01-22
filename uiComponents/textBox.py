@@ -86,6 +86,8 @@ class TextBox(Component):
         
         self.command: Callable[[TextBox], None] = None
         self.char_limit: int = -1
+        
+        self.tabbing_command: Callable[[TextBox], None] = None
                 
         key_bus.register('mouse_left_down', self.on_click)
         key_bus.register('mouse_left_down', self.check_off_click)
@@ -139,6 +141,9 @@ class TextBox(Component):
         
     def add_command(self, command: Callable[['TextBox'], None]) -> None:
         self.command = command
+        
+    def add_tabbing(self, command: Callable[['TextBox'], None]) -> None:
+        self.tabbing_command = command
         
     def add_prefix(self, prefix: str) -> None:
         self.prefix = prefix    
@@ -607,7 +612,10 @@ class TextBox(Component):
             
         # User used TAB
         if unicode == '\t':
-            return
+            if not self.tabbing_command:
+                return
+            
+            self.tabbing_command(self)
             
         if not re.match(r'[A-Za-z0-9()-_[\]<> "\'{}#]', unicode) or re.match(r'[:;]', unicode):
             return
@@ -617,17 +625,7 @@ class TextBox(Component):
         
         self.__add_char(unicode)
         
-    def check_off_click(self) -> None:
-        if self.hovering or not self.active:
-            return
-        
-        if self.format_box:
-            if self.format_box.rect.collidepoint(pygame.mouse.get_pos()):
-                return
-            
-            self.format_box.deregister()
-            self.format_box = None
-        
+    def end_field(self) -> None:
         self.cursor_active = False
         self.cursor_timer.reset()
         
@@ -641,6 +639,28 @@ class TextBox(Component):
         
         if self.command:
             self.command(self)
+        
+    def check_off_click(self) -> None:
+        if self.hovering or not self.active:
+            return
+        
+        if self.format_box:
+            if self.format_box.rect.collidepoint(pygame.mouse.get_pos()):
+                return
+            
+            self.format_box.deregister()
+            self.format_box = None
+        
+        self.end_field()
+    
+    def activate(self) -> None:
+        self.cursor_active = True
+        self.cursor_timer.start()
+        
+        self.__draw_text()
+        
+        self.active = True
+        event_bus.sign('typing_register', self)
         
     def on_click(self) -> None:
         if not self.hovering:
@@ -658,13 +678,7 @@ class TextBox(Component):
             self.cursor_selection = True
             self.cursor_selection_start = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
         
-        self.cursor_active = True
-        self.cursor_timer.start()
-        
-        self.__draw_text()
-        
-        self.active = True
-        event_bus.sign('typing_register', self)
+        self.activate()
         
     def on_release(self) -> None:
         self.cursor_selection = False

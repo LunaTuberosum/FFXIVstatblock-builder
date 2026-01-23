@@ -474,7 +474,7 @@ class TextBox(Component):
         
         if self.cursor_selection:
             mouse = pygame.mouse.get_pos()
-            self.cursor_selection_end = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
+            self.cursor_selection_end = (max(mouse[0] - self.rect.x, 0), max(mouse[1] - self.rect.y, 0))
             self.cursor_mouse_pos = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
             
             self.__draw_text()
@@ -524,6 +524,9 @@ class TextBox(Component):
         self.change_text(''.join(chars))
         
     def copy(self) -> None:
+        if not self.active:
+            return
+        
         pyperclip.copy(self.highlighted_text)
         
     def __reset_selection(self) -> None:
@@ -542,6 +545,11 @@ class TextBox(Component):
                 continue
             
             text += char
+            
+        if len(text) == 0:
+            self.cursor_index = CURSOR_END
+        else:
+            self.cursor_index = self.cursor_selection_indexs[0]
                         
         self.__reset_selection()
         
@@ -555,11 +563,16 @@ class TextBox(Component):
         
         clip: str = pyperclip.paste()
         
+        end_index = None
         if self.highlighted_text:
+            end_index = self.cursor_selection_indexs[1]
             self.__remove_highlighted_text()
-        
+            
         for char in clip:
             self.__add_char(char)
+            
+        if end_index:
+            self.cursor_index = end_index
         
     def __remove_char(self) -> None:
         if not self.text:
@@ -575,6 +588,12 @@ class TextBox(Component):
             self.formating.pop(len(self.text), None)
             
         else:
+            f_data = self.formating.get(self.cursor_index, None)
+            if f_data:            
+                self.formating.pop(self.cursor_index, None)
+                if f_data.format_type == Format.BOLD_OFF or f_data.format_type == Format.ITALIC_OFF or f_data.format_type == Format.COLOR_OFF:
+                    self.formating[self.cursor_index - 1] = f_data
+                    
             self.cursor_index = self.cursor_index - 1
             chars.pop(self.cursor_index)
             
@@ -626,6 +645,9 @@ class TextBox(Component):
         self.__add_char(unicode)
         
     def end_field(self) -> None:
+        if self.command:
+            self.command(self)
+        
         self.cursor_active = False
         self.cursor_timer.reset()
         
@@ -636,9 +658,6 @@ class TextBox(Component):
         
         self.active = False
         self.__draw_text()
-        
-        if self.command:
-            self.command(self)
         
     def check_off_click(self) -> None:
         if self.hovering or not self.active:

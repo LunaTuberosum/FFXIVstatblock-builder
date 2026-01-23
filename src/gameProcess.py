@@ -11,6 +11,7 @@ from src.mouseHandler import MouseHandler
 from ui.confirmElement import ConfirmElement
 from ui.escapeMenu import EscapeMenu
 from ui.uiElement import UIElement
+from uiComponents.dropdown import Dropdown
 
 
 class GameProcess():
@@ -141,7 +142,15 @@ class GameProcess():
             for comp in self.ui_window.components.values():
                 comp.no_hover()
                 
-                if comp.is_hover(self.mouse_handler.mouse_pos) and not self.hover_object:
+                if comp.is_hover(self.mouse_handler.mouse_pos):
+                    if isinstance(comp, Dropdown):
+                        self.hover_object = comp
+                        self.ui_window.hover()
+                        continue
+                    
+                    if self.hover_object:
+                        continue
+                    
                     self.hover_object = comp
                     self.ui_window.hover()
             

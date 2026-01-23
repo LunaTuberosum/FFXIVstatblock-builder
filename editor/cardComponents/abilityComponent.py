@@ -157,6 +157,8 @@ class AbilityComponent(CardComponent):
         
         limit: int = self.size[0] - 20
         bold: bool = False
+        italic: bool = False
+        color: bool = False
         
         if self.marker:
             limit -= self.marker.face.size[0]
@@ -188,10 +190,19 @@ class AbilityComponent(CardComponent):
                             text = ''
                             size = 0
                             
-                        if f_data.format_type == Format.BOLD or f_data.format_type == Format.COLOR:
+                        if f_data.format_type == Format.BOLD:
                             bold = True
-                        elif f_data.format_type == Format.BOLD_OFF or f_data.format_type == Format.COLOR_OFF:
+                        elif f_data.format_type == Format.ITALIC:
+                            italic = True
+                        elif f_data.format_type == Format.COLOR:
+                            color = True
+                            
+                        elif f_data.format_type == Format.BOLD_OFF:
                             bold = False
+                        elif f_data.format_type == Format.ITALIC_OFF:
+                            italic = False
+                        elif f_data.format_type == Format.COLOR_OFF:
+                            color = False
                             
                 if size + self.font_bolded.size(word + ' ')[0] >= limit:
                     self.lines.append(text)
@@ -202,7 +213,7 @@ class AbilityComponent(CardComponent):
                 index += len(word + ' ')
                 effect_index += len(word + ' ')
                 
-                if bold:
+                if bold or color:
                     render: pygame.Surface = self.font_bolded.render(word + ' ', True, '#000000')
                     size += render.width
                 else:
@@ -210,7 +221,14 @@ class AbilityComponent(CardComponent):
                     size += render.width
             
             self.lines.append(text)
-        
+            
+            if bold:
+                self.formating[index - 1] = FormatData(Format.BOLD_OFF, '')
+            elif italic:
+                self.formating[index - 1] = FormatData(Format.ITALIC_OFF, '')
+            elif color:
+                self.formating[index - 1] = FormatData(Format.COLOR_OFF, '')
+                
         if self.extra_text:
             text = ''
             size = 0

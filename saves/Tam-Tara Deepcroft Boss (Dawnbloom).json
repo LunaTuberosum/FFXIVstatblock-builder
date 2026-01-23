@@ -2,7 +2,7 @@
     "version": "2.0",
     "colors": [],
     "0": {
-        "width": 3,
+        "width": 2,
         "height": 6,
         "components": {
             "Name_Component": {
@@ -28,7 +28,7 @@
             "Traits_Title": {
                 "section": "Traits"
             },
-            "Trait_0": {
+            "Trait_1": {
                 "name": "Elite Foe: Malicous Mage",
                 "format": {
                     "24": {
@@ -42,7 +42,7 @@
                 },
                 "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginnig the encounter."
             },
-            "Trait_1": {
+            "Trait_2": {
                 "name": "Combo",
                 "format": {
                     "12": {
@@ -68,7 +68,7 @@
                 },
                 "desc": "Attack using Reaping Cut, then perform Slashing Scythe or Void Orb"
             },
-            "Trait_2": {
+            "Trait_3": {
                 "name": "Til Death Do Us Part",
                 "format": {
                     "24": {
@@ -98,7 +98,7 @@
                 },
                 "desc": "When within 4 squares of Avere Braveheart gain Revivify(5) and Critical Up(3)"
             },
-            "Trait_3": {
+            "Trait_4": {
                 "name": "Blood Rune",
                 "format": {
                     "8": {
@@ -131,8 +131,8 @@
             "Abilities_Title": {
                 "section": "Abilities"
             },
-            "Ability_0": {
-                "name": "Ability 1",
+            "Ability_1": {
+                "name": "Reaping Cut",
                 "invk": false,
                 "types": "Primary, Physical",
                 "effects": {
@@ -147,13 +147,31 @@
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "DEX[d20+3]",
-                        "format": {},
+                        "desc": "DEX (d20 + 4)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "16": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -264,7 +282,7 @@
                     ]
                 }
             },
-            "Ability_1": {
+            "Ability_2": {
                 "name": "Void Orb",
                 "invk": false,
                 "types": "Primary, Magic",
@@ -280,13 +298,31 @@
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "INT[d20+5]",
-                        "format": {},
+                        "desc": "INT (d20+5)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Magic Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "22": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -313,7 +349,7 @@
                 "extra_text": "",
                 "marker": null
             },
-            "Ability_2": {
+            "Ability_3": {
                 "name": "Slashing Scythe",
                 "invk": false,
                 "types": "Primary, Magic",
@@ -330,12 +366,30 @@
                     },
                     "Check": {
                         "desc": "INT[d20+5]",
-                        "format": {},
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Magic Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "22": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -437,7 +491,7 @@
                     ]
                 }
             },
-            "Ability_3": {
+            "Ability_4": {
                 "name": "Groom To Be",
                 "invk": false,
                 "types": "Secondary, Magic",
@@ -542,12 +596,17 @@
                 "extra_text": "",
                 "marker": null
             },
-            "Ability_4": {
+            "Ability_5": {
                 "name": "Red Wedding",
                 "invk": false,
                 "types": "Secondary, Magic",
                 "effects": {
                     "Target": {
+                        "desc": "All enemies within range",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
                         "desc": "The entire encounter map",
                         "format": {},
                         "in_line": false
@@ -570,7 +629,7 @@
                 "extra_text": "",
                 "marker": null
             },
-            "Ability_5": {
+            "Ability_6": {
                 "name": "Speak No Evil",
                 "invk": false,
                 "types": "Instant, Magic",
@@ -586,13 +645,31 @@
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "MND [d20+5]",
-                        "format": {},
+                        "desc": "MND (d20+5)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Magic Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "22": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -623,9 +700,9 @@
                 "extra_text": "",
                 "marker": null
             },
-            "Ability_6": {
+            "Ability_7": {
                 "name": "Love of Mine",
-                "invk": true,
+                "invk": false,
                 "types": "Instant, Magic",
                 "effects": {
                     "Target": {
@@ -665,7 +742,7 @@
     },
     "1": {
         "width": 2,
-        "height": 6,
+        "height": 4,
         "components": {
             "Name_Component": {
                 "name": "Avere Bravearm",
@@ -689,20 +766,6 @@
             },
             "Traits_Title": {
                 "section": "Traits"
-            },
-            "Trait_0": {
-                "name": "Elite Foe: Undead Voidsent",
-                "format": {
-                    "24": {
-                        "type": 4,
-                        "data": "#D34D35"
-                    },
-                    "32": {
-                        "type": 5,
-                        "data": ""
-                    }
-                },
-                "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
             },
             "Trait_1": {
                 "name": "Til Death Do Us Par",
@@ -734,10 +797,24 @@
                 },
                 "desc": "When within 4 squares of Edda Blackblossom gain Revivify(5) and Critical Up(3)"
             },
+            "Trait_2": {
+                "name": "Elite Foe: Undead Voidsent",
+                "format": {
+                    "24": {
+                        "type": 4,
+                        "data": "#D34D35"
+                    },
+                    "32": {
+                        "type": 5,
+                        "data": ""
+                    }
+                },
+                "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
+            },
             "Abilities_Title": {
                 "section": "Abilities"
             },
-            "Ability_0": {
+            "Ability_1": {
                 "name": "Head Over Heals",
                 "invk": false,
                 "types": "Primary, Magic",
@@ -748,18 +825,36 @@
                         "in_line": false
                     },
                     "Range": {
-                        "desc": "An Adjacent Square",
+                        "desc": "An adjacent Square",
                         "format": {},
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "INT[d20+5]",
-                        "format": {},
+                        "desc": "INT (d20+5)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Magic Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "22": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -785,29 +880,47 @@
                 "extra_text": "",
                 "marker": null
             },
-            "Ability_1": {
+            "Ability_2": {
                 "name": "Drowning Blood",
                 "invk": false,
                 "types": "Primary, Magic",
                 "effects": {
                     "Target": {
-                        "desc": "The entire encounter map",
+                        "desc": "All enemies within range",
                         "format": {},
                         "in_line": false
                     },
                     "Range": {
-                        "desc": "All enemies in the encounter",
+                        "desc": "The entire encounter map",
                         "format": {},
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "INT[d20+5]",
-                        "format": {},
+                        "desc": "INT (d20+5)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Magic Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "22": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -824,7 +937,7 @@
                 "extra_text": "",
                 "marker": null
             },
-            "Ability_2": {
+            "Ability_3": {
                 "name": "Desolation",
                 "invk": false,
                 "types": "Primary, Magic",
@@ -942,7 +1055,7 @@
                     ]
                 }
             },
-            "Ability_3": {
+            "Ability_4": {
                 "name": "Spare Bodies",
                 "invk": false,
                 "types": "Secondary, Magic",
@@ -953,7 +1066,7 @@
                         "in_line": false
                     },
                     "Range": {
-                        "desc": "6 squares away from the Target of this ability.",
+                        "desc": "6 squares away from the target of this ability.",
                         "format": {},
                         "in_line": false
                     },
@@ -1023,7 +1136,7 @@
     },
     "2": {
         "width": 1,
-        "height": 4,
+        "height": 3,
         "components": {
             "Name_Component": {
                 "name": "Wedding Corpse",
@@ -1048,7 +1161,7 @@
             "Abilities_Title": {
                 "section": "Abilities"
             },
-            "Ability_0": {
+            "Ability_1": {
                 "name": "Attack",
                 "invk": false,
                 "types": "Primary, Physical",
@@ -1064,13 +1177,31 @@
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "STR[d20+3]",
-                        "format": {},
+                        "desc": "STR (d20+3)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
-                        "desc": "Target\u00e2\u20ac\u2122's Defense",
-                        "format": {},
+                        "desc": "Target's Defense",
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "16": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -1100,7 +1231,7 @@
     },
     "3": {
         "width": 2,
-        "height": 8,
+        "height": 5,
         "components": {
             "Name_Component": {
                 "name": "Edda the Consumed",
@@ -1125,7 +1256,7 @@
             "Traits_Title": {
                 "section": "Traits"
             },
-            "Trait_0": {
+            "Trait_1": {
                 "name": "Elite Foe: Undead Voidsent",
                 "format": {
                     "24": {
@@ -1139,7 +1270,7 @@
                 },
                 "desc": "This character cannot be Stunned and markers they have generated cannot be removed. Be sure to inform players of this before beginnig the encounter."
             },
-            "Trait_1": {
+            "Trait_2": {
                 "name": "Blood Rune",
                 "format": {
                     "8": {
@@ -1169,7 +1300,7 @@
                 },
                 "desc": "Whenever Edda the Consumed uses Black Honeymoon, add 1d6 to the damage roll of that ability for each Blood Rune stack."
             },
-            "Trait_2": {
+            "Trait_3": {
                 "name": "Doom",
                 "format": {
                     "8": {
@@ -1206,7 +1337,7 @@
             "Abilities_Title": {
                 "section": "Abilities"
             },
-            "Ability_0": {
+            "Ability_1": {
                 "name": "In Health",
                 "invk": false,
                 "types": "Primary, Magic",
@@ -1222,13 +1353,31 @@
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "INT[d20+4]",
-                        "format": {},
+                        "desc": "INT (d20+4)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Magic Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "22": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -1273,7 +1422,7 @@
                         "in_line": false
                     }
                 },
-                "extra_text": "",
+                "extra_text": "Switch markers every other round.",
                 "marker": {
                     "grid_size": [
                         7,
@@ -1356,7 +1505,7 @@
                     ]
                 }
             },
-            "Ability_1": {
+            "Ability_2": {
                 "name": "Void Flare",
                 "invk": false,
                 "types": "Primary, Magic",
@@ -1372,13 +1521,31 @@
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "INT[d20+4]",
-                        "format": {},
+                        "desc": "INT (d20+4)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Magic Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "22": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -1430,16 +1597,7 @@
                         7
                     ],
                     "marker_overlay": {
-                        "STAKE": [
-                            [
-                                1,
-                                1
-                            ],
-                            [
-                                5,
-                                5
-                            ]
-                        ],
+                        "STAKE": [],
                         "STACK": [],
                         "STACK_LINE": [],
                         "STACK_MULTI": [],
@@ -1515,7 +1673,7 @@
                     ]
                 }
             },
-            "Ability_2": {
+            "Ability_3": {
                 "name": "Resolution",
                 "invk": false,
                 "types": "Primary, Magic",
@@ -1531,13 +1689,31 @@
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "INT[d20+5]",
-                        "format": {},
+                        "desc": "INT (d20+5)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Magic Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "22": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {
@@ -1568,12 +1744,17 @@
                 "extra_text": "",
                 "marker": null
             },
-            "Ability_3": {
+            "Ability_4": {
                 "name": "Black Honeymoon",
                 "invk": false,
                 "types": "Secondary, Magic",
                 "effects": {
                     "Target": {
+                        "desc": "All enemies within range",
+                        "format": {},
+                        "in_line": false
+                    },
+                    "Range": {
                         "desc": "The entire encounter map",
                         "format": {},
                         "in_line": false
@@ -1596,7 +1777,7 @@
                 "extra_text": "",
                 "marker": null
             },
-            "Ability_4": {
+            "Ability_5": {
                 "name": "Persistent Bodies",
                 "invk": false,
                 "types": "Secondary, Magic",
@@ -1645,7 +1826,7 @@
                 "extra_text": "",
                 "marker": null
             },
-            "Ability_5": {
+            "Ability_6": {
                 "name": "In Sickness",
                 "invk": false,
                 "types": "Instant, Magic",
@@ -1661,13 +1842,31 @@
                         "in_line": false
                     },
                     "Check": {
-                        "desc": "INT[d20+5]",
-                        "format": {},
+                        "desc": "INT (d20+5)",
+                        "format": {
+                            "0": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "3": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": false
                     },
                     "CR": {
                         "desc": "Target's Magic Defense",
-                        "format": {},
+                        "format": {
+                            "9": {
+                                "type": 4,
+                                "data": "#2D638E"
+                            },
+                            "22": {
+                                "type": 5,
+                                "data": ""
+                            }
+                        },
                         "in_line": true
                     },
                     "Base Effect": {

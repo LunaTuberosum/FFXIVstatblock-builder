@@ -44,6 +44,12 @@ def load_image(image_path: str) -> pygame.Surface:
     except:
         raise FileNotFoundError(f'Path "{image_path}" dosen\'t exist.')
     
+def save_image(image: pygame.Surface, image_path: str) -> None:
+    try:
+        pygame.image.save(image,image_path)
+    except:
+        raise OSError(f'Image can not be saved at path "{image_path}".')
+    
 def load_font(font_path: str, font_size: int) -> pygame.font.Font:
     try:
         return pygame.font.Font(font_path, font_size)

@@ -238,7 +238,10 @@ class Editor(GameProcess):
             
             height = max(height, card.size[1] + 40)
             
+        export_trans: pygame.Surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        
         export: pygame.Surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        export.fill('#313031')
         
         x: int = 40
         for card in self.stat_cards:
@@ -246,11 +249,22 @@ class Editor(GameProcess):
                 component.no_hover()
             
             card.update((0, 0), x)
+            card.draw(export_trans)
             card.draw(export)
             
             x += card.size[0] + 20
             
-        pygame.image.save(export, f'.\\exports\\{self.sheet.name}.png')
+        try:
+            resourceHandler.save_image(export_trans, f'.\\exports\\{self.sheet.name}\\export_tansparent.png')
+            
+            resourceHandler.save_image(export, f'.\\exports\\{self.sheet.name}\\export.png')
+        except:
+            resourceHandler.save_dir('.\\exports\\', self.sheet.name)
+            
+            resourceHandler.save_image(export_trans, f'.\\exports\\{self.sheet.name}\\export_transparent.png')
+            
+            resourceHandler.save_image(export, f'.\\exports\\{self.sheet.name}\\export.png')
+            
         
     def delete_card(self, card: StatCard) -> None:
         card.deregister()

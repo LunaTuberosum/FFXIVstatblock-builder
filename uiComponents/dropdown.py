@@ -141,10 +141,11 @@ class Dropdown(Component):
         self.active = False
         
     def is_hover(self, mouse_pos: tuple[int, int]) -> bool:
+        is_hover: bool = False
         if self.active and self.background.get_rect(topleft=(18 + self.rect.x, 35 + self.rect.y)).collidepoint(mouse_pos):
-            return True
+            is_hover = True
         
-        return self.rect.collidepoint(mouse_pos)    
+        return is_hover or self.rect.collidepoint(mouse_pos)    
     
     def __draw_text_face(self) -> None:
         self.text_face.fill((0, 0, 0, 0))

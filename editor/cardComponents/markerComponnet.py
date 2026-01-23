@@ -90,7 +90,21 @@ class MarkerComponent(Component):
                 
             self.marker_area.append(new_row)
         
-        self.marker_overlays = marker_overlays
+        for overlay_type, overlay_list in marker_overlays.items():
+            if not overlay_list:
+                continue
+            
+            if not isinstance(overlay_list, list):
+                self.marker_overlays[overlay_type] = (overlay_list[0], overlay_list[1])
+                continue
+            
+            new_list: list[tuple[int, int]] = []
+            for overlay in overlay_list:
+                new_list.append((overlay[0], overlay[1]))
+                
+            self.marker_overlays[overlay_type] = new_list
+            
+        print(self.marker_overlays)
         
         self.__render_tiles()
         

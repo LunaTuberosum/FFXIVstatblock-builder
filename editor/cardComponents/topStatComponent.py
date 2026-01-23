@@ -106,7 +106,27 @@ class TopStatComponent(CardComponent):
         
         self.__draw_text_face()
         
-    def refresh(self) -> None:
+    def refresh(self) -> None:        
+        if self.size[1] != HEIGHT_TOKEN and self.is_token:
+            self.size = (WIDTH, HEIGHT_TOKEN)
+            self.image = pygame.Surface(self.size, pygame.SRCALPHA)
+            self.rect = self.image.get_rect()
+            
+            self.background = pygame.Surface(self.size, pygame.SRCALPHA)
+            self.__draw_background()
+            
+            self.text_face = pygame.Surface(self.size, pygame.SRCALPHA)
+            
+        elif self.size != HEIGHT and not self.is_token:
+            self.size = (WIDTH, HEIGHT)
+            self.image = pygame.Surface(self.size, pygame.SRCALPHA)
+            self.rect = self.image.get_rect()
+            
+            self.background = pygame.Surface(self.size, pygame.SRCALPHA)
+            self.__draw_background()
+            
+            self.text_face = pygame.Surface(self.size, pygame.SRCALPHA)
+            
         self.__draw_text_face()
         
     def __render_large_number(self, text, x: int, y: int) -> None:

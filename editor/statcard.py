@@ -53,6 +53,21 @@ class StatCard():
         for component in self.components.values():
             component.deregister()
         
+    def refresh(self) -> None:
+        self.actual_height = max(self.height, 2)
+        self.size = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * BACKGROUND_TILE_SIZE)
+        
+        if self.width // 3 > 1:
+            self.size = (self.size[0] - 48, self.size[1])
+            
+        self.limit = self.size[1] - 30
+        
+        self.background = pygame.Surface(self.size, pygame.SRCALPHA)
+        self.__draw_background()
+        
+        self.image = pygame.Surface(self.size, pygame.SRCALPHA)
+        self.rect: pygame.Rect = self.image.get_rect(topleft=(0, 40))
+        
     def swap_traits(self, trait: TraitComponent) -> None:
         if not self.dragged_file:
             return
@@ -144,13 +159,13 @@ class StatCard():
         self.rect.topleft = (x + pan[0], 40 + pan[1])
         
         offset: tuple[int, int] = (20, 20)
-        list(self.components.values())[-1].is_last = True
+        # list(self.components.values())[-1].is_last = True # TODO: Fix
         for componet in self.components.values():
             if offset[1] + componet.rect.height >= self.limit:
                 offset = (offset[0] + 540, 20)
                 
-            if self.limit - offset[1] < 130:
-                componet.is_last = True
+            # if self.limit - offset[1] < 130:
+            #     componet.is_last = True
                 
             componet.update(offset)
                 
@@ -187,7 +202,7 @@ class StatCard():
         
         event_bus.sign('context_menu', {
             '': None,
-            'Edit': None,
+            'Edit': self.edit,
             'Clear': None,
             'Delete': None
         }, True)
@@ -236,6 +251,10 @@ class StatCard():
                     name,
                     AbilityComponent(self)
                 ).load(component_data[name])
+               
+    def edit(self) -> None:
+        from editor.ui.editCardElement import EditCardElement
+        event_bus.sign('ui_window', EditCardElement(self))
                
     def __draw_background(self) -> None:
         _background: dict[str, pygame.Surface] = StatCard.__split_background()

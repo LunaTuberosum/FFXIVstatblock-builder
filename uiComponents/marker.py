@@ -23,7 +23,7 @@ class Marker(Component):
         from editor.ui.markerElement import MarkerElement
         self.parent: MarkerElement = parent
         
-        self.marker_area: list[list[int]] = []
+        self.marker_area: list[list[Paint]] = []
         for row in self.marker_component.marker_area:
             
             new_row = []

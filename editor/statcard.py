@@ -38,6 +38,8 @@ class StatCard():
         self.image: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self.rect: pygame.Rect = self.image.get_rect(topleft=(0, 40))
         
+        self.hovering: bool = False
+        
         self.dragged_file: CardComponent = None
         
         key_bus.register('mouse_right_down', self.context_menu)
@@ -197,8 +199,20 @@ class StatCard():
     def get_component(self, component_name: str) -> CardComponent:
         return self.components[component_name]
         
+    def hover(self) -> None:
+        if self.hovering: 
+            return
+        
+        self.hovering = True
+        
+    def no_hover(self) -> None:
+        if not self.hovering:
+            return
+        
+        self.hovering = False
+        
     def context_menu(self) -> None:
-        if not self.rect.collidepoint(pygame.mouse.get_pos()): 
+        if not self.hovering: 
             return
         
         event_bus.sign('context_menu', {
@@ -207,6 +221,20 @@ class StatCard():
             'Clear': self.clear,
             'Delete': self.delete
         }, True)
+        
+    def save(self) -> dict:
+        event_bus.sign('context_menu', None)
+        
+        save: dict = {
+            'width': self.width // 3,
+            'height': self.height,
+            'components': {}
+        }
+        
+        for name, component in self.components.items():
+            save['components'][name] = component.save()
+        
+        return save
         
     def load(self, component_data: dict[str, dict]) -> None:
         self.add_component(

@@ -87,6 +87,37 @@ class AbilityComponent(CardComponent):
         
         event_bus.sign('swap_abilities', self)
         
+    def save(self) -> dict:
+        effect_dict: dict[str, dict] = {}
+        
+        for name, e_data in self.effects.items():
+            format_dict: dict[int, dict[str, int | str]] = {}
+            
+            for index, f_data in e_data.format_data.items():
+                format_dict[index] = {
+                    'type': f_data.format_type.value,
+                    'data': f_data.data
+                }
+                
+            effect_dict[name] = {
+                'desc': e_data.desc,
+                'format': format_dict,
+                'in_line': e_data.in_line
+            }
+            
+        marker: MarkerComponent = None
+        if self.marker:
+            marker = self.marker.save()
+                        
+        return {
+            'name': self.name,
+            'invk': self.invk,
+            'types': self.types,
+            'effects': effect_dict,
+            'extra_text': self.extra_text,
+            'marker': marker
+        }
+        
     def load(self, data: dict[str]) -> None:
         self.name = data['name']
         self.invk = data['invk']

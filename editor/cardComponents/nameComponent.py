@@ -47,6 +47,13 @@ class NameComponent(CardComponent):
         from editor.ui.nameElement import NameElement
         event_bus.sign('ui_window', NameElement(self))
     
+    def save(self) -> dict:
+        return {
+            'name': self.name,
+            'level': self.level,
+            'levelPosition': self.level_position
+        }
+    
     def load(self, data: dict[str]) -> None:
         self.name = data['name']
         self.level = data['level']

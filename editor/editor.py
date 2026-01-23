@@ -77,9 +77,12 @@ class Editor(GameProcess):
             card.deregister()
         
     def editor_context_menu(self) -> None:
+        if self.ui_window and self.ui_window.hovering:
+            return
+        
         event_bus.sign('context_menu', {
             'Add Card': self.add_card,
-            'Save': None,
+            'Save': self.save,
             'Export as PNG': None
         })
         
@@ -121,11 +124,17 @@ class Editor(GameProcess):
             )
             
         for card in self.stat_cards:
+            card.no_hover()
+            
             for component in card.components.values():
                 component.no_hover()
                 
                 if component.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
+                    card.hover()
                     self.hover_object = component
+                    
+            if card.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
+                self.hover_object = card
         
         if self.hover_object:
             self.hover_object.hover()
@@ -204,6 +213,16 @@ class Editor(GameProcess):
     def add_card(self) -> None:
         from editor.ui.addCardElement import AddCardElement
         event_bus.sign('ui_window', AddCardElement())
+        
+    def save(self) -> None:
+        save_dict: dict = {
+            'version': '2.0',
+            'colors': self.get_colors(),
+        }
+        for index, card in enumerate(self.stat_cards):
+            save_dict[str(index)] = card.save()
+            
+        resourceHandler.save_json(f'.\\saves\\{self.sheet.path}\\{self.sheet.name}.json', save_dict)
         
     def delete_card(self, card: StatCard) -> None:
         card.deregister()

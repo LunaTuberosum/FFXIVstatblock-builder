@@ -72,6 +72,21 @@ class TraitComponent(CardComponent):
         
         event_bus.sign('swap_traits', self)
         
+    def save(self) -> dict:
+        format_dict: dict[int, dict[str, int | str]] = {}
+        
+        for index, f_data in self.formating.items():
+            format_dict[index] = {
+                'type': f_data.format_type.value,
+                'data': f_data.data
+            }
+            
+        return {
+            'name': self.name,
+            'format': format_dict,
+            'desc': self.desc
+        }
+        
     def load(self, data: dict[str]) -> None:
         self.name = data['name']
         self.desc = data['desc']

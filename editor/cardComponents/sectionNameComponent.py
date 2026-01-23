@@ -33,6 +33,11 @@ class SectionNameComponent(CardComponent):
         
         screen.blit(self.image, (self.pos[0] + self.offset[0], self.pos[1] + self.offset[1]))
         
+    def save(self) -> dict:
+        return {
+            'section': self.section
+        }
+        
     def hover(self) -> None:
         pass
 

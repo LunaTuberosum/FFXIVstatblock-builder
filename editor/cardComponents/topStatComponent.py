@@ -87,6 +87,26 @@ class TopStatComponent(CardComponent):
         from editor.ui.topStatElement import TopStatElement
         event_bus.sign('ui_window', TopStatElement(self))
         
+    def save(self) -> dict:
+        return {
+            'token': self.is_token,
+            'creatureSize': self.creature_size,
+            'species': self.species,
+            
+            'vigilance': self.vigilance,
+            'defense': self.defense,
+            'magicDefense': self.magic_defense,
+            
+            'maxHP': self.max_HP,
+            'speed': self.speed,
+            
+            'str': self.str,
+            'dex': self.dex,
+            'vit': self.vit,
+            'int': self.int,
+            'mnd': self.mnd,
+        }
+        
     def load(self, data: dict[str]) -> None:
         self.creature_size = data['creatureSize']
         self.species = data['species']
@@ -234,7 +254,7 @@ class TopStatComponent(CardComponent):
             render: pygame.Surface = self.miedinger_medium.render(stat, True, '#ffffff')
             self.text_face.blit(render, (data['x'], 112))
             
-            sign: str = '+' if data['stat'] > 0 else ''
+            sign: str = '+' if data['stat'] >= 0 else ''
             sign_render: pygame.Surface = self.miedinger_medium.render(f'{sign}{data['stat']}', True, '#ffffff')
             self.text_face.blit(
                 sign_render,

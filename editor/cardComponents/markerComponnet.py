@@ -23,7 +23,7 @@ class MarkerComponent(Component):
         
         self.grid_size: tuple[int, int] = (width, height)
         
-        self.marker_area: list[list[int]] = []
+        self.marker_area: list[list[Paint]] = []
         for y in range(height):
             row = []
             for x in range(width):
@@ -104,6 +104,22 @@ class MarkerComponent(Component):
         
         self.image.blit(self.face, (0, 0))
         screen.blit(self.image, self.rect.topleft)
+        
+    def save(self) -> dict:
+        marker_list: list[list[int]] = []
+        
+        for col in self.marker_area:
+            col_list: list[int] = []
+            for row in col:
+                col_list.append(row.value)
+                
+            marker_list.append(col_list)
+            
+        return {
+            'grid_size': self.grid_size,
+            'marker_overlay': self.marker_overlays,
+            'marker_area': marker_list
+        }
         
     def __render_tile(self, x: int, y: int, tileset: dict[str, pygame.Surface], tile: int) -> None:
         top: bool = False

@@ -39,12 +39,13 @@ class Editor(GameProcess):
         self.stat_cards: list[StatCard] = []
         self.load()
         
-        
     def setup_bus_calls(self) -> None:
         super().setup_bus_calls()
         
         key_bus.register('mouse_left_down', self.on_click)
         key_bus.register('mouse_left_up', self.on_release)
+        
+        key_bus.register('mouse_right_down', self.editor_context_menu)
         
         key_bus.register('space_down', self.space_down)
         key_bus.register('space_up', self.space_up)
@@ -52,11 +53,15 @@ class Editor(GameProcess):
         data_bus.register('get_colors', self.get_colors)
         data_bus.register('add_color', self.add_color)
         
+        event_bus.register('add_card', self.new_card)
+        
     def deregister(self) -> None:
         super().deregister()
         
         key_bus.deregister('mouse_left_down', self.on_click)
         key_bus.deregister('mouse_left_up', self.on_release)
+        
+        key_bus.deregister('mouse_right_down', self.editor_context_menu)
         
         key_bus.deregister('space_down', self.space_down)
         key_bus.deregister('space_up', self.space_up)
@@ -64,8 +69,17 @@ class Editor(GameProcess):
         data_bus.deregister('get_colors', self.get_colors)
         data_bus.deregister('add_color', self.add_color)
         
+        event_bus.deregister('add_card', self.new_card)
+        
         for card in self.stat_cards:
             card.deregister()
+        
+    def editor_context_menu(self) -> None:
+        event_bus.sign('context_menu', {
+            'Add Card': self.add_card,
+            'Save': None,
+            'Export as PNG': None
+        })
         
     def get_colors(self) -> list[str]:
         return self.text_colors
@@ -169,6 +183,9 @@ class Editor(GameProcess):
         
         super().draw()
         
+    def new_card(self, card: StatCard) -> None:
+        self.stat_cards.append(card)
+        
     def load(self) -> None:
         for card in self.sheet.sheet_info.values():
             if not isinstance(card, dict): 
@@ -181,3 +198,7 @@ class Editor(GameProcess):
             s_card.load(card['components'])
             
             self.stat_cards.append(s_card)
+            
+    def add_card(self) -> None:
+        from editor.ui.addCardElement import AddCardElement
+        event_bus.sign('ui_window', AddCardElement())

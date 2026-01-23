@@ -10,6 +10,7 @@ from editor.cardComponents.traitComponent import TraitComponent
 from singletons import resourceHandler
 
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 
 
 BACKGROUND_TILE_SIZE: int = 194
@@ -38,10 +39,14 @@ class StatCard():
         
         self.dragged_file: CardComponent = None
         
+        key_bus.register('mouse_right_down', self.context_menu)
+        
         event_bus.register('swap_traits', self.swap_traits)
         event_bus.register('swap_abilities', self.swap_abilities)
         
     def deregister(self) -> None:
+        key_bus.deregister('mouse_right_down', self.context_menu)
+        
         event_bus.deregister('swap_traits', self.swap_traits)
         event_bus.deregister('swap_abilities', self.swap_abilities)
         
@@ -175,6 +180,17 @@ class StatCard():
 
     def get_component(self, component_name: str) -> CardComponent:
         return self.components[component_name]
+        
+    def context_menu(self) -> None:
+        if not self.rect.collidepoint(pygame.mouse.get_pos()): 
+            return
+        
+        event_bus.sign('context_menu', {
+            '': None,
+            'Edit': None,
+            'Clear': None,
+            'Delete': None
+        }, True)
         
     def load(self, component_data: dict[str, dict]) -> None:
         self.add_component(

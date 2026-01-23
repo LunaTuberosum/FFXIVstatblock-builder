@@ -3,7 +3,6 @@ import pygame
 from ui.uiElement import UIElement
 
 from uiComponents.button import Button
-from uiComponents.textBox import TextBox
 
 
 class StatCardElement[T](UIElement):
@@ -59,28 +58,6 @@ class StatCardElement[T](UIElement):
         self.apply()
         
         self.close()
-        
-    def tab(self, textbox: TextBox) -> None:
-        current_box: TextBox = None
-        next_box: TextBox = None
-        for component in self.components.values():
-            if not isinstance(component, TextBox):
-                continue
-            
-            if component == textbox:
-                current_box = component
-                continue
-            
-            if current_box:
-                next_box = component
-                break
-                
-        if not next_box:
-            current_box.end_field()
-            return
-                
-        current_box.end_field()
-        next_box.activate()
     
     def render_text(self, text: str, color: str, pos: tuple[int, int]) -> None:
         self.text_face.blit(self.font.render(text, True, '#000000'), (pos[0], pos[1] + 1))

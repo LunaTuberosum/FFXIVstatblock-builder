@@ -15,10 +15,11 @@ class EventBus(Bus):
                 'delete_file': [],
                 
                 'load_sheet': [],
+                'add_card': [],
                 'return_menu': [],
                 
                 'swap_traits': [],
-                'swap_abilities': [],
+                'swap_abilities': [], 
                 
                 'swap_effects': [],
                 

@@ -6,6 +6,7 @@ from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 from uiComponents.button import Button
 from uiComponents.componet import Component
+from uiComponents.textBox import TextBox
 
 
 BACKGROUND_TILE_SIZE: int = 50
@@ -110,6 +111,50 @@ class UIElement():
 
         self.image.blit(self.font_title.render(f'{self.title}{" Configuration" if self.write_config else ""}', True, '#000000'), TITLE_POS_OFFSET)
         self.image.blit(self.font_title.render(f'{self.title}{" Configuration" if self.write_config else ""}', True, '#CCCCCC' if not self.hovering else '#dedede'), TITLE_POS)
+
+    def tab(self, textbox: TextBox) -> None:
+        current_box: TextBox = None
+        next_box: TextBox = None
+        for component in self.components.values():
+            if not isinstance(component, TextBox):
+                continue
+            
+            if component == textbox:
+                current_box = component
+                continue
+            
+            if current_box:
+                next_box = component
+                break
+                
+        if not next_box:
+            current_box.end_field()
+            return
+                
+        current_box.end_field()
+        next_box.activate()
+        
+    def tab(self, textbox: TextBox) -> None:
+        current_box: TextBox = None
+        next_box: TextBox = None
+        for component in self.components.values():
+            if not isinstance(component, TextBox):
+                continue
+            
+            if component == textbox:
+                current_box = component
+                continue
+            
+            if current_box:
+                next_box = component
+                break
+                
+        if not next_box:
+            current_box.end_field()
+            return
+                
+        current_box.end_field()
+        next_box.activate()
 
     def __draw_background(self) -> None:
         _background: dict[str, pygame.Surface] = UIElement.__split_background()

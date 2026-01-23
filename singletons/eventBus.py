@@ -16,6 +16,7 @@ class EventBus(Bus):
                 
                 'load_sheet': [],
                 'add_card': [],
+                'delete_card': [],
                 'return_menu': [],
                 
                 'swap_traits': [],

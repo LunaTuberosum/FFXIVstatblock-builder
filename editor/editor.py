@@ -54,6 +54,7 @@ class Editor(GameProcess):
         data_bus.register('add_color', self.add_color)
         
         event_bus.register('add_card', self.new_card)
+        event_bus.register('delete_card', self.delete_card)
         
     def deregister(self) -> None:
         super().deregister()
@@ -70,6 +71,7 @@ class Editor(GameProcess):
         data_bus.deregister('add_color', self.add_color)
         
         event_bus.deregister('add_card', self.new_card)
+        event_bus.deregister('delete_card', self.delete_card)
         
         for card in self.stat_cards:
             card.deregister()
@@ -202,3 +204,8 @@ class Editor(GameProcess):
     def add_card(self) -> None:
         from editor.ui.addCardElement import AddCardElement
         event_bus.sign('ui_window', AddCardElement())
+        
+    def delete_card(self, card: StatCard) -> None:
+        card.deregister()
+        
+        self.stat_cards.remove(card)

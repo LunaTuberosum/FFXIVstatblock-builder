@@ -292,12 +292,14 @@ class EditCardElement(UIElement):
         count: int = 0
         for component in self.card.components.values():
             if isinstance(component, SectionNameComponent):
+                component.deregister()
                 continue
             
             if not isinstance(component, TraitComponent):
                 continue
             
             if count >= trait_num:
+                component.deregister()
                 continue
             
             traits.append(component)
@@ -319,12 +321,14 @@ class EditCardElement(UIElement):
         count = 0
         for component in self.card.components.values():
             if isinstance(component, SectionNameComponent):
+                component.deregister()
                 continue
             
             if not isinstance(component, AbilityComponent):
                 continue
             
             if count >= ability_num:
+                component.deregister()
                 continue
             
             abilities.append(component)

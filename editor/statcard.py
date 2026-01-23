@@ -11,6 +11,7 @@ from singletons import resourceHandler
 
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
+from ui.confirmElement import ConfirmElement
 
 
 BACKGROUND_TILE_SIZE: int = 194
@@ -203,8 +204,8 @@ class StatCard():
         event_bus.sign('context_menu', {
             '': None,
             'Edit': self.edit,
-            'Clear': None,
-            'Delete': None
+            'Clear': self.clear,
+            'Delete': self.delete
         }, True)
         
     def load(self, component_data: dict[str, dict]) -> None:
@@ -255,6 +256,29 @@ class StatCard():
     def edit(self) -> None:
         from editor.ui.editCardElement import EditCardElement
         event_bus.sign('ui_window', EditCardElement(self))
+               
+    def clear(self) -> None:
+        event_bus.sign('context_menu', None)
+        
+        def confirm():
+            event_bus.sign('ui_window', None)
+            for componet in self.components.values():
+                componet.deregister()
+            
+            self.components = {
+                'Name_Component': NameComponent(self),
+                'Top_Stat_Component': TopStatComponent(self, self.get_component('Top_Stat_Component').is_token)
+            }
+            
+        event_bus.sign('ui_window', ConfirmElement(
+            text='Are you sure you want to clear this card?\nThis action can not be undone.',
+            confrim_command=confirm,
+            confirm_text='Clear'
+        ))
+    
+    def delete(self) -> None:
+        event_bus.sign('delete_card', self)
+        event_bus.sign('context_menu', None)
                
     def __draw_background(self) -> None:
         _background: dict[str, pygame.Surface] = StatCard.__split_background()

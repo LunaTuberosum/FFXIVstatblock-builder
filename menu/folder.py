@@ -5,7 +5,9 @@ from typing import Callable
 import pygame
 
 from singletons import resourceHandler
+
 from singletons.eventBus import event_bus
+from singletons.dataBus import data_bus
 
 from menu.menuObject import MenuObject
 from menu.sheet import Sheet
@@ -35,12 +37,14 @@ class Folder(MenuObject):
         )        
         self.TILE_MAX_WIDTH = 157
         
+        self.id: int = data_bus.sign('get_folder_id')
+        
         self.files: list[MenuObject] = []
         
         self.add_files()
         
         self.is_prev: bool = False
-            
+        
         event_bus.register('duplicate_sheet', self.duplicate_sheet)
         
     def deregister(self):
@@ -51,8 +55,11 @@ class Folder(MenuObject):
     def on_click(self) -> None:
         if not self.hovering:
             return
-        
+    
         if self.click_timer.time_left() > 0:
+            self.no_hover()
+            self.click_timer.reset()
+            self.drag = False
             event_bus.sign('change_folder', self)
         else:
             self.click_timer.start()

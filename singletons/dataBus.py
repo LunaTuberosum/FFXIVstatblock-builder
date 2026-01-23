@@ -7,8 +7,10 @@ class DataBus(Bus):
     def __init__(self) -> None:
         super().__init__(
             {
+                'get_folder_id': None,
+                
                 'add_color': None,
-                'get_colors': None
+                'get_colors': None,
             }
         )
         

@@ -5,6 +5,7 @@ from editor.cardComponents.cardComponent import CardComponent
 
 from editor.statcard import StatCard
 
+from menu.folder import Folder
 from menu.sheet import Sheet
 
 from singletons import resourceHandler
@@ -23,10 +24,12 @@ JUPITER_FONT: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\jupiter
 MIEDINGER: pygame.Font = resourceHandler.load_font('assets/fonts/miedinger_medium.ttf', 18)
 
 class Editor(GameProcess):
-    def __init__(self, main: object, sheet: Sheet) -> None:
+    def __init__(self, main: object, sheet: Sheet, current_folder: Folder, prev_folders: list[Folder]) -> None:
         super().__init__(main)
         
         self.sheet: Sheet = sheet
+        self.current_folder: Folder = current_folder
+        self.prev_folders: list[Folder] = prev_folders
         
         self.pan: tuple[int, int] = (0, 0)
         self.can_pan: dict[str, bool] = {
@@ -158,7 +161,7 @@ class Editor(GameProcess):
         
     def menu_return(self) -> None:
         def confirm():
-            event_bus.sign('return_menu')
+            event_bus.sign('return_menu', self.current_folder, self.prev_folders)
                     
         event_bus.sign('ui_window', 
             ConfirmElement(

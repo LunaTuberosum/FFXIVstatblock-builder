@@ -160,8 +160,6 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
                         'marker_area': comp_data['marker']['markerArea']
                     }
                     
-                    print(effect_name)
-                    print(comp_data['marker']['type'])
                     if comp_data['marker']['type'] == 0:
                         new_marker['marker_overlay']['PROXIMITY'] = (comp_data['marker']['gridSize'][0], 0)
                         

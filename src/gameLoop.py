@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from editor.editor import Editor
+from menu.folder import Folder
 from menu.menu import Menu
 
 from singletons.eventBus import event_bus
@@ -72,14 +73,41 @@ class GameLoop():
         key_bus.reset()
         self.set_up_bus_calls()
         
-        self.current_process = Editor(self, sheet)
-        
-    def return_menu(self) -> None:
+        self.current_process = Editor(self, sheet, self.current_process.current_folder, self.current_process.prev_folder)
+                
+    def search_for_folder(self, folder: Folder, look_folder: Folder) -> Folder:
+        for m_file in folder.files:
+            if not isinstance(m_file, Folder):
+                continue
+            
+            if m_file.id == look_folder.id:
+                return m_file
+            
+            if found := self.search_for_folder(m_file, look_folder):
+                return found
+                
+    def return_menu(self, current_folder: Folder, prev_folders: list[Folder]) -> None:
         event_bus.reset()
         key_bus.reset()
         self.set_up_bus_calls()
             
         self.current_process = Menu(self)
+        
+        prev_fold: list[Folder] = []
+        for folder in prev_folders:
+            if folder.id == self.current_process.current_folder.id:
+                self.current_process.current_folder.is_prev = True
+                prev_fold.append(self.current_process.current_folder)
+                continue
+            
+            m_file = self.search_for_folder(self.current_process.current_folder, folder)
+            m_file.is_prev = True
+            prev_fold.append(m_file)
+            
+        self.current_process.prev_folder = prev_fold
+        
+        if self.current_process.current_folder.id != current_folder.id:
+            self.current_process.current_folder = self.search_for_folder(self.current_process.current_folder, current_folder)
             
     def update(self) -> None:
         while self.run:

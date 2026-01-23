@@ -3,9 +3,12 @@ import pygame
 
 from menu.menuObject import MenuObject
 from menu.sheet import Sheet
+
 from singletons import resourceHandler
+
 from singletons.keyBus import key_bus
 from singletons.eventBus import event_bus
+from singletons.dataBus import data_bus
 
 from menu.folder import Folder
 
@@ -24,6 +27,8 @@ class Menu(GameProcess):
     def __init__(self, main: object) -> None:
         super().__init__(main)
         
+        self.folder_num: int  = 0
+        
         self.current_folder: Folder = Folder('', '')
         self.prev_folder: list[Folder] = []
         
@@ -38,6 +43,8 @@ class Menu(GameProcess):
         
         key_bus.register('mouse_right_down', self.menu_context_menu)
         
+        data_bus.register('get_folder_id', self.get_folder_id)
+        
     def deregister(self) -> None:
         super().deregister()
         
@@ -47,17 +54,23 @@ class Menu(GameProcess):
         
         key_bus.deregister('mouse_right_down', self.menu_context_menu)
         
+        data_bus.deregister('get_folder_id', self.get_folder_id)
+        
     def menu_context_menu(self) -> None:
         event_bus.sign('context_menu', {
             'Add Sheet': self.current_folder.create_sheet,
             'Add Folder': self.current_folder.create_folder
         })
         
+    def get_folder_id(self) -> int:
+        self.folder_num += 1
+        return self.folder_num
+        
     def change_folder(self, new_folder: Folder) -> None:
         new_folder.no_hover()
         
         if self.prev_folder:
-            if new_folder.name == self.prev_folder[-1].name:
+            if new_folder.id == self.prev_folder[-1].id:
                 self.prev_folder.pop()
                 new_folder.is_prev = False
                 self.current_folder = new_folder

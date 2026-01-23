@@ -943,7 +943,6 @@ class TextBox(Component):
                     min(surf_size[0] - (self.cursor_index * 10), 5),
                     pos[1]
                 )
-                print(pos)
         
         # [(minX, maxX, minY, maxY, advance**), ...]
         text_metrics: list[tuple[int, ...]] = self.font.metrics(text)

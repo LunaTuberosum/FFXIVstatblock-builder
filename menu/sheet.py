@@ -38,6 +38,9 @@ class Sheet(MenuObject):
             return
         
         if self.click_timer.time_left() > 0:
+            self.no_hover()
+            self.click_timer.reset()
+            self.drag = False
             event_bus.sign('load_sheet', self)
         else:
             self.click_timer.start()

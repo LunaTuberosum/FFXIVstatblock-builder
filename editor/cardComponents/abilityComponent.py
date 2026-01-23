@@ -2,7 +2,7 @@ import pygame
 
 from editor.cardComponents.cardComponent import CardComponent
 
-from editor.cardComponents.markerComponnet import MarkerComponent
+from editor.cardComponents.markerComponent import MarkerComponent
 from singletons import resourceHandler
 
 from singletons.eventBus import event_bus

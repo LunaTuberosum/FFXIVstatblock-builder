@@ -161,19 +161,19 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
                     }
                     
                     if comp_data['marker']['type'] == 0:
-                        new_marker['marker_overlay']['PROXIMITY'] = (comp_data['marker']['gridSize'][0], 0)
+                        new_marker['marker_overlay']['PROXIMITY'] = { 'pos': (comp_data['marker']['gridSize'][0], 0), 'data': '' }
                         
                     elif comp_data['marker']['type'] == 1:
                         for y, col in enumerate(comp_data['marker']['markerArea']):
                             for x, row in enumerate(col):
                                 if row == 2:
-                                    new_marker['marker_overlay']['STACK'].append((y, x))
+                                    new_marker['marker_overlay']['STACK'].append({ 'pos': (y, x), 'data': '' })
                                     
                     elif comp_data['marker']['type'] == 2:
                         for y, col in enumerate(comp_data['marker']['markerArea']):
                             for x, row in enumerate(col):
                                 if row == 2:
-                                    new_marker['marker_overlay']['STAKE'].append((y, x))
+                                    new_marker['marker_overlay']['STAKE'].append({ 'pos': (y, x), 'data': 'red' })
                 
                 card['components'][comp_name] = {
                     'name': comp_data['name'],

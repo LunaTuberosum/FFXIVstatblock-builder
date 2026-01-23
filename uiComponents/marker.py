@@ -1,8 +1,8 @@
 import pygame
 
-from editor.cardComponents.markerComponnet import MarkerComponent
+from editor.cardComponents.markerComponent import MarkerComponent
 
-from editor.ui.paintbursh import Paint, get_tileset
+from editor.ui.paintbursh import Paint, get_tileset, MarkerOverlay
 
 from singletons import resourceHandler
 
@@ -32,13 +32,21 @@ class Marker(Component):
                 
             self.marker_area.append(new_row)
             
-        self.marker_overlays: dict[str, list[tuple[int, int]] | tuple[int, int]] = {}
+        self.marker_overlays: dict[str, list[MarkerOverlay] | MarkerOverlay] = {}
         for m_type, overlays in self.marker_component.marker_overlays.items():
-            if isinstance(overlays, list):
-                self.marker_overlays[m_type] = overlays.copy()
+            if not isinstance(overlays, list):
+                if not overlays:
+                    self.marker_overlays[m_type] = None
+                    continue
+                
+                self.marker_overlays[m_type] = MarkerOverlay(overlays.pos, overlays.data)
                 continue
             
-            self.marker_overlays[m_type] = overlays
+            new_list: list[MarkerOverlay] = []
+            for o_data in overlays:
+                new_list.append(MarkerOverlay(o_data.pos, o_data.data))
+                
+            self.marker_overlays[m_type] = new_list
         
         self.grid_size: tuple[int, int] = self.marker_component.grid_size
         
@@ -57,6 +65,9 @@ class Marker(Component):
         self.caution_tankbuster_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\CautionTankBusterMarker.png')
         
         self.stake_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\StakeMarker.png')
+        self.stake_blue_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\StakeMarker_Blue.png')
+        self.stake_purple_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\StakeMarker_Purple.png')
+        self.stake_green_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\StakeMarker_Green.png')
         
         self.proximity_icon: pygame.Surface = resourceHandler.load_image('.\\assets\\markerIcons\\ProximityMarker.png')
         
@@ -163,20 +174,32 @@ class Marker(Component):
         
         self.hover_pos = None
             
-    def __add_overlay(self, overlay_list: list[tuple[int, int]], paint: Paint) -> bool:
+    def __add_overlay(self, overlay_list: list[MarkerOverlay], paint: Paint, data='') -> bool:
         if self.parent.brush.paint == paint:
-            for pos in overlay_list:
-                if pos == (self.hover_pos[1], self.hover_pos[0]):
+            for overlay in overlay_list:
+                if overlay.pos == (self.hover_pos[1], self.hover_pos[0]):
+                    if data != overlay.data:
+                        overlay.data = data
+                    
                     return True
             
-            overlay_list.append((self.hover_pos[1], self.hover_pos[0]))
+            overlay_list.append(MarkerOverlay((self.hover_pos[1], self.hover_pos[0]), data))
             self.__render_tiles()
             return True
         
         else:
-            for pos in overlay_list:
-                if pos == (self.hover_pos[1], self.hover_pos[0]):
-                    overlay_list.remove(pos)
+            for overlay in overlay_list:
+                if self.parent.brush.paint == Paint.STAKE and overlay.data == 'red':
+                    continue
+                if self.parent.brush.paint == Paint.STAKE_BLUE and overlay.data == 'blue':
+                    continue
+                if self.parent.brush.paint == Paint.STAKE_PURPLE and overlay.data == 'purple':
+                    continue
+                if self.parent.brush.paint == Paint.STAKE_GREEN and overlay.data == 'green':
+                    continue
+                
+                if overlay.pos == (self.hover_pos[1], self.hover_pos[0]):
+                    overlay_list.remove(overlay)
                     break
             self.__render_tiles()
                 
@@ -187,7 +210,16 @@ class Marker(Component):
             return
         
         modified_overlay: bool = False
-        if self.__add_overlay(self.marker_overlays['STAKE'], Paint.STAKE):
+        if self.__add_overlay(self.marker_overlays['STAKE'], Paint.STAKE, data='red'):
+            modified_overlay = True
+            
+        if self.__add_overlay(self.marker_overlays['STAKE'], Paint.STAKE_BLUE, data='blue'):
+            modified_overlay = True
+            
+        if self.__add_overlay(self.marker_overlays['STAKE'], Paint.STAKE_PURPLE, data='purple'):
+            modified_overlay = True
+            
+        if self.__add_overlay(self.marker_overlays['STAKE'], Paint.STAKE_GREEN, data='green'):
             modified_overlay = True
                 
         if self.__add_overlay(self.marker_overlays['STACK'], Paint.STACK):
@@ -209,7 +241,7 @@ class Marker(Component):
             modified_overlay = True
         
         if self.parent.brush.paint == Paint.PROXIMITY:
-            self.marker_overlays['PROXIMITY'] = (self.hover_pos[1], self.hover_pos[0])
+            self.marker_overlays['PROXIMITY'] = MarkerOverlay((self.hover_pos[1], self.hover_pos[0]))
             self.__render_tiles()
             modified_overlay = True
         
@@ -359,43 +391,53 @@ class Marker(Component):
                 icon: pygame.Surface = self.icons.get(tile, self.icons[Paint.GRID])
                 self.face.blit(icon, (x * 25, y * 25))
                 
-        for pos in self.marker_overlays['STAKE']:
-            self.face.blit(self.icons[Paint.STAKE], (pos[1] * 25, pos[0] * 25))
+        for overlay in self.marker_overlays['STAKE']:
+            self.face.blit(self.icons[Paint.STAKE], (overlay.pos[1] * 25, overlay.pos[0] * 25))
             
-            self.face.blit(self.stake_icon, (pos[1] * 25, (pos[0] * 25) - 25))
+            if overlay.data == 'red':
+                self.face.blit(self.stake_icon, (overlay.pos[1] * 25, (overlay.pos[0] * 25) - 25))
             
-            if self.marker_area[pos[0]][pos[1]] == Paint.DPS:
-                self.face.blit(self.icons[Paint.DPS], (pos[1] * 25, pos[0] * 25))
-            
-            elif self.marker_area[pos[0]][pos[1]] == Paint.HEALER:
-                self.face.blit(self.icons[Paint.HEALER], (pos[1] * 25, pos[0] * 25))
+            elif overlay.data == 'blue':
+                self.face.blit(self.stake_blue_icon, (overlay.pos[1] * 25, (overlay.pos[0] * 25) - 25))
                 
-            elif self.marker_area[pos[0]][pos[1]] == Paint.TANK:
-                self.face.blit(self.icons[Paint.TANK], (pos[1] * 25, pos[0] * 25))
+            elif overlay.data == 'purple':
+                self.face.blit(self.stake_purple_icon, (overlay.pos[1] * 25, (overlay.pos[0] * 25) - 25))
+                
+            elif overlay.data == 'green':
+                self.face.blit(self.stake_green_icon, (overlay.pos[1] * 25, (overlay.pos[0] * 25) - 25))
             
-        for pos in self.marker_overlays['STACK']:
-            self.face.blit(self.stack_icon, ((pos[1] * 25) - 50, (pos[0] * 25) - 50))
+            if self.marker_area[overlay.pos[0]][overlay.pos[1]] == Paint.DPS:
+                self.face.blit(self.icons[Paint.DPS], (overlay.pos[1] * 25, overlay.pos[0] * 25))
             
-        for pos in self.marker_overlays['STACK_LINE']:
-            self.face.blit(self.line_stack_icon, ((pos[1] * 25) - 50, (pos[0] * 25) - 50))
+            elif self.marker_area[overlay.pos[0]][overlay.pos[1]] == Paint.HEALER:
+                self.face.blit(self.icons[Paint.HEALER], (overlay.pos[1] * 25, overlay.pos[0] * 25))
+                
+            elif self.marker_area[overlay.pos[0]][overlay.pos[1]] == Paint.TANK:
+                self.face.blit(self.icons[Paint.TANK], (overlay.pos[1] * 25, overlay.pos[0] * 25))
             
-        for pos in self.marker_overlays['STACK_MULTI']:
-            self.face.blit(self.multi_stack_icon, ((pos[1] * 25) - 50, (pos[0] * 25) - 50))
+        for overlay in self.marker_overlays['STACK']:
+            self.face.blit(self.stack_icon, ((overlay.pos[1] * 25) - 50, (overlay.pos[0] * 25) - 50))
             
-        for pos in self.marker_overlays['TANKBUSTER']:
-            self.face.blit(self.tankbuster_icon, ((pos[1] * 25) - 25, (pos[0] * 25) - 25))
+        for overlay in self.marker_overlays['STACK_LINE']:
+            self.face.blit(self.line_stack_icon, ((overlay.pos[1] * 25) - 50, (overlay.pos[0] * 25) - 50))
             
-        for pos in self.marker_overlays['TANKBUSTER_AOE']:
-            self.face.blit(self.aoe_tankbuster_icon, ((pos[1] * 25) - 50, (pos[0] * 25) - 50))
+        for overlay in self.marker_overlays['STACK_MULTI']:
+            self.face.blit(self.multi_stack_icon, ((overlay.pos[1] * 25) - 50, (overlay.pos[0] * 25) - 50))
             
-        for pos in self.marker_overlays['TANKBUSTER_CAUTION']:
-            self.face.blit(self.caution_tankbuster_icon, ((pos[1] * 25) - 25, (pos[0] * 25) - 25))
+        for overlay in self.marker_overlays['TANKBUSTER']:
+            self.face.blit(self.tankbuster_icon, ((overlay.pos[1] * 25) - 25, (overlay.pos[0] * 25) - 25))
             
-        if pos := self.marker_overlays['PROXIMITY']:
-            height: int = min(self.grid_size[1] - pos[0], 10)
+        for overlay in self.marker_overlays['TANKBUSTER_AOE']:
+            self.face.blit(self.aoe_tankbuster_icon, ((overlay.pos[1] * 25) - 50, (overlay.pos[0] * 25) - 50))
+            
+        for overlay in self.marker_overlays['TANKBUSTER_CAUTION']:
+            self.face.blit(self.caution_tankbuster_icon, ((overlay.pos[1] * 25) - 25, (overlay.pos[0] * 25) - 25))
+            
+        if overlay := self.marker_overlays['PROXIMITY']:
+            height: int = min(self.grid_size[1] - overlay.pos[0], 10)
         
             scaled: pygame.Surface = pygame.transform.scale(self.proximity_icon, (25, height * 25))
-            self.face.blit(scaled, (pos[1] * 25, pos[0] * 25))
+            self.face.blit(scaled, (overlay.pos[1] * 25, overlay.pos[0] * 25))
             
         self.face = pygame.transform.scale(self.face, (400, 400))
         

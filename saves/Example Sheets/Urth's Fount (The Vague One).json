@@ -822,10 +822,13 @@
                     ],
                     "marker_overlay": {
                         "STAKE": [
-                            [
-                                2,
-                                2
-                            ]
+                            {
+                                "pos": [
+                                    2,
+                                    2
+                                ],
+                                "data": "red"
+                            }
                         ],
                         "STACK": [],
                         "STACK_LINE": [],
@@ -1142,10 +1145,13 @@
                     ],
                     "marker_overlay": {
                         "STAKE": [
-                            [
-                                3,
-                                3
-                            ]
+                            {
+                                "pos": [
+                                    3,
+                                    3
+                                ],
+                                "data": "red"
+                            }
                         ],
                         "STACK": [],
                         "STACK_LINE": [],

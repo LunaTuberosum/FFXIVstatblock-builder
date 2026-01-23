@@ -6,6 +6,11 @@ from singletons import resourceHandler
 from uiComponents.button import Button
     
 
+class MarkerOverlay():
+    def __init__(self, pos: tuple[int, int], data: str = '') -> None:
+        self.pos: tuple[int, int] = pos
+        self.data: str = data
+
 class Paint(Enum):
     GRID: int = 0
     
@@ -13,28 +18,31 @@ class Paint(Enum):
     ORIGIN: int = 2
     
     STAKE: int = 3
+    STAKE_BLUE: int = 4
+    STAKE_PURPLE: int = 5
+    STAKE_GREEN: int = 6
     
-    INSTANT: int = 4
-    PROXIMITY: int = 5
+    INSTANT: int = 7
+    PROXIMITY: int = 8
     
-    STACK_MARKER: int = 6
-    STACK: int = 7
-    STACK_LINE: int = 8
-    STACK_MULTI: int = 9
+    STACK_MARKER: int = 9
+    STACK: int = 10
+    STACK_LINE: int = 11
+    STACK_MULTI: int = 12
     
-    TANKBUSTER_MARKER: int = 10
-    TANKBUSTER: int = 11
-    TANKBUSTER_AOE: int = 12
-    TANKBUSTER_CAUTION: int = 13
+    TANKBUSTER_MARKER: int = 13
+    TANKBUSTER: int = 14
+    TANKBUSTER_AOE: int = 15
+    TANKBUSTER_CAUTION: int = 16
     
-    TOWER: int = 14 # One day...
-    TOWER_2: int = 15 # One day...
-    TOWER_3: int = 16 # One day...
-    TOWER_4: int = 17 # One day...
+    TOWER: int = 147# One day...
+    TOWER_2: int = 18 # One day...
+    TOWER_3: int = 19 # One day...
+    TOWER_4: int = 20 # One day...
     
-    DPS: int = 18
-    HEALER: int = 19
-    TANK: int = 20
+    DPS: int = 21
+    HEALER: int = 22
+    TANK: int = 23
     
 class Paintbrush():
     def __init__(self) -> None:

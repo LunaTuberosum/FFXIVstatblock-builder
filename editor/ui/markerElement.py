@@ -172,11 +172,12 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             button.active = False
             if button == self.brush.active_button:
                 button.active = True
-            
-            button.no_hover()
-            
+                        
             if button.rect.collidepoint(pygame.mouse.get_pos()):
                 button.hover()
+                
+            else:
+                button.no_hover()
                 
             button.draw(screen, self.pos)    
             
@@ -199,12 +200,14 @@ class MarkerElement(StatCardElement[AbilityComponent]):
     def __add_class_buttons(self) -> None:
         last_pos: tuple[int, int] = self.paletes_buttons[-1].pos
         
+        if last_pos[0] == 338:
+            last_pos = (50 - 32, last_pos[1] + 34)
         def tank():
             self.brush.paint = Paint.TANK
             self.brush.active_button = self.paletes_buttons[-3]
         self.paletes_buttons.append(
             Button(
-                pos=(last_pos[0] + 32, 230),
+                pos=(last_pos[0] + 32, last_pos[1]),
                 size=(32, 34),
                 image='.\\assets\\icons\\TankButton.png',
                 image_hover='.\\assets\\icons\\TankButton_hover.png',
@@ -212,12 +215,14 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             )
         )
         
+        if last_pos[0] + 32 == 338:
+            last_pos = (50 - 64, last_pos[1] + 34) 
         def dps():
             self.brush.paint = Paint.DPS
             self.brush.active_button = self.paletes_buttons[-2]
         self.paletes_buttons.append(
             Button(
-                pos=(last_pos[0] + 64, 230),
+                pos=(last_pos[0] + 64, last_pos[1]),
                 size=(32, 34),
                 image='.\\assets\\icons\\DPSButton.png',
                 image_hover='.\\assets\\icons\\DPSButton_hover.png',
@@ -225,12 +230,14 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             )
         )
         
+        if last_pos[0] + 64 == 338:
+            last_pos = (50 - 96, last_pos[1] + 34)
         def healer():
             self.brush.paint = Paint.HEALER
             self.brush.active_button = self.paletes_buttons[-1]
         self.paletes_buttons.append(
             Button(
-                pos=(last_pos[0] + 96, 230),
+                pos=(last_pos[0] + 96, last_pos[1]),
                 size=(32, 34),
                 image='.\\assets\\icons\\HealerButton.png',
                 image_hover='.\\assets\\icons\\HealerButton_hover.png',
@@ -253,12 +260,21 @@ class MarkerElement(StatCardElement[AbilityComponent]):
         def stake():
             self.brush.paint = Paint.STAKE
             self.brush.active_button = self.paletes_buttons[3]
+        def blue_stake():
+            self.brush.paint = Paint.STAKE_BLUE
+            self.brush.active_button = self.paletes_buttons[4]
+        def purple_stake():
+            self.brush.paint = Paint.STAKE_PURPLE
+            self.brush.active_button = self.paletes_buttons[5]
+        def green_stake():
+            self.brush.paint = Paint.STAKE_GREEN
+            self.brush.active_button = self.paletes_buttons[6]
         def instant():
             self.brush.paint = Paint.INSTANT
-            self.brush.active_button = self.paletes_buttons[4]
+            self.brush.active_button = self.paletes_buttons[7]
         def proximity():
             self.brush.paint = Paint.PROXIMITY
-            self.brush.active_button = self.paletes_buttons[5]  
+            self.brush.active_button = self.paletes_buttons[8]  
         
         self.paletes_buttons = [
             Button(
@@ -292,12 +308,33 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(178, 230),
                 size=(32, 34),
+                image='.\\assets\\icons\\OriginOutlineBlueStakeButton.png',
+                image_hover='.\\assets\\icons\\OriginOutlineBlueStakeButton_hover.png',
+                command=blue_stake
+            ),
+            Button(
+                pos=(210, 230),
+                size=(32, 34),
+                image='.\\assets\\icons\\OriginOutlinePurpleStakeButton.png',
+                image_hover='.\\assets\\icons\\OriginOutlinePurpleStakeButton_hover.png',
+                command=purple_stake
+            ),
+            Button(
+                pos=(242, 230),
+                size=(32, 34),
+                image='.\\assets\\icons\\OriginOutlineGreenStakeButton.png',
+                image_hover='.\\assets\\icons\\OriginOutlineGreenStakeButton_hover.png',
+                command=green_stake
+            ),
+            Button(
+                pos=(274, 230),
+                size=(32, 34),
                 image='.\\assets\\icons\\InstantButton.png',
                 image_hover='.\\assets\\icons\\InstantButton_hover.png',
                 command=instant
             ),
             Button(
-                pos=(210, 230),
+                pos=(306, 230),
                 size=(32, 34),
                 image='.\\assets\\icons\\ProximityButton.png',
                 image_hover='.\\assets\\icons\\ProximityButton_hover.png',

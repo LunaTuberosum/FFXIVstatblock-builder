@@ -1597,7 +1597,12 @@
                         7
                     ],
                     "marker_overlay": {
-                        "STAKE": [],
+                        "STAKE": [
+                            {
+                                "pos": [1, 1],
+                                "data": "red"
+                            }
+                        ],
                         "STACK": [],
                         "STACK_LINE": [],
                         "STACK_MULTI": [],

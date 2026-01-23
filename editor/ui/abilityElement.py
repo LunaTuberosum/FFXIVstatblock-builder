@@ -136,7 +136,7 @@ class AbilityElement(StatCardElement[AbilityComponent]):
         
     def marker_edit(self) -> None:
         if not self.component.marker:
-            from editor.cardComponents.markerComponnet import MarkerComponent
+            from editor.cardComponents.markerComponent import MarkerComponent
             self.component.marker = MarkerComponent(5, 5, self.component)
             self.component.refresh()
         

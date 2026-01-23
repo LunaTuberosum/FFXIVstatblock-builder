@@ -37,9 +37,9 @@ class Sheet(MenuObject):
         if not self.hovering:
             return
         
+        super().on_click()
         
         if self.click_timer.time_left() > 0:
-            super().on_click()
             self.no_hover()
             self.click_timer.reset()
             self.drag = False

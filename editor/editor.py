@@ -83,7 +83,7 @@ class Editor(GameProcess):
         event_bus.sign('context_menu', {
             'Add Card': self.add_card,
             'Save': self.save,
-            'Export as PNG': None
+            'Export as PNG': self.export
         })
         
     def get_colors(self) -> list[str]:
@@ -223,6 +223,31 @@ class Editor(GameProcess):
             save_dict[str(index)] = card.save()
             
         resourceHandler.save_json(f'.\\saves\\{self.sheet.path}\\{self.sheet.name}.json', save_dict)
+        
+    def export(self) -> None:
+        event_bus.sign('context_menu', None)
+        
+        width: int = 40
+        height: int = 40
+        
+        for card in self.stat_cards:
+            width += card.size[0] + 20
+            
+            height = max(height, card.size[1] + 40)
+            
+        export: pygame.Surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        
+        x: int = 40
+        for card in self.stat_cards:
+            for component in card.components.values():
+                component.no_hover()
+            
+            card.update((0, 0), x)
+            card.draw(export)
+            
+            x += card.size[0] + 20
+            
+        pygame.image.save(export, f'.\\exports\\{self.sheet.name}.png')
         
     def delete_card(self, card: StatCard) -> None:
         card.deregister()

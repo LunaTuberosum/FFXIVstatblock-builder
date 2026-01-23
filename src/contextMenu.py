@@ -70,7 +70,7 @@ class ContextMenu():
         if prev_len == len(self.options):
             return
             
-        self.size = (self.size[0], OPTION_HEIGHT + (OPTION_HEIGHT * len(self.options)))
+        self.size = (self.size[0], OPTION_HEIGHT + (OPTION_HEIGHT * len(self.options) + 5))
         
         self.background = pygame.Surface(self.size, pygame.SRCALPHA)
         self.__draw_background()

@@ -219,6 +219,8 @@ class StatCard():
         
         event_bus.sign('context_menu', {
             '': None,
+            'Move Left': self.left,
+            'Move Right': self.right,
             'Edit': self.edit,
             'Clear': self.clear,
             'Delete': self.delete
@@ -282,6 +284,14 @@ class StatCard():
                     name,
                     AbilityComponent(self)
                 ).load(component_data[name])
+               
+    def left(self) -> None:
+        event_bus.sign('context_menu', None)
+        event_bus.sign('move_card', self, 'left')
+    
+    def right(self) -> None:
+        event_bus.sign('context_menu', None)
+        event_bus.sign('move_card', self, 'right')
                
     def edit(self) -> None:
         from editor.ui.editCardElement import EditCardElement

@@ -59,6 +59,8 @@ class Editor(GameProcess):
         event_bus.register('add_card', self.new_card)
         event_bus.register('delete_card', self.delete_card)
         
+        event_bus.register('move_card', self.move_card)
+        
     def deregister(self) -> None:
         super().deregister()
         
@@ -75,6 +77,8 @@ class Editor(GameProcess):
         
         event_bus.deregister('add_card', self.new_card)
         event_bus.deregister('delete_card', self.delete_card)
+        
+        event_bus.deregister('move_card', self.move_card)
         
         for card in self.stat_cards:
             card.deregister()
@@ -270,3 +274,14 @@ class Editor(GameProcess):
         card.deregister()
         
         self.stat_cards.remove(card)
+        
+    def move_card(self, card: StatCard, direction: str) -> None:
+        card_index: int = self.stat_cards.index(card)
+        
+        if direction == 'left':
+            self.stat_cards.remove(card)
+            self.stat_cards.insert(card_index - 1, card)
+            
+        elif direction == 'right':
+            self.stat_cards.remove(card)
+            self.stat_cards.insert(card_index + 1, card)

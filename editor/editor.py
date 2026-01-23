@@ -255,7 +255,7 @@ class Editor(GameProcess):
             x += card.size[0] + 20
             
         try:
-            resourceHandler.save_image(export_trans, f'.\\exports\\{self.sheet.name}\\export_tansparent.png')
+            resourceHandler.save_image(export_trans, f'.\\exports\\{self.sheet.name}\\export_transparent.png')
             
             resourceHandler.save_image(export, f'.\\exports\\{self.sheet.name}\\export.png')
         except:

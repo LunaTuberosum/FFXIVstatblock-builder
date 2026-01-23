@@ -104,8 +104,6 @@ class MarkerComponent(Component):
                 
             self.marker_overlays[overlay_type] = new_list
             
-        print(self.marker_overlays)
-        
         self.__render_tiles()
         
     def draw(self, screen: pygame.Surface, parent_pos: tuple[int, int]) -> None:

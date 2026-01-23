@@ -157,22 +157,24 @@ class StatCard():
         
         ability.refresh()
         swap_to.refresh()
-        
+                              
     def update(self, pan: tuple[int, int], x: int) -> None:
         self.rect.topleft = (x + pan[0], 40 + pan[1])
         
         offset: tuple[int, int] = (20, 20)
-        # list(self.components.values())[-1].is_last = True # TODO: Fix
-        for componet in self.components.values():
-            if offset[1] + componet.rect.height >= self.limit:
+        prev_component: CardComponent = None
+        for component in self.components.values():
+            component.is_last = False
+            if offset[1] + component.rect.height >= self.limit:
                 offset = (offset[0] + 540, 20)
+                if prev_component: prev_component.is_last = True
                 
-            # if self.limit - offset[1] < 130:
-            #     componet.is_last = True
+            component.update(offset)
                 
-            componet.update(offset)
-                
-            offset = (offset[0], offset[1] + componet.rect.height)
+            offset = (offset[0], offset[1] + component.rect.height)
+            prev_component = component
+            
+        list(self.components.values())[-1].is_last = True
         
     def draw(self, screen: pygame.Surface) -> None:
         self.image.fill((0, 0, 0, 0))

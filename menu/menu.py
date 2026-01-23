@@ -200,12 +200,13 @@ class Menu(GameProcess):
         if self.prev_folder:
             prev_folder = self.prev_folder[-1]
             
-            prev_folder.no_hover()
             if prev_folder.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
                 self.hover_object = prev_folder
                 
+            else:
+                prev_folder.no_hover()
+                
         for m_file in self.current_folder.files:
-            m_file.no_hover()                
             
             if m_file.rect.collidepoint(self.mouse_handler.mouse_pos):
                 if m_file.drag: 
@@ -213,9 +214,13 @@ class Menu(GameProcess):
                     continue
                 
                 if self.hover_object:
+                    m_file.no_hover()                
                     continue
                 
                 self.hover_object = m_file
+            
+            else:
+                m_file.no_hover()                
 
         if self.hover_object:
             self.hover_object.hover()

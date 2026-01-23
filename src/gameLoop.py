@@ -26,6 +26,8 @@ class GameLoop():
         self.display: Display = None 
         self.load_setting_save()
         
+        pygame.mixer.set_num_channels(3)
+        
         pygame.display.set_caption('FFXIV TTRPG Stat Card Builder V0.93')
         pygame.display.set_icon(resourceHandler.load_image('.\\assets\\icon.ico'))
         
@@ -53,7 +55,9 @@ class GameLoop():
                 'windowSize': (DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT),
                 'displayOption': 1,
                 'framerate': 0,
-                'vsync': False
+                'vsync': False,
+                
+                'volume': 1
             }
 
             resourceHandler.save_pickle('.//settings.pkl', setting_save)
@@ -62,6 +66,8 @@ class GameLoop():
         self.display.set_fullscreen(setting_save['displayOption'])
         self.display.set_framerate(setting_save['framerate'])
         self.display.set_vsync(setting_save['vsync'])
+        
+        self.display.set_volume(setting_save['volume'])
         
         self.display.create_screen()
     

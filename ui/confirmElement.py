@@ -46,7 +46,7 @@ class ConfirmElement(UIElement):
                 size=(198, 38),
                 image='.\\assets\\icons\\button.png',
                 image_hover='.\\assets\\icons\\button_hover.png',
-                command=self.confrim_command,
+                command=self.confirm,
                 text=self.confirm_text
             )
         )
@@ -90,11 +90,13 @@ class ConfirmElement(UIElement):
         
         for comp in self.components.values():
             comp.draw(screen, self.pos)
-            
-    def close(self) -> None:
-        self.get_component('Cancel').command()
+        
+    def confirm(self) -> None:
+        event_bus.sign('play_se', 'confirm')
+        self.confrim_command()
         
     def cancel(self) -> None:
+        event_bus.sign('play_se', 'cancel')
         self.deregister()
             
         event_bus.sign('ui_window', None)

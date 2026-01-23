@@ -4,6 +4,7 @@ import pygame
 from singletons import resourceHandler
 
 from singletons.keyBus import key_bus
+from singletons.eventBus import event_bus
 
 from uiComponents.componet import Component
 
@@ -50,6 +51,7 @@ class ButtonOption():
         if not self.hovering:
             return
         
+        event_bus.sign('play_se', 'confirm')
         self.command(self.text)
         
     def no_hover(self) -> None:

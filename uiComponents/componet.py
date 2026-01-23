@@ -1,5 +1,7 @@
 import pygame
 
+from singletons.eventBus import event_bus
+
 
 class Component():
     def __init__(self, pos: tuple[int, int], size: tuple[int, int]) -> None:
@@ -21,6 +23,10 @@ class Component():
         self.hovering = False
 
     def hover(self) -> None:
+        if self.hovering:
+            return
+        
+        event_bus.sign('play_se', 'hover')
         self.hovering = True
         
     def is_hover(self, mouse_pos: tuple[int, int]) -> bool:

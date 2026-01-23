@@ -627,6 +627,7 @@ class TextBox(Component):
             event_bus.sign('typing_register', None)
             self.hovering = False
             self.check_off_click()
+            event_bus.sign('play_se', 'confirm')
             return
             
         # User used TAB
@@ -634,6 +635,7 @@ class TextBox(Component):
             if not self.tabbing_command:
                 return
             
+            event_bus.sign('play_se', 'confirm')
             self.tabbing_command(self)
             
         if not re.match(r'[A-Za-z0-9()-_[\]<> "\'{}#]', unicode) or re.match(r'[:;]', unicode):
@@ -670,6 +672,7 @@ class TextBox(Component):
             self.format_box.deregister()
             self.format_box = None
         
+        event_bus.sign('play_se', 'confirm')
         self.end_field()
     
     def activate(self) -> None:
@@ -684,6 +687,7 @@ class TextBox(Component):
     def on_click(self) -> None:
         if not self.hovering:
             return
+        event_bus.sign('play_se', 'confirm')
         
         if self.format_box and not self.format_box.hovering:
             self.format_box.deregister()

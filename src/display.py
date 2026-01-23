@@ -16,6 +16,8 @@ class Display():
         self.__framerate: int = 0
         self.__vsync: bool = False
         
+        self.__volume: float = 1
+        
         self.screen: pygame.Surface = None
         
     def get_resolution(self) -> tuple[int, int]:
@@ -58,6 +60,12 @@ class Display():
     
     def set_vsync(self, vsync: bool) -> None:
         self.__vsync = vsync
+        
+    def get_volume(self) -> float:
+        return self.__volume
+    
+    def set_volume(self, volume: float) -> None:
+        self.__volume = volume
         
     def create_screen(self) -> None:
         flags = self.get_fullscreen_pygame()

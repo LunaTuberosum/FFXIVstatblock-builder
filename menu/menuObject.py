@@ -53,7 +53,7 @@ class MenuObject():
         key_bus.deregister('mouse_right_down', self.context_menu)
         
     def on_click(self) -> None:
-        pass
+        event_bus.sign('play_se', 'confirm')
         
     def on_release(self) -> None:
         if not self.hovering or not self.drag:
@@ -160,6 +160,10 @@ class MenuObject():
         self.hovering = False
 
     def hover(self):
+        if self.hovering:
+            return
+        
+        event_bus.sign('play_se', 'hover')
         self.hovering = True
         
     def rename(self, text: str):

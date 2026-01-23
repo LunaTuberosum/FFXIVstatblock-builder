@@ -8,6 +8,7 @@ class EventBus(Bus):
         super().__init__(
             {
                 'quit': [],
+                'play_se': [],
                 
                 'change_folder': [],
                 'move_file': [],

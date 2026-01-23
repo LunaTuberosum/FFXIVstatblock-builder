@@ -7,6 +7,7 @@ from singletons.keyBus import key_bus
 from src.contextMenu import ContextMenu
 from src.keyHandler import KeyHandler
 from src.mouseHandler import MouseHandler
+from src.soundEffectHandler import SoundeEffectHandler
 
 from ui.confirmElement import ConfirmElement
 from ui.escapeMenu import EscapeMenu
@@ -22,6 +23,9 @@ class GameProcess():
         self.key_handler: KeyHandler = KeyHandler()
         self.mouse_handler: MouseHandler = MouseHandler()
         
+        self.sound_handler: SoundeEffectHandler = SoundeEffectHandler()
+        self.sound_handler.set_volume(self.main.display.get_volume())
+        
         self.ui_window: UIElement = None
         self.hold_window: list[UIElement] = []
         self.context_menu: ContextMenu = None
@@ -33,12 +37,16 @@ class GameProcess():
         self.setup_bus_calls()
         
     def setup_bus_calls(self) -> None:
+        event_bus.register('play_se', self.play_se)
+        
         event_bus.register('context_menu', self.create_context_menu)
         event_bus.register('ui_window', self.create_ui_window)
         
         key_bus.register('esc_down', self.escape_menu)
         
     def deregister(self) -> None:
+        event_bus.deregister('play_se', self.play_se)
+        
         event_bus.deregister('context_menu', self.create_context_menu)
         event_bus.deregister('ui_window', self.create_ui_window)
         
@@ -48,6 +56,9 @@ class GameProcess():
         for event in self.events:
             if event.type == event_id:
                 return event
+    
+    def play_se(self, sound_name: str) -> None:
+        self.sound_handler.play_se(sound_name)
     
     def create_context_menu(self, context_options: dict[str, Callable[[None], None]], addative: bool = False) -> None:
         if not context_options:
@@ -127,11 +138,13 @@ class GameProcess():
             self.context_menu.no_hover()
             
             for option in self.context_menu.options:
-                option.no_hover()
                 
                 if option.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
                     self.hover_object = option
                     self.context_menu.hover()
+                    
+                else:
+                    option.no_hover()
             
             if self.context_menu.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
                 self.hover_object = self.context_menu
@@ -140,7 +153,6 @@ class GameProcess():
             self.ui_window.no_hover()
             
             for comp in self.ui_window.components.values():
-                comp.no_hover()
                 
                 if comp.is_hover(self.mouse_handler.mouse_pos):
                     if isinstance(comp, Dropdown):
@@ -149,10 +161,14 @@ class GameProcess():
                         continue
                     
                     if self.hover_object:
+                        comp.no_hover()
                         continue
                     
                     self.hover_object = comp
                     self.ui_window.hover()
+                    
+                else: 
+                    comp.no_hover()
             
             if self.ui_window.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
                 self.hover_object = self.ui_window

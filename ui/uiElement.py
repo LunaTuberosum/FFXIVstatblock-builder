@@ -66,6 +66,8 @@ class UIElement():
             command=self.close
         ))
         
+        event_bus.sign('play_se', 'open_window')
+        
     def deregister(self) -> None:
         key_bus.deregister('mouse_left_down', self.check_off_click)
         
@@ -73,6 +75,8 @@ class UIElement():
             comp.deregister()
             
     def close(self) -> None:
+        event_bus.sign('play_se', 'close_window')
+        
         self.deregister()
             
         event_bus.sign('ui_window', None)

@@ -3,7 +3,9 @@ from typing import Callable
 import pygame
 
 from singletons import resourceHandler
+
 from singletons.keyBus import key_bus
+from singletons.eventBus import event_bus
 
 
 IMAGE_POS: tuple[int, int] = (10, 2)
@@ -44,6 +46,10 @@ class ContextMenuOption():
         screen.blit(self.font.render(self.text, True, '#DED2B8'), (self.pos))
 
     def hover(self) -> None:
+        if self.hovering:
+            return
+        
+        event_bus.sign('play_se', 'hover')
         self.hovering = True
 
     def no_hover(self) -> None:
@@ -54,6 +60,8 @@ class ContextMenuOption():
         
     def on_click(self) -> None:
         if not self.text or not self.hovering: return
+        
+        event_bus.sign('play_se', 'confirm')
         
         self.clicked = True
         self.call()

@@ -2,7 +2,9 @@ from typing import Callable
 import pygame
 
 from singletons import resourceHandler
+
 from singletons.keyBus import key_bus
+from singletons.eventBus import event_bus
 
 from uiComponents.componet import Component
 
@@ -34,7 +36,8 @@ class Dropdown(Component):
                 'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_closed_hover.png'),
             }
         else:
-            self.image_open: dict[str, pygame.Surface] = {
+            self.image_open: dict[str,
+                                  pygame.Surface] = {
                 'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_open.png'),
                 'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_open_hover.png'),
             }
@@ -115,6 +118,7 @@ class Dropdown(Component):
         if not self.hovering:
             return
         
+        event_bus.sign('play_se', 'confirm')
         if self.rect.collidepoint(pygame.mouse.get_pos()):
             self.active = not self.active
             return

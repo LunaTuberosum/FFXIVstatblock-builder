@@ -92,6 +92,7 @@ class ListItem():
     def on_click(self) -> None:
         if not self.hovering:
             return
+        event_bus.sign('play_se', 'confirm')
         
         if self.click_timer.time_left() > 0:
             self.command(self)

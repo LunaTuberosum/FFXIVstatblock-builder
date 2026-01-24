@@ -98,8 +98,8 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
             'width': card_data['width'],
             'height': (card_data['height'] + 2) * 2,
             'components': {
-                'Name_Component': card_data['components']['Name_Component'],
-                'Top_Stat_Component': card_data['components']['Top_Stat_Component']
+                'Name_Component': card_data['components']['NameComponent [0]'],
+                'Top_Stat_Component': card_data['components']['TopStatsComponent [1]']
             }
         }
         

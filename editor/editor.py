@@ -1,3 +1,4 @@
+from pprint import pprint
 from typing import Callable
 import pygame
 
@@ -179,7 +180,7 @@ class Editor(GameProcess):
         
     def menu_options(self) -> dict[str, Callable[[None], None]]:
         return {
-            'Save': self.quit,
+            'Save': self.save,
             'Return to Menu': self.menu_return,
             'Exit Program': self.quit
         }
@@ -228,6 +229,8 @@ class Editor(GameProcess):
         for index, card in enumerate(self.stat_cards):
             save_dict[str(index)] = card.save()
             
+        pprint(save_dict)    
+        
         resourceHandler.save_json(f'.\\saves\\{self.sheet.path}\\{self.sheet.name}.json', save_dict)
         
     def export(self) -> None:

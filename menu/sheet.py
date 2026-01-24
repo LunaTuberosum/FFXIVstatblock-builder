@@ -23,7 +23,7 @@ RECT_SIZE: tuple[int, int] = (212, 212)
 class Sheet(MenuObject):
     def __init__(self, path: str, sheet: str) -> None:
         super().__init__(
-            sheet.strip('.json'), 
+            sheet.replace('.json', ''), 
             path, 
             'StatSaveBackground'
         )

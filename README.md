@@ -50,10 +50,82 @@ To backup your save do the following:
 
 1. Click on the blue/green [<> Code] button in the top right.
 2. Click [Download ZIP]
-3. Unzip the file in another easy to reach folder.
+3. Delete all file and folders from your orignal directory EXCEPT your [saves] folder. (Remember to back that folder up)
+4. Extract update files into the directory.
+5. Open the folder and run the EXE named **FFXIV Stat Card Builder**
+6. (Optional) You can make a shortcut of this EXE by right clicking it and selecting [Create Shortcut]. **DO NOT** remove the EXE from the folder!
+7. Enjoy :)
 
 
 ## Changelog
+### Version 0.93
+```
+* Rebuilt program from the ground up to imporve FPS and workflow
+
+* You must Double Left Click on sheets, folders, and parts of statcards to open them. This is to make easier to not do on acciedent
+
+* Rebuilt textboxes to be able to: 
+    * Be moved through with keyboard and mouse
+    * Be able to select, copy, paste, and delete sections of text
+    * Be able to scroll through large textboxes
+    * Reworked formating with a new popup on use of Right Click
+    * The ability to add custom colors
+    * You can Tab through textboxes
+
+* Saves have been updated to better store data and keep track of more things 
+
+* Reworked how you add Effects with a whole new pop out window
+    * There are now presets for common types of Effects
+    * Effects can be marked as In Line, causing them to render on the previous effects line.
+
+* You can now add an Extra Text to abilities. This is for explinations of how the ability works or flavor text
+
+* Reworked how you add Markers and edit them
+    * Redesigned several ui and marker icons
+    * Markers now auto tile for cleaner appearance
+    * Added more Stake Overlays
+    * Added stack Overlays
+    * Added tankbuster Overlays
+
+* Added Sound effects
+
+* Added settings window
+    * Can change resolution (Needs Restart)
+    * Switch between Fullscreen, Windowed, and Windowed full screen (Needs Restart)
+    * Switch which display the program opens to (Needs Restart)
+    * Can change volume of program
+
+* Added new escape menu
+    * Various features listed in it are not available at the moment
+
+* Heavly improved editor FPS and usablity
+    * Stat card can now be shifted using the context menu
+    * Can now rearange Traits and Abilities via dragging them
+    * Stat cards Height variable is now more precise alowing for finner steps
+    * Cards no longer render if not seen
+    * When exporting as PNG it now makes a folder that exports one with a background and one without (Transparent)
+    * When editing a part of the stat card (such as its name) the window no longer disapears when you click
+        * This window now always sticks to the right side of the screen instead of the right side of the card
+        * This window now can be closed with a small X in the top right (True of all UI windows)
+        * The element the window is adjusting now only updates apon pressing the (Apply) button or the (Confirm) Button. This is to save on performance
+        * The (Apply) button applies your changes, while the (Confirm) button applies them and closes the window
+
+* You can now make folders on the menu screen
+    * You can drag both sheets and folders into other folders
+
+* You can easily rename files instead of them all being called "StatSheet[X]"
+
+* Files can be duplicated
+
+* UI and almsot all elements have been updated to look better
+
+* Fixed various bugs, including but not limited to:
+    * When closing from editor using the window clsoing it not longer gives an error
+    * The program won't crash if you click to fast (hopefully)
+    * Various and many spelling mistakes
+    * And all of the jank with the old text boxes
+```
+
 ### Version 0.92.4
 ```
 * Fixed bug (#6)

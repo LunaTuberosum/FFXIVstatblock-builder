@@ -130,9 +130,41 @@ class MarkerComponent(Component):
                 
             marker_list.append(col_list)
             
+        overlay_dict = {
+            'STAKE': [],
+            'STACK': [],
+            'STACK_LINE': [],
+            'STACK_MULTI': [],
+            'TANKBUSTER': [],
+            'TANKBUSTER_AOE': [],
+            'TANKBUSTER_CAUTION': [],
+            'PROXIMITY': None
+        }
+        
+        for o_type in overlay_dict:
+            if not isinstance(self.marker_overlays[o_type], list):
+                if not self.marker_overlays[o_type]:
+                    overlay_dict[o_type] = None
+                    continue
+                
+                overlay_dict[o_type] = {
+                    'pos': self.marker_overlays[o_type].pos,
+                    'data': self.marker_overlays[o_type].data
+                }
+                continue
+            
+            new_list: list[dict] = []
+            for overlay in self.marker_overlays[o_type]:
+                new_list.append({
+                    'pos': overlay.pos,
+                    'data': overlay.data
+                })
+                
+            overlay_dict[o_type] = new_list
+            
         return {
             'grid_size': self.grid_size,
-            'marker_overlay': self.marker_overlays,
+            'marker_overlay': overlay_dict,
             'marker_area': marker_list
         }
         

@@ -1,4 +1,3 @@
-from pprint import pprint
 from typing import Callable
 import pygame
 
@@ -229,8 +228,6 @@ class Editor(GameProcess):
         for index, card in enumerate(self.stat_cards):
             save_dict[str(index)] = card.save()
             
-        pprint(save_dict)    
-        
         resourceHandler.save_json(f'.\\saves\\{self.sheet.path}\\{self.sheet.name}.json', save_dict)
         
     def export(self) -> None:

@@ -99,6 +99,7 @@ To backup your save do the following:
     * Various features listed in it are not available at the moment
 
 * Heavly improved editor FPS and usablity
+    * Removed Zooming out as it looked bad and want to do it better later
     * Stat card can now be shifted using the context menu
     * Can now rearange Traits and Abilities via dragging them
     * Stat cards Height variable is now more precise alowing for finner steps

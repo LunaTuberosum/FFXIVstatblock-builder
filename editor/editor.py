@@ -17,11 +17,8 @@ from singletons.keyBus import key_bus
 from src.gameProcess import GameProcess
 
 from ui.confirmElement import ConfirmElement
+from ui.uiElement import UIElement
 
-
-pygame.font.init()
-JUPITER_FONT: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\jupiter_pro_regular.otf', 40)
-MIEDINGER: pygame.Font = resourceHandler.load_font('assets/fonts/miedinger_medium.ttf', 18)
 
 class Editor(GameProcess):
     def __init__(self, main: object, sheet: Sheet, current_folder: Folder, prev_folders: list[Folder]) -> None:
@@ -118,9 +115,11 @@ class Editor(GameProcess):
         elif self.hover_object and isinstance(self.hover_object, CardComponent):
             pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_HAND))
             
+        elif self.hover_object and not isinstance(self.hover_object, UIElement): 
+            pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_HAND))
+            
         else:
             pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW))
-        
     def update(self) -> None:
         super().update()
         
@@ -160,7 +159,9 @@ class Editor(GameProcess):
                 confirm,
                 confirm_text='Exit',
                 cancel_text='Stay'
-            )
+            ),
+            False,
+            True
         )
         
     def menu_return(self) -> None:
@@ -196,8 +197,6 @@ class Editor(GameProcess):
                 card.draw(screen)
                 
             x += card.size[0] + 20
-        
-        screen.blit(MIEDINGER.render(str(round(self.main.clock.get_fps(), 1)), True, '#00ff00'), (screen.size[0]- 100, 10))
         
         super().draw()
         

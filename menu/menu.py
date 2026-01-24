@@ -14,11 +14,8 @@ from menu.folder import Folder
 
 from src.gameProcess import GameProcess
 from ui.confirmElement import ConfirmElement
+from ui.uiElement import UIElement
 
-
-pygame.font.init()
-JUPITER_FONT: pygame.font.Font = resourceHandler.load_font('.\\assets\\fonts\\jupiter_pro_regular.otf', 40)
-MIEDINGER: pygame.font.Font = resourceHandler.load_font('assets/fonts/miedinger_medium.ttf', 18)
 
 SAVE_X_START: int = 15
 SAVE_Y_START: int = 70
@@ -33,6 +30,8 @@ class Menu(GameProcess):
         self.prev_folder: list[Folder] = []
         
         self.dragged_file: MenuObject = None
+        
+        self.JUPITER_FONT: pygame.font.Font = resourceHandler.load_font('.\\assets\\fonts\\jupiter_pro_regular.otf', 40)
         
     def setup_bus_calls(self) -> None:
         super().setup_bus_calls()
@@ -224,6 +223,12 @@ class Menu(GameProcess):
 
         if self.hover_object:
             self.hover_object.hover()
+            
+        if self.hover_object and not isinstance(self.hover_object, UIElement): 
+            pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_HAND))
+            
+        else:
+            pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW))
     
         self.draw()
         
@@ -237,8 +242,8 @@ class Menu(GameProcess):
         
         screen.fill('#313031')
 
-        screen.blit(JUPITER_FONT.render('FFXIV TTRPG Stat Card Builder', True, '#000000'), (10, 22))
-        screen.blit(JUPITER_FONT.render('FFXIV TTRPG Stat Card Builder', True, '#CCCCCC'), (10, 20))
+        screen.blit(self.JUPITER_FONT.render('FFXIV TTRPG Stat Card Builder', True, '#000000'), (10, 22))
+        screen.blit(self.JUPITER_FONT.render('FFXIV TTRPG Stat Card Builder', True, '#CCCCCC'), (10, 20))
         
         x: int = SAVE_X_START
         y: int = SAVE_Y_START
@@ -268,6 +273,4 @@ class Menu(GameProcess):
         if self.dragged_file:
             self.dragged_file.draw(screen, pos[0], pos[1])
                 
-        screen.blit(MIEDINGER.render(str(round(self.main.clock.get_fps(), 1)), True, '#00ff00'), (screen.size[0]- 100, 10))
-        
         super().draw()

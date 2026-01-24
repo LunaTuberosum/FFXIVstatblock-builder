@@ -245,9 +245,10 @@ class List(Component):
             pygame.draw.rect(screen, '#525552', (self.size[0] - 13 + self.rect.x, self.rect.y + 48 + scroll_offset, 8, scroll_size))
         
         for component in self.components.values():
-            component.no_hover()
             if component.is_hover(pygame.mouse.get_pos()):
                 component.hover()
+            else:
+                component.no_hover()
             
             component.draw(screen, self.rect.topleft)
             
@@ -285,7 +286,19 @@ class List(Component):
             
         if self.dragged_list:
             self.dragged_list.draw(screen, pos)
-        
+            
+    def is_hover(self, mouse_pos: tuple[int, int]) -> bool:
+        is_hover: bool = False
+        for item in self.list_items:
+            if item.is_hover(mouse_pos):
+                is_hover = True
+                
+        for component in self.components.values():
+            if component.is_hover(mouse_pos):
+                is_hover = True
+
+        return is_hover
+
     def mouse_scroll_down(self) -> None:
         if len(self.list_items) <= 10:
             return

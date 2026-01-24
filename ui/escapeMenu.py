@@ -5,6 +5,7 @@ import pygame
 from singletons.eventBus import event_bus
 
 from ui.confirmElement import ConfirmElement
+from ui.systemElement import SystemElement
 from ui.uiElement import UIElement
 
 from uiComponents.button import Button
@@ -60,7 +61,7 @@ class EscapeMenu(UIElement):
                 size=(370, 24),
                 image=None,
                 image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
-                command=None,
+                command=self.system,
                 text='System Configuration'
             )
         )
@@ -110,4 +111,7 @@ class EscapeMenu(UIElement):
             confirm_text='Close',
             cancel_text='Close'
         ))
+    
+    def system(self) -> None:
+        event_bus.sign('ui_window', SystemElement())
         

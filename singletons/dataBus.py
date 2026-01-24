@@ -7,6 +7,13 @@ class DataBus(Bus):
     def __init__(self) -> None:
         super().__init__(
             {
+                'get_display': None,
+                
+                'get_resolution': None,
+                'get_fullscreen': None,
+                'get_fps': None,
+                'get_monitor': None,
+                
                 'get_folder_id': None,
                 
                 'add_color': None,

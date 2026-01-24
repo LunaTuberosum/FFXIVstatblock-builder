@@ -1,4 +1,6 @@
 from enum import Enum
+from screeninfo import get_monitors
+import pyautogui
 
 import pygame
 
@@ -10,11 +12,15 @@ class ScreenOptions(Enum):
 
 class Display():
     def __init__(self, width: int, height: int) -> None:
+        pyautogui.FAILSAFE = False
+        
         self.__width: int = width
         self.__height: int = height
         self.__fullscreen: ScreenOptions = ScreenOptions.WINDOWED
         self.__framerate: int = 0
         self.__vsync: bool = False
+        
+        self.__monitor: int = 1
         
         self.__volume: float = 1
         
@@ -61,6 +67,12 @@ class Display():
     def set_vsync(self, vsync: bool) -> None:
         self.__vsync = vsync
         
+    def get_monitor(self) -> int:
+        return self.__monitor
+    
+    def set_monitor(self, moniter: int) -> None:
+        self.__monitor = moniter
+        
     def get_volume(self) -> float:
         return self.__volume
     
@@ -70,7 +82,18 @@ class Display():
     def create_screen(self) -> None:
         flags = self.get_fullscreen_pygame()
         res = self.get_resolution()
+        
+        prev_pos: tuple[int, int] = pygame.mouse.get_pos(True)
+        
+        cursor_pos: tuple[int, int] = (0, 0)
+        monitors = get_monitors()
+        monitors.reverse()
+        cursor_pos = (monitors[self.__monitor - 1].x + 10, 0)
+        pyautogui.moveTo(cursor_pos[0], cursor_pos[1])
+        
         self.screen = pygame.display.set_mode(res, flags=flags, vsync=self.get_vsync())
+        
+        pyautogui.moveTo(prev_pos[0], prev_pos[1])
         
     def draw(self) -> None:
         pygame.display.flip()

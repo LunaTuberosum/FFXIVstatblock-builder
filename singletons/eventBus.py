@@ -10,6 +10,11 @@ class EventBus(Bus):
                 'quit': [],
                 'play_se': [],
                 
+                'set_master': [],
+                'mute_master': [],
+                
+                'set_resolution': [],
+                
                 'change_folder': [],
                 'move_file': [],
                 'duplicate_sheet': [],

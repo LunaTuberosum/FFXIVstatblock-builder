@@ -52,6 +52,8 @@ class GameLoop():
 
         if not setting_save:
             setting_save = {
+                'monitor': 1,
+                
                 'windowSize': (DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT),
                 'displayOption': 1,
                 'framerate': 0,
@@ -63,6 +65,7 @@ class GameLoop():
             resourceHandler.save_pickle('.//settings.pkl', setting_save)
 
         self.display = Display(setting_save['windowSize'][0], setting_save['windowSize'][1])
+        self.display.set_monitor(setting_save['monitor'])
         self.display.set_fullscreen(setting_save['displayOption'])
         self.display.set_framerate(setting_save['framerate'])
         self.display.set_vsync(setting_save['vsync'])

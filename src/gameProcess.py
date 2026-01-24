@@ -3,8 +3,10 @@ import pygame
 
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
+from singletons.dataBus import data_bus
 
 from src.contextMenu import ContextMenu
+from src.display import Display, ScreenOptions
 from src.keyHandler import KeyHandler
 from src.mouseHandler import MouseHandler
 from src.soundEffectHandler import SoundeEffectHandler
@@ -39,18 +41,42 @@ class GameProcess():
     def setup_bus_calls(self) -> None:
         event_bus.register('play_se', self.play_se)
         
+        event_bus.register('set_master', self.set_master)
+        event_bus.register('mute_master', self.mute_master)
+        
+        event_bus.register('set_resolution', self.set_resolution)
+        
         event_bus.register('context_menu', self.create_context_menu)
         event_bus.register('ui_window', self.create_ui_window)
         
         key_bus.register('esc_down', self.escape_menu)
         
+        data_bus.register('get_display', self.get_display)
+        
+        data_bus.register('get_resolution', self.get_resolution)
+        data_bus.register('get_fullscreen', self.get_fullscreen)
+        data_bus.register('get_fps', self.get_fps)
+        data_bus.register('get_monitor', self.get_monitor)
+        
     def deregister(self) -> None:
         event_bus.deregister('play_se', self.play_se)
+        
+        event_bus.deregister('set_master', self.set_master)
+        event_bus.deregister('mute_master', self.mute_master)
+        
+        event_bus.register('set_resolution', self.set_resolution)
         
         event_bus.deregister('context_menu', self.create_context_menu)
         event_bus.deregister('ui_window', self.create_ui_window)
         
         key_bus.deregister('esc_down', self.escape_menu)
+        
+        data_bus.deregister('get_display', self.get_display)
+        
+        data_bus.deregister('get_resolution', self.get_resolution)
+        data_bus.deregister('get_fullscreen', self.get_fullscreen)
+        data_bus.deregister('get_fps', self.get_fps)
+        data_bus.deregister('get_monitor', self.get_monitor)
         
     def is_event(self, event_id: int) -> pygame.Event:
         for event in self.events:
@@ -60,6 +86,14 @@ class GameProcess():
     def play_se(self, sound_name: str) -> None:
         self.sound_handler.play_se(sound_name)
     
+    def set_master(self, volume: float) -> None:
+        self.main.display.set_volume(volume)
+        self.sound_handler.set_volume(volume)        
+        
+    def mute_master(self) -> None:
+        self.main.display.set_volume(0)
+        self.sound_handler.set_volume(0)    
+        
     def create_context_menu(self, context_options: dict[str, Callable[[None], None]], addative: bool = False) -> None:
         if not context_options:
             if self.context_menu:
@@ -77,7 +111,7 @@ class GameProcess():
         
         self.context_menu = ContextMenu(self.mouse_handler.mouse_pos, 186, context_options)
         
-    def create_ui_window(self, window: UIElement, hold_window: bool = False) -> None:
+    def create_ui_window(self, window: UIElement, hold_window: bool = False, force: bool = False) -> None:
         event_bus.sign('context_menu', {})
         
         if self.ui_window and not hold_window:
@@ -85,7 +119,10 @@ class GameProcess():
             
         if hold_window:
             self.hold_window.append(self.ui_window)
-        
+            
+        if force:
+            self.hold_window = []
+
         if not window:
             self.ui_window = None
             
@@ -170,7 +207,7 @@ class GameProcess():
                 else: 
                     comp.no_hover()
             
-            if self.ui_window.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
+            if self.ui_window.is_hover(self.mouse_handler.mouse_pos) and not self.hover_object:
                 self.hover_object = self.ui_window
                 
         if self.is_event(pygame.QUIT):
@@ -186,7 +223,9 @@ class GameProcess():
                 confirm,
                 confirm_text='Exit',
                 cancel_text='Stay'
-            )
+            ),
+            False,
+            True
         )
         
     def escape_menu(self) -> None:
@@ -197,7 +236,9 @@ class GameProcess():
         event_bus.sign('ui_window', 
             EscapeMenu(
                 self.menu_options()
-            )
+            ),
+            False,
+            True
         )
         
     def menu_options(self) -> dict[str, Callable[[None], None]]:
@@ -211,3 +252,21 @@ class GameProcess():
             self.context_menu.draw(self.main.get_screen())
         
         self.main.display.draw()
+        
+    def set_resolution(self, resolution: tuple[int, int]) -> None:
+        self.main.display.set_resolution(resolution[0], resolution[1])
+        
+    def get_display(self) -> Display:
+        return self.main.display
+        
+    def get_resolution(self) -> tuple[int, int]:
+        return self.main.display.get_resolution()
+    
+    def get_fullscreen(self) -> ScreenOptions:
+        return self.main.display.get_fullscreen()
+        
+    def get_fps(self) -> int:
+        return round(self.main.clock.get_fps())
+    
+    def get_monitor(self) -> int:
+        return self.main.display.get_monitor()

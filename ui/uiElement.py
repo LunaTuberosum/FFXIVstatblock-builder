@@ -115,28 +115,9 @@ class UIElement():
 
         self.image.blit(self.font_title.render(f'{self.title}{" Configuration" if self.write_config else ""}', True, '#000000'), TITLE_POS_OFFSET)
         self.image.blit(self.font_title.render(f'{self.title}{" Configuration" if self.write_config else ""}', True, '#CCCCCC' if not self.hovering else '#dedede'), TITLE_POS)
-
-    def tab(self, textbox: TextBox) -> None:
-        current_box: TextBox = None
-        next_box: TextBox = None
-        for component in self.components.values():
-            if not isinstance(component, TextBox):
-                continue
-            
-            if component == textbox:
-                current_box = component
-                continue
-            
-            if current_box:
-                next_box = component
-                break
-                
-        if not next_box:
-            current_box.end_field()
-            return
-                
-        current_box.end_field()
-        next_box.activate()
+      
+    def is_hover(self, mouse_pos: tuple[int, int]) ->  bool:
+        return self.rect.collidepoint(mouse_pos)
         
     def tab(self, textbox: TextBox) -> None:
         current_box: TextBox = None

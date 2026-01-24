@@ -29,6 +29,9 @@ class KeyBus(Bus):
                 'space_down': [],
                 'space_up': [],
                 
+                'shift_down': [],
+                'shift_up': [],
+                
                 'left_arrow_down': [],
                 'left_arrow_up': [],
                 

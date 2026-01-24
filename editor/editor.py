@@ -34,6 +34,8 @@ class Editor(GameProcess):
             'space_down': False
         }
         
+        self.hori_scroll: bool = False
+        
         self.text_colors: list[str] = []
         
         self.stat_cards: list[StatCard] = []
@@ -49,6 +51,9 @@ class Editor(GameProcess):
         
         key_bus.register('space_down', self.space_down)
         key_bus.register('space_up', self.space_up)
+        
+        key_bus.register('shift_down', self.shift_down)
+        key_bus.register('shift_up', self.shift_up)
         
         data_bus.register('get_colors', self.get_colors)
         data_bus.register('add_color', self.add_color)
@@ -68,6 +73,9 @@ class Editor(GameProcess):
         
         key_bus.deregister('space_down', self.space_down)
         key_bus.deregister('space_up', self.space_up)
+        
+        key_bus.deregister('shift_down', self.shift_down)
+        key_bus.deregister('shift_up', self.shift_up)
         
         data_bus.deregister('get_colors', self.get_colors)
         data_bus.deregister('add_color', self.add_color)
@@ -102,6 +110,12 @@ class Editor(GameProcess):
     def space_up(self) -> None:
         self.can_pan['space_down'] = False
         
+    def shift_down(self) -> None:
+        self.hori_scroll = True
+        
+    def shift_up(self) -> None:
+        self.hori_scroll = False
+        
     def on_click(self) -> None:
         self.can_pan['left_down'] = True
         
@@ -112,6 +126,9 @@ class Editor(GameProcess):
         if self.can_pan['space_down']:
             pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_SIZEALL))
             
+        elif self.hori_scroll:
+            pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_SIZEWE))
+            
         elif self.hover_object and isinstance(self.hover_object, CardComponent):
             pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_HAND))
             
@@ -120,6 +137,7 @@ class Editor(GameProcess):
             
         else:
             pygame.mouse.set_cursor(pygame.cursors.Cursor(pygame.SYSTEM_CURSOR_ARROW))
+            
     def update(self) -> None:
         super().update()
         
@@ -128,6 +146,21 @@ class Editor(GameProcess):
                 min(self.pan[0] + event.rel[0], 0), 
                 min(self.pan[1] + event.rel[1], 0)
             )
+        
+        if event := self.is_event(pygame.MOUSEWHEEL):
+                if self.hori_scroll:
+                    self.pan = (
+                        min(self.pan[0] + event.y * 40, 0),
+                        self.pan[1]
+                    )
+                else:
+                    self.pan = (
+                        self.pan[0],
+                        min(self.pan[1] + event.y * 40, 0)
+                    )
+                    
+        if pygame.key.get_mods() & pygame.KMOD_CTRL and (key := self.is_event(pygame.KEYDOWN)) and key.key == pygame.K_SPACE:
+            self.pan = (0, 0)
             
         for card in self.stat_cards:
             card.no_hover()

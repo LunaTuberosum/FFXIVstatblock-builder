@@ -28,6 +28,9 @@ class KeyHandler():
         if keys[pygame.K_SPACE]:
             key_bus.sign('space_down')
             
+        if keys[pygame.K_LSHIFT]:
+            key_bus.sign('shift_down')
+            
         if keys[pygame.K_ESCAPE]:
             key_bus.sign('esc_down')
     
@@ -36,3 +39,6 @@ class KeyHandler():
         
         if keys[pygame.K_SPACE]:
             key_bus.sign('space_up')
+            
+        if keys[pygame.K_LSHIFT]:
+            key_bus.sign('shift_up')

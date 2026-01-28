@@ -56,6 +56,11 @@ To backup your save do the following:
 
 
 ## Changelog
+### Version 0.93.1
+```
+* Added Dawnblooms's Edda Blackblossom bossfight as an example stat sheet
+```
+
 ### Version 0.93
 ```
 * Rebuilt program from the ground up to improve FPS and workflow

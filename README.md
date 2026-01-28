@@ -8,10 +8,12 @@ Welcome to the program version of the stat block creator. With this using a simp
 Within this program there is an example stat sheet (collection of stat cards). This is there to help you understand what is all capable with this program and let you have an easy play ground to learn.
 
 
-The example stat sheet is based of the ***Minstrel's Ballad: Lord of the Corpse Hall*** by TheVagueOne the FFXIV TTRPG Discord.
+The example stat sheet is based of the ***Minstrel's Ballad: Lord of the Corpse Hall*** by TheVagueOne and ***Dawnbloom’s Eorzean Clan Bestiary: Edda Blackblosom Boss Fight*** by Dawnbloom the FFXIV TTRPG Discord.
 
 links:
 * [Minstrel's Ballad: Lord of the Corpse Hall](docs.google.com/document/d/1LtJxy7w1lv_Khc6ugvk2rp1ocL3LZ8DtV0H8K9JPZ2Q/edit?usp=drive_web&ouid=114165381399485093355) by TheVagueOne
+
+* [Dawnbloom’s Eorzean Clan Bestiary](https://docs.google.com/document/d/1pU5dr0elrL9pX-OhceRftGKmIFjhtUFuvYVI_ZNDX7w/edit?tab=t.0#heading=h.h6ylbgaq3n64) by Dawnbloom
 
 If you have any problems please message me on Discord. If you run into a bug please file a report here:
 

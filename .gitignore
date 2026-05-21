@@ -1,8 +1,9 @@
 .venv
-__pycache__/
 *.pyc
-logs/*
+settings.pkl
 !logs/Logs go in here.txt
+__pycache__/
+logs/*
 dist
 main.spec
 build

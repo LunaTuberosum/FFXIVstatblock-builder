@@ -66,6 +66,9 @@ class UIElement():
             command=self.close
         ))
         
+        self.play_open()
+        
+    def play_open(self):
         event_bus.sign('play_se', 'open_window')
         
     def deregister(self) -> None:

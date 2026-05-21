@@ -1,0 +1,120 @@
+{
+    "viewed": false,
+    "name": "Version .931 Changelog",
+    "maxPage": 2,
+    "warning": "The amount that Height on stat cards increases by has been decresed again. This may cause clipping issues with you stat blocks. You only need to increase the Height or Width to fix this issue.",
+    "text": [
+        [
+            "title",
+            "CHANGELOG COMPONENT"
+        ],
+        [
+            "text",
+            "Added the most recent changelog to automatically open upon update/installation. So you can't miss it."
+        ],
+        [
+            "text",
+            "Added all previous changelogs to the escape menu under the [Changelog] button."
+        ],
+        [
+            "title",
+            "CARD COMPONENT"
+        ],
+        [
+            "text",
+            "Height's increase has been lowered. This should remove some akwardness."
+        ],
+        [
+            "title",
+            "NAME COMPONENT"
+        ],
+        [
+            "text",
+            "Added the ability to toggle between the enemy Tiers from the Gamemaster book and levels. I'm not sure \nhow I feel about the tiers but I need to add them."
+        ],
+        [
+            "text",
+            "Additionally when switching between the two in the Edit Card menu it will set the \"level\" to the \nappropriate lowest value (Mob/00)."
+        ],
+        [
+            "text",
+            "Decreased the size of the level text when set to be in the top right of the card. Was just a little to big \ncompared to the official books."
+        ],
+        [
+            "break",
+            "1"
+        ],
+        [
+            "title",
+            "EFFECT COMPONENT"
+        ],
+        [
+            "text",
+            "Clicking on an effect in Effect Configuration's list only requires one click instead of two. Felt weird to have \nto double click."
+        ],
+        [
+            "text",
+            "Clicking on to a different effect now saves the effect you are working on. Should of done this before and \nshould especially do this now that changing effects is easier."
+        ],
+        [
+            "text",
+            "Changing an effect to a Preset saves the effect and updates the card. I thought it looked weird not to."
+        ],
+        [
+            "text",
+            "Adding or Removing and effect cause the card to update. It looks cleaner and continues the trend of \nupdating more often."
+        ],
+        [
+            "text",
+            "Adding the first effect on a ability will cause you to immediately have it selected. Less clicks :)."
+        ],
+        [
+            "text",
+            "When removing the last effect on an ability it will clear all fields. Looks nicer that way."
+        ],
+        [
+            "text",
+            "Changing to a different effect changes the preset button back to its default state. Just looks bad when it \ndoesn't do that."
+        ],
+        [
+            "text",
+            "Confirmation menus no longer can be clicked away by clicking anywhere else on the screen. It caused a \nlot of issues."
+        ],
+        [
+            "break",
+            "2"
+        ],
+        [
+            "title",
+            "BUGS"
+        ],
+        [
+            "text",
+            "Fixed smaller dropdowns option background extending far past button size. Now fits nicely in bounds."
+        ],
+        [
+            "text",
+            "Fixed the program crashing when trying to click on a new effect when their is only one effect. How this \nhappens is really weird but it is now fixed."
+        ],
+        [
+            "text",
+            "Fixed not being able to add colons to Trait and Ability names. Oversite on my part mb."
+        ],
+        [
+            "text",
+            "Fixed Git not tracking the logs folder, meaning you have to try to crash a program again when it crashes \ninstead of just looking for a txt file."
+        ],
+        [
+            "text",
+            "Fixed confirmation menus X button not working."
+        ],
+        [
+            "text",
+            "Fixed when deleting a effect that had been modified there would be an additional click when clicking \nafter the Confirmation Menu was made. This was the most annoying bug in the WORLD to fix."
+        ],
+        [
+            "text",
+            "Fixed context menu not closing when saving a sheet. Idk how I missed this one."
+        ]
+    ]
+}

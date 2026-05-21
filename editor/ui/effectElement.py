@@ -158,9 +158,17 @@ class EffectElement(StatCardElement[AbilityComponent]):
             comp.draw(screen, self.pos)
             
     def update_effect(self) -> None:
+        if not self.current_effect:
+            return
+        
         self.get_component('Name_Text').change_text(self.current_effect[0])
         self.get_component('Desc_Text').change_text(self.current_effect[1].desc, self.current_effect[1].format_data)
         self.get_component('Inline_Toggle').set_option('On' if self.current_effect[1].in_line else 'Off')
+            
+    def clear(self) -> None:
+        self.get_component('Name_Text').change_text('')
+        self.get_component('Desc_Text').change_text('')
+        self.get_component('Inline_Toggle').set_option('Off')
             
     def change_inline(self, selection: str) -> None:
         self.get_component('Inline_Toggle').set_option(selection)
@@ -172,6 +180,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
         def confirm():
             event_bus.sign('ui_window', None)
             modify_text()
+            self.apply()
             
         if not name_text.text.startswith('Effect') or desc_text.text != '':
             event_bus.sign('ui_window', ConfirmElement(
@@ -192,6 +201,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def target_area(self) -> None:
         def modify_text():
@@ -203,6 +213,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def origin(self) -> None:
         def modify_text():
@@ -214,6 +225,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def range_single(self) -> None:
         def modify_text():
@@ -225,6 +237,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
     
     def range_single_ranged(self) -> None:
         def modify_text():
@@ -236,6 +249,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def range_area(self) -> None:
         def modify_text():
@@ -247,6 +261,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def range_area_ranged(self) -> None:
         def modify_text():
@@ -258,6 +273,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def check(self) -> None:
         def modify_text():
@@ -269,6 +285,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def cr(self) -> None:
         def modify_text():
@@ -280,6 +297,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def base_effect(self) -> None:
         def modify_text():
@@ -291,6 +309,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def direct_hit(self) -> None:
         def modify_text():
@@ -302,6 +321,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def marker_area(self) -> None:
         def modify_text():
@@ -313,6 +333,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def marker_trigger(self) -> None:
         def modify_text():
@@ -324,6 +345,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def marker_effect(self) -> None:
         def modify_text():
@@ -335,6 +357,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
         
     def limitation(self) -> None:
         def modify_text():
@@ -346,6 +369,7 @@ class EffectElement(StatCardElement[AbilityComponent]):
             return
         
         modify_text()
+        self.apply()
             
     def _render_text_face(self):
         super()._render_text_face()

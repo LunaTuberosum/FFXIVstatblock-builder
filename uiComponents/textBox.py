@@ -638,7 +638,7 @@ class TextBox(Component):
             event_bus.sign('play_se', 'confirm')
             self.tabbing_command(self)
             
-        if not re.match(r'[A-Za-z0-9()-_[\]<> "\'{}#]', unicode) or re.match(r'[:;]', unicode):
+        if not re.match(r'[A-Za-z0-9()-_[\]<> "\'{}#]', unicode):
             return
         
         if self.char_limit != -1 and len(self.text) >= self.char_limit:

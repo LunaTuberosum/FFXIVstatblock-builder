@@ -182,8 +182,11 @@ class List(Component):
                 count += 1
                 
             self.set_effects()
+            
+            if count == 1:
+                self.__modify_effect(self.list_items[0])
                 
-        if num_effects < len(self.element.effects):
+        elif num_effects < len(self.element.effects):
             def lower_effects():
                 new_effects: dict[str, EffectData] = {}
                 
@@ -205,9 +208,13 @@ class List(Component):
                     
                 self.set_effects()
                 
-            def confirm():
+            def confirm():                
                 event_bus.sign('ui_window', None)  
                 lower_effects()
+                self.element.apply()
+                
+                if len(self.list_items) == 0:
+                    self.element.clear()
                 
             def cancel():
                 event_bus.sign('ui_window', None)
@@ -215,7 +222,9 @@ class List(Component):
             
             last_key: str = list(self.element.effects.keys())[-1]
             
-            if not last_key.startswith('Effect') or self.element.effects[last_key].desc:
+            if not last_key.startswith('Effect') or self.element.effects[last_key].desc or \
+                (self.element.current_effect[0] == last_key and (not self.element.get_component('Name_Text').text.startswith('Effect') or self.element.get_component('Desc_Text').text)):
+                    
                 confirm_elemnet: ConfirmElement = ConfirmElement(
                     'This effect has been modified in some way.\nWould you like to delete it?',
                     confrim_command=confirm
@@ -223,13 +232,16 @@ class List(Component):
                 confirm_elemnet.change_cancel_commnad(cancel)
                 
                 event_bus.sign('ui_window', confirm_elemnet, True)
+                self.get_component('Effect_Minus').no_hover()
                 
             else:
                 lower_effects()
+                if len(self.list_items) == 0:
+                    self.element.clear()
+                
+        self.element.apply()
             
     def draw(self, screen: pygame.Surface, parent_pos: tuple[int, int]) -> None:
-        self.handle_effects()
-        
         super().draw(screen, parent_pos)
         
         self.image.blit(self.background)
@@ -252,6 +264,8 @@ class List(Component):
             
             component.draw(screen, self.rect.topleft)
             
+        self.handle_effects()
+        
         y: int = 49
         self.dragged_list = None
         pos: tuple[int, int] = ()
@@ -334,6 +348,11 @@ class List(Component):
         textbox.change_text(str(new_value)) 
         
     def change_effect(self, list_item: ListItem) -> None:
+        self.element.apply()
+        self.__modify_effect(list_item)
+        self.element.get_component('Preset_Dropdown').change_selection('Please Select a Preset...')
+        
+    def __modify_effect(self, list_item: ListItem) -> None:
         self.element.current_effect = (list_item.effect_name, list_item.effect_data)
         self.element.update_effect()
         

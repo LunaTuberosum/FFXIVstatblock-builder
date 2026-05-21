@@ -63,7 +63,10 @@ class Dropdown(Component):
         
         self.option_hover: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\DropDownHoverBackground.png')
         
-        back_size = (294,  (len(self.options) * 30) + 10)
+        back_size = (
+            294 if size == 'Large' else 234, 
+            (len(self.options) * 30) + 10
+        )
         self.background: pygame.Surface = pygame.Surface(back_size, pygame.SRCALPHA)
         self.__draw_background()
         
@@ -132,11 +135,14 @@ class Dropdown(Component):
                 selection = name
                 break
             
-        self.selected_option = selection
-        self.__draw_text_face()
+        self.change_selection(selection)
         self.active = False
         
         data.command()
+        
+    def change_selection(self, selection: str) -> None:
+        self.selected_option = selection
+        self.__draw_text_face()
         
     def check_off_click(self) -> None:
         if self.hovering or not self.active:

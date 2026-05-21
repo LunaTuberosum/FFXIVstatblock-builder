@@ -254,8 +254,10 @@ class Editor(GameProcess):
         event_bus.sign('ui_window', AddCardElement())
         
     def save(self) -> None:
+        event_bus.sign('context_menu', None)
+        
         save_dict: dict = {
-            'version': '2.0',
+            'version': '2.1',
             'colors': self.get_colors(),
         }
         for index, card in enumerate(self.stat_cards):

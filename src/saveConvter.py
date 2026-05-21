@@ -5,8 +5,8 @@ def check_saves(folder: str) -> None:
     for m_file in resourceHandler.load_dir(f'.\\saves\\{folder}'):
         if m_file.endswith('.json'):
             sheet = resourceHandler.load_json(f'.\\saves\\{folder}\\{m_file}')
-            
-            if sheet.get('version'):
+             
+            if sheet.get('version') == '2.1':
                 continue
             
             sheet = reformat_sheet(sheet)
@@ -89,28 +89,47 @@ def reformat_text(text: str) -> tuple[str, dict[str, dict]]:
             
 def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
     new_sheet: dict[str, dict[str]] = {
-        'version': '2.0',
+        'version': '2.1',
         'colors': []
     }
     
     for card_id, card_data in sheet.items():
+        if card_id == 'version': continue
+        if card_id == 'colors': continue
+        
+        height: int = card_data['height']
+        if float(sheet.get('version', 1.0)) < 2.0:
+            height = (card_data['height'] + 2) * 2
+        
         card: dict[str, dict] = {
             'width': card_data['width'],
-            'height': (card_data['height'] + 2) * 2,
-            'components': {
-                'Name_Component': card_data['components']['NameComponent [0]'],
-                'Top_Stat_Component': card_data['components']['TopStatsComponent [1]']
-            }
+            'height': height,
+            'components': {}
         }
         
         for comp_name, comp_data in card_data['components'].items():
-            if comp_name == 'Traits_Title':
+            if comp_name.startswith('Name'):
+                card['components']['Name_Component'] = {
+                    'name': comp_data['name'],
+                    'is_tier': False,
+                    'level': comp_data['level'],
+                    'levelPosition': comp_data['levelPosition']
+                }
+                
+            elif comp_name.startswith('Top'):
+                card['components']['Top_Stat_Component'] = comp_data
+                
+            elif comp_name == 'Traits_Title':
                 card['components']['Traits_Title'] = comp_data
                 
             elif comp_name == 'Abilities_Title':
                 card['components']['Abilities_Title'] = comp_data
                 
             elif comp_name.startswith('Trait'):
+                if float(sheet.get('version', 1.0)) >= 2.0:
+                    card['components'][comp_name] = comp_data
+                    continue
+                
                 new_desc, format_data = reformat_text(comp_data['desc'])
                 
                 card['components'][comp_name] = {
@@ -120,6 +139,10 @@ def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
                 }
                 
             elif comp_name.startswith('Ability'):
+                if float(sheet.get('version', 1.0)) >= 2.0:
+                    card['components'][comp_name] = comp_data
+                    continue
+                
                 new_effects: dict[str, str] = {}
                 extra_text: str = ''
                 

@@ -1,5 +1,5 @@
 {
-    "version": "2.0",
+    "version": "2.1",
     "colors": [],
     "0": {
         "width": 3,
@@ -7,6 +7,7 @@
         "components": {
             "Name_Component": {
                 "name": "Odin, The Unbroken",
+                "is_tier": false,
                 "level": "50",
                 "levelPosition": false
             },
@@ -1236,6 +1237,7 @@
         "components": {
             "Name_Component": {
                 "name": "Gungnir",
+                "is_tier": false,
                 "level": "50",
                 "levelPosition": false
             },
@@ -1459,6 +1461,7 @@
         "components": {
             "Name_Component": {
                 "name": "Odin, Lord of the Eternal Hall",
+                "is_tier": false,
                 "level": "50",
                 "levelPosition": false
             },

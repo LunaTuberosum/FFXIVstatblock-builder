@@ -1,0 +1,75 @@
+{
+    "version": "2.1",
+    "colors": [],
+    "0": {
+        "width": 1,
+        "height": 5,
+        "components": {
+            "Name_Component": {
+                "name": "Character Name",
+                "is_tier": true,
+                "level": "Mob",
+                "levelPosition": true
+            },
+            "Top_Stat_Component": {
+                "token": false,
+                "creatureSize": "Medium (1x1)",
+                "species": "Character Species",
+                "vigilance": "10",
+                "defense": "10",
+                "magicDefense": "10",
+                "maxHP": "0",
+                "speed": "0",
+                "str": "0",
+                "dex": "0",
+                "vit": "0",
+                "int": "0",
+                "mnd": "0"
+            },
+            "Abilities_Title": {
+                "section": "Abilities"
+            },
+            "Ability_1": {
+                "name": "Ability 2",
+                "invk": false,
+                "types": "",
+                "effects": {
+                    "Effect 0": {
+                        "desc": "asdasd",
+                        "format": {},
+                        "in_line": false
+                    }
+                },
+                "extra_text": "",
+                "marker": null
+            }
+        }
+    },
+    "1": {
+        "width": 1,
+        "height": 1,
+        "components": {
+            "Name_Component": {
+                "name": "Character Name",
+                "is_tier": false,
+                "level": "00",
+                "levelPosition": true
+            },
+            "Top_Stat_Component": {
+                "token": false,
+                "creatureSize": "Medium (1x1)",
+                "species": "Character Species",
+                "vigilance": "10",
+                "defense": "10",
+                "magicDefense": "10",
+                "maxHP": "0",
+                "speed": "0",
+                "str": "0",
+                "dex": "0",
+                "vit": "0",
+                "int": "0",
+                "mnd": "0"
+            }
+        }
+    }
+}

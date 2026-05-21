@@ -50,7 +50,6 @@ class ListItem():
         self.hovering: bool = False
         
         self.current: bool = False
-        self.click_timer: Timer = Timer(300)
         
         self.active: bool = True
         
@@ -94,12 +93,7 @@ class ListItem():
             return
         event_bus.sign('play_se', 'confirm')
         
-        if self.click_timer.time_left() > 0:
-            self.command(self)
-            self.click_timer.start()
-            return
-        
-        self.click_timer.start()
+        self.command(self)
         
         if not self.drag:
             mouse: tuple[int, int] = pygame.mouse.get_pos()

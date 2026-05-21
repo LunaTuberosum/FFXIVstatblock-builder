@@ -118,6 +118,7 @@ class GameProcess():
             self.ui_window.deregister()
             
         if hold_window:
+            self.ui_window.no_hover()
             self.hold_window.append(self.ui_window)
             
         if force:

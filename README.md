@@ -21,7 +21,7 @@ If you have any problems please message me on Discord. If you run into a bug ple
 
 
 ### **!! WARNING !!**
-This current version **(0.93)** it has all the features necessary to make a stat card but may still be buggy and missing QOL features. 1.0 is comming but due to how long 0.93 took me it may take a bit. Please report all bugs and jank. Thank you
+This current version **(0.93.2)** it has all the features necessary to make a stat card but may still be buggy and missing QOL features. 1.0 is comming but due to how long 0.93 took me it may take a bit. Please report all bugs and jank. Thank you
 
 ### **!! WARNING PT. 2 !!**
 If you used this program prior to **Version 0.93** and are updating it. Please BACKUP your saves. The way saves work was changed and there for could cause corruption when the program tries to update them.
@@ -37,7 +37,6 @@ To backup your save do the following:
 7. If it fails again, contact me.
 
 ### How to download
-
 
 1. Click on the blue/green [<> Code] button in the top right.
 2. Click [Download ZIP]
@@ -58,6 +57,61 @@ To backup your save do the following:
 
 
 ## Changelog
+### Version 0.93.2
+```
+CHANGELOG COMPONENT
+
+* Added the most recent changelog to automatically open upon update/installation. So you can’t miss it.
+
+* Added all previous changelogs to the escape menu under the [Changelogs] button.
+
+CARD COMPONENT
+
+* Height's increase has been lowered. This should remove some akwardness.
+
+NAME COMPONENT
+
+*Added the ability to toggle between the enemy Tiers from the Gamemaster book and levels. I’m not sure how I feel about the tiers but I need to add them.
+
+*Additionally when switching between the two in the Edit Card menu it will set the “level” to the appropriate lowest value (Mob/00).
+
+*Decreased the size of the level text when set to be in the top right of the card. Was just a little to big compared to the official books.
+
+EFFECT COMPONENT
+
+* Clicking on an effect in Effect Configuration’s list only requires one click instead of two. Felt weird to have to double click.
+
+* Clicking on to a different effect now saves the effect you are working on. Should of done this before and should especially do this now that changing effects is easier.
+
+* Changing an effect to a Preset saves the effect and updates the card. I thought it looked weird not to.
+
+* Adding or Removing and effect cause the card to update. It looks cleaner and continues the trend of updating more often.
+
+* Adding the first effect on a ability will cause you to immediately have it selected. Less clicks :).
+
+* When removing the last effect on an ability it will clear all fields. Looks nicer that way.
+
+* Changing to a different effect changes the preset button back to its default state. Just looks bad when it doesn’t do that.
+
+* Confirmation menus no longer can be clicked away by clicking anywhere else on the screen. It caused a lot of issues.
+
+BUGS
+
+* Fixed smaller dropdowns option background extending far past button size. Now fits nicely in bounds.
+
+* Fixed the program crashing when trying to click on a new effect when their is only one effect. How this happens is really weird but it is now fixed.
+
+* Fixed not being able to add colons to Trait and Ability names. Oversite on my part mb.
+
+* Fixed Git not tracking the logs folder, meaning you have to try to crash a program again when it crashes instead of just looking for a txt file.
+
+* Fixed confirmation menus X button not working. 
+
+* Fixed when deleting a effect that had been modified there would be an additional click when clicking after the Confirmation Menu was made. This was the most annoying bug in the WORLD to fix.
+
+* Fixed context menu not closing when saving a sheet. Idk how I missed this one.
+```
+
 ### Version 0.93.1
 ```
 * Added Dawnblooms's Edda Blackblossom bossfight as an example stat sheet

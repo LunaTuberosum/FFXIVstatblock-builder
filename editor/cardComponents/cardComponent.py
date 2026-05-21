@@ -11,6 +11,10 @@ SMALL_CASE_BRACKET: int = 2
 SMALL_CASE_UPPER: int = 4
 SMALL_CASE_LOWER: int = 8
 
+TINY_CASE_BRACKET: int = 4
+TINY_CASE_UPPER: int = 6
+TINY_CASE_LOWER: int = 8
+
 class CardComponent():
     def __init__(self, name: str, size: tuple[int, int], pos: tuple[int, int], card: object) -> None:
         self.name: str = name
@@ -29,6 +33,7 @@ class CardComponent():
         
         self.font_cap: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\LibreBaskerville.ttf', 24)
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\LibreBaskerville.ttf', 20)
+        self.font_tiny: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\LibreBaskerville.ttf', 18)
         
         self.hovering: bool = False
         
@@ -159,5 +164,28 @@ class CardComponent():
             else:
                 render: pygame.Surface = self.font.render(char.upper(), True, '#954E40')
                 self.text_face.blit(render, (x, pos[1] + SMALL_CASE_LOWER))
+                x += render.get_width()
+                
+    def _render_tiny_case(self, text: str, pos: tuple[int, int]) -> None:
+        characters: list[str] = list(text)
+        
+        x: int = pos[0]
+        for char in characters:
+            if char.isspace():
+                x += self.font.size(' ')[0]
+                
+            elif char == '[' or char == ']':
+                render: pygame.Surface = self.font.render(char, True, '#954E40')
+                self.text_face.blit(render, (x, pos[1] + TINY_CASE_BRACKET))
+                x += render.get_width()
+                
+            elif char.isupper() or char.isnumeric():
+                render: pygame.Surface = self.font.render(char, True, '#954E40')
+                self.text_face.blit(render, (x, pos[1] + TINY_CASE_UPPER))
+                x += render.get_width()
+                
+            else:
+                render: pygame.Surface = self.font_tiny.render(char.upper(), True, '#954E40')
+                self.text_face.blit(render, (x, pos[1] + TINY_CASE_LOWER))
                 x += render.get_width()
                 

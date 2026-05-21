@@ -19,15 +19,18 @@ class SoundeEffectHandler():
         self.hover: pygame.Sound = pygame.Sound('.\\assets\\se\\FFXIV_Hover.wav')
         self.hover.set_volume(.3)
         
+        self.notification: pygame.Sound = pygame.Sound('.\\assets\\se\\FFXIV_Notification.mp3')
+        self.notification.set_volume(.1)
+        
     def set_volume(self, volume: float) -> None:
         self.volume = volume
-        
         
         self.close_window.set_volume(.1 * self.volume)
         self.open_window.set_volume(.1 * self.volume)
         self.confirm.set_volume(.3 * self.volume)
         self.cancel.set_volume(.3 * self.volume)
         self.hover.set_volume(.3 * self.volume)
+        self.notification.set_volume(.1 * self.volume)
         
     def play_se(self, sound_name: str) -> None:
         match (sound_name):
@@ -45,3 +48,6 @@ class SoundeEffectHandler():
                 
             case 'hover':
                 self.hover.play()
+                
+            case 'notification':
+                self.notification.play()

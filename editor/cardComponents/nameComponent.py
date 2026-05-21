@@ -5,8 +5,11 @@ from editor.cardComponents.cardComponent import CardComponent
 from singletons.eventBus import event_bus
 
 
-LEVEL_END = False
-LEVEL_TOPRIGHT = True
+LEVEL_NUM: int = 0
+LEVEL_TIER: int = 1
+
+LEVEL_END: bool = False
+LEVEL_TOPRIGHT: bool = True
 
 NAME_LIMIT_END: int = 512
 NAME_LIMIT_TOPLEFT: int = 500
@@ -15,7 +18,7 @@ BASE_HEIGHT: int = 36
 LINE_HEIGHT: int = 30
 
 class NameComponent(CardComponent):
-    def __init__(self, card: object) -> None:
+    def __init__(self, card: object, is_tier: bool = False) -> None:
         super().__init__(
             name='NameComponent',
             size=(512, 36),
@@ -24,8 +27,9 @@ class NameComponent(CardComponent):
         )
         
         self.name: str = 'Character Name'
-        self.level: str = '00'
-        self.level_position: bool = LEVEL_END
+        self.level_type: int = LEVEL_NUM if not is_tier else LEVEL_TIER
+        self.level: str = '00' if self.level_type == LEVEL_NUM else 'Mob'
+        self.level_position: bool = LEVEL_TOPRIGHT
 
         self.__draw_text_face()
         
@@ -50,12 +54,14 @@ class NameComponent(CardComponent):
     def save(self) -> dict:
         return {
             'name': self.name,
+            'is_tier': self.level_type == LEVEL_TIER,
             'level': self.level,
             'levelPosition': self.level_position
         }
     
     def load(self, data: dict[str]) -> None:
         self.name = data['name']
+        self.level_type = LEVEL_TIER if data['is_tier'] else LEVEL_NUM
         self.level = data['level']
         self.level_position = data['levelPosition']
 
@@ -69,7 +75,18 @@ class NameComponent(CardComponent):
         
         level: str = f'[L{self.level}]'
         
-        limit: int = NAME_LIMIT_TOPLEFT - self.font_cap.size(level)[0]
+        if self.level_type == LEVEL_TIER:
+            level = f'{self.level}'
+            
+            if self.level_position == LEVEL_END:
+                level = f'[{self.level}]'
+            
+        level_size: tuple[int, int] = (
+            self.font_cap.size(level[0])[0] + self.font.size(level[1:])[0],
+            self.font_tiny.size(level)[1]
+        )
+        
+        limit: int = NAME_LIMIT_TOPLEFT - level_size[0]
         
         words: list[str] = self.name.split(' ')
         if self.level_position == LEVEL_END:
@@ -106,7 +123,7 @@ class NameComponent(CardComponent):
             y += LINE_HEIGHT
             
         if self.level_position == LEVEL_TOPRIGHT:
-            self._render_small_case(level, (limit, 0))
+            self._render_tiny_case(level, (limit, 0))
             
         
         

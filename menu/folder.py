@@ -56,6 +56,7 @@ class Folder(MenuObject):
         if not self.hovering:
             return
         super().on_click()
+        event_bus.sign('ui_window', None)
         
         if self.click_timer.time_left() > 0:
             self.no_hover()

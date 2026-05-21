@@ -28,7 +28,7 @@ class GameLoop():
         
         pygame.mixer.set_num_channels(3)
         
-        pygame.display.set_caption('FFXIV TTRPG Stat Card Builder V0.93')
+        pygame.display.set_caption('FFXIV TTRPG Stat Card Builder V0.93.2')
         pygame.display.set_icon(resourceHandler.load_image('.\\assets\\icon.ico'))
         
         pygame.key.set_repeat(200, 100)

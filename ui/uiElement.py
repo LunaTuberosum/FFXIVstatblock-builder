@@ -66,6 +66,9 @@ class UIElement():
             command=self.close
         ))
         
+        self.play_open()
+        
+    def play_open(self):
         event_bus.sign('play_se', 'open_window')
         
     def deregister(self) -> None:
@@ -91,7 +94,7 @@ class UIElement():
         if not self.hovering:
             return
         self.hovering = False
-
+            
     def hover(self) -> None:
         self.hovering = True
         

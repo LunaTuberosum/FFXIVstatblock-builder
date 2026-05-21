@@ -1,7 +1,5 @@
 import pygame
 
-from singletons.eventBus import event_bus
-
 from ui.uiElement import UIElement
 
 from uiComponents.button import Button

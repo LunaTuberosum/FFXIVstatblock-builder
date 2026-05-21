@@ -65,6 +65,9 @@ class ConfirmElement(UIElement):
     
     def change_cancel_commnad(self, command: Callable[[None], None]) -> None:
         self.get_component('Cancel').command = command
+    
+    def check_off_click(self) -> None:
+        return
         
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)
@@ -94,6 +97,9 @@ class ConfirmElement(UIElement):
     def confirm(self) -> None:
         event_bus.sign('play_se', 'confirm')
         self.confrim_command()
+        
+    def close(self) -> None:
+        self.get_component('Cancel').command()
         
     def cancel(self) -> None:
         event_bus.sign('play_se', 'cancel')

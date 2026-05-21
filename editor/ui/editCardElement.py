@@ -3,6 +3,7 @@ import pygame
 
 from editor.cardComponents.abilityComponent import AbilityComponent
 from editor.cardComponents.cardComponent import CardComponent
+from editor.cardComponents.nameComponent import LEVEL_NUM, LEVEL_TIER
 from editor.cardComponents.sectionNameComponent import SectionNameComponent
 from editor.cardComponents.traitComponent import TraitComponent
 from singletons.eventBus import event_bus
@@ -14,9 +15,9 @@ from ui.uiElement import UIElement
 from uiComponents.toggleButtons import ToggleButtons
 
 
-ELEMENT_SIZE: tuple[int, int] = (500, 395)
+ELEMENT_SIZE: tuple[int, int] = (500, 450)
 W_HALF: int = 250
-H_HALF: int = 197
+H_HALF: int = 225
 
 class EditCardElement(UIElement):
     def __init__(self, card: object) -> None:
@@ -52,9 +53,22 @@ class EditCardElement(UIElement):
         )
         
         self.add_component(
+            'Level_Toggle',
+            ToggleButtons(
+                pos=(245, 145),
+                size=(200, 25),
+                options={
+                    'Tier': self.change_level,
+                    'Number': self.change_level
+                },
+                default='Tier' if card.get_component('Name_Component').level_type == LEVEL_TIER else 'Number'
+            )
+        )
+        
+        self.add_component(
             'Card_Width_Text',
             TextBox(
-                pos=(288, 140),
+                pos=(288, 195),
                 size=(90, 1),
             )
         )
@@ -66,7 +80,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Width_Plus',
             Button(
-                pos=(378, 138),
+                pos=(378, 193),
                 size=(32, 34),
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
@@ -76,7 +90,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Width_Minus',
             Button(
-                pos=(408, 138),
+                pos=(408, 193),
                 size=(32, 34),
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
@@ -87,7 +101,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Height_Text',
             TextBox(
-                pos=(288, 175),
+                pos=(288, 230),
                 size=(90, 1),
             )
         )
@@ -99,7 +113,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Height_Plus',
             Button(
-                pos=(378, 173),
+                pos=(378, 228),
                 size=(32, 34),
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
@@ -109,7 +123,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Height_Minus',
             Button(
-                pos=(408, 173),
+                pos=(408, 228),
                 size=(32, 34),
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
@@ -120,7 +134,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Trait_Text',
             TextBox(
-                pos=(288, 235),
+                pos=(288, 290),
                 size=(90, 1),
             )
         )
@@ -139,7 +153,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Trait_Plus',
             Button(
-                pos=(378, 233),
+                pos=(378, 288),
                 size=(32, 34),
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
@@ -149,7 +163,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Trait_Minus',
             Button(
-                pos=(408, 233),
+                pos=(408, 288),
                 size=(32, 34),
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
@@ -160,7 +174,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Ability_Text',
             TextBox(
-                pos=(288, 285),
+                pos=(288, 340),
                 size=(90, 1),
             )
         )
@@ -179,7 +193,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Ability_Plus',
             Button(
-                pos=(378, 283),
+                pos=(378, 338),
                 size=(32, 34),
                 image='.\\assets\\icons\\AddButton.png',
                 image_hover='.\\assets\\icons\\AddButton_hover.png',
@@ -189,7 +203,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Card_Ability_Minus',
             Button(
-                pos=(408, 283),
+                pos=(408, 338),
                 size=(32, 34),
                 image='.\\assets\\icons\\MinusButton.png',
                 image_hover='.\\assets\\icons\\MinusButton_hover.png',
@@ -200,7 +214,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Confrim',
             Button(
-                pos=(28, 330),
+                pos=(28, 385),
                 size=(198, 38),
                 image='.\\assets\\icons\\button.png',
                 image_hover='.\\assets\\icons\\button_hover.png',
@@ -212,7 +226,7 @@ class EditCardElement(UIElement):
         self.add_component(
             'Cancel',
             Button(
-                pos=(272, 330),
+                pos=(272, 385),
                 size=(198, 38),
                 image='.\\assets\\icons\\button.png',
                 image_hover='.\\assets\\icons\\button_hover.png',
@@ -241,6 +255,9 @@ class EditCardElement(UIElement):
             
     def change_type(self, selection: str) -> None:
         self.get_component('Type_Toggle').set_option(selection)
+    
+    def change_level(self, selection: str) -> None:
+        self.get_component('Level_Toggle').set_option(selection)
             
     def check_numeric(self, textbox: TextBox) -> None:
         if textbox.text.isnumeric():
@@ -283,6 +300,15 @@ class EditCardElement(UIElement):
         textbox.change_text(str(new_value)) 
         
     def edit(self) -> None:
+        is_tier: bool = self.get_component('Level_Toggle').button_selected.text == 'Tier'
+        if is_tier and self.card.get_component('Name_Component').level_type != LEVEL_TIER:
+            self.card.get_component('Name_Component').level = 'Mob'
+        elif not is_tier and self.card.get_component('Name_Component').level_type == LEVEL_TIER:
+            self.card.get_component('Name_Component').level = '00'
+            
+        self.card.get_component('Name_Component').level_type = LEVEL_TIER if is_tier else LEVEL_NUM
+        self.card.get_component('Name_Component').refresh()
+        
         self.card.get_component('Top_Stat_Component').is_token = True if self.get_component('Type_Toggle').button_selected.text == 'Token' else False
         self.card.get_component('Top_Stat_Component').refresh()
         
@@ -384,17 +410,21 @@ class EditCardElement(UIElement):
         self.render_text('Card Type', '#C2C2C2', (25, 55))
 
         self.render_text('Type', '#EEE1C5', (50, 80))
+        
+        self.render_text('Level Type', '#C2C2C2', (25, 115))
 
-        self.render_text('Card Size', '#C2C2C2', (25, 115))
+        self.render_text('Type', '#EEE1C5', (50, 140))
 
-        self.render_text('Width', '#EEE1C5', (50, 140))
+        self.render_text('Card Size', '#C2C2C2', (25, 175))
 
-        self.render_text('Height', '#EEE1C5', (50, 175))
+        self.render_text('Width', '#EEE1C5', (50, 200))
 
-        self.render_text('Traits', '#C2C2C2', (25, 210))
+        self.render_text('Height', '#EEE1C5', (50, 225))
 
-        self.render_text('Number of Traits', '#EEE1C5', (50, 235))
+        self.render_text('Traits', '#C2C2C2', (25, 260))
 
-        self.render_text('Abilities', '#C2C2C2', (25, 260))
+        self.render_text('Number of Traits', '#EEE1C5', (50, 285))
 
-        self.render_text('Number of Abilities', '#EEE1C5', (50, 285))
+        self.render_text('Abilities', '#C2C2C2', (25, 320))
+
+        self.render_text('Number of Abilities', '#EEE1C5', (50, 345))

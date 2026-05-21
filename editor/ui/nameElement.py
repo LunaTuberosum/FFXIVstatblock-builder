@@ -1,10 +1,11 @@
 import pygame
 
-from editor.cardComponents.nameComponent import NameComponent
+from editor.cardComponents.nameComponent import LEVEL_NUM, LEVEL_TIER, NameComponent
 
 from editor.ui.statCardElement import StatCardElement
 
 from uiComponents.button import Button
+from uiComponents.dropdown import Dropdown
 from uiComponents.textBox import TextBox
 from uiComponents.toggleButtons import ToggleButtons
 
@@ -38,37 +39,38 @@ class NameElement(StatCardElement[NameComponent]):
         self.get_component('Name_Text').change_text(self.component.name)
         self.get_component('Name_Text').add_tabbing(self.tab)
 
-        self.add_component(
-            'Level_Text',
-            TextBox(
-                pos=(338, 140),
-                size=(90, 1)
+        if self.component.level_type == LEVEL_NUM:
+            self.add_component(
+                'Level_Text',
+                TextBox(
+                    pos=(338, 140),
+                    size=(90, 1)
+                )
             )
-        )
-        
-        self.get_component('Level_Text').change_text(self.component.level)
-        self.get_component('Level_Text').add_tabbing(self.tab)
+            
+            self.get_component('Level_Text').change_text(self.component.level)
+            self.get_component('Level_Text').add_tabbing(self.tab)
 
-        self.add_component(
-            'Level_Plus',
-            Button(
-                pos=(428, 138),
-                size=(32, 34),
-                image='.\\assets\\icons\\AddButton.png',
-                image_hover='.\\assets\\icons\\AddButton_hover.png',
-                command=self.add_level
+            self.add_component(
+                'Level_Plus',
+                Button(
+                    pos=(428, 138),
+                    size=(32, 34),
+                    image='.\\assets\\icons\\AddButton.png',
+                    image_hover='.\\assets\\icons\\AddButton_hover.png',
+                    command=self.add_level
+                )
             )
-        )
-        self.add_component(
-            'Level_Minus',
-            Button(
-                pos=(458, 138),
-                size=(32, 34),
-                image='.\\assets\\icons\\MinusButton.png',
-                image_hover='.\\assets\\icons\\MinusButton_hover.png',
-                command=self.minus_level
+            self.add_component(
+                'Level_Minus',
+                Button(
+                    pos=(458, 138),
+                    size=(32, 34),
+                    image='.\\assets\\icons\\MinusButton.png',
+                    image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                    command=self.minus_level
+                )
             )
-        )
         
         self.add_component(
             'Level_Toggle',
@@ -83,6 +85,22 @@ class NameElement(StatCardElement[NameComponent]):
             )
         )
         
+        if self.component.level_type == LEVEL_TIER:
+            self.add_component(
+                'Level_Dropdown',
+                Dropdown(
+                    pos=(220, 135),
+                    options={
+                        'Mob':  self.l_type,
+                        'Menece': self.l_type,
+                        'Champion': self.l_type,
+                        'Solo': self.l_type
+                    },
+                    default=self.component.level,
+                    size='Small'
+                )
+            )
+        
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)
             
@@ -95,7 +113,11 @@ class NameElement(StatCardElement[NameComponent]):
             
     def apply(self) -> None:
         self.component.name = self.get_component('Name_Text').text
-        self.component.level = self.get_component('Level_Text').text
+        if self.component.level_type == LEVEL_TIER:
+            self.component.level = self.get_component('Level_Dropdown').selected_option
+            
+        elif self.component.level_type == LEVEL_NUM:
+            self.component.level = self.get_component('Level_Text').text
         
         level_toggle: ToggleButtons = self.get_component('Level_Toggle')
         if level_toggle.button_selected.text == 'End':
@@ -104,6 +126,9 @@ class NameElement(StatCardElement[NameComponent]):
             self.component.level_position = LEVEL_TOPRIGHT
             
         self.component.refresh()
+        
+    def l_type(self) -> None:
+        pass
                 
     def add_level(self) -> None:
         if not (textbox := self.get_component('Level_Text')).text.isnumeric():

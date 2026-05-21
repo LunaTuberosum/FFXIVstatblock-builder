@@ -1,12 +1,13 @@
 {
-    "version": "2.0",
+    "version": "2.1",
     "colors": [],
     "0": {
         "width": 2,
-        "height": 6,
+        "height": 11,
         "components": {
             "Name_Component": {
                 "name": "Edda Blackblossom",
+                "is_tier": false,
                 "level": "50",
                 "levelPosition": true
             },
@@ -742,10 +743,11 @@
     },
     "1": {
         "width": 2,
-        "height": 4,
+        "height": 7,
         "components": {
             "Name_Component": {
                 "name": "Avere Bravearm",
+                "is_tier": false,
                 "level": "50",
                 "levelPosition": true
             },
@@ -1136,10 +1138,11 @@
     },
     "2": {
         "width": 1,
-        "height": 3,
+        "height": 5,
         "components": {
             "Name_Component": {
                 "name": "Wedding Corpse",
+                "is_tier": false,
                 "level": "50",
                 "levelPosition": true
             },
@@ -1231,10 +1234,11 @@
     },
     "3": {
         "width": 2,
-        "height": 5,
+        "height": 10,
         "components": {
             "Name_Component": {
                 "name": "Edda the Consumed",
+                "is_tier": false,
                 "level": "50",
                 "levelPosition": true
             },

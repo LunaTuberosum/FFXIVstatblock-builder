@@ -22,9 +22,9 @@ class StatCard():
         
         self.width: int = width * 3
         self.height: int = height
-        self.actual_height: int = max(self.height, 2)
+        self.actual_height: int = self.height
         
-        self.size: tuple[int, int] = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * BACKGROUND_TILE_SIZE)
+        self.size: tuple[int, int] = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * (BACKGROUND_TILE_SIZE // 2))
         if width > 1:
             self.size = (self.size[0] - 48, self.size[1])
             
@@ -57,8 +57,8 @@ class StatCard():
             component.deregister()
         
     def refresh(self) -> None:
-        self.actual_height = max(self.height, 2)
-        self.size = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * BACKGROUND_TILE_SIZE)
+        self.actual_height = self.height
+        self.size = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * (BACKGROUND_TILE_SIZE // 2))
         
         if self.width // 3 > 1:
             self.size = (self.size[0] - 48, self.size[1])
@@ -326,29 +326,36 @@ class StatCard():
         x: int = 0
         y: int = 0
         section: str = 'Top'
+        
+        blank: pygame.Surface = pygame.Surface((194, 194))
+        blank.fill('#313031')
 
         for height in range(self.actual_height):
             if height == self.actual_height - 1:
                 section = 'Bottom'
+                y -= 97
 
             elif height != 0:
                 section = ''
 
             for _w in range(self.width):
                 if _w == 0:
+                    self.background.blit(blank, (x, y))
                     self.background.blit(_background[f'{section}Left'], (x, y))
 
                 elif _w == self.width - 1:
+                    self.background.blit(blank, (x, y))
                     self.background.blit(_background[f'{section}Right'], (x, y))
 
                 else:
                     if _w == 4: x -= 48
+                    self.background.blit(blank, (x, y))
                     self.background.blit(_background[f'{section}Middle'], (x, y))
 
                 x += 194
 
             x = 0
-            y += 194
+            y += 97
         
     def __split_background() -> dict[str, pygame.Surface]:
         _img = resourceHandler.load_image('.\\assets\\backgrounds\\StatCardBackground.png')

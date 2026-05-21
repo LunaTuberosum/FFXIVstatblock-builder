@@ -8,13 +8,13 @@ from singletons import resourceHandler
 from src.display import Display, ScreenOptions
 
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 from singletons.dataBus import data_bus
 
 from uiComponents.bar import Bar
 from uiComponents.button import Button
 
 from ui.uiElement import UIElement
-from uiComponents.componet import Component
 from uiComponents.dropdown import Dropdown
 from uiComponents.switchButton import SwitchButton
 from uiComponents.verticalToggleButton import VerticalToggleButtons
@@ -104,6 +104,8 @@ class SystemElement(UIElement):
         )
         
         self.display(clear=False)
+        
+        key_bus.deregister('mouse_left_down', self.check_off_click)
         
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)

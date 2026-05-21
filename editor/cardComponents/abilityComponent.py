@@ -175,7 +175,7 @@ class AbilityComponent(CardComponent):
             self.formating[index] = FormatData(Format.EFFECT_NAME_OFF, '')
             index += 1
             
-            if effect_data.in_line:
+            if effect_data.in_line and len(self.lines):
                 text = self.lines.pop() + text
             
             size = self.font_bolded.size(text)[0]

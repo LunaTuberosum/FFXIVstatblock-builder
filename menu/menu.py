@@ -4,6 +4,7 @@ import pygame
 from menu.menuObject import MenuObject
 from menu.sheet import Sheet
 
+from menu.ui.changelogElement import ChangelogElement
 from singletons import resourceHandler
 
 from singletons.keyBus import key_bus
@@ -32,6 +33,13 @@ class Menu(GameProcess):
         self.dragged_file: MenuObject = None
         
         self.JUPITER_FONT: pygame.font.Font = resourceHandler.load_font('.\\assets\\fonts\\jupiter_pro_regular.otf', 40)
+        
+        changelog: dict[str, str | bool] = resourceHandler.load_json('.\\changelogs\\changelog_recent.json')
+        if changelog['viewed'] == False:
+            event_bus.sign('ui_window', ChangelogElement(changelog, alert=True))
+            
+            changelog['viewed'] = True
+            resourceHandler.save_json('.\\changelogs\\changelog_recent.json', changelog)
         
     def setup_bus_calls(self) -> None:
         super().setup_bus_calls()

@@ -1,0 +1,232 @@
+{
+    "viewed": false,
+    "name": "Version 0.93 Changelog",
+    "maxPage": 3,
+    "warning": "",
+    "text": [
+        [
+            "title",
+            "MENU/GENERAL"
+        ],
+        [
+            "text",
+            "Rebuilt program from the ground up to improve FPS and workflow."
+        ],
+        [
+            "text",
+            "You must Double Left Click on sheets, folders, and parts of statcards to open them. This is to make easier \nto not do on accident."
+        ],
+        [
+            "text",
+            "Saves have been updated to better store data and keep track of more things,"
+        ],
+        [
+            "text",
+            "Added Sound effects."
+        ],
+        [
+            "text",
+            "Added new escape menu."
+        ],
+        [
+            "text",
+            "Various features listed in it are not available at the moment."
+        ],
+        [
+            "text",
+            "Added settings window."
+        ],
+        [
+            "text",
+            "Can change resolution (Needs Restart)."
+        ],
+        [
+            "text",
+            "Switch between Fullscreen, Windowed, and Windowed full screen (Needs Restart)."
+        ],
+        [
+            "text",
+            "Switch which display the program opens to (Needs Restart)."
+        ],
+        [
+            "text",
+            "Can change volume of program."
+        ],
+        [
+            "text",
+            "You can now make folders on the menu screen."
+        ],
+        [
+            "text",
+            "You can drag both sheets and folders into other folders."
+        ],
+        [
+            "break",
+            "1"
+        ],
+        [
+            "text",
+            "You can easily rename files instead of them all being called \"StatSheet[X]\"."
+        ],
+        [
+            "text",
+            "Files can be duplicated."
+        ],
+        [
+            "text",
+            "UI and almost all elements have been updated to look better."
+        ],
+        [
+            "title",
+            "EDITOR"
+        ],
+        [
+            "text",
+            "Heavily improved editor FPS and usability."
+        ],
+        [
+            "text",
+            "Removed Zooming out as it looked bad and want to do it better later."
+        ],
+        [
+            "text",
+            "Stat card can now be shifted using the context menu."
+        ],
+        [
+            "text",
+            "Can now rearrange Traits and Abilities via dragging them."
+        ],
+        [
+            "text",
+            "Stat cards Height variable is now more precise allowing for finer steps."
+        ],
+        [
+            "text",
+            "Cards no longer render if not seen."
+        ],
+        [
+            "text",
+            "When exporting as PNG it now makes a folder that exports one with a background and one without \n(Transparent)."
+        ],
+        [
+            "text",
+            "When editing a part of the stat card (such as its name) the window no longer disappears when you click."
+        ],
+        [
+            "text",
+            "This window now always sticks to the right side of the screen instead of the right side of the card."
+        ],
+        [
+            "text",
+            "This window now can be closed with a small X in the top right (True of all UI windows)."
+        ],
+        [
+            "break",
+            "2"
+        ],
+        [
+            "text",
+            "The element the window is adjusting now only updates upon pressing the (Apply) button or the (Confirm) \nButton. This is to save on performance."
+        ],
+        [
+            "text",
+            "The (Apply) button applies your changes, while the (Confirm) button applies them and closes the window."
+        ],
+        [
+            "title",
+            "TEXTBOX"
+        ],
+        [
+            "text",
+            "Be moved through with keyboard and mouse."
+        ],
+        [
+            "text",
+            "Be able to select, copy, paste, and delete sections of text."
+        ],
+        [
+            "text",
+            "Be able to scroll through large textboxes."
+        ],
+        [
+            "text",
+            "Reworked formatting with a new popup on use of Right Click."
+        ],
+        [
+            "text",
+            "The ability to add custom colors."
+        ],
+        [
+            "text",
+            "You can Tab through textboxes."
+        ],
+        [
+            "title",
+            "ABILITIES"
+        ],
+        [
+            "text",
+            "Reworked how you add Effects with a whole new pop out window."
+        ],
+        [
+            "text",
+            "There are now presets for common types of Effects."
+        ],
+        [
+            "text",
+            "Effects can be marked as In Line, causing them to render on the previous effects line."
+        ],
+        [
+            "text",
+            "You can now add an Extra Text to abilities. This is for explanations of how the ability works or flavor text."
+        ],
+        [
+            "break",
+            "3"
+        ],
+        [
+            "text",
+            "Reworked how you add Markers and edit them."
+        ],
+        [
+            "text",
+            "Redesigned several ui and marker icons."
+        ],
+        [
+            "text",
+            "Markers now auto tile for cleaner appearance."
+        ],
+        [
+            "text",
+            "Added more Stake Overlays."
+        ],
+        [
+            "text",
+            "Added stack Overlays."
+        ],
+        [
+            "text",
+            "Added tankbuster Overlays."
+        ],
+        [
+            "title",
+            "BUGS"
+        ],
+        [
+            "text",
+            "When closing from editor using the window closing it not longer gives an error."
+        ],
+        [
+            "text",
+            "The program won't crash if you click to fast (hopefully)."
+        ],
+        [
+            "text",
+            "Various and many spelling mistakes."
+        ],
+        [
+            "text",
+            "And all of the jank with the old text boxes."
+        ]
+    ]
+}

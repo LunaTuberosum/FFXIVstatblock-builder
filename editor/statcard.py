@@ -332,7 +332,6 @@ class StatCard():
 
         for height in range(self.actual_height):
             if height == self.actual_height - 1:
-                print('bottom')
                 section = 'Bottom'
                 y -= 97
 

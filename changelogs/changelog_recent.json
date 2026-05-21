@@ -1,5 +1,5 @@
 {
-    "viewed": true,
+    "viewed": false,
     "name": "Version 0.93.2 Changelog",
     "maxPage": 2,
     "warning": "The amount that Height on stat cards increases by has been decresed again. This may cause clipping issues with you stat blocks. You only need to increase the Height or Width to fix this issue.",

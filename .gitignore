@@ -5,5 +5,5 @@ settings.pkl
 __pycache__/
 logs/*
 dist
-main.spec
+*.spec
 build

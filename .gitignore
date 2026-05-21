@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 logs/*
+!logs
 dist
 main.spec
 build

@@ -3,7 +3,7 @@
     "colors": [],
     "0": {
         "width": 3,
-        "height": 7,
+        "height": 13,
         "components": {
             "Name_Component": {
                 "name": "Odin, The Unbroken",
@@ -1233,7 +1233,7 @@
     },
     "1": {
         "width": 1,
-        "height": 5,
+        "height": 9,
         "components": {
             "Name_Component": {
                 "name": "Gungnir",
@@ -1457,7 +1457,7 @@
     },
     "2": {
         "width": 1,
-        "height": 4,
+        "height": 7,
         "components": {
             "Name_Component": {
                 "name": "Odin, Lord of the Eternal Hall",
@@ -1483,7 +1483,7 @@
             "Traits_Title": {
                 "section": "Traits"
             },
-            "Trait_0": {
+            "Trait_1": {
                 "name": "Elite Foe: Lord of the Corpse Hall",
                 "format": {
                     "24": {
@@ -1497,7 +1497,7 @@
                 },
                 "desc": "This character cannot be Stunned and markerrs they have generated cannot be removed. Be sure to inform players of this before beginning the encounter."
             },
-            "Trait_1": {
+            "Trait_2": {
                 "name": "Survive and Receive Valhalla",
                 "format": {},
                 "desc": "Odin summons 2 [Gungnir] 3 spaces from themself at the start of each Round this Phase."
@@ -1505,7 +1505,7 @@
             "Abilities_Title": {
                 "section": "Abilities"
             },
-            "Ability_0": {
+            "Ability_1": {
                 "name": "Shin-Zantetsuken",
                 "invk": false,
                 "types": "Primary, Physical",

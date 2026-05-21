@@ -2,6 +2,7 @@ import pygame
 
 from singletons import resourceHandler
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 
 from ui.uiElement import UIElement
 
@@ -61,14 +62,13 @@ class ChangelogElement(UIElement):
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         self._render_text_face()
         
+        key_bus.deregister('mouse_left_down', self.check_off_click)
+        
     def play_open(self):
         if self.alert:
             event_bus.sign('play_se', 'notification')
         else:
             event_bus.sign('play_se', 'open_window')
-        
-    def check_off_click(self) -> None:
-        return
         
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)

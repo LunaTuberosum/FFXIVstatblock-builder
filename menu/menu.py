@@ -4,7 +4,7 @@ import pygame
 from menu.menuObject import MenuObject
 from menu.sheet import Sheet
 
-from menu.ui.changelog import ChangelogElement
+from menu.ui.changelogElement import ChangelogElement
 from singletons import resourceHandler
 
 from singletons.keyBus import key_bus

@@ -3,7 +3,9 @@ from typing import Callable
 import pygame
 
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 
+from ui.changelogViewElement import ChangelogViewElement
 from ui.confirmElement import ConfirmElement
 from ui.systemElement import SystemElement
 from ui.uiElement import UIElement
@@ -11,7 +13,7 @@ from ui.uiElement import UIElement
 from uiComponents.button import Button
 
 
-ELEMENT_SIZE: tuple[int, int] = (430, 104)
+ELEMENT_SIZE: tuple[int, int] = (430, 129)
 H_BUFFER: int = 60
 W_HALF: int = 215
 
@@ -44,9 +46,20 @@ class EscapeMenu(UIElement):
             )
         )
         
-        self.add_component('Playguide',
+        self.add_component('Changelogs',
             Button(
                 pos=(30, 80),
+                size=(370, 24),
+                image=None,
+                image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
+                command=self.changelogs,
+                text='Changelogs'
+            )
+        )
+        
+        self.add_component('Playguide',
+            Button(
+                pos=(30, 105),
                 size=(370, 24),
                 image=None,
                 image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
@@ -57,7 +70,7 @@ class EscapeMenu(UIElement):
         
         self.add_component('Settings',
             Button(
-                pos=(30, 105),
+                pos=(30, 130),
                 size=(370, 24),
                 image=None,
                 image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
@@ -66,7 +79,7 @@ class EscapeMenu(UIElement):
             )
         )
         
-        y: int = 130
+        y: int = 155
         for option, call in quit_options.items():
             self.add_component(option,
                 Button(
@@ -87,6 +100,8 @@ class EscapeMenu(UIElement):
             
             button.left_algin_text()
             button.change_text_color('#DED2B8')
+            
+        key_bus.deregister('mouse_left_down', self.check_off_click)
         
     def draw(self, screen: pygame.Surface) -> None:
         super().draw(screen)
@@ -110,8 +125,11 @@ class EscapeMenu(UIElement):
             confrim_command=None,
             confirm_text='Close',
             cancel_text='Close'
-        ))
+        ), True)
+    
+    def changelogs(self) -> None:
+        event_bus.sign('ui_window', ChangelogViewElement(), True)
     
     def system(self) -> None:
-        event_bus.sign('ui_window', SystemElement())
+        event_bus.sign('ui_window', SystemElement(), True)
         

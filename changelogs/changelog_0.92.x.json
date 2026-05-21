@@ -1,0 +1,92 @@
+{
+    "viewed": false,
+    "name": "Version 0.92.x Changelog",
+    "maxPage": 1,
+    "warning": "",
+    "text": [
+        [
+            "title",
+            "VERSION 0.92.4"
+        ],
+        [
+            "text",
+            "Fixed bug (#6)."
+        ],
+        [
+            "text",
+            "Fixed bug (#7)."
+        ],
+        [
+            "title",
+            "VERSION 0.92.3"
+        ],
+        [
+            "text",
+            "Fixed bug (#4)."
+        ],
+        [
+            "text",
+            "Fixed bug (#5)."
+        ],
+        [
+            "text",
+            "Fixed issue where all font was bolded not just the title."
+        ],
+        [
+            "title",
+            "VERSION 0.92.2"
+        ],
+        [
+            "text",
+            "Fixed bug (#2)."
+        ],
+        [
+            "text",
+            "Fixed bug (#3)."
+        ],
+        [
+            "title",
+            "VERSION 0.92.1"
+        ],
+        [
+            "text",
+            "Fixed bug (#1)."
+        ],
+        [
+            "text",
+            "Readded Icon file."
+        ],
+        [
+            "break",
+            "1"
+        ],
+        [
+            "title",
+            "VERSION 0.92"
+        ],
+        [
+            "text",
+            "Able to make Stat Sheets and Stat Cards within."
+        ],
+        [
+            "text",
+            "Able to save Stat Sheets."
+        ],
+        [
+            "text",
+            "Able to export Stat Sheets as PNGs."
+        ],
+        [
+            "text",
+            "Can make abilities INVK abilities."
+        ],
+        [
+            "text",
+            "Types and names on abilities no longer overlap if one is two long."
+        ],
+        [
+            "text",
+            "Can actually leave the program."
+        ]
+    ]
+}

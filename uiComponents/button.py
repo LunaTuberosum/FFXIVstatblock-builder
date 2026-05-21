@@ -86,8 +86,8 @@ class Button(Component):
             return
         event_bus.sign('play_se', 'confirm')
         
-        self.no_hover()
         self.command()
+        self.no_hover()
         
     def __add_outline(self, image: pygame.Surface) -> pygame.Surface:
         con_mask = pygame.mask.Mask((3, 3), fill=True)

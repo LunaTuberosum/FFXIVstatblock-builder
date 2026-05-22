@@ -24,7 +24,7 @@ class StatCard():
         
         self.width: int = width * 3
         self.height: int = height
-        self.actual_height: int = self.height
+        self.actual_height: int = self.height + 2
         
         self.size: tuple[int, int] = (self.width * BACKGROUND_TILE_WIDTH, self.actual_height *  BACKGROUND_TILE_HEIGHT)
         if width > 1:
@@ -59,7 +59,7 @@ class StatCard():
             component.deregister()
         
     def refresh(self) -> None:
-        self.actual_height = self.height
+        self.actual_height = self.height + 2
         self.size = (self.width * BACKGROUND_TILE_WIDTH, self.actual_height * (BACKGROUND_TILE_WIDTH // 2))
         
         if self.width // 3 > 1:

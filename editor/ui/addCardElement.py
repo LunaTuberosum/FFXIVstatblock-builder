@@ -314,9 +314,13 @@ class AddCardElement(UIElement):
             from editor.cardComponents.traitComponent import TraitComponent
             
             for trait in range(int(trait_text.text)):
+                t: TraitComponent = TraitComponent(card)
+                t.name = f'Trait {trait + 1}'
+                t.refresh()
+                
                 card.add_component(
                     f'Trait_{trait}',
-                    TraitComponent(card)
+                    t
                 )
                 
         ability_text: TextBox = self.get_component('Card_Ability_Text')
@@ -329,9 +333,13 @@ class AddCardElement(UIElement):
             from editor.cardComponents.abilityComponent import AbilityComponent
             
             for ability in range(int(ability_text.text)):
+                a: AbilityComponent = AbilityComponent(card)
+                a.name = f'Ability {ability + 1}'
+                a.refresh()
+                
                 card.add_component(
                     f'Ability_{ability}',
-                    AbilityComponent(card)
+                    a
                 )
     
         event_bus.sign('add_card', card)

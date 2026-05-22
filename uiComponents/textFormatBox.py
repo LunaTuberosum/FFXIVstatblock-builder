@@ -110,34 +110,41 @@ class TextFormatBox():
         
         mouse_pos = pygame.mouse.get_pos()
         
-        self.bold_button.no_hover()
         if self.bold_button.is_hover(mouse_pos):
             self.bold_button.hover()
+        else:
+            self.bold_button.no_hover()
             
-        self.italic_button.no_hover()
         if self.italic_button.is_hover(mouse_pos):
             self.italic_button.hover()
+        else:
+            self.italic_button.no_hover()
             
-        self.ability_button.no_hover()
         if self.ability_button.is_hover(mouse_pos):
             self.ability_button.hover()
+        else:
+            self.ability_button.no_hover()
             
-        self.attribute_button.no_hover()
         if self.attribute_button.is_hover(mouse_pos):
             self.attribute_button.hover()
+        else:
+            self.attribute_button.no_hover()
             
-        self.add_color_button.no_hover()
         if self.add_color_button.is_hover(mouse_pos):
             self.add_color_button.hover() 
+        else:
+            self.add_color_button.no_hover()
         
         if self.color_text_active:
-            self.color_textbox.no_hover()
             if self.color_textbox.is_hover(mouse_pos):
                 self.color_textbox.hover()
+            else:
+                self.color_textbox.no_hover()
                 
-            self.color_confirm_button.no_hover()
             if self.color_confirm_button.is_hover(mouse_pos):
                 self.color_confirm_button.hover()
+            else:
+                self.color_confirm_button.no_hover()
             
             screen.blit(self.add_background, (self.rect.x + 10, self.rect.y - 40))
             

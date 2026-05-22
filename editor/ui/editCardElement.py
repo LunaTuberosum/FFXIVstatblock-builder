@@ -337,7 +337,7 @@ class EditCardElement(UIElement):
         if count < trait_num:
             for i in range(trait_num - count):
                 t = TraitComponent(self.card)
-                t.name = f'Trait {trait_num + i + 1}'
+                t.name = f'Trait {count + i + 1}'
                 t.refresh()
                 traits.append(t)
                 
@@ -366,7 +366,7 @@ class EditCardElement(UIElement):
         if count < ability_num:
             for i in range(ability_num - count):
                 a = AbilityComponent(self.card)
-                a.name = f'Ability {ability_num + i + 1}'
+                a.name = f'Ability {count + i + 1}'
                 a.refresh()
                 abilities.append(a)
                 

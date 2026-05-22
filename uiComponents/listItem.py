@@ -67,6 +67,7 @@ class ListItem():
     def draw(self, screen: pygame.Surface, pos: tuple[int, int]) -> None:
         x, y = pos
         if self.drag:
+            print('adssad')
             mouse: tuple[int, int] = pygame.mouse.get_pos()
             x = min(max(mouse[0] - self.drag_pos[0], self.parent.rect.x + 5), self.parent.rect.x + 5)
             y = min(max(mouse[1] - self.drag_pos[1], self.parent.rect.y + 49), self.parent.rect.bottom - 37)
@@ -100,10 +101,12 @@ class ListItem():
             self.drag_pos = (mouse[0] - self.rect.x, mouse[1] - self.rect.y)
             
         self.drag = True
+        print(self.drag)
         
     def on_release(self) -> None:
         if not self.drag:
             return
+        print('release')
         
         self.drag = False
         
@@ -116,6 +119,9 @@ class ListItem():
         self.hovering = False
         
     def hover(self) -> None:
+        if self.drag:
+            return
+        
         self.hovering = True
         
     def is_hover(self, mouse_pos: tuple[int, int]) -> bool:

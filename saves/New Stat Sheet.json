@@ -26,22 +26,18 @@
                 "int": "0",
                 "mnd": "0"
             },
-            "Abilities_Title": {
-                "section": "Abilities"
+            "Traits_Title": {
+                "section": "Traits"
             },
-            "Ability_1": {
-                "name": "",
-                "invk": false,
-                "types": "",
-                "effects": {
-                    "Effect 0": {
-                        "desc": "",
-                        "format": {},
-                        "in_line": false
-                    }
-                },
-                "extra_text": "",
-                "marker": null
+            "Trait_0": {
+                "name": "Trait 1",
+                "format": {},
+                "desc": ""
+            },
+            "Trait_1": {
+                "name": "Trait 2",
+                "format": {},
+                "desc": ""
             }
         }
     }

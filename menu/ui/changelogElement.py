@@ -166,7 +166,7 @@ class ChangelogElement(UIElement):
             elif form == 'text':
                 self.render_text(f'- {text}', '#EEE1C5', (60, y))
                 if '\n' in text:
-                    y += 28
+                    y += 12 * (text.count('\n') + 1)
                 y += 28
             elif form == 'break' and text == str(self.page + 1):
                 break

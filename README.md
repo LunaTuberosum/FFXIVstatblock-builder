@@ -57,6 +57,29 @@ To backup your save do the following:
 
 
 ## Changelog
+### Version 0.94.1
+```
+CARD COMPONENT
+
+* Stat card when created with defualt height was far too small. Now starts at larger size.
+
+* When exporting a sheet, the cards would have a terrible grey border in the transparent version. This was due to a hack to make the height adjust smaller amounts. Proper fix has been implemented fixing the issues well keeping the height change.
+
+TRAIT/ABILITY COMPONENT
+
+* When adding traits or abilities when creating a card, they would be made without names.
+
+* When adding additional traits or abilities when editing a card, they would count up incorrectly.
+
+EFFECT COMPONENT
+
+* Effects could not be dragged, they now can and the way they work has been changed. Report any bugs you find please.
+
+TEXTBOX COMPONENT
+
+* The format box button would constantly make noise when hovering over them. They have been silenced.
+```
+
 ### Version 0.94
 ```
 CHANGELOG COMPONENT

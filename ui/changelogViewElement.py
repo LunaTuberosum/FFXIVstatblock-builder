@@ -32,14 +32,14 @@ class ChangelogViewElement(UIElement):
             write_config=False
         )
         
-        self.add_component('Version 0.93.2',
+        self.add_component('Version 0.94',
             Button(
                 pos=(30, 55),
                 size=(370, 24),
                 image=None,
                 image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
                 command=self.load_changelog,
-                text='Version 0.93.2'
+                text='Version 0.94'
             )
         )
         
@@ -114,8 +114,6 @@ class ChangelogViewElement(UIElement):
         for log in resourceHandler.load_dir('.\\changelogs\\'):
             log_file: dict = resourceHandler.load_json(f'.\\changelogs\\{log}')
             
-            print(changelog.split()[1])
-            print(log_file['name'].split())
             if changelog.split()[1] in log_file['name'].split():
                 event_bus.sign('ui_window', ChangelogElement(log_file), True)
                 return

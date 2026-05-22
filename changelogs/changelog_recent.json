@@ -1,9 +1,61 @@
 {
     "viewed": true,
     "name": "Version 0.94 Changelog",
-    "maxPage": 2,
+    "maxPage": 3,
     "warning": "The amount that Height on stat cards increases by has been decreased again. This may cause clipping issues with you stat blocks. You only need to increase the Height or Width to fix this issue.",
     "text": [
+        [
+            "title",
+            "VERSION 0.94.1"
+        ],
+        [
+            "title",
+            "CARD COMPONENT"
+        ],
+        [
+            "text",
+            "Stat card when created with defualt height was far too small. Now starts at larger size."
+        ],
+        [
+            "text",
+            "When exporting a sheet, the cards would have a terrible grey border in the transparent version. This was \ndue to a hack to make the height adjust smaller amounts. Proper fix has been implemented fixing the \nissues well keeping the height change.\n"
+        ],
+        [
+            "title",
+            "TRAIT/ABILITY COMPONENT"
+        ],
+        [
+            "text",
+            "When adding traits or abilities when creating a card, they would be made without names."
+        ],
+        [
+            "text",
+            "When adding additional traits or abilities when editing a card, they would count up incorrectly."
+        ],
+        [
+            "title",
+            "EFFECT COMPONENT"
+        ],
+        [
+            "text",
+            "Effects could not be dragged, they now can and the way they work has been changed. Report any bugs \nyou find please."
+        ],
+        [
+            "break",
+            "1"
+        ],
+        [
+            "title",
+            "TEXTBOX COMPONENT"
+        ],
+        [
+            "text",
+            "The format box button would constantly make noise when hovering over them. They have been silenced."
+        ],
+        [
+            "title",
+            "VERSION 0.94"
+        ],
         [
             "title",
             "CHANGELOG COMPONENT"
@@ -42,7 +94,7 @@
         ],
         [
             "break",
-            "1"
+            "2"
         ],
         [
             "title",
@@ -81,16 +133,16 @@
             "Confirmation menus no longer can be clicked away by clicking anywhere else on the screen. It caused a \nlot of issues."
         ],
         [
-            "break",
-            "2"
-        ],
-        [
             "title",
             "BUGS"
         ],
         [
             "text",
             "Fixed smaller dropdowns option background extending far past button size. Now fits nicely in bounds."
+        ],
+        [
+            "break",
+            "3"
         ],
         [
             "text",

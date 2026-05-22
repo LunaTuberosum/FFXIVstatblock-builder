@@ -57,7 +57,7 @@ To backup your save do the following:
 
 
 ## Changelog
-### Version 0.93.2
+### Version 0.94
 ```
 CHANGELOG COMPONENT
 

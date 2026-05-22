@@ -3,7 +3,7 @@
     "colors": [],
     "0": {
         "width": 2,
-        "height": 11,
+        "height": 9,
         "components": {
             "Name_Component": {
                 "name": "Edda Blackblossom",
@@ -743,7 +743,7 @@
     },
     "1": {
         "width": 2,
-        "height": 7,
+        "height": 5,
         "components": {
             "Name_Component": {
                 "name": "Avere Bravearm",
@@ -1138,7 +1138,7 @@
     },
     "2": {
         "width": 1,
-        "height": 5,
+        "height": 3,
         "components": {
             "Name_Component": {
                 "name": "Wedding Corpse",
@@ -1234,7 +1234,7 @@
     },
     "3": {
         "width": 2,
-        "height": 10,
+        "height": 8,
         "components": {
             "Name_Component": {
                 "name": "Edda the Consumed",

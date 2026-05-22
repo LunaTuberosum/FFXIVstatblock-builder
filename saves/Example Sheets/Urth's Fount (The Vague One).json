@@ -3,7 +3,7 @@
     "colors": [],
     "0": {
         "width": 3,
-        "height": 13,
+        "height": 11,
         "components": {
             "Name_Component": {
                 "name": "Odin, The Unbroken",
@@ -1233,7 +1233,7 @@
     },
     "1": {
         "width": 1,
-        "height": 9,
+        "height": 7,
         "components": {
             "Name_Component": {
                 "name": "Gungnir",
@@ -1457,7 +1457,7 @@
     },
     "2": {
         "width": 1,
-        "height": 7,
+        "height": 5,
         "components": {
             "Name_Component": {
                 "name": "Odin, Lord of the Eternal Hall",

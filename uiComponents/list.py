@@ -102,19 +102,29 @@ class List(Component):
         return self.components.get(comp_name)
     
     def set_effects(self) -> None:
-        for item in self.list_items:
-            item.deregister()
-            
-        self.list_items = []
+        list_items = []
         
+        index: int = 0
         for name, data in self.element.effects.items():
-            self.list_items.append(ListItem(
-                size=(self.size[0] - 21, 30),
-                effect_name=name,
-                effect_data=data,
-                command=self.change_effect,
-                parent=self
-            ))
+            if index >= len(self.list_items):
+                list_items.append(ListItem(
+                    size=(self.size[0] - 21, 30),
+                    effect_name=name,
+                    effect_data=data,
+                    command=self.change_effect,
+                    parent=self
+                ))
+                continue
+            
+            item: ListItem = self.list_items[index]
+            item.effect_name = name
+            item.effect_data = data
+            item.refresh()
+            
+            list_items.append(item)
+            index += 1
+            
+        self.list_items = list_items
         
     def swap_effects(self, effect: ListItem) -> None:
         if not self.dragged_list:

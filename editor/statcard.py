@@ -14,17 +14,19 @@ from singletons.keyBus import key_bus
 from ui.confirmElement import ConfirmElement
 
 
-BACKGROUND_TILE_SIZE: int = 194
-BACKGROUND_TILE_SIZE_X2: int = 388
+BACKGROUND_TILE_WIDTH: int = 194
+BACKGROUND_TILE_HEIGHT: int = 97
+BACKGROUND_TILE_WIDTH_X2: int = 388
+BACKGROUND_TILE_HEIGHT_X2: int = 194
 
 class StatCard():
     def __init__(self, width: int, height: int) -> None:
         
         self.width: int = width * 3
         self.height: int = height
-        self.actual_height: int = self.height
+        self.actual_height: int = self.height + 2
         
-        self.size: tuple[int, int] = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * (BACKGROUND_TILE_SIZE // 2))
+        self.size: tuple[int, int] = (self.width * BACKGROUND_TILE_WIDTH, self.actual_height *  BACKGROUND_TILE_HEIGHT)
         if width > 1:
             self.size = (self.size[0] - 48, self.size[1])
             
@@ -57,8 +59,8 @@ class StatCard():
             component.deregister()
         
     def refresh(self) -> None:
-        self.actual_height = self.height
-        self.size = (self.width * BACKGROUND_TILE_SIZE, self.actual_height * (BACKGROUND_TILE_SIZE // 2))
+        self.actual_height = self.height + 2
+        self.size = (self.width * BACKGROUND_TILE_WIDTH, self.actual_height * (BACKGROUND_TILE_WIDTH // 2))
         
         if self.width // 3 > 1:
             self.size = (self.size[0] - 48, self.size[1])
@@ -327,35 +329,28 @@ class StatCard():
         y: int = 0
         section: str = 'Top'
         
-        blank: pygame.Surface = pygame.Surface((194, 194))
-        blank.fill('#313031')
-
         for height in range(self.actual_height):
             if height == self.actual_height - 1:
                 section = 'Bottom'
-                y -= 97
 
             elif height != 0:
                 section = ''
 
             for _w in range(self.width):
                 if _w == 0:
-                    self.background.blit(blank, (x, y))
                     self.background.blit(_background[f'{section}Left'], (x, y))
 
                 elif _w == self.width - 1:
-                    self.background.blit(blank, (x, y))
                     self.background.blit(_background[f'{section}Right'], (x, y))
 
                 else:
                     if _w == 4: x -= 48
-                    self.background.blit(blank, (x, y))
                     self.background.blit(_background[f'{section}Middle'], (x, y))
 
-                x += 194
+                x += BACKGROUND_TILE_WIDTH
 
             x = 0
-            y += 97
+            y += BACKGROUND_TILE_HEIGHT
         
     def __split_background() -> dict[str, pygame.Surface]:
         _img = resourceHandler.load_image('.\\assets\\backgrounds\\StatCardBackground.png')
@@ -372,25 +367,25 @@ class StatCard():
             'BottomRight': None
         }
 
-        _temp['TopLeft'] = pygame.surface.Surface((BACKGROUND_TILE_SIZE, BACKGROUND_TILE_SIZE), pygame.SRCALPHA)
+        _temp['TopLeft'] = pygame.surface.Surface((BACKGROUND_TILE_WIDTH, BACKGROUND_TILE_HEIGHT), pygame.SRCALPHA)
         _temp['TopLeft'].blit(_img, (0, 0))
-        _temp['TopMiddle'] = pygame.surface.Surface((BACKGROUND_TILE_SIZE, BACKGROUND_TILE_SIZE), pygame.SRCALPHA)
-        _temp['TopMiddle'].blit(_img, (-BACKGROUND_TILE_SIZE, 0))
-        _temp['TopRight'] = pygame.surface.Surface((BACKGROUND_TILE_SIZE, BACKGROUND_TILE_SIZE), pygame.SRCALPHA)
-        _temp['TopRight'].blit(_img, (-BACKGROUND_TILE_SIZE_X2, 0))
+        _temp['TopMiddle'] = pygame.surface.Surface((BACKGROUND_TILE_WIDTH, BACKGROUND_TILE_HEIGHT), pygame.SRCALPHA)
+        _temp['TopMiddle'].blit(_img, (-BACKGROUND_TILE_WIDTH, 0))
+        _temp['TopRight'] = pygame.surface.Surface((BACKGROUND_TILE_WIDTH, BACKGROUND_TILE_HEIGHT), pygame.SRCALPHA)
+        _temp['TopRight'].blit(_img, (-BACKGROUND_TILE_WIDTH_X2, 0))
 
-        _temp['Left'] = pygame.surface.Surface((BACKGROUND_TILE_SIZE, BACKGROUND_TILE_SIZE), pygame.SRCALPHA)
-        _temp['Left'].blit(_img, (0, -BACKGROUND_TILE_SIZE))
-        _temp['Middle'] = pygame.surface.Surface((BACKGROUND_TILE_SIZE, BACKGROUND_TILE_SIZE), pygame.SRCALPHA)
-        _temp['Middle'].blit(_img, (-BACKGROUND_TILE_SIZE, -BACKGROUND_TILE_SIZE))
-        _temp['Right'] = pygame.surface.Surface((BACKGROUND_TILE_SIZE, BACKGROUND_TILE_SIZE), pygame.SRCALPHA)
-        _temp['Right'].blit(_img, (-BACKGROUND_TILE_SIZE_X2, -BACKGROUND_TILE_SIZE))
+        _temp['Left'] = pygame.surface.Surface((BACKGROUND_TILE_WIDTH, BACKGROUND_TILE_HEIGHT), pygame.SRCALPHA)
+        _temp['Left'].blit(_img, (0, -BACKGROUND_TILE_HEIGHT))
+        _temp['Middle'] = pygame.surface.Surface((BACKGROUND_TILE_WIDTH, BACKGROUND_TILE_HEIGHT), pygame.SRCALPHA)
+        _temp['Middle'].blit(_img, (-BACKGROUND_TILE_WIDTH, -BACKGROUND_TILE_HEIGHT))
+        _temp['Right'] = pygame.surface.Surface((BACKGROUND_TILE_WIDTH, BACKGROUND_TILE_HEIGHT), pygame.SRCALPHA)
+        _temp['Right'].blit(_img, (-BACKGROUND_TILE_WIDTH_X2, -BACKGROUND_TILE_HEIGHT))
 
-        _temp['BottomLeft'] = pygame.surface.Surface((BACKGROUND_TILE_SIZE, BACKGROUND_TILE_SIZE), pygame.SRCALPHA)
-        _temp['BottomLeft'].blit(_img, (0, -BACKGROUND_TILE_SIZE_X2))
-        _temp['BottomMiddle'] = pygame.surface.Surface((BACKGROUND_TILE_SIZE, BACKGROUND_TILE_SIZE), pygame.SRCALPHA)
-        _temp['BottomMiddle'].blit(_img, (-BACKGROUND_TILE_SIZE, -BACKGROUND_TILE_SIZE_X2))
-        _temp['BottomRight'] = pygame.surface.Surface((BACKGROUND_TILE_SIZE, BACKGROUND_TILE_SIZE), pygame.SRCALPHA)
-        _temp['BottomRight'].blit(_img, (-BACKGROUND_TILE_SIZE_X2, -BACKGROUND_TILE_SIZE_X2))
+        _temp['BottomLeft'] = pygame.surface.Surface((BACKGROUND_TILE_WIDTH, BACKGROUND_TILE_HEIGHT), pygame.SRCALPHA)
+        _temp['BottomLeft'].blit(_img, (0, -BACKGROUND_TILE_HEIGHT_X2))
+        _temp['BottomMiddle'] = pygame.surface.Surface((BACKGROUND_TILE_WIDTH, BACKGROUND_TILE_HEIGHT), pygame.SRCALPHA)
+        _temp['BottomMiddle'].blit(_img, (-BACKGROUND_TILE_WIDTH, -BACKGROUND_TILE_HEIGHT_X2))
+        _temp['BottomRight'] = pygame.surface.Surface((BACKGROUND_TILE_WIDTH, BACKGROUND_TILE_HEIGHT), pygame.SRCALPHA)
+        _temp['BottomRight'].blit(_img, (-BACKGROUND_TILE_WIDTH_X2, -BACKGROUND_TILE_HEIGHT_X2))
 
         return _temp

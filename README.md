@@ -61,7 +61,7 @@ To backup your save do the following:
 ```
 CARD COMPONENT
 
-* Stat card when created with defualt height was far too small. Now starts at larger size.
+* Stat card when created with default height was far too small. Now starts at larger size.
 
 * When exporting a sheet, the cards would have a terrible grey border in the transparent version. This was due to a hack to make the height adjust smaller amounts. Proper fix has been implemented fixing the issues well keeping the height change.
 

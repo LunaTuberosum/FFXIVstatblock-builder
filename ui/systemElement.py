@@ -262,22 +262,6 @@ class SystemElement(UIElement):
         self.tab = Tab.DISPLAY
         self.__render_text()
         
-        monitors = get_monitors()
-        monitors.reverse()
-        
-        options: dict[str, object] = {}
-        for mon in monitors:
-            options[mon.name] = self.switch_monitor
-        
-        self.add_component(
-            'Monitor_Dropdown',
-            Dropdown(
-                pos=(313, 77),
-                options=options,
-                default=monitors[data_bus.sign('get_monitor') - 1].name
-            )
-        )
-        
         fs: ScreenOptions = data_bus.sign('get_fullscreen')
         defualt: str = ''
         
@@ -317,6 +301,22 @@ class SystemElement(UIElement):
                     "540x960": self.switch_resolution,
                 },
                 default=f'{res[0]}x{res[1]}'
+            )
+        )
+        
+        monitors = get_monitors()
+        monitors.reverse()
+        
+        options: dict[str, object] = {}
+        for mon in monitors:
+            options[mon.name] = self.switch_monitor
+        
+        self.add_component(
+            'Monitor_Dropdown',
+            Dropdown(
+                pos=(313, 77),
+                options=options,
+                default=monitors[data_bus.sign('get_monitor') - 1].name
             )
         )
         

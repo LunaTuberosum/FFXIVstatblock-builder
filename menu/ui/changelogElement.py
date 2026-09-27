@@ -151,6 +151,9 @@ class ChangelogElement(UIElement):
                     y += 24
                 else:
                     text += ' '
+            if count < 12:
+                self.render_text_large(text, '#D34D35', (W_HALF - (self.font_large.size(text)[0] / 2), y))
+                y += 24
             y += 5
                 
         for form, text in self.changelog['text']:

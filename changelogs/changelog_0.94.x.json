@@ -33,16 +33,16 @@
             "When adding additional traits or abilities when editing a card, they would count up incorrectly."
         ],
         [
+            "break",
+            "1"
+        ],
+        [
             "title",
             "EFFECT COMPONENT"
         ],
         [
             "text",
             "Effects could not be dragged, they now can and the way they work has been changed. Report any bugs \nyou find please."
-        ],
-        [
-            "break",
-            "1"
         ],
         [
             "title",
@@ -85,16 +85,16 @@
             "Added the ability to toggle between the enemy Tiers from the Gamemaster book and levels. I'm not sure \nhow I feel about the tiers but I need to add them."
         ],
         [
+            "break",
+            "2"
+        ],
+        [
             "text",
             "Additionally when switching between the two in the Edit Card menu it will set the \"level\" to the \nappropriate lowest value (Mob/00)."
         ],
         [
             "text",
             "Decreased the size of the level text when set to be in the top right of the card. Was just a little to big \ncompared to the official books."
-        ],
-        [
-            "break",
-            "2"
         ],
         [
             "title",
@@ -129,6 +129,10 @@
             "Changing to a different effect changes the preset button back to its default state. Just looks bad when it \ndoesn't do that."
         ],
         [
+            "break",
+            "3"
+        ],
+        [
             "text",
             "Confirmation menus no longer can be clicked away by clicking anywhere else on the screen. It caused a \nlot of issues."
         ],
@@ -139,10 +143,6 @@
         [
             "text",
             "Fixed smaller dropdowns option background extending far past button size. Now fits nicely in bounds."
-        ],
-        [
-            "break",
-            "3"
         ],
         [
             "text",

@@ -5,6 +5,7 @@ from menu.ui.renameElement import RenameElement
 
 from singletons import resourceHandler
 
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 
@@ -23,16 +24,16 @@ class MenuObject():
         self.name: str = name
         self.path: str = path
         
-        self.seperator: pygame.Surface = resourceHandler.load_image('assets/backgrounds/UISeperator.png')
-        self.background: pygame.Surface = resourceHandler.load_image(f'assets/backgrounds/{background}.png')
+        self.seperator: pygame.Surface = resourceHandler.load_image(f'assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\UISeperator.png')
+        self.background: pygame.Surface = resourceHandler.load_image(f'assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\{background}.png')
         
         self.size: tuple[int, int] = (250, 250)
         self.image: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         
         self.rect: pygame.Rect = self.image.get_rect()
         
-        self.font: pygame.font.Font = resourceHandler.load_font('assets/fonts/noto-sans.regular.ttf', 18)
-        self.fontTitle: pygame.font.Font = resourceHandler.load_font('assets/fonts/Deutschlander.otf', 25)
+        self.font: pygame.font.Font = resourceHandler.load_font('assets\\fonts\\noto-sans.regular.ttf', 18)
+        self.fontTitle: pygame.font.Font = resourceHandler.load_font('assets\\fonts\\Deutschlander.otf', 25)
         
         self.hovering: bool = False
     

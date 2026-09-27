@@ -3,8 +3,9 @@ import pygame
 
 from singletons import resourceHandler
 
-from singletons.keyBus import key_bus
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 
 from uiComponents.componet import Component
 
@@ -28,22 +29,21 @@ class Dropdown(Component):
         
         if size == 'Large':
             self.image_open: dict[str, pygame.Surface] = {
-                'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_open.png'),
-                'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_open_hover.png'),
+                'no_hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_open.png'),
+                'hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_open_hover.png'),
             }
             self.image_closed: dict[str, pygame.Surface] = {
-                'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_closed.png'),
-                'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_closed_hover.png'),
+                'no_hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_closed.png'),
+                'hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_closed_hover.png'),
             }
         else:
-            self.image_open: dict[str,
-                                  pygame.Surface] = {
-                'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_open.png'),
-                'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_open_hover.png'),
+            self.image_open: dict[str, pygame.Surface] = {
+                'no_hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_small_open.png'),
+                'hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_small_open_hover.png'),
             }
             self.image_closed: dict[str, pygame.Surface] = {
-                'no_hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_closed.png'),
-                'hover': resourceHandler.load_image('.\\assets\\icons\\dropdown_small_closed_hover.png'),
+                'no_hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_small_closed.png'),
+                'hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_small_closed_hover.png'),
             }
             
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\noto-sans.regular.ttf', 20)
@@ -61,7 +61,7 @@ class Dropdown(Component):
         self.selected_option: str = default
         self.active: bool = False
         
-        self.option_hover: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\DropDownHoverBackground.png')
+        self.option_hover: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\DropDownHoverBackground.png')
         
         back_size = (
             294 if size == 'Large' else 234, 
@@ -263,7 +263,7 @@ class Dropdown(Component):
         )
                
     def __split_background() -> dict[str, pygame.Surface]:
-        _img = resourceHandler.load_image('.\\assets\\backgrounds\\DropDownBackground.png')
+        _img = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\DropDownBackground.png')
 
         _temp: dict[str, pygame.Surface] = {
             'TopLeft': None,

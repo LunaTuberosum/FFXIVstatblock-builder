@@ -1,6 +1,8 @@
 import pygame
 
 from singletons import resourceHandler
+
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 
@@ -43,16 +45,16 @@ class ChangelogElement(UIElement):
         self.add_component('Left_Button', Button(
                 pos=(440, 543),
                 size=(34, 34),
-                image='.\\assets\\icons\\left_button.png',
-                image_hover='.\\assets\\icons\\left_button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\left_button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\left_button_hover.png',
                 command=self.left
             )
         )
         self.add_component('Right_Button', Button(
                 pos=(525, 543),
                 size=(34, 34),
-                image='.\\assets\\icons\\right_button.png',
-                image_hover='.\\assets\\icons\\right_button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\right_button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\right_button_hover.png',
                 command=self.right
             )
         )

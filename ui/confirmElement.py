@@ -2,6 +2,7 @@ from typing import Callable
 
 import pygame
 
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 
 from uiComponents.button import Button
@@ -44,8 +45,8 @@ class ConfirmElement(UIElement):
             Button(
                 pos=(30, 135),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.confirm,
                 text=self.confirm_text
             )
@@ -56,8 +57,8 @@ class ConfirmElement(UIElement):
             Button(
                 pos=(272, 135),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.cancel,
                 text=self.cancel_text
             )

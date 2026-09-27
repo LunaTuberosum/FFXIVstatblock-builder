@@ -3,8 +3,10 @@ import re
 import pygame
 
 from menu.ui.changelogElement import ChangelogElement
+
 from singletons import resourceHandler
 
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 
@@ -53,7 +55,7 @@ class ChangelogViewElement(UIElement):
                     pos=(X_POS, y),
                     size=SIZE,
                     image=None,
-                    image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
+                    image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\EscapeMenuHoverBackground.png',
                     command=self.load_changelog,
                     text=name
                 )

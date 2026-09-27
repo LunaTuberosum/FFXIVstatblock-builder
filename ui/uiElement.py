@@ -2,8 +2,10 @@ import pygame
 
 from singletons import resourceHandler
 
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
+
 from uiComponents.button import Button
 from uiComponents.componet import Component
 from uiComponents.textBox import TextBox
@@ -49,7 +51,7 @@ class UIElement():
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\noto-sans.regular.ttf', 18)
 
         self.font_title: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\Deutschlander.otf', 25)
-        self.seperator: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\UISeperator.png')
+        self.seperator: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\UISeperator.png')
 
         self.hovering: bool = False
         
@@ -244,7 +246,7 @@ class UIElement():
         )
                
     def __split_background() -> dict[str, pygame.Surface]:
-        _img = resourceHandler.load_image('.\\assets\\backgrounds\\UIBackground.png')
+        _img = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\UIBackground.png')
 
         _temp: dict[str, pygame.Surface] = {
             'TopLeft': None,

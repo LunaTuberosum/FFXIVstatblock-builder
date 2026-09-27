@@ -2,6 +2,7 @@ from typing import Callable
 
 import pygame
 
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 
@@ -40,7 +41,7 @@ class EscapeMenu(UIElement):
                 pos=(30, 55),
                 size=(370, 24),
                 image=None,
-                image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\EscapeMenuHoverBackground.png',
                 command=self.in_progress,
                 text='Support Desk'
             )
@@ -51,7 +52,7 @@ class EscapeMenu(UIElement):
                 pos=(30, 80),
                 size=(370, 24),
                 image=None,
-                image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\EscapeMenuHoverBackground.png',
                 command=self.changelogs,
                 text='Changelogs'
             )
@@ -62,7 +63,7 @@ class EscapeMenu(UIElement):
                 pos=(30, 105),
                 size=(370, 24),
                 image=None,
-                image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\EscapeMenuHoverBackground.png',
                 command=self.in_progress,
                 text='Playguide'
             )
@@ -73,7 +74,7 @@ class EscapeMenu(UIElement):
                 pos=(30, 130),
                 size=(370, 24),
                 image=None,
-                image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\EscapeMenuHoverBackground.png',
                 command=self.system,
                 text='System Configuration'
             )
@@ -86,7 +87,7 @@ class EscapeMenu(UIElement):
                     pos=(30, y),
                     size=(370, 24),
                     image=None,
-                    image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
+                    image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\EscapeMenuHoverBackground.png',
                     command=call,
                     text=option
                 )

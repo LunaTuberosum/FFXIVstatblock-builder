@@ -24,7 +24,10 @@ class Display():
         
         self.__volume: float = 1
         
+        self.__theme: str = 'dark'
+        
         self.screen: pygame.Surface = None
+        
         
     def get_resolution(self) -> tuple[int, int]:
         return (self.__width, self.__height)
@@ -78,6 +81,12 @@ class Display():
     
     def set_volume(self, volume: float) -> None:
         self.__volume = volume
+        
+    def get_theme(self) -> str:
+        return self.__theme
+    
+    def set_theme(self, theme: str) -> None:
+        self.__theme = theme
         
     def create_screen(self) -> None:
         flags = self.get_fullscreen_pygame()

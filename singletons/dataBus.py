@@ -13,6 +13,7 @@ class DataBus(Bus):
                 'get_fullscreen': None,
                 'get_fps': None,
                 'get_monitor': None,
+                'get_theme': None,
                 
                 'get_folder_id': None,
                 

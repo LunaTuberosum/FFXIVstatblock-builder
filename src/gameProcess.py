@@ -57,6 +57,7 @@ class GameProcess():
         data_bus.register('get_fullscreen', self.get_fullscreen)
         data_bus.register('get_fps', self.get_fps)
         data_bus.register('get_monitor', self.get_monitor)
+        data_bus.register('get_theme', self.get_theme)
         
     def deregister(self) -> None:
         event_bus.deregister('play_se', self.play_se)
@@ -77,6 +78,7 @@ class GameProcess():
         data_bus.deregister('get_fullscreen', self.get_fullscreen)
         data_bus.deregister('get_fps', self.get_fps)
         data_bus.deregister('get_monitor', self.get_monitor)
+        data_bus.deregister('get_theme', self.get_theme)
         
     def is_event(self, event_id: int) -> pygame.Event:
         for event in self.events:
@@ -271,3 +273,6 @@ class GameProcess():
     
     def get_monitor(self) -> int:
         return self.main.display.get_monitor()
+    
+    def get_theme(self) -> str:
+        return self.main.display.get_theme()

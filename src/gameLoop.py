@@ -59,7 +59,9 @@ class GameLoop():
                 'framerate': 0,
                 'vsync': False,
                 
-                'volume': 1
+                'volume': 1,
+                
+                'theme': 'dark'
             }
 
             resourceHandler.save_pickle('.//settings.pkl', setting_save)
@@ -71,6 +73,12 @@ class GameLoop():
         self.display.set_vsync(setting_save['vsync'])
         
         self.display.set_volume(setting_save['volume'])
+        
+        if not setting_save.get('theme'): ## Do to updating to 0.95 this is needed
+            setting_save['theme'] = 'dark' ##
+            resourceHandler.save_pickle('.//settings.pkl', setting_save) ##
+        
+        self.display.set_theme(setting_save['theme'])
         
         self.display.create_screen()
     

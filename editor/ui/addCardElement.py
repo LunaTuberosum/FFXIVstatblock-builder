@@ -2,6 +2,8 @@ import re
 import pygame
 
 from editor.statcard import StatCard
+
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 
 from uiComponents.button import Button
@@ -75,8 +77,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(378, 193),
                 size=(32, 34),
-                image='.\\assets\\icons\\AddButton.png',
-                image_hover='.\\assets\\icons\\AddButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
                 command=self.add_width
             )
         )
@@ -85,8 +87,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(408, 193),
                 size=(32, 34),
-                image='.\\assets\\icons\\MinusButton.png',
-                image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton_hover.png',
                 command=self.minus_width
             )
         )
@@ -108,8 +110,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(378, 228),
                 size=(32, 34),
-                image='.\\assets\\icons\\AddButton.png',
-                image_hover='.\\assets\\icons\\AddButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
                 command=self.add_height
             )
         )
@@ -118,8 +120,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(408, 228),
                 size=(32, 34),
-                image='.\\assets\\icons\\MinusButton.png',
-                image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton_hover.png',
                 command=self.minus_height
             )
         )
@@ -141,8 +143,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(378, 288),
                 size=(32, 34),
-                image='.\\assets\\icons\\AddButton.png',
-                image_hover='.\\assets\\icons\\AddButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
                 command=self.add_trait
             )
         )
@@ -151,8 +153,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(408, 288),
                 size=(32, 34),
-                image='.\\assets\\icons\\MinusButton.png',
-                image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton_hover.png',
                 command=self.minus_trait
             )
         )
@@ -174,8 +176,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(378, 338),
                 size=(32, 34),
-                image='.\\assets\\icons\\AddButton.png',
-                image_hover='.\\assets\\icons\\AddButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
                 command=self.add_ability
             )
         )
@@ -184,8 +186,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(408, 338),
                 size=(32, 34),
-                image='.\\assets\\icons\\MinusButton.png',
-                image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton_hover.png',
                 command=self.minus_ability
             )
         )
@@ -195,8 +197,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(28, 385),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.create,
                 text='Create'
             )
@@ -207,8 +209,8 @@ class AddCardElement(UIElement):
             Button(
                 pos=(272, 385),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.close,
                 text='Close'
             )

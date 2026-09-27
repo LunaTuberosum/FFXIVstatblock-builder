@@ -6,6 +6,7 @@ from editor.cardComponents.abilityComponent import AbilityComponent
 from editor.ui.paintbursh import Paintbrush, Paint
 from editor.ui.statCardElement import StatCardElement
 
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 
 from ui.confirmElement import ConfirmElement
@@ -59,8 +60,8 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(280, 80),
                 size=(32, 34),
-                image='.\\assets\\icons\\AddButton.png',
-                image_hover='.\\assets\\icons\\AddButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
                 command=self.add_width
             )
         )
@@ -69,8 +70,8 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(310, 80),
                 size=(32, 34),
-                image='.\\assets\\icons\\MinusButton.png',
-                image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton_hover.png',
                 command=self.minus_width
             )
         )
@@ -93,8 +94,8 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(280, 120),
                 size=(32, 34),
-                image='.\\assets\\icons\\AddButton.png',
-                image_hover='.\\assets\\icons\\AddButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
                 command=self.add_height
             )
         )
@@ -103,8 +104,8 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(310, 120),
                 size=(32, 34),
-                image='.\\assets\\icons\\MinusButton.png',
-                image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton_hover.png',
                 command=self.minus_height
             )
         )
@@ -137,8 +138,8 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(30, self.size[1] - 65),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.remove_marker,
                 text='Remove  Marker'
             )

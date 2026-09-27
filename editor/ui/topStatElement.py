@@ -5,6 +5,9 @@ import pygame
 from editor.cardComponents.topStatComponent import TopStatComponent
 
 from editor.ui.statCardElement import StatCardElement
+
+from singletons.dataBus import data_bus
+
 from uiComponents.button import Button
 from uiComponents.textBox import TextBox
 
@@ -263,8 +266,8 @@ class TopStatElement(StatCardElement[TopStatComponent]):
             Button(
                 pos=(pos[0] + box_size - 2, pos[1] - 2),
                 size=(32, 34),
-                image='.\\assets\\icons\\AddButton.png',
-                image_hover='.\\assets\\icons\\AddButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
                 command=plus_callback
             )
         )
@@ -273,8 +276,8 @@ class TopStatElement(StatCardElement[TopStatComponent]):
             Button(
                 pos=(pos[0] + box_size + 28, pos[1] - 2),
                 size=(32, 34),
-                image='.\\assets\\icons\\MinusButton.png',
-                image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton_hover.png',
                 command=minus_callback
             )
         )

@@ -4,8 +4,9 @@ import pygame
 
 from singletons import resourceHandler
 
-from singletons.keyBus import key_bus
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 
 
 IMAGE_POS: tuple[int, int] = (10, 2)
@@ -26,8 +27,8 @@ class ContextMenuOption():
         self.hovering: bool = False
         self.clicked: bool = False
 
-        self.hover_background: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\ContextMenuHoverBackground.png')
-        self.clicked_background: pygame.Surface = resourceHandler.load_image('.\\assets\\backgrounds\\ContextMenuClickedBackground.png')
+        self.hover_background: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\ContextMenuHoverBackground.png')
+        self.clicked_background: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\ContextMenuClickedBackground.png')
         
         key_bus.register('mouse_left_down', self.on_click)
         

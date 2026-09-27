@@ -3,8 +3,9 @@ import pygame
 
 from singletons import resourceHandler
 
-from singletons.keyBus import key_bus
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 
 from uiComponents.componet import Component
 
@@ -26,9 +27,9 @@ class ButtonOption():
         self.hovering: bool = False
         self.selected: bool = False
         
-        self.button_image: pygame.Surface = resourceHandler.load_image('.\\assets\\icons\\ToggleButton.png')
-        self.button_image_hover: pygame.Surface = resourceHandler.load_image('.\\assets\\icons\\ToggleButton_hover.png')
-        self.button_image_selected: pygame.Surface = resourceHandler.load_image('.\\assets\\icons\\ToggleButton_selected.png')
+        self.button_image: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ToggleButton.png')
+        self.button_image_hover: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ToggleButton_hover.png')
+        self.button_image_selected: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ToggleButton_selected.png')
         
         key_bus.register('mouse_left_down', self.on_click)
         

@@ -1,5 +1,7 @@
 import pygame
 
+from singletons.dataBus import data_bus
+
 from ui.uiElement import UIElement
 
 from uiComponents.button import Button
@@ -19,8 +21,8 @@ class StatCardElement[T](UIElement):
             Button(
                 pos=(30, self.size[1] - 65),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.apply,
                 text='Apply'
             )
@@ -31,8 +33,8 @@ class StatCardElement[T](UIElement):
             Button(
                 pos=(self.size[0] - 228, self.size[1] - 65),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.confirm,
                 text='Confirm'
             )

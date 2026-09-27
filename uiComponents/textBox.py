@@ -12,8 +12,9 @@ from src.timer import Timer
 
 from singletons import resourceHandler
 
-from singletons.keyBus import key_bus
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 
 from uiComponents.componet import Component
 from uiComponents.textFormat import Format, FormatData
@@ -38,8 +39,8 @@ class TextBox(Component):
         )
         self.box_size: tuple[int, int] = size
             
-        self.background: pygame.Surface = self.__draw_background('.\\assets\\backgrounds\\UITextBoxBackground.png')
-        self.background_selected: pygame.Surface = self.__draw_background('.\\assets\\backgrounds\\UITextBoxBackground_selected.png') 
+        self.background: pygame.Surface = self.__draw_background(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\UITextBoxBackground.png')
+        self.background_selected: pygame.Surface = self.__draw_background(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\UITextBoxBackground_selected.png') 
         
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\noto-sans.regular.ttf', 18)
         

@@ -4,6 +4,8 @@ from editor.cardComponents.nameComponent import LEVEL_NUM, LEVEL_TIER, NameCompo
 
 from editor.ui.statCardElement import StatCardElement
 
+from singletons.dataBus import data_bus
+
 from uiComponents.button import Button
 from uiComponents.dropdown import Dropdown
 from uiComponents.textBox import TextBox
@@ -56,8 +58,8 @@ class NameElement(StatCardElement[NameComponent]):
                 Button(
                     pos=(428, 138),
                     size=(32, 34),
-                    image='.\\assets\\icons\\AddButton.png',
-                    image_hover='.\\assets\\icons\\AddButton_hover.png',
+                    image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+                    image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
                     command=self.add_level
                 )
             )
@@ -66,8 +68,8 @@ class NameElement(StatCardElement[NameComponent]):
                 Button(
                     pos=(458, 138),
                     size=(32, 34),
-                    image='.\\assets\\icons\\MinusButton.png',
-                    image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                    image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton.png',
+                    image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton_hover.png',
                     command=self.minus_level
                 )
             )

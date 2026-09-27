@@ -43,8 +43,8 @@ class TextFormatBox():
         self.color_confirm_button: Button = Button(
             pos=(138, -34),
             size=(32, 34),
-            image='.\\assets\\icons\\ConfirmButton.png',
-            image_hover='.\\assets\\icons\\ConfirmButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ConfirmButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ConfirmButton_hover.png',
             command=self.color_confirm
         )
         self.color_text_active: bool = False
@@ -52,40 +52,40 @@ class TextFormatBox():
         self.bold_button: Button = Button(
             pos=(7, 6), 
             size=(32, 34),
-            image='.\\assets\\icons\\BoldButton.png',
-            image_hover='.\\assets\\icons\\BoldButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\BoldButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\BoldButton_hover.png',
             command=self.textbox.toggle_bold
         )
         
         self.italic_button: Button = Button(
             pos=(40, 6), 
             size=(32, 34),
-            image='.\\assets\\icons\\ItalicButton.png',
-            image_hover='.\\assets\\icons\\ItalicButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ItalicButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ItalicButton_hover.png',
             command=self.textbox.toggle_italic
         )
         
         self.ability_button: Button = Button(
             pos=(73, 6), 
             size=(32, 34),
-            image='.\\assets\\icons\\ColorOverButton.png',
-            image_hover='.\\assets\\icons\\ColorOverButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton_hover.png',
             command=self.toggle_color
         )
         
         self.attribute_button: Button = Button(
             pos=(106, 6), 
             size=(32, 34),
-            image='.\\assets\\icons\\ColorOverButton.png',
-            image_hover='.\\assets\\icons\\ColorOverButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton_hover.png',
             command=self.toggle_color
         )
         
         self.add_color_button: Button = Button(
             pos=(self.size[0] - 39, 6), 
             size=(32, 34),
-            image='.\\assets\\icons\\AddButton.png',
-            image_hover='.\\assets\\icons\\AddButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
             command=self.add_color
         )
         
@@ -274,8 +274,8 @@ class TextFormatBox():
         self.colors[color] = Button(
             pos=(139 + (33 * len(self.colors)), 6),
             size=(32, 34),
-            image='.\\assets\\icons\\ColorOverButton.png',
-            image_hover='.\\assets\\icons\\ColorOverButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton_hover.png',
             command=self.toggle_color
         )
         
@@ -398,7 +398,7 @@ class TextFormatBox():
         return background_surface
                
     def __split_background() -> dict[str, pygame.Surface]:
-        _img = resourceHandler.load_image('.\\assets\\backgrounds\\TextBoxFormatBackground.png')
+        _img = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\TextBoxFormatBackground.png')
 
         _temp: dict[str, pygame.Surface] = {
             'TopLeft': None,

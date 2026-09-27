@@ -6,6 +6,7 @@ from editor.ui.effectElement import EffectElement
 from editor.ui.markerElement import MarkerElement
 from editor.ui.statCardElement import StatCardElement
 
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 
 from uiComponents.button import Button
@@ -72,8 +73,8 @@ class AbilityElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(322, 290),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.effect_edit,
                 text='Effect Builder'
             )
@@ -84,8 +85,8 @@ class AbilityElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(322, 350),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.marker_edit,
                 text='Marker Builder'
             )

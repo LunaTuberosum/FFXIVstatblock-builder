@@ -5,6 +5,7 @@ from editor.cardComponents.abilityComponent import EffectData
 
 from singletons import resourceHandler
 
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
 from singletons.keyBus import key_bus
 
@@ -61,16 +62,16 @@ class List(Component):
             'Effect_Plus': Button(
                 pos=(self.size[0] - 72, 9),
                 size=(32, 34),
-                image='.\\assets\\icons\\AddButton.png',
-                image_hover='.\\assets\\icons\\AddButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\AddButton_hover.png',
                 command=self.add_effect_num
             )
             ,
             'Effect_Minus': Button(
                 pos=(self.size[0] - 41, 9),
                 size=(32, 34),
-                image='.\\assets\\icons\\MinusButton.png',
-                image_hover='.\\assets\\icons\\MinusButton_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\MinusButton_hover.png',
                 command=self.minus_effect_num
             )
         }
@@ -472,7 +473,7 @@ class List(Component):
         )
                
     def __split_background() -> dict[str, pygame.Surface]:
-        _img = resourceHandler.load_image('.\\assets\\backgrounds\\ListBackground.png')
+        _img = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\ListBackground.png')
 
         _temp: dict[str, pygame.Surface] = {
             'TopLeft': None,

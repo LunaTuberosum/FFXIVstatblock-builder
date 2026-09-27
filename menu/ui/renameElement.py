@@ -1,5 +1,7 @@
 import pygame
 
+from singletons.dataBus import data_bus
+
 from ui.uiElement import UIElement
 
 from uiComponents.button import Button
@@ -41,8 +43,8 @@ class RenameElement(UIElement):
             Button(
                 pos=(30, 135),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.close,
                 text='Close'
             )
@@ -53,8 +55,8 @@ class RenameElement(UIElement):
             Button(
                 pos=(382, 135),
                 size=(198, 38),
-                image='.\\assets\\icons\\button.png',
-                image_hover='.\\assets\\icons\\button_hover.png',
+                image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
+                image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
                 command=self.change_name,
                 text='Confirm'
             )

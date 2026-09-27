@@ -32,49 +32,34 @@ class ChangelogViewElement(UIElement):
             write_config=False
         )
         
-        self.add_component('Version 0.94',
-            Button(
-                pos=(30, 55),
-                size=(370, 24),
-                image=None,
-                image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
-                command=self.load_changelog,
-                text='Version 0.94'
-            )
-        )
+        y: int = 55
+        X_POS: int = 30
+        SIZE: tuple[int, int] = (370, 24)
         
-        self.add_component('Version 0.93.1',
-            Button(
-                pos=(30, 80),
-                size=(370, 24),
-                image=None,
-                image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
-                command=self.load_changelog,
-                text='Version 0.93.1'
-            )
-        )
+        changelogs: list[str] = resourceHandler.load_dir('.\\changelogs\\')
+        changelogs.reverse()
         
-        self.add_component('Version 0.93',
-            Button(
-                pos=(30, 105),
-                size=(370, 24),
-                image=None,
-                image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
-                command=self.load_changelog,
-                text='Version 0.93'
+        for change in changelogs:
+            name: str = change.split('_')[1][:-5]
+            
+            if name == 'recent':
+                log: dict[str, str] = resourceHandler.load_json('.\\changelogs\\changelog_recent.json')
+                name = log['name'].split()[1]
+                
+            name = 'Version ' + name
+            
+            self.add_component(name,
+                Button(
+                    pos=(X_POS, y),
+                    size=SIZE,
+                    image=None,
+                    image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
+                    command=self.load_changelog,
+                    text=name
+                )
             )
-        )
-        
-        self.add_component('Version 0.92.x',
-            Button(
-                pos=(30, 130),
-                size=(370, 24),
-                image=None,
-                image_hover='.\\assets\\backgrounds\\EscapeMenuHoverBackground.png',
-                command=self.load_changelog,
-                text='Version 0.92.x'
-            )
-        )
+            
+            y += 25
         
         for button in self.components.values():
             if not isinstance(button, Button):

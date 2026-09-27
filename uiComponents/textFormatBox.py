@@ -189,9 +189,10 @@ class TextFormatBox():
         self.attribute_button.draw(screen, self.rect.topleft)
         
         for color, button in self.colors.items():
-            button.no_hover()
             if button.is_hover(mouse_pos):
                 button.hover()
+            else:
+                button.no_hover()
                 
             if self.textbox.color and self.textbox.color_data == color:
                 button.active = True

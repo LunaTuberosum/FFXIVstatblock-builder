@@ -29,6 +29,7 @@ TEXT_DECREASE: int = 10
 class Tab(Enum):
     DISPLAY: int = 0
     SOUND: int = 1
+    THEME: int = 2
 
 class SystemElement(UIElement):
     def __init__(self) -> None:
@@ -76,6 +77,17 @@ class SystemElement(UIElement):
                 image='.\\assets\\icons\\SoundButton.png',
                 image_hover='.\\assets\\icons\\SoundButton_hover.png',
                 command=self.sound
+            )
+        )
+        
+        self.add_component(
+            'Theme',
+            Button(
+                pos=(22, 155),
+                size=(46, 46),
+                image='.\\assets\\icons\\ThemeButton.png',
+                image_hover='.\\assets\\icons\\ThemeButton_hover.png',
+                command=self.theme
             )
         )
         
@@ -187,7 +199,10 @@ class SystemElement(UIElement):
         return setting_save
     
     def apply_sound(self, display: Display, setting_save: dict) -> dict:
-        
+        return setting_save
+    
+    def apply_theme(self, display: Display, setting_save: dict) -> dict:
+        setting_save['theme'] = self.get_component('UI_Dropdown').selected_option
         
         return setting_save
             
@@ -202,13 +217,17 @@ class SystemElement(UIElement):
             'framerate': display.get_framerate(),
             'vsync': display.get_vsync(),
             
-            'volume': display.get_volume()
+            'volume': display.get_volume(),
+            
+            'theme': display.get_theme()
         }
         
         if self.tab == Tab.DISPLAY:
             setting_save = self.apply_display(display, setting_save)
         elif self.tab == Tab.SOUND:
             setting_save = self.apply_sound(display, setting_save)
+        elif self.tab == Tab.THEME:
+            setting_save = self.apply_theme(display, setting_save)  
 
         resourceHandler.save_pickle('.//settings.pkl', setting_save)
             
@@ -236,6 +255,14 @@ class SystemElement(UIElement):
         
             self.render_text_face('Master Volume', '#C2C2C2', (378, 78))
             
+        elif self.tab == Tab.THEME:
+            self.render_text_face('Theme Settings', '#C2C2C2', (90, 55))
+            
+            self.render_text_face('UI Theme', '#EEE1C5', (115, 80))
+            
+            self.render_text_face('Choose your preferred color scheme. Certian elements \nare not affected by this change.', '#EEE1C5', (115, 200))
+            self.render_text_face('*You must restart for changes to take effect.', '#EEE1C5', (115, 250))
+                
         self.text_face.blit(
             pygame.transform.scale(self.seperator, (600, 3)),
             (78, 290)
@@ -245,7 +272,7 @@ class SystemElement(UIElement):
         remove: list[str] = []
         index: int = 0
         for key, comp in self.components.items():
-            if index < 5:
+            if index < 6:
                 index += 1
                 continue
             
@@ -378,3 +405,26 @@ class SystemElement(UIElement):
             event_bus.sign('mute_master')
         else:
             event_bus.sign('set_master', self.last_volumes['master'])
+            
+    def theme(self) -> None:
+        self.clear_tab_comp()
+        
+        display: Display = data_bus.sign('get_display')
+        
+        self.add_component(
+            'UI_Dropdown',
+            Dropdown(
+                pos=(313, 77),
+                options={
+                    'dark': self.change_theme,
+                    'classic': self.change_theme,
+                },
+                default=display.get_theme()
+            )
+        )
+
+        self.tab = Tab.THEME
+        self.__render_text()
+        
+    def change_theme(self) -> None:
+        pass

@@ -15,6 +15,8 @@ class DataBus(Bus):
                 'get_monitor': None,
                 'get_theme': None,
                 
+                'get_theme_color': None,
+                
                 'get_folder_id': None,
                 
                 'add_color': None,

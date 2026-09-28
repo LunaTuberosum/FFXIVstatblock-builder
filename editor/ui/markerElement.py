@@ -523,9 +523,9 @@ class MarkerElement(StatCardElement[AbilityComponent]):
         self.render_text('Marker Palete', '#C2C2C2', (25, 155))
         self.render_text('Palete', '#EEE1C5', (50, 185))
             
-        pygame.draw.rect(self.text_face, '#525552', (47, 227, 326, 108))
-        pygame.draw.rect(self.text_face, '#D4B155', (47, 227, 326, 108), 2)
-        pygame.draw.rect(self.text_face, '#6A4A32', (49, 229, 322, 104), 1)
+        pygame.draw.rect(self.text_face, data_bus.sign('get_theme_color', 'back'), (47, 227, 326, 108))
+        pygame.draw.rect(self.text_face, data_bus.sign('get_theme_color', 'border'), (47, 227, 326, 108), 2)
+        pygame.draw.rect(self.text_face, data_bus.sign('get_theme_color', 'border_accent'), (49, 229, 322, 104), 1)
         
         self.render_text('Marker', '#C2C2C2', (410, 55))
             

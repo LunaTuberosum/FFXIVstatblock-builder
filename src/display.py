@@ -5,6 +5,21 @@ import pyautogui
 import pygame
 
 
+THEME_COLORS: dict[str, dict[str, str]] = {
+    'dark': {
+        'border': '#D4B155',
+        'border_accent': '#6A4A32',
+        'back': '#525552',
+        'scroll': '#525552'
+    },
+    'classic': {
+        'border': '#EBEDE8',
+        'border_accent': '#CACCC7',
+        'back': '#200096',
+        'scroll': '#5E4AAC'
+    }
+}
+
 class ScreenOptions(Enum):
     FULLSCREEN: int = 0
     WINDOWED: int = 1
@@ -87,6 +102,9 @@ class Display():
     
     def set_theme(self, theme: str) -> None:
         self.__theme = theme
+        
+    def get_theme_color(self, color: str) -> str:
+        return THEME_COLORS[self.__theme][color]
         
     def create_screen(self) -> None:
         flags = self.get_fullscreen_pygame()

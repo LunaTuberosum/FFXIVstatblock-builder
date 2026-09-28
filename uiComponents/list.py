@@ -265,7 +265,7 @@ class List(Component):
             scroll_size: float = segment_size * 10
             scroll_offset: float = segment_size * self.offset
             
-            pygame.draw.rect(screen, '#525552', (self.size[0] - 13 + self.rect.x, self.rect.y + 48 + scroll_offset, 8, scroll_size))
+            pygame.draw.rect(screen, data_bus.sign('get_theme_color', 'scroll'), (self.size[0] - 13 + self.rect.x, self.rect.y + 48 + scroll_offset, 8, scroll_size))
         
         for component in self.components.values():
             if component.is_hover(pygame.mouse.get_pos()):

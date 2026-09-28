@@ -75,7 +75,6 @@ class GameLoop():
         self.display.set_volume(setting_save['volume'])
         
         if not setting_save.get('theme'): ## Do to updating to 0.95 this is needed
-            setting_save['theme'] = 'classic' ## TODO: TEMP TEMP
             resourceHandler.save_pickle('.//settings.pkl', setting_save) ##
         
         self.display.set_theme(setting_save['theme'])

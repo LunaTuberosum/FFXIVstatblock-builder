@@ -36,6 +36,7 @@ class Dropdown(Component):
                 'no_hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_closed.png'),
                 'hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_closed_hover.png'),
             }
+            self.option_hover: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\DropDownHoverBackground.png')
         else:
             self.image_open: dict[str, pygame.Surface] = {
                 'no_hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_small_open.png'),
@@ -45,6 +46,7 @@ class Dropdown(Component):
                 'no_hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_small_closed.png'),
                 'hover': resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\dropdown_small_closed_hover.png'),
             }
+            self.option_hover: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\DropDownSmallHoverBackground.png')
             
         self.font: pygame.Font = resourceHandler.load_font('.\\assets\\fonts\\noto-sans.regular.ttf', 20)
         
@@ -60,9 +62,7 @@ class Dropdown(Component):
         
         self.selected_option: str = default
         self.active: bool = False
-        
-        self.option_hover: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\backgrounds\\DropDownHoverBackground.png')
-        
+                
         back_size = (
             294 if size == 'Large' else 234, 
             (len(self.options) * 30) + 10

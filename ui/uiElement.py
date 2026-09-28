@@ -57,14 +57,14 @@ class UIElement():
         
         key_bus.register('mouse_left_down', self.check_off_click)
         
-        self.add_component('Close_UI',Button(
+        self.add_component('Close_UI', Button(
             pos=(
                 self.size[0] - 43,
                 19
             ),
             size=(24, 24),
-            image='.\\assets\\icons\\CloseButton.png',
-            image_hover='.\\assets\\icons\\CloseButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\CloseButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\CloseButton_hover.png',
             command=self.close
         ))
         

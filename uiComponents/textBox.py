@@ -188,6 +188,9 @@ class TextBox(Component):
         if not self.can_format:
             return
         
+        if self.format_box:
+            return
+        
         self.format_box = TextFormatBox((self.cursor_pos[0] + self.rect.x, self.cursor_pos[1] + self.rect.y), self)
         
     def left_shift(self) -> None:

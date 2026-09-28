@@ -68,16 +68,16 @@ class TextFormatBox():
         self.ability_button: Button = Button(
             pos=(73, 6), 
             size=(32, 34),
-            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton.png',
-            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\OverButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\OverButton_hover.png',
             command=self.toggle_color
         )
         
         self.attribute_button: Button = Button(
             pos=(106, 6), 
             size=(32, 34),
-            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton.png',
-            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\OverButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\OverButton_hover.png',
             command=self.toggle_color
         )
         
@@ -155,7 +155,7 @@ class TextFormatBox():
                 width=6
             )
             pygame.draw.rect(screen, color, (self.rect.x + 17, self.rect.y - 33, 30, 30), border_radius=5)
-            pygame.draw.rect(screen, '#C4A463', (self.rect.x + 17, self.rect.y - 33, 30, 30), width=1, border_radius=5)
+            pygame.draw.rect(screen, data_bus.sign('get_theme_color', 'border'), (self.rect.x + 17, self.rect.y - 33, 30, 30), width=1, border_radius=5)
             
             self.color_textbox.draw(screen, self.rect.topleft)
             self.color_confirm_button.draw(screen, self.rect.topleft)
@@ -275,8 +275,8 @@ class TextFormatBox():
         self.colors[color] = Button(
             pos=(139 + (33 * len(self.colors)), 6),
             size=(32, 34),
-            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton.png',
-            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\ColorOverButton_hover.png',
+            image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\OverButton.png',
+            image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\OverButton_hover.png',
             command=self.toggle_color
         )
         

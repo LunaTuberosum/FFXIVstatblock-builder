@@ -3,8 +3,9 @@ import pygame
 
 from singletons import resourceHandler
 
-from singletons.keyBus import key_bus
+from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
+from singletons.keyBus import key_bus
 
 from uiComponents.componet import Component
 
@@ -21,9 +22,15 @@ class Button(Component):
         
         self.face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)
         if image:
-            self.face = pygame.transform.scale(resourceHandler.load_image(image), self.size)
+            if isinstance(image, pygame.Surface):
+                self.face = pygame.transform.scale(image, self.size)
+            else:
+                self.face = pygame.transform.scale(resourceHandler.load_image(image), self.size)
             
-        self.face_hover: pygame.Surface = pygame.transform.scale(resourceHandler.load_image(image_hover), self.size)
+        if isinstance(image_hover, pygame.Surface):
+            self.face_hover = pygame.transform.scale(image_hover, self.size)
+        else:
+            self.face_hover: pygame.Surface = pygame.transform.scale(resourceHandler.load_image(image_hover), self.size)
                 
         self.command: Callable[[None], None] = command
         self.text: str = text
@@ -99,3 +106,14 @@ class Button(Component):
         surf_out.blit(image, (1, 1))
 
         return surf_out
+    
+def over_button(under_path: str, is_hover: bool = False) -> pygame.Surface:
+    under: pygame.Surface =  resourceHandler.load_image(under_path)
+    if is_hover:
+        over: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\OverButton_hover.png')
+    else:
+        over: pygame.Surface = resourceHandler.load_image(f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\OverButton.png')
+    
+    under.blit(over)
+
+    return under

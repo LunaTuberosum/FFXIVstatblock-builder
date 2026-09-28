@@ -11,7 +11,7 @@ from singletons.eventBus import event_bus
 
 from ui.confirmElement import ConfirmElement
 
-from uiComponents.button import Button
+from uiComponents.button import Button, over_button
 from uiComponents.dropdown import Dropdown
 from uiComponents.marker import Marker
 from uiComponents.textBox import TextBox
@@ -210,8 +210,8 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(last_pos[0] + 32, last_pos[1]),
                 size=(32, 34),
-                image='.\\assets\\icons\\TankButton.png',
-                image_hover='.\\assets\\icons\\TankButton_hover.png',
+                image=over_button('.\\assets\\icons\\TankButton.png'),
+                image_hover=over_button('.\\assets\\icons\\TankButton_hover.png', True),
                 command=tank
             )
         )
@@ -225,8 +225,8 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(last_pos[0] + 64, last_pos[1]),
                 size=(32, 34),
-                image='.\\assets\\icons\\DPSButton.png',
-                image_hover='.\\assets\\icons\\DPSButton_hover.png',
+                image=over_button('.\\assets\\icons\\DPSButton.png'),
+                image_hover=over_button('.\\assets\\icons\\DPSButton_hover.png', True),
                 command=dps
             )
         )
@@ -240,8 +240,8 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(last_pos[0] + 96, last_pos[1]),
                 size=(32, 34),
-                image='.\\assets\\icons\\HealerButton.png',
-                image_hover='.\\assets\\icons\\HealerButton_hover.png',
+                image=over_button('.\\assets\\icons\\HealerButton.png'),
+                image_hover=over_button('.\\assets\\icons\\HealerButton_hover.png', True),
                 command=healer
             )
         )
@@ -281,64 +281,64 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(50, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\GridButton.png',
-                image_hover='.\\assets\\icons\\GridButton_hover.png',
+                image=over_button('.\\assets\\icons\\GridButton.png'),
+                image_hover=over_button('.\\assets\\icons\\GridButton_hover.png', True),
                 command=grid
             ),
             Button(
                 pos=(82, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\MarkerButton.png',
-                image_hover='.\\assets\\icons\\MarkerButton_hover.png',
+                image=over_button('.\\assets\\icons\\MarkerButton.png'),
+                image_hover=over_button('.\\assets\\icons\\MarkerButton_hover.png', True),
                 command=marker
             ),
             Button(
                 pos=(114, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\OriginButton.png',
-                image_hover='.\\assets\\icons\\OriginButton_hover.png',
+                image=over_button('.\\assets\\icons\\OriginButton.png'),
+                image_hover=over_button('.\\assets\\icons\\OriginButton_hover.png', True),
                 command=origin
             ),
             Button(
                 pos=(146, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\OriginOutlineStakeButton.png',
-                image_hover='.\\assets\\icons\\OriginOutlineStakeButton_hover.png',
+                image=over_button('.\\assets\\icons\\OriginOutlineStakeButton.png'),
+                image_hover=over_button('.\\assets\\icons\\OriginOutlineStakeButton_hover.png', True),
                 command=stake
             ),
             Button(
                 pos=(178, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\OriginOutlineBlueStakeButton.png',
-                image_hover='.\\assets\\icons\\OriginOutlineBlueStakeButton_hover.png',
+                image=over_button('.\\assets\\icons\\OriginOutlineBlueStakeButton.png'),
+                image_hover=over_button('.\\assets\\icons\\OriginOutlineBlueStakeButton_hover.png', True),
                 command=blue_stake
             ),
             Button(
                 pos=(210, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\OriginOutlinePurpleStakeButton.png',
-                image_hover='.\\assets\\icons\\OriginOutlinePurpleStakeButton_hover.png',
+                image=over_button('.\\assets\\icons\\OriginOutlinePurpleStakeButton.png'),
+                image_hover=over_button('.\\assets\\icons\\OriginOutlinePurpleStakeButton_hover.png', True),
                 command=purple_stake
             ),
             Button(
                 pos=(242, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\OriginOutlineGreenStakeButton.png',
-                image_hover='.\\assets\\icons\\OriginOutlineGreenStakeButton_hover.png',
+                image=over_button('.\\assets\\icons\\OriginOutlineGreenStakeButton.png'),
+                image_hover=over_button('.\\assets\\icons\\OriginOutlineGreenStakeButton_hover.png', True),
                 command=green_stake
             ),
             Button(
                 pos=(274, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\InstantButton.png',
-                image_hover='.\\assets\\icons\\InstantButton_hover.png',
+                image=over_button('.\\assets\\icons\\InstantButton.png'),
+                image_hover=over_button('.\\assets\\icons\\InstantButton_hover.png', True),
                 command=instant
             ),
             Button(
                 pos=(306, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\ProximityButton.png',
-                image_hover='.\\assets\\icons\\ProximityButton_hover.png',
+                image=over_button('.\\assets\\icons\\ProximityButton.png'),
+                image_hover=over_button('.\\assets\\icons\\ProximityButton_hover.png', True),
                 command=proximity
             )
         ]
@@ -370,36 +370,36 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(50, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\GridButton.png',
-                image_hover='.\\assets\\icons\\GridButton_hover.png',
+                image=over_button('.\\assets\\icons\\GridButton.png'),
+                image_hover=over_button('.\\assets\\icons\\GridButton_hover.png', True),
                 command=grid
             ),
             Button(
                 pos=(82, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\StackButton.png',
-                image_hover='.\\assets\\icons\\StackButton_hover.png',
+                image=over_button('.\\assets\\icons\\StackButton.png'),
+                image_hover=over_button('.\\assets\\icons\\StackButton_hover.png', True),
                 command=stack_marker
             ),
             Button(
                 pos=(114, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\StackOriginButton.png',
-                image_hover='.\\assets\\icons\\StackOriginButton_hover.png',
+                image=over_button('.\\assets\\icons\\StackOriginButton.png'),
+                image_hover=over_button('.\\assets\\icons\\StackOriginButton_hover.png', True),
                 command=stack_origin
             ),
             Button(
                 pos=(146, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\LineStackOriginButton.png',
-                image_hover='.\\assets\\icons\\LineStackOriginButton_hover.png',
+                image=over_button('.\\assets\\icons\\LineStackOriginButton.png'),
+                image_hover=over_button('.\\assets\\icons\\LineStackOriginButton_hover.png', True),
                 command=stack_origin_line
             ),
             Button(
                 pos=(178, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\MultiStackOriginButton.png',
-                image_hover='.\\assets\\icons\\MultiStackOriginButton_hover.png',
+                image=over_button('.\\assets\\icons\\MultiStackOriginButton.png'),
+                image_hover=over_button('.\\assets\\icons\\MultiStackOriginButton_hover.png', True),
                 command=stack_origin_multi
             )
         ]
@@ -430,36 +430,36 @@ class MarkerElement(StatCardElement[AbilityComponent]):
             Button(
                 pos=(50, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\GridButton.png',
-                image_hover='.\\assets\\icons\\GridButton_hover.png',
+                image=over_button('.\\assets\\icons\\GridButton.png'),
+                image_hover=over_button('.\\assets\\icons\\GridButton_hover.png', True),
                 command=grid
             ),
             Button(
                 pos=(82, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\TankbusterButton.png',
-                image_hover='.\\assets\\icons\\TankbusterButton_hover.png',
+                image=over_button('.\\assets\\icons\\TankbusterButton.png'),
+                image_hover=over_button('.\\assets\\icons\\TankbusterButton_hover.png', True),
                 command=tankbuster_marker
             ),
             Button(
                 pos=(114, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\TankBusterOriginButton.png',
-                image_hover='.\\assets\\icons\\TankBusterOriginButton_hover.png',
+                image=over_button('.\\assets\\icons\\TankBusterOriginButton.png'),
+                image_hover=over_button('.\\assets\\icons\\TankBusterOriginButton_hover.png', True),
                 command=tankbuster
             ),
             Button(
                 pos=(146, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\AOETankBusterOriginButton.png',
-                image_hover='.\\assets\\icons\\AOETankBusterOriginButton_hover.png',
+                image=over_button('.\\assets\\icons\\AOETankBusterOriginButton.png'),
+                image_hover=over_button('.\\assets\\icons\\AOETankBusterOriginButton_hover.png', True),
                 command=aoe_tankbuster
             ),
             Button(
                 pos=(178, 230),
                 size=(32, 34),
-                image='.\\assets\\icons\\CautionTankBusterOriginButton.png',
-                image_hover='.\\assets\\icons\\CautionTankBusterOriginButton_hover.png',
+                image=over_button('.\\assets\\icons\\CautionTankBusterOriginButton.png'),
+                image_hover=over_button('.\\assets\\icons\\CautionTankBusterOriginButton_hover.png', True),
                 command=caution_tankbuster
             )
         ]

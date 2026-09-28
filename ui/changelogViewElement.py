@@ -46,7 +46,7 @@ class ChangelogViewElement(UIElement):
             
             if name == 'recent':
                 log: dict[str, str] = resourceHandler.load_json('.\\changelogs\\changelog_recent.json')
-                name = log['name'].split()[1]
+                name = log['name'].split()[1] + ' (Newest)'
                 
             name = 'Version ' + name
             

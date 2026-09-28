@@ -20,7 +20,7 @@ class ButtonOption():
         
         text: pygame.Surface = self.font.render(self.text, True, '#EEE1C5')
         self.text_face: pygame.Surface = pygame.Surface((25 + text.size[0], 20), pygame.SRCALPHA)
-        self.text_face.blit(text, (25, -8))
+        self.text_face.blit(text, (25, -7))
         
         self.rect: pygame.Rect = self.text_face.get_rect(topleft=self.pos)
         

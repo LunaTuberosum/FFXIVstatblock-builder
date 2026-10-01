@@ -4,6 +4,7 @@ from typing import Callable
 
 import pygame
 
+from menu.encounter import Encounter
 from singletons import resourceHandler
 
 from singletons.eventBus import event_bus
@@ -45,11 +46,13 @@ class Folder(MenuObject):
         
         self.is_prev: bool = False
         
+        event_bus.register('duplicate_encounter', self.duplicate_encounter)
         event_bus.register('duplicate_sheet', self.duplicate_sheet)
         
     def deregister(self):
         super().deregister()
         
+        event_bus.deregister('duplicate_encounter', self.duplicate_encounter)
         event_bus.deregister('duplicate_sheet', self.duplicate_sheet)
         
     def on_click(self) -> None:
@@ -76,7 +79,11 @@ class Folder(MenuObject):
         # '' -> 'folder' -> 'fodler//folder2'
         for m_file in resourceHandler.load_dir(f'.\\saves\\{self.path}\\{self.name}'):
             if m_file.endswith('.json'):  
-                self.files.append(Sheet(f'{self.path}\\{self.name}', m_file))
+                _file: dict = resourceHandler.load_json(f'.\\saves\\{self.path}\\{self.name}\\{m_file}')
+                
+                if _file.get('type') == 'statsheet': self.files.append(Sheet(f'{self.path}\\{self.name}', m_file))
+                elif _file.get('type') == 'encounter': self.files.append(Encounter(f'{self.path}\\{self.name}', m_file))
+                
                 continue
             self.files.append(Folder(f'{self.path}\\{self.name}', m_file))
             
@@ -133,6 +140,48 @@ class Folder(MenuObject):
         
         self.files.append(Folder(f'{self.path}\\{self.name}', new_name))
         self.sort()
+        
+    def create_encounter(self) -> None:
+        event_bus.sign('context_menu', {})
+        
+        new_name: str = 'New Encounter Sheet'
+        count: int = 0
+        for m_file in self.files:
+            if isinstance(m_file, Encounter) and m_file.name.startswith(new_name):
+                count += 1
+        
+        if count:
+            new_name += f' {count}'
+
+        resourceHandler.save_json(
+            f'.\\saves\\{self.path}\\{self.name}\\{new_name}.json', 
+            {
+                "type": "encounter",
+                "version": "1.0",
+                "desc": ""
+            }
+        )
+        
+        self.files.append(Encounter(f'{self.path}\\{self.name}', f'{new_name}.json'))
+        self.sort()
+        
+    def duplicate_encounter(self, encounter: Encounter) -> None:
+        if not any(m_file == encounter for m_file in self.files):
+            return
+        
+        new_name: str = encounter.name + ' - Copy'
+        count: int = 0
+        for m_file in self.files:
+            if isinstance(m_file, Sheet) and m_file.name.startswith(new_name):
+                count += 1
+                
+        if count:
+            new_name += f' ({count})'
+            
+        resourceHandler.save_json(f'.\\saves\\{self.path}\\{self.name}\\{new_name}.json', encounter.encounter_info)
+        
+        self.files.append(Encounter(f'{self.path}\\{self.name}', f'{new_name}.json'))
+        self.sort()
     
     def create_sheet(self) -> None:
         event_bus.sign('context_menu', {})
@@ -146,7 +195,14 @@ class Folder(MenuObject):
         if count:
             new_name += f' {count}'
 
-        resourceHandler.save_json(f'.\\saves\\{self.path}\\{self.name}\\{new_name}.json', {})
+        resourceHandler.save_json(
+            f'.\\saves\\{self.path}\\{self.name}\\{new_name}.json', 
+            {
+                "type": "statsheet",
+                "version": "2.2",
+                "colors": []
+            }
+        )
         
         self.files.append(Sheet(f'{self.path}\\{self.name}', f'{new_name}.json'))
         self.sort()

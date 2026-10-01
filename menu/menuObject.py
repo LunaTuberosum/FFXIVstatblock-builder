@@ -12,7 +12,6 @@ from singletons.keyBus import key_bus
 from src.timer import Timer
 
 
-ENTRY_START_X: int = 33
 ENTRY_INDENT_X: int = 44
 ENTRY_INCREASE: int = 25
 ENTRY_X_BOUND: int = 215
@@ -20,6 +19,8 @@ ENTRY_X_BOUND: int = 215
 class MenuObject():
     def __init__(self, name: str, path: str, background: str) -> None:
         self.TILE_MAX_WIDTH: int = 187
+        self.ENTRY_START_X: int = 33
+        self.NAME_START_X: int = 33
         
         self.name: str = name
         self.path: str = path
@@ -87,14 +88,14 @@ class MenuObject():
         line_count: int = 1
         
         if not len(entries):
-            self.render_text('EMPTY', '#EEE1C5' if not self.hovering else '#F7EDD9', (ENTRY_START_X, _y))
+            self.render_text('EMPTY', '#EEE1C5' if not self.hovering else '#F7EDD9', (self.ENTRY_START_X, _y))
             return
         
         for _file in entries:
             if isinstance(_file, list): continue
             if isinstance(_file, str): continue
             
-            _x = ENTRY_START_X
+            _x = self.ENTRY_START_X
             for word in self.get_entry(_file):
                 if _x + self.font.size(word)[0] > ENTRY_X_BOUND:
                     _x = ENTRY_INDENT_X
@@ -102,7 +103,7 @@ class MenuObject():
                     line_count += 1
                     
                 if line_count == entry_max_lines:
-                    self.render_text('...', '#EEE1C5' if not self.hovering else '#F7EDD9', (ENTRY_START_X, _y))
+                    self.render_text('...', '#EEE1C5' if not self.hovering else '#F7EDD9', (self.ENTRY_START_X, _y))
                     return
                     
                 self.render_text(word, '#EEE1C5' if not self.hovering else '#F7EDD9', (_x, _y))
@@ -130,13 +131,13 @@ class MenuObject():
             name = ''.join(name)
             name += '...'
             
-            self.image.blit(self.fontTitle.render(name, True, '#000000'), (ENTRY_START_X, y_offset + 1))
-            self.image.blit(self.fontTitle.render(name, True, '#CCCCCC' if not self.hovering else '#dedede'), (ENTRY_START_X, y_offset))
+            self.image.blit(self.fontTitle.render(name, True, '#000000'), (self.NAME_START_X, y_offset + 1))
+            self.image.blit(self.fontTitle.render(name, True, '#CCCCCC' if not self.hovering else '#dedede'), (self.NAME_START_X, y_offset))
         
             return
 
-        self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (ENTRY_START_X, y_offset + 1))
-        self.image.blit(self.fontTitle.render(self.name, True, '#CCCCCC' if not self.hovering else '#dedede'), (ENTRY_START_X, y_offset))
+        self.image.blit(self.fontTitle.render(self.name, True, '#000000'), (self.NAME_START_X, y_offset + 1))
+        self.image.blit(self.fontTitle.render(self.name, True, '#CCCCCC' if not self.hovering else '#dedede'), (self.NAME_START_X, y_offset))
         
     def context_menu(self) -> None:
         if not self.hovering: 

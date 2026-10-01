@@ -1,5 +1,6 @@
 {
-    "version": "2.1",
+    "version": "2.2",
+    "type": "statsheet",
     "colors": [],
     "0": {
         "width": 3,

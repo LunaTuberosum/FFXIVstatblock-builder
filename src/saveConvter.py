@@ -5,8 +5,11 @@ def check_saves(folder: str) -> None:
     for m_file in resourceHandler.load_dir(f'.\\saves\\{folder}'):
         if m_file.endswith('.json'):
             sheet = resourceHandler.load_json(f'.\\saves\\{folder}\\{m_file}')
+            
+            if sheet.get('type') != 'statsheet':
+                continue
              
-            if sheet.get('version') == '2.1':
+            if sheet.get('version') == '2.2':
                 continue
             
             sheet = reformat_sheet(sheet)
@@ -89,13 +92,15 @@ def reformat_text(text: str) -> tuple[str, dict[str, dict]]:
             
 def reformat_sheet(sheet: dict[str]) -> dict[str, dict[str]]:
     new_sheet: dict[str, dict[str]] = {
-        'version': '2.1',
+        'type': 'statsheet',
+        'version': '2.2',
         'colors': []
     }
     
     for card_id, card_data in sheet.items():
         if card_id == 'version': continue
         if card_id == 'colors': continue
+        if card_id == 'type': continue
         
         height: int = card_data['height']
         if float(sheet.get('version', 1.0)) < 2.0:

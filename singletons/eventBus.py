@@ -17,6 +17,7 @@ class EventBus(Bus):
                 
                 'change_folder': [],
                 'move_file': [],
+                'duplicate_encounter': [],
                 'duplicate_sheet': [],
                 'delete_file': [],
                 

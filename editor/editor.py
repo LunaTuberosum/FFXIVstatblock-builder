@@ -257,7 +257,8 @@ class Editor(GameProcess):
         event_bus.sign('context_menu', None)
         
         save_dict: dict = {
-            'version': '2.1',
+            'type': 'statsheet',
+            'version': '2.2',
             'colors': self.get_colors(),
         }
         for index, card in enumerate(self.stat_cards):

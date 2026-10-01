@@ -66,6 +66,7 @@ class Menu(GameProcess):
     def menu_context_menu(self) -> None:
         event_bus.sign('context_menu', {
             'Add Sheet': self.current_folder.create_sheet,
+            'Add Encounter': self.current_folder.create_encounter,
             'Add Folder': self.current_folder.create_folder
         })
         

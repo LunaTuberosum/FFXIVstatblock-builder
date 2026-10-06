@@ -32,6 +32,8 @@ class EventBus(Bus):
                 
                 'swap_effects': [],
                 
+                'load_encounter': [],
+                
                 'context_menu': [],
                 'ui_window': [],
                 

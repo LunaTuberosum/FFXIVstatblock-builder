@@ -8,17 +8,17 @@ from uiComponents.button import Button
 from uiComponents.textBox import TextBox
 
 
-ELEMENT_SIZE: tuple[int, int] = (610, 200)
+ELEMENT_SIZE: tuple[int, int] = (560, 290)
 W_HALF: int = 305
 H_HALF: int = 100
 
-class RenameElement(UIElement):
+class DescriptionElement(UIElement):
     def __init__(self, m_file: object):
         screen = pygame.display.get_surface()
         
         super().__init__(
-            name='Rename',
-            title='Rename',
+            name='Description',
+            title='Description',
             size=ELEMENT_SIZE,
             pos=(
                 (screen.size[0] / 2) - W_HALF,
@@ -26,22 +26,24 @@ class RenameElement(UIElement):
             )
         )
         
-        from menu.menuObject import MenuObject
-        self.m_file: MenuObject = m_file
+        from menu.encounter import Encounter
+        self.m_file: Encounter = m_file
         
         textbox: TextBox = self.add_component(
-            'Name_Text',
+            'Desc_Text',
             TextBox(
-                pos=(220, 80),
-                size=(330, 1)
+                pos=(50, 80),
+                size=(450, 4)
             )
         )
-        textbox.change_text(self.m_file.name)
+        
+        textbox.change_text(self.m_file.encounter_info['desc'])
+        textbox.set_can_format(False)
         
         self.add_component(
             'Close',
             Button(
-                pos=(30, 135),
+                pos=(30, 225),
                 size=(198, 38),
                 image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
                 image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
@@ -53,11 +55,11 @@ class RenameElement(UIElement):
         self.add_component(
             'Confirm',
             Button(
-                pos=(382, 135),
+                pos=(332, 225),
                 size=(198, 38),
                 image=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button.png',
                 image_hover=f'.\\assets\\ui\\{data_bus.sign('get_theme')}\\icons\\button_hover.png',
-                command=self.change_name,
+                command=self.change_desc,
                 text='Confirm'
             )
         )
@@ -73,15 +75,15 @@ class RenameElement(UIElement):
                 (screen.size[1] / 2) - H_HALF
             )
         
-        self.render_text('Name', '#C2C2C2', (25, 55))
+        self.render_text('Description', '#C2C2C2', (25, 55))
         
-        self.render_text(f'{self.m_file.__class__.__name__} Name', '#EEE1C5', (50, 80))
-            
         screen.blit(self.image, self.pos)
         
         for comp in self.components.values():
             comp.draw(screen, self.pos)
             
-    def change_name(self):
-        self.m_file.rename(self.get_component('Name_Text').text)
+    def change_desc(self):
+        self.m_file.redesc(self.get_component('Desc_Text').text)
         self.close()
+        
+    

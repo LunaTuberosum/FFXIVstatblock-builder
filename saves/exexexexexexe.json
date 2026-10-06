@@ -1,5 +1,6 @@
 {
     "type": "encounter",
     "version": "1.0",
+    "colors": [],
     "desc": "A test example of the new encounter mechanic :)"
 }

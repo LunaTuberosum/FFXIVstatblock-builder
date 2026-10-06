@@ -116,7 +116,7 @@ class GameProcess():
         if self.context_menu:
             self.context_menu.deregister()
         
-        self.context_menu = ContextMenu(self.mouse_handler.mouse_pos, 186, context_options)
+        self.context_menu = ContextMenu(self.mouse_handler.mouse_pos, 206, context_options)
         
     def create_ui_window(self, window: UIElement, hold_window: bool = False, force: bool = False) -> None:
         event_bus.sign('context_menu', {})
@@ -184,7 +184,7 @@ class GameProcess():
             
             for option in self.context_menu.options:
                 
-                if option.rect.collidepoint(self.mouse_handler.mouse_pos) and not self.hover_object:
+                if option.is_hover(self.mouse_handler.mouse_pos) and not self.hover_object:
                     self.hover_object = option
                     self.context_menu.hover()
                     

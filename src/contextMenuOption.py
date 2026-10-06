@@ -37,6 +37,7 @@ class ContextMenuOption():
         
     def draw(self, screen: pygame.Surface) -> None:
         if self.text == '': return
+        if self.text == '{}': return
 
         if self.hovering:
             screen.blit(self.hover_background, (self.pos[0] - IMAGE_POS[0], self.pos[1] + IMAGE_POS[1]))
@@ -45,6 +46,12 @@ class ContextMenuOption():
 
         screen.blit(self.font.render(self.text, True, '#000000'), (self.pos[0], self.pos[1] + 1))
         screen.blit(self.font.render(self.text, True, '#DED2B8'), (self.pos))
+
+    def is_hover(self, mouse_pos: tuple[int, int]) -> bool:
+        if self.text == '': return False
+        if self.text == '{}': return False
+        
+        return self.rect.collidepoint(mouse_pos)
 
     def hover(self) -> None:
         if self.hovering:

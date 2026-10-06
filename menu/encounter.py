@@ -2,6 +2,8 @@ import pygame
 
 from menu.menuObject import MenuObject
 
+from menu.ui.descriptionElement import DescriptionElement
+
 from singletons import resourceHandler
 
 from singletons.eventBus import event_bus
@@ -48,7 +50,7 @@ class Encounter(MenuObject):
             self.no_hover()
             self.click_timer.reset()
             self.drag = False
-            # event_bus.sign('load_encounter', self)
+            event_bus.sign('load_encounter', self)
         else:
             self.click_timer.start()
             
@@ -90,13 +92,14 @@ class Encounter(MenuObject):
             if _x + self.font.size(word)[0] > ENTRY_X_BOUND:
                 line_count += 1
                 
-                if line_count == entry_max_lines:
-                    self.render_text('...', '#EEE1C5' if not self.hovering else '#F7EDD9', (_x, _y))
-                    return
-                
                 _x = ENTRY_START_Y
                 _y += ENTRY_INCREASE
                 
+                if line_count == entry_max_lines:
+                    _y -= 5
+                    self.render_text('...', '#EEE1C5' if not self.hovering else '#F7EDD9', (_x, _y))
+                    return
+
             self.render_text(word, '#EEE1C5' if not self.hovering else '#F7EDD9', (_x, _y))
             _x += self.font.size(word + ' ')[0]
         
@@ -110,6 +113,7 @@ class Encounter(MenuObject):
         event_bus.sign('context_menu', {
             '': None,
             'Change Name': self.change_name,
+            'Change Description': self.change_description,
             'Duplicate': self.duplicate,
             'Delete': self.delete
         }, True)
@@ -135,4 +139,12 @@ class Encounter(MenuObject):
             return
         
         self.name = text
+        
+    def change_description(self) -> None:
+        event_bus.sign('context_menu', {})
+        event_bus.sign('ui_window', DescriptionElement(self))
     
+    def redesc(self, text: str) -> None:        
+        self.encounter_info['desc'] = text
+        
+        resourceHandler.save_json(f'.\\saves\\{self.path}\\{self.name}.json', self.encounter_info)

@@ -2,7 +2,9 @@ from os import listdir
 import sys
 import pygame
 
-from editor.editor import Editor
+from editor.encounterEditor import EncounterEditor
+from editor.statcardEditor import StatcardEditor
+
 from menu.folder import Folder
 from menu.menu import Menu
 
@@ -41,6 +43,7 @@ class GameLoop():
     def set_up_bus_calls(self) -> None:
         event_bus.register('quit', self.quit)
         event_bus.register('load_sheet', self.load_sheet)
+        event_bus.register('load_encounter', self.load_encounter)
         event_bus.register('return_menu', self.return_menu)
         
     def quit(self) -> None:
@@ -89,7 +92,14 @@ class GameLoop():
         key_bus.reset()
         self.set_up_bus_calls()
         
-        self.current_process = Editor(self, sheet, self.current_process.current_folder, self.current_process.prev_folder)
+        self.current_process = StatcardEditor(self, sheet, self.current_process.current_folder, self.current_process.prev_folder)
+        
+    def load_encounter(self, encounter: object) -> None:
+        event_bus.reset()
+        key_bus.reset()
+        self.set_up_bus_calls()
+        
+        self.current_process = EncounterEditor(self, encounter, self.current_process.current_folder, self.current_process.prev_folder)
                 
     def search_for_folder(self, folder: Folder, look_folder: Folder) -> Folder:
         for m_file in folder.files:

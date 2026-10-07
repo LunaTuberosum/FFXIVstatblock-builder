@@ -1,10 +1,10 @@
 import pygame
 
-from editor.cardComponents.abilityComponent import AbilityComponent
+from statcardEditor.cardComponents.abilityComponent import AbilityComponent
 
-from editor.ui.effectElement import EffectElement
-from editor.ui.markerElement import MarkerElement
-from editor.ui.statCardElement import StatCardElement
+from statcardEditor.ui.effectElement import EffectElement
+from statcardEditor.ui.markerElement import MarkerElement
+from statcardEditor.ui.statCardElement import StatCardElement
 
 from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
@@ -137,7 +137,7 @@ class AbilityElement(StatCardElement[AbilityComponent]):
         
     def marker_edit(self) -> None:
         if not self.component.marker:
-            from editor.cardComponents.markerComponent import MarkerComponent
+            from statcardEditor.cardComponents.markerComponent import MarkerComponent
             self.component.marker = MarkerComponent(5, 5, self.component)
             self.component.refresh()
         

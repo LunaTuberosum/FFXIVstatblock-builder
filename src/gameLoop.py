@@ -2,8 +2,8 @@ from os import listdir
 import sys
 import pygame
 
-from editor.encounterEditor import EncounterEditor
-from editor.statcardEditor import StatcardEditor
+from encounterEditor.encounterEditor import EncounterEditor
+from  statcardEditor.statcardEditor import StatcardEditor
 
 from menu.folder import Folder
 from menu.menu import Menu
@@ -28,7 +28,7 @@ class GameLoop():
         self.display: Display = None 
         self.load_setting_save()
         
-        pygame.mixer.set_num_channels(3)
+        pygame.mixer.set_num_channels(5)
         
         pygame.display.set_caption('FFXIV TTRPG Stat Card Builder V0.93.2')
         pygame.display.set_icon(resourceHandler.load_image('.\\assets\\icon.ico'))

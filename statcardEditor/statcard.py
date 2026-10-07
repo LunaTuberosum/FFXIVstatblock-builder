@@ -1,11 +1,11 @@
 import pygame
 
-from editor.cardComponents.abilityComponent import AbilityComponent
-from editor.cardComponents.cardComponent import CardComponent
-from editor.cardComponents.nameComponent import NameComponent
-from editor.cardComponents.sectionNameComponent import SectionNameComponent
-from editor.cardComponents.topStatComponent import TopStatComponent
-from editor.cardComponents.traitComponent import TraitComponent
+from statcardEditor.cardComponents.abilityComponent import AbilityComponent
+from statcardEditor.cardComponents.cardComponent import CardComponent
+from statcardEditor.cardComponents.nameComponent import NameComponent
+from statcardEditor.cardComponents.sectionNameComponent import SectionNameComponent
+from statcardEditor.cardComponents.topStatComponent import TopStatComponent
+from statcardEditor.cardComponents.traitComponent import TraitComponent
 
 from singletons import resourceHandler
 
@@ -296,7 +296,7 @@ class StatCard():
         event_bus.sign('move_card', self, 'right')
                
     def edit(self) -> None:
-        from editor.ui.editCardElement import EditCardElement
+        from statcardEditor.ui.editCardElement import EditCardElement
         event_bus.sign('ui_window', EditCardElement(self))
                
     def clear(self) -> None:

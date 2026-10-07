@@ -1,10 +1,10 @@
 import re
 import pygame
 
-from editor.cardComponents.abilityComponent import AbilityComponent
+from statcardEditor.cardComponents.abilityComponent import AbilityComponent
 
-from editor.ui.paintbursh import Paintbrush, Paint
-from editor.ui.statCardElement import StatCardElement
+from statcardEditor.ui.paintbursh import Paintbrush, Paint
+from statcardEditor.ui.statCardElement import StatCardElement
 
 from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus

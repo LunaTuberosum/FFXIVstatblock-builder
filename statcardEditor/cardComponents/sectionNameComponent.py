@@ -1,6 +1,6 @@
 import pygame
 
-from editor.cardComponents.cardComponent import CardComponent
+from statcardEditor.cardComponents.cardComponent import CardComponent
 
 from singletons import resourceHandler
 

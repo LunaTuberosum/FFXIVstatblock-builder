@@ -1,6 +1,6 @@
 import pygame
 
-from editor.cardComponents.cardComponent import CardComponent
+from statcardEditor.cardComponents.cardComponent import CardComponent
 
 from singletons import resourceHandler
 
@@ -63,7 +63,7 @@ class TraitComponent(CardComponent):
         if not super().on_click():
             return
                
-        from editor.ui.traitElement import TraitElement
+        from statcardEditor.ui.traitElement import TraitElement
         event_bus.sign('ui_window', TraitElement(self))
         
     def on_release(self) -> None:

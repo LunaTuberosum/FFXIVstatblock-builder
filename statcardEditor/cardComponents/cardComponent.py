@@ -21,7 +21,7 @@ class CardComponent():
         self.size: tuple[int, int] =  size
         self.pos: tuple[int, int] = pos 
         
-        from editor.statcard import StatCard
+        from statcardEditor.statcard import StatCard
         self.card: StatCard = card
         
         self.image: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)

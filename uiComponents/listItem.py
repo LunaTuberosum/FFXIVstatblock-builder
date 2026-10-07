@@ -1,7 +1,7 @@
 from typing import Callable
 import pygame
 
-from editor.cardComponents.abilityComponent import EffectData
+from statcardEditor.cardComponents.abilityComponent import EffectData
 
 from singletons import resourceHandler
 

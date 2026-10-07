@@ -1,8 +1,8 @@
 import pygame
 
-from editor.cardComponents.traitComponent import TraitComponent
+from statcardEditor.cardComponents.traitComponent import TraitComponent
 
-from editor.ui.statCardElement import StatCardElement
+from statcardEditor.ui.statCardElement import StatCardElement
 
 from uiComponents.textBox import TextBox
 

@@ -1,7 +1,7 @@
 import re
 import pygame
 
-from editor.statcard import StatCard
+from statcardEditor.statcard import StatCard
 
 from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
@@ -286,7 +286,7 @@ class AddCardElement(UIElement):
             int(self.get_component('Card_Height_Text').text)
         )
         
-        from editor.cardComponents.nameComponent import NameComponent
+        from statcardEditor.cardComponents.nameComponent import NameComponent
         card.add_component(
             'Name_Component',
             NameComponent(
@@ -295,7 +295,7 @@ class AddCardElement(UIElement):
             )
         )
         
-        from editor.cardComponents.topStatComponent import TopStatComponent
+        from statcardEditor.cardComponents.topStatComponent import TopStatComponent
         card.add_component(
             'Top_Stat_Component',
             TopStatComponent(
@@ -304,7 +304,7 @@ class AddCardElement(UIElement):
             )
         )
         
-        from editor.cardComponents.sectionNameComponent import SectionNameComponent
+        from statcardEditor.cardComponents.sectionNameComponent import SectionNameComponent
         
         trait_text: TextBox = self.get_component('Card_Trait_Text')
         if trait_text.text != '0':
@@ -313,7 +313,7 @@ class AddCardElement(UIElement):
                 SectionNameComponent(card, 'Traits')
             )
             
-            from editor.cardComponents.traitComponent import TraitComponent
+            from statcardEditor.cardComponents.traitComponent import TraitComponent
             
             for trait in range(int(trait_text.text)):
                 t: TraitComponent = TraitComponent(card)
@@ -332,7 +332,7 @@ class AddCardElement(UIElement):
                 SectionNameComponent(card, 'Abilities')
             )
             
-            from editor.cardComponents.abilityComponent import AbilityComponent
+            from statcardEditor.cardComponents.abilityComponent import AbilityComponent
             
             for ability in range(int(ability_text.text)):
                 a: AbilityComponent = AbilityComponent(card)

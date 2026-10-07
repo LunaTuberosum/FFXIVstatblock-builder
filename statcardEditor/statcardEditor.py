@@ -1,12 +1,13 @@
 import pygame
 
-from editor.cardComponents.cardComponent import CardComponent
+from statcardEditor.cardComponents.cardComponent import CardComponent
 
-from editor.editor import Editor
-from editor.statcard import StatCard
+from statcardEditor.statcard import StatCard
 
 from menu.folder import Folder
 from menu.sheet import Sheet
+
+from src.editorCore import Editor
 
 from singletons import resourceHandler
 
@@ -122,7 +123,7 @@ class StatcardEditor(Editor):
             self.stat_cards.append(s_card)
             
     def add_card(self) -> None:
-        from editor.ui.addCardElement import AddCardElement
+        from statcardEditor.ui.addCardElement import AddCardElement
         event_bus.sign('ui_window', AddCardElement())
         
     def save(self) -> None:

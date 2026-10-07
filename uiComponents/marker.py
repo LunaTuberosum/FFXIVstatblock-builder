@@ -1,8 +1,8 @@
 import pygame
 
-from editor.cardComponents.markerComponent import MarkerComponent
+from statcardEditor.cardComponents.markerComponent import MarkerComponent
 
-from editor.ui.paintbursh import Paint, get_tileset, MarkerOverlay
+from statcardEditor.ui.paintbursh import Paint, get_tileset, MarkerOverlay
 
 from singletons import resourceHandler
 
@@ -20,7 +20,7 @@ class Marker(Component):
         
         self.marker_component: MarkerComponent = marker_component
         
-        from editor.ui.markerElement import MarkerElement
+        from statcardEditor.ui.markerElement import MarkerElement
         self.parent: MarkerElement = parent
         
         self.marker_area: list[list[Paint]] = []

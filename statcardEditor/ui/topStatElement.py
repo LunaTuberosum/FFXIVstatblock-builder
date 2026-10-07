@@ -2,9 +2,9 @@ import re
 from typing import Callable
 import pygame
 
-from editor.cardComponents.topStatComponent import TopStatComponent
+from statcardEditor.cardComponents.topStatComponent import TopStatComponent
 
-from editor.ui.statCardElement import StatCardElement
+from statcardEditor.ui.statCardElement import StatCardElement
 
 from singletons.dataBus import data_bus
 

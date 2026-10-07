@@ -1,8 +1,8 @@
 import pygame
 
-from editor.cardComponents.cardComponent import CardComponent
+from statcardEditor.cardComponents.cardComponent import CardComponent
 
-from editor.cardComponents.markerComponent import MarkerComponent
+from statcardEditor.cardComponents.markerComponent import MarkerComponent
 from singletons import resourceHandler
 
 from singletons.eventBus import event_bus
@@ -78,7 +78,7 @@ class AbilityComponent(CardComponent):
         if not super().on_click():
             return
                
-        from editor.ui.abilityElement import AbilityElement
+        from statcardEditor.ui.abilityElement import AbilityElement
         event_bus.sign('ui_window', AbilityElement(self))
         
     def on_release(self) -> None:

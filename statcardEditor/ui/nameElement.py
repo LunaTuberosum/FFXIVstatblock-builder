@@ -1,8 +1,8 @@
 import pygame
 
-from editor.cardComponents.nameComponent import LEVEL_NUM, LEVEL_TIER, NameComponent
+from statcardEditor.cardComponents.nameComponent import LEVEL_NUM, LEVEL_TIER, NameComponent
 
-from editor.ui.statCardElement import StatCardElement
+from statcardEditor.ui.statCardElement import StatCardElement
 
 from singletons.dataBus import data_bus
 

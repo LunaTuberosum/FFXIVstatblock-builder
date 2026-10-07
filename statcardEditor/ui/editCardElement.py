@@ -1,11 +1,11 @@
 import re
 import pygame
 
-from editor.cardComponents.abilityComponent import AbilityComponent
-from editor.cardComponents.cardComponent import CardComponent
-from editor.cardComponents.nameComponent import LEVEL_NUM, LEVEL_TIER
-from editor.cardComponents.sectionNameComponent import SectionNameComponent
-from editor.cardComponents.traitComponent import TraitComponent
+from statcardEditor.cardComponents.abilityComponent import AbilityComponent
+from statcardEditor.cardComponents.cardComponent import CardComponent
+from statcardEditor.cardComponents.nameComponent import LEVEL_NUM, LEVEL_TIER
+from statcardEditor.cardComponents.sectionNameComponent import SectionNameComponent
+from statcardEditor.cardComponents.traitComponent import TraitComponent
 
 from singletons.dataBus import data_bus
 from singletons.eventBus import event_bus
@@ -35,7 +35,7 @@ class EditCardElement(UIElement):
             )
         )
         
-        from editor.statcard import StatCard
+        from statcardEditor.statcard import StatCard
         self.card: StatCard = card
         
         self.text_face: pygame.Surface = pygame.Surface(self.size, pygame.SRCALPHA)

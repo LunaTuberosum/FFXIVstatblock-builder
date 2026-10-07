@@ -1,7 +1,7 @@
 import re
 import pygame
 
-from editor.cardComponents.abilityComponent import EffectData
+from statcardEditor.cardComponents.abilityComponent import EffectData
 
 from singletons import resourceHandler
 
@@ -27,7 +27,7 @@ class List(Component):
             size
         )
         
-        from editor.ui.effectElement import EffectElement
+        from statcardEditor.ui.effectElement import EffectElement
         self.element: EffectElement = element
         
         self.list_name: str = list_name

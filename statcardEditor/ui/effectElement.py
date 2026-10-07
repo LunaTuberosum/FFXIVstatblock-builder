@@ -1,9 +1,9 @@
 from typing import Callable
 import pygame
 
-from editor.cardComponents.abilityComponent import AbilityComponent, EffectData
+from statcardEditor.cardComponents.abilityComponent import AbilityComponent, EffectData
 
-from editor.ui.statCardElement import StatCardElement
+from statcardEditor.ui.statCardElement import StatCardElement
 
 from singletons.eventBus import event_bus
 

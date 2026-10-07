@@ -1,6 +1,8 @@
 import pygame
 
-from editor.editor import Editor
+from encounterEditor.ui.addLinkedSheetElement import AddLinkedSheetElement
+
+from src.editorCore import Editor
 
 from menu.encounter import Encounter
 from menu.folder import Folder
@@ -15,7 +17,8 @@ from ui.uiElement import UIElement
 class EncounterEditor(Editor):
     def __init__(self, main: object, encounter: Encounter, current_folder: Folder, prev_folders: list[Folder]) -> None:
         self.encounter: Encounter = encounter
-        print(self.encounter.encounter_info)
+        self.linked_sheets: list[dict[str, any]] = []
+        self.fields: list[None] = []
         
         super().__init__(main, current_folder, prev_folders)
         
@@ -64,18 +67,16 @@ class EncounterEditor(Editor):
         
         super().draw()
         
-    # def load(self) -> None:
-    #     for card in self.sheet.sheet_info.values():
-    #         if not isinstance(card, dict): 
-    #             if isinstance(card, list):
-    #                 self.text_colors = card
-    #             continue
+    def load(self) -> None:
+        self.text_colors = self.encounter.encounter_info['colors']
+        
+        for sheet in self.encounter.encounter_info['linked_sheets']:
+            self.linked_sheets.append(resourceHandler.load_json(sheet))
             
-    #         s_card: StatCard = StatCard(card['width'], card['height'])
-            
-    #         s_card.load(card['components'])
-            
-    #         self.stat_cards.append(s_card)
+        #instatate fields
+        
+        if len(self.linked_sheets) == 0:
+            event_bus.sign('ui_window', AddLinkedSheetElement(alert=True))
             
     def save(self) -> None:
         super().save()
@@ -84,7 +85,9 @@ class EncounterEditor(Editor):
             'type': 'encounter',
             'version': '1.0',
             'colors': self.get_colors(),
-            'desc': self.encounter.encounter_info['desc']
+            'desc': self.encounter.encounter_info['desc'],
+            'linked_sheets': [],
+            'fields': {}
         }
             
         resourceHandler.save_json(f'.\\saves\\{self.encounter.path}\\{self.encounter.name}.json', save_dict)

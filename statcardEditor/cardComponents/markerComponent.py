@@ -1,6 +1,6 @@
 import pygame
 
-from editor.ui.paintbursh import MarkerOverlay, Paint, get_tileset
+from statcardEditor.ui.paintbursh import MarkerOverlay, Paint, get_tileset
 from singletons import resourceHandler
 from uiComponents.componet import Component
 
@@ -11,7 +11,7 @@ ORIGIN: int = 2
 
 class MarkerComponent(Component):
     def __init__(self, width: int, height: int, component) -> None:
-        from editor.cardComponents.abilityComponent import AbilityComponent
+        from statcardEditor.cardComponents.abilityComponent import AbilityComponent
         self.component: AbilityComponent = component
         
         super().__init__(

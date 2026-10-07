@@ -159,7 +159,9 @@ class Folder(MenuObject):
                 "type": "encounter",
                 "version": "1.0",
                 "colors": [],
-                "desc": ""
+                "desc": "",
+                'linked_sheets': [],
+                'fields': {}
             }
         )
         

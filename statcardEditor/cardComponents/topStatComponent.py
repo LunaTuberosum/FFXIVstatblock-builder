@@ -1,6 +1,6 @@
 import pygame
 
-from editor.cardComponents.cardComponent import CardComponent
+from statcardEditor.cardComponents.cardComponent import CardComponent
 
 from singletons import resourceHandler
 from singletons.eventBus import event_bus
@@ -84,7 +84,7 @@ class TopStatComponent(CardComponent):
             self.click_timer.start()
             return
         
-        from editor.ui.topStatElement import TopStatElement
+        from statcardEditor.ui.topStatElement import TopStatElement
         event_bus.sign('ui_window', TopStatElement(self))
         
     def save(self) -> dict:
